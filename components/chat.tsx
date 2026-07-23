@@ -10,7 +10,7 @@ import {
 } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Arrow } from "./site-header";
+import { Arrow, SiteHeader } from "./site-header";
 import type { SseEvent } from "@/lib/chat/types";
 
 type Role = "user" | "assistant";
@@ -71,7 +71,7 @@ function parseSseChunk(buffer: string): { events: SseEvent[]; rest: string } {
 
 export function ChatPanel() {
   const listId = useId();
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [sessionId, setSessionId] = useState("");
   const [input, setInput] = useState("");
@@ -91,7 +91,12 @@ export function ChatPanel() {
   }, []);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    const panel = panelRef.current;
+    if (!panel) {
+      return;
+    }
+
+    panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
   }, [messages, isSending]);
 
   async function sendMessage(raw: string) {
@@ -210,95 +215,105 @@ export function ChatPanel() {
 
   return (
     <section className="chat" aria-labelledby={`${listId}-title`}>
-      <div className="shell chat__shell">
-        <header className="chat__intro">
+      <SiteHeader embedded />
+
+      <h1 className="visually-hidden" id={`${listId}-title`}>
+        Ask how automation could fit your workflow
+      </h1>
+
+      <div className="chat__body">
+        <aside className="chat__rail" aria-hidden="true">
           <p className="eyebrow">Ask the assistant</p>
-          <h1 className="display chat__title" id={`${listId}-title`}>
+          <p className="display chat__title">
             Ask how automation could fit your workflow
-          </h1>
+          </p>
           <p className="chat__lede">
             Chat with our AI to learn what we automate, how engagements work,
             and whether a first project makes sense for your team.
           </p>
-        </header>
+        </aside>
 
-        <div
-          className="chat__panel"
-          role="log"
-          aria-live="polite"
-          aria-relevant="additions"
-          aria-label="Chat messages"
-        >
-          <ul className="chat__messages" id={listId}>
-            {messages.map((message) => {
-              const isStreaming =
-                message.id === streamingId && message.role === "assistant";
+        <div className="chat__main">
+          <div
+            className="chat__panel"
+            ref={panelRef}
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+            aria-label="Chat messages"
+          >
+            <ul className="chat__messages" id={listId}>
+              {messages.map((message) => {
+                const isStreaming =
+                  message.id === streamingId && message.role === "assistant";
 
-              return (
-                <li
-                  key={message.id}
-                  className={`chat__bubble chat__bubble--${message.role}${
-                    isStreaming ? " chat__bubble--streaming" : ""
-                  }`}
-                >
-                  <span className="chat__role">
-                    {message.role === "user" ? "You" : "Assistant"}
-                  </span>
-                  {message.role === "assistant" ? (
-                    <div className="chat__markdown">
-                      {message.content ? (
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                          {message.content}
-                        </ReactMarkdown>
-                      ) : (
-                        <p className="chat__streaming-placeholder">
-                          Thinking…
-                        </p>
-                      )}
-                    </div>
-                  ) : (
-                    <p>{message.content}</p>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-          <div ref={bottomRef} />
-        </div>
-
-        <form className="chat__composer" onSubmit={handleSubmit}>
-          {error ? (
-            <p className="chat__error" role="alert">
-              {error}
-            </p>
-          ) : null}
-          <label className="visually-hidden" htmlFor={`${listId}-input`}>
-            Message
-          </label>
-          <textarea
-            id={`${listId}-input`}
-            ref={inputRef}
-            className="chat__input"
-            rows={2}
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Ask about automation, use cases, or getting started…"
-            disabled={isSending || !sessionId}
-            maxLength={4000}
-          />
-          <div className="chat__composer-footer">
-            <p className="chat__hint">Enter to send · Shift+Enter for a new line</p>
-            <button
-              className="button button-primary"
-              type="submit"
-              disabled={isSending || !sessionId || !input.trim()}
-            >
-              Send
-              <Arrow />
-            </button>
+                return (
+                  <li
+                    key={message.id}
+                    className={`chat__bubble chat__bubble--${message.role}${
+                      isStreaming ? " chat__bubble--streaming" : ""
+                    }`}
+                  >
+                    <span className="chat__role">
+                      {message.role === "user" ? "You" : "Assistant"}
+                    </span>
+                    {message.role === "assistant" ? (
+                      <div className="chat__markdown">
+                        {message.content ? (
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {message.content}
+                          </ReactMarkdown>
+                        ) : (
+                          <p className="chat__streaming-placeholder">
+                            Thinking…
+                          </p>
+                        )}
+                      </div>
+                    ) : (
+                      <p>{message.content}</p>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        </form>
+
+          <form className="chat__composer" onSubmit={handleSubmit}>
+            {error ? (
+              <p className="chat__error" role="alert">
+                {error}
+              </p>
+            ) : null}
+            <label className="visually-hidden" htmlFor={`${listId}-input`}>
+              Message
+            </label>
+            <textarea
+              id={`${listId}-input`}
+              ref={inputRef}
+              className="chat__input"
+              rows={2}
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Ask about automation, use cases, or getting started…"
+              disabled={isSending || !sessionId}
+              maxLength={4000}
+            />
+            <div className="chat__composer-footer">
+              <p className="chat__hint">
+                Enter to send · Shift+Enter for a new line
+              </p>
+              <button
+                className="button button-primary"
+                type="submit"
+                disabled={isSending || !sessionId || !input.trim()}
+              >
+                Send
+                <Arrow />
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   );

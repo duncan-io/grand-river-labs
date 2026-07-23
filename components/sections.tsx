@@ -4,17 +4,17 @@ const promises = [
   {
     label: "Time",
     title: "Save time",
-    copy: "Cut hours off repetitive process work—so your team gets the day back.",
+    copy: "Cut hours off repetitive process work—so your team has capacity for higher-value work.",
   },
   {
     label: "Labor",
     title: "Save labor",
-    copy: "Fewer handoffs, less re-entry, less busywork. Same throughput, less drag.",
+    copy: "Fewer handoffs, less re-entry, less busywork. More focus on work that moves the needle.",
   },
   {
     label: "Money",
-    title: "Save money",
-    copy: "Lower the cost of getting work done. Turn wasted effort into margin.",
+    title: "Multiply impact",
+    copy: "More throughput and results for less spend—productivity gained on every dollar.",
   },
 ];
 
@@ -22,17 +22,17 @@ const steps = [
   {
     number: "01",
     title: "Discover",
-    copy: "We map where time, labor, and cost leak—then fix what matters most.",
+    copy: "We start by mapping where your time, labor, and cost leak—so we fix what matters most.",
   },
   {
     number: "02",
     title: "Automate",
-    copy: "We build around your current workflow and the tools you already use.",
+    copy: "Then we build around your current workflow and the tools you already use.",
   },
   {
     number: "03",
     title: "Amplify",
-    copy: "We measure the savings, then refine so they keep compounding.",
+    copy: "Finally, we measure the savings and refine so the gains keep compounding.",
   },
 ];
 
@@ -46,112 +46,115 @@ function TributaryScene() {
     <svg
       className="promise__scene"
       aria-hidden="true"
-      viewBox="0 0 720 280"
+      viewBox="0 0 640 300"
       fill="none"
       preserveAspectRatio="xMidYMid meet"
     >
-      <defs>
-        <linearGradient id="promise-stream" x1="80" y1="40" x2="680" y2="220">
-          <stop stopColor="#8ACEC7" />
-          <stop offset="0.55" stopColor="#4EAAA2" />
-          <stop offset="1" stopColor="#057A72" />
-        </linearGradient>
-        <linearGradient id="promise-sheen" x1="200" y1="60" x2="640" y2="240">
-          <stop stopColor="#FFFFFF" stopOpacity=".55" />
-          <stop offset="0.5" stopColor="#F7FFFE" stopOpacity=".2" />
-          <stop offset="1" stopColor="#BCE8E4" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
+      {/* Inbound streams → shared merge */}
       <path
-        d="M40 58c120 8 180 42 250 88 52 34 98 52 150 58"
-        stroke="url(#promise-stream)"
-        strokeWidth="18"
+        d="M130 56 C 220 56, 280 70, 340 150"
+        stroke="#69BDB6"
+        strokeWidth="11"
         strokeLinecap="round"
-        opacity=".55"
       />
       <path
-        d="M40 140c110-6 170 10 240 36 70 26 130 42 200 48"
-        stroke="url(#promise-stream)"
-        strokeWidth="22"
+        d="M130 150 H 340"
+        stroke="#4EAAA2"
+        strokeWidth="13"
         strokeLinecap="round"
-        opacity=".7"
       />
       <path
-        d="M40 222c130-18 200-8 280 18 70 22 130 34 200 36"
-        stroke="url(#promise-stream)"
-        strokeWidth="16"
+        d="M130 244 C 220 244, 280 230, 340 150"
+        stroke="#69BDB6"
+        strokeWidth="11"
         strokeLinecap="round"
-        opacity=".5"
       />
 
+      {/* Outbound merged flow */}
       <path
         className="promise__confluence"
-        d="M440 120c70 8 120 28 180 62 28 16 48 28 70 38"
-        stroke="url(#promise-stream)"
-        strokeWidth="28"
+        d="M340 150 H 526"
+        stroke="#057A72"
+        strokeWidth="20"
         strokeLinecap="round"
       />
       <path
         className="promise__sheen"
-        d="M460 118c60 10 110 30 165 58"
-        stroke="url(#promise-sheen)"
-        strokeWidth="10"
+        d="M360 150 H 500"
+        stroke="#FFFFFF"
+        strokeOpacity="0.35"
+        strokeWidth="7"
         strokeLinecap="round"
       />
-
       <g
         className="promise__current"
         stroke="#F5FCFB"
         strokeWidth="2.5"
         strokeLinecap="round"
-        opacity=".55"
+        opacity=".7"
       >
-        <path d="M120 56c28 4 48 12 68 24" />
-        <path d="M100 138c36 2 62 10 90 22" />
-        <path d="M110 218c34-2 60 4 88 14" />
-        <path d="M500 140c36 10 64 22 90 36" />
+        <path d="M385 150 h32" />
+        <path d="M440 150 h32" />
       </g>
 
+      {/* Source nodes + left labels */}
+      <circle cx="118" cy="56" r="12" fill="#075752" />
+      <circle cx="118" cy="150" r="12" fill="#075752" />
+      <circle cx="118" cy="244" r="12" fill="#075752" />
+      <circle cx="118" cy="56" r="5" fill="#EAF9F7" />
+      <circle cx="118" cy="150" r="5" fill="#EAF9F7" />
+      <circle cx="118" cy="244" r="5" fill="#EAF9F7" />
+
       <text
-        x="36"
-        y="42"
+        x="100"
+        y="60"
+        textAnchor="end"
         fill="#075752"
-        fontSize="12"
+        fontSize="13"
         fontWeight="700"
-        letterSpacing="0.14em"
+        letterSpacing="0.12em"
       >
         TIME
       </text>
       <text
-        x="36"
-        y="124"
+        x="100"
+        y="154"
+        textAnchor="end"
         fill="#075752"
-        fontSize="12"
+        fontSize="13"
         fontWeight="700"
-        letterSpacing="0.14em"
+        letterSpacing="0.12em"
       >
         LABOR
       </text>
       <text
-        x="36"
-        y="206"
-        fill="#075752"
-        fontSize="12"
-        fontWeight="700"
-        letterSpacing="0.14em"
-      >
-        MONEY
-      </text>
-      <text
-        x="600"
+        x="100"
         y="248"
-        fill="#057A72"
-        fontSize="12"
+        textAnchor="end"
+        fill="#075752"
+        fontSize="13"
         fontWeight="700"
         letterSpacing="0.12em"
       >
-        CLARITY
+        MONEY
+      </text>
+
+      {/* Merge junction */}
+      <circle cx="340" cy="150" r="15" fill="#057A72" />
+      <circle cx="340" cy="150" r="6.5" fill="#EAF9F7" />
+
+      {/* Impact node + label */}
+      <circle cx="526" cy="150" r="17" fill="#075752" />
+      <circle cx="526" cy="150" r="7.5" fill="#EAF9F7" />
+      <text
+        x="552"
+        y="155"
+        fill="#075752"
+        fontSize="13"
+        fontWeight="700"
+        letterSpacing="0.12em"
+      >
+        IMPACT
       </text>
     </svg>
   );
@@ -207,30 +210,6 @@ function AudienceAtmosphere() {
   );
 }
 
-function FlowConnector() {
-  return (
-    <span className="process-flow__connector" aria-hidden="true">
-      <svg viewBox="0 0 80 24" fill="none">
-        <path
-          className="process-flow__connector-line"
-          d="M4 12h64"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeDasharray="4 6"
-        />
-        <path
-          d="M62 5.5 72 12l-10 6.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
-  );
-}
-
 export function PromiseSection() {
   return (
     <section className="section promise" id="approach">
@@ -239,15 +218,20 @@ export function PromiseSection() {
           <div className="promise__intro">
             <p className="eyebrow">What you get</p>
             <h2 className="section-heading">
-              Reclaim hours. Reduce effort. Cut cost.
+              Reclaim hours. Reduce effort. Cut cost. Increase impact.
             </h2>
             <p className="section-copy">
-              Automation should fit into your business—not the other way around.
-              We simplify the work behind the work.
+              The point isn&apos;t just less busywork—it&apos;s more output for
+              every dollar. Automation should fit your business, free your team
+              for higher-value work, and compound productivity without a
+              rip-and-replace.
             </p>
           </div>
           <div className="promise__visual">
             <TributaryScene />
+            <p className="promise__caption">
+              Three leaks. One clearer path to impact.
+            </p>
           </div>
         </div>
 
@@ -271,21 +255,26 @@ export function ProcessSection() {
       <div className="shell">
         <div className="process__top reveal">
           <div>
-            <p className="eyebrow">How it works</p>
-            <h2 className="section-heading">Change without the upheaval.</h2>
+            <p className="eyebrow">Our process</p>
+            <h2 className="section-heading">
+              Here&apos;s how we&apos;ll work together.
+            </h2>
           </div>
           <p className="section-copy">
             A clear path from today&apos;s bottleneck to measurable savings.
           </p>
         </div>
 
-        <ol className="process-flow reveal">
-          {steps.map((step, index) => (
-            <li className="process-flow__step" key={step.number}>
-              {index < steps.length - 1 ? <FlowConnector /> : null}
-              <span className="process-flow__number">{step.number}</span>
-              <h3>{step.title}</h3>
-              <p>{step.copy}</p>
+        <ol className="process-timeline reveal">
+          {steps.map((step) => (
+            <li className="process-timeline__step" key={step.number}>
+              <span className="process-timeline__marker">
+                <span className="process-timeline__number">{step.number}</span>
+              </span>
+              <div className="process-timeline__body">
+                <h3>{step.title}</h3>
+                <p>{step.copy}</p>
+              </div>
             </li>
           ))}
         </ol>

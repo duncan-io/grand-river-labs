@@ -405,9 +405,9 @@ export function BpaSections() {
           </div>
 
           <div className="bpa-examples__list">
-            {examples.map((example, index) => (
+            {examples.map((example) => (
               <article
-                className={`bpa-example reveal${index % 2 === 1 ? " bpa-example--alt" : ""}`}
+                className="bpa-example reveal"
                 key={example.number}
                 id={`example-${example.number}`}
               >

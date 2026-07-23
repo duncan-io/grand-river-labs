@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useId, useState } from "react";
 import { industries } from "./industries";
 
 const Arrow = () => (
@@ -31,6 +34,33 @@ const Chevron = () => (
   </svg>
 );
 
+const MenuIcon = ({ open }: { open: boolean }) => (
+  <svg
+    aria-hidden="true"
+    className="site-nav-toggle__icon"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    {open ? (
+      <path
+        d="M5 5l10 10M15 5 5 15"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    ) : (
+      <path
+        d="M3.5 6.5h13M3.5 10h13M3.5 13.5h13"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    )}
+  </svg>
+);
+
 export function BrandMark() {
   return (
     <span className="wordmark">
@@ -49,11 +79,56 @@ export function BrandMark() {
   );
 }
 
-export function SiteHeader() {
+const BOOK_CALL_HREF =
+  "mailto:hello@grandriverlabs.com?subject=Book%20a%20call";
+
+export function SiteHeader({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const panelId = useId();
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    const onResize = () => {
+      if (window.matchMedia("(min-width: 901px)").matches) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  const headerClass = [
+    "site-header",
+    embedded ? "site-header--embedded" : "",
+    menuOpen ? "site-header--menu-open" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <header className="site-header">
+    <header className={headerClass}>
       <div className="shell site-header__inner">
-        <a href="/" aria-label="Grand River Labs, home">
+        <a href="/" aria-label="Grand River Labs, home" onClick={closeMenu}>
           <BrandMark />
         </a>
 
@@ -77,9 +152,58 @@ export function SiteHeader() {
             </div>
           </div>
           <a href="/whitelabel">White-label</a>
+          <a className="button button-primary" href={BOOK_CALL_HREF}>
+            Book a call
+            <Arrow />
+          </a>
+        </nav>
+
+        <button
+          type="button"
+          className="site-nav-toggle"
+          aria-expanded={menuOpen}
+          aria-controls={panelId}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <MenuIcon open={menuOpen} />
+        </button>
+      </div>
+
+      <div
+        id={panelId}
+        className="site-nav-panel"
+        hidden={!menuOpen}
+        inert={!menuOpen ? true : undefined}
+      >
+        <nav className="site-nav-panel__nav" aria-label="Mobile navigation">
+          <a href="/what-we-do" onClick={closeMenu}>
+            What we do
+          </a>
+          <div className="site-nav-panel__group">
+            <a href="/use-cases" onClick={closeMenu}>
+              Use cases
+            </a>
+            <div className="site-nav-panel__industries" role="list">
+              {industries.map((item) => (
+                <a
+                  href={`/use-cases/${item.slug}`}
+                  key={item.slug}
+                  role="listitem"
+                  onClick={closeMenu}
+                >
+                  {item.industry}
+                </a>
+              ))}
+            </div>
+          </div>
+          <a href="/whitelabel" onClick={closeMenu}>
+            White-label
+          </a>
           <a
-            className="button button-primary"
-            href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+            className="button button-primary site-nav-panel__cta"
+            href={BOOK_CALL_HREF}
+            onClick={closeMenu}
           >
             Book a call
             <Arrow />
