@@ -325,7 +325,7 @@ export function MarketingAutomationSections() {
         <MarketingAutomationScene />
         <div className="shell">
           <div className="mkt-hero__content">
-            <p className="eyebrow">Marketing automation</p>
+            <p className="eyebrow">Marketing & sales automation</p>
             <p className="mkt-hero__brand">Grand River Labs</p>
             <h1 className="mkt-hero__headline">
               Keep pipeline moving without babysitting the stack.
@@ -476,7 +476,7 @@ export function MarketingAutomationCta() {
         <div>
           <p className="eyebrow">Ready when you are</p>
           <h2 className="section-heading">
-            Let&apos;s find where marketing automation pays for itself.
+            Let&apos;s find where marketing & sales automation pays for itself.
           </h2>
         </div>
         <div className="use-cases-cta__actions">

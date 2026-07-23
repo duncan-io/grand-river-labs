@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
-  title: "Marketing Automation | Grand River Labs",
+  title: "Marketing & Sales Automation | Grand River Labs",
   description:
     "Lead routing, nurture sequences, and campaign ops that fit your CRM and channels—practical automation that keeps pipeline moving.",
 };

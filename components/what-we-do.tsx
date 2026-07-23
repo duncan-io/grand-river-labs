@@ -1,4 +1,5 @@
 import { Arrow } from "./site-header";
+import { WhiteGloveEngagement } from "./white-glove-engagement";
 
 const services = [
   {
@@ -8,7 +9,7 @@ const services = [
     motif: "bpa" as const,
   },
   {
-    title: "Marketing automation",
+    title: "Marketing & sales automation",
     copy: "Lead routing, nurture sequences, and campaign ops that fit your CRM and channels. Practical automation that keeps pipeline moving without rebuilding the stack.",
     href: "/marketing-automation",
     motif: "marketing" as const,
@@ -814,21 +815,6 @@ const integration = [
   },
 ];
 
-const engagement = [
-  {
-    title: "Discover",
-    copy: "We sit with your team, map the real workflow, and find the bottlenecks worth fixing—so we invest where it saves the most time and money.",
-  },
-  {
-    title: "Design & connect",
-    copy: "We design the automation around your existing systems, wire the integrations, and keep you in the loop until it feels right.",
-  },
-  {
-    title: "Launch & stay with it",
-    copy: "We launch carefully, watch the first weeks of real use, and stay close—so you get a working process, not a brittle handoff.",
-  },
-];
-
 const networkNodes = [
   { id: "a", cx: 960, cy: 360, r: 26, delay: "0s" },
   { id: "b", cx: 1020, cy: 580, r: 22, delay: "0.55s" },
@@ -1207,57 +1193,7 @@ export function WhatWeDoSections() {
         </div>
       </section>
 
-      <section className="section what-we-do-glove" id="how-we-work">
-        <div className="shell">
-          <div className="what-we-do-glove__top reveal">
-            <div>
-              <p className="eyebrow">White-glove engagement</p>
-              <h2 className="section-heading">
-                Personal enough to feel like a partner.
-              </h2>
-            </div>
-            <p className="section-copy">
-              You bring the business context. We bring the automation expertise—
-              and stay with the work until it saves real time, labor, and money.
-            </p>
-          </div>
-          <ol className="what-we-do-glove__steps reveal">
-            {engagement.map((step, index) => (
-              <li className="what-we-do-glove__step" key={step.title}>
-                {index > 0 ? (
-                  <span
-                    className="what-we-do-glove__connector"
-                    aria-hidden="true"
-                  >
-                    <svg viewBox="0 0 80 24" fill="none">
-                      <path
-                        className="what-we-do-glove__connector-line"
-                        d="M4 12h64"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeDasharray="4 6"
-                      />
-                      <path
-                        d="M62 5.5 72 12l-10 6.5"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                ) : null}
-                <span className="what-we-do-glove__number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <WhiteGloveEngagement />
     </>
   );
 }

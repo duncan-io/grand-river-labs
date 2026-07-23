@@ -1,4 +1,5 @@
 import { Arrow } from "./site-header";
+import { WhiteGloveEngagement } from "./white-glove-engagement";
 
 const friction = [
   {
@@ -19,58 +20,25 @@ const friction = [
   },
 ];
 
-const examples = [
-  {
-    number: "01",
-    title: "Lead & inquiry intake",
-    before:
-      "A form submission or inbound email arrives. Someone opens it, copies the name, company, and ask into the CRM, assigns an owner by gut feel, and types a confirmation by hand. If the inbox is busy, the lead waits. If the copy-paste slips, the record is wrong from day one.",
-    after:
-      "The message hits your existing inbox or form. Structured fields are pulled out, a CRM record is created or matched, an owner is assigned by your rules, and a confirmation goes out—without anyone retyping. Your team opens a clean lead, not a pile of admin.",
-    flow: ["Inbox", "Extract", "Route", "Confirm"],
-  },
-  {
-    number: "02",
-    title: "Approval & handoff chains",
-    before:
-      "A discount, a change order, or an access request lands in email or Slack. Context is incomplete. The right person isn’t tagged. Days later someone digs up the thread, approves from memory, and someone else has to update the next system by hand.",
-    after:
-      "The request is captured with the fields you need, routed to the right approver with context attached, and logged when they approve or deny. The next system—CRM, ops tool, or sheet—updates automatically, and the requester hears back without a status ping.",
-    flow: ["Request", "Route", "Decide", "Update"],
-  },
-  {
-    number: "03",
-    title: "Cross-system status sync",
-    before:
-      "A job moves from “in progress” to “done” in one tool. Someone remembers to update the CRM. Someone else updates the client sheet. A third person posts in Slack. When those steps don’t happen in order—or at all—the team works from three different truths.",
-    after:
-      "One source of truth owns the status. When it changes, the other systems update and the right people get notified. No second typing. No “did you update X?” threads. Everyone sees the same stage of the work.",
-    flow: ["Change", "Sync", "Notify", "Align"],
-  },
-  {
-    number: "04",
-    title: "Recurring ops & reporting",
-    before:
-      "Every week someone exports numbers, pastes them into a spreadsheet, rebuilds the same summary, and emails it to the people who asked. The ritual takes an afternoon. If that person is out, the ritual stalls—or the summary doesn’t go out at all.",
-    after:
-      "On a schedule, data is pulled from the tools you already trust, shaped into the brief your team actually reads, and delivered to the right channel. Same story you’d assemble by hand—without the weekly scrape.",
-    flow: ["Schedule", "Pull", "Draft", "Deliver"],
-  },
-];
+const featured = {
+  process: "Job status updates",
+  title: "When a job is marked done",
+  flow: [
+    { label: "Job board", hint: "Marked done" },
+    { label: "CRM", hint: "Deal stage syncs" },
+    { label: "Sheet", hint: "Client row updates" },
+    { label: "Slack", hint: "Team gets pinged" },
+  ],
+  outcome: "One change. Every system agrees.",
+};
 
-const engagement = [
-  {
-    title: "Discover",
-    copy: "We sit with your team, map the real workflow—not the org chart version—and find the handoffs that cost the most time and money.",
-  },
-  {
-    title: "Design & connect",
-    copy: "We design the automation around the tools you already run, wire the integrations, and keep you in the loop until the path feels right.",
-  },
-  {
-    title: "Launch & stay with it",
-    copy: "We launch carefully, watch the first weeks of real use, and stay close—so you get a working process, not a brittle handoff.",
-  },
+const morePaths = [
+  "Approvals",
+  "Lead intake",
+  "Reporting",
+  "Onboarding",
+  "Invoicing",
+  "…and yours",
 ];
 
 function BpaScene() {
@@ -291,33 +259,22 @@ function BpaScene() {
   );
 }
 
-function FlowStrip({ steps }: { steps: string[] }) {
+type FlowStep = { label: string; hint: string };
+
+function StatusTimeline({ steps }: { steps: FlowStep[] }) {
   return (
-    <ol className="bpa-flow-strip" aria-label="Automation flow">
+    <ol className="bpa-timeline" aria-label="Automated status sync">
       {steps.map((step, index) => (
-        <li className="bpa-flow-strip__step" key={step}>
-          {index > 0 ? (
-            <span className="bpa-flow-strip__connector" aria-hidden="true">
-              <svg viewBox="0 0 80 24" fill="none">
-                <path
-                  className="bpa-flow-strip__connector-line"
-                  d="M4 12h64"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeDasharray="4 6"
-                />
-                <path
-                  d="M62 5.5 72 12l-10 6.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+        <li className="bpa-timeline__step" key={step.label}>
+          <span className="bpa-timeline__marker">
+            <span className="bpa-timeline__number">
+              {String(index + 1).padStart(2, "0")}
             </span>
-          ) : null}
-          <span className="bpa-flow-strip__label">{step}</span>
+          </span>
+          <div className="bpa-timeline__body">
+            <h4>{step.label}</h4>
+            <p>{step.hint}</p>
+          </div>
         </li>
       ))}
     </ol>
@@ -393,96 +350,47 @@ export function BpaSections() {
         <div className="shell">
           <div className="bpa-examples__top reveal">
             <div>
-              <p className="eyebrow">Examples</p>
+              <p className="eyebrow">In practice</p>
               <h2 className="section-heading">
                 What business process automation looks like in practice.
               </h2>
             </div>
             <p className="section-copy">
-              Four common paths—from intake to reporting—written out the way
-              work actually moves. Same outcomes. Fewer hours in the weeds.
+              One path, written out. The rest follow the same shape.
             </p>
           </div>
 
-          <div className="bpa-examples__list">
-            {examples.map((example) => (
-              <article
-                className="bpa-example reveal"
-                key={example.number}
-                id={`example-${example.number}`}
-              >
-                <header className="bpa-example__header">
-                  <span className="bpa-example__number">{example.number}</span>
-                  <h3 className="bpa-example__title">{example.title}</h3>
-                </header>
+          <article className="bpa-featured reveal">
+            <p className="bpa-featured__process">{featured.process}</p>
+            <h3 className="bpa-featured__title">{featured.title}</h3>
 
-                <div className="bpa-example__body">
-                  <div className="bpa-example__phase">
-                    <p className="bpa-example__phase-label">Before</p>
-                    <p className="bpa-example__copy">{example.before}</p>
-                  </div>
-                  <div className="bpa-example__phase">
-                    <p className="bpa-example__phase-label">After</p>
-                    <p className="bpa-example__copy">{example.after}</p>
-                  </div>
-                </div>
+            <StatusTimeline steps={featured.flow} />
 
-                <FlowStrip steps={example.flow} />
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+            <p className="bpa-featured__outcome">{featured.outcome}</p>
+          </article>
 
-      <section className="section bpa-how" id="how-we-work">
-        <div className="shell">
-          <div className="bpa-how__top reveal">
-            <div>
-              <p className="eyebrow">How we automate</p>
-              <h2 className="section-heading">
-                Personal enough to feel like a partner.
-              </h2>
-            </div>
-            <p className="section-copy">
-              You bring the business context. We bring the process map and the
-              build—and stay with the work until it saves real time, labor, and
-              money.
+          <footer className="bpa-examples__more reveal">
+            <p className="bpa-examples__more-line">
+              Same pattern for whatever handoff eats the week.
             </p>
-          </div>
-          <ol className="bpa-how__steps reveal">
-            {engagement.map((step, index) => (
-              <li className="bpa-how__step" key={step.title}>
-                {index > 0 ? (
-                  <span className="bpa-how__connector" aria-hidden="true">
-                    <svg viewBox="0 0 80 24" fill="none">
-                      <path
-                        className="bpa-how__connector-line"
-                        d="M4 12h64"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeDasharray="4 6"
-                      />
-                      <path
-                        d="M62 5.5 72 12l-10 6.5"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                ) : null}
-                <span className="bpa-how__number">
-                  {String(index + 1).padStart(2, "0")}
+            <p className="bpa-examples__names">
+              {morePaths.map((name, index) => (
+                <span key={name}>
+                  {index > 0 ? (
+                    <span className="bpa-examples__dot" aria-hidden="true">
+                      {" "}
+                      ·{" "}
+                    </span>
+                  ) : null}
+                  {name}
                 </span>
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
-              </li>
-            ))}
-          </ol>
+              ))}
+            </p>
+          </footer>
         </div>
       </section>
+
+      <WhiteGloveEngagement />
     </>
   );
 }
