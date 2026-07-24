@@ -9,6 +9,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export default function Home() {
+  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
+
   return (
     <>
       <SiteHeader />
@@ -17,7 +19,7 @@ export default function Home() {
         <PromiseSection />
         <ProcessSection />
         <AudienceSection />
-        <ContactSection />
+        <ContactSection turnstileSiteKey={turnstileSiteKey} />
       </main>
       <SiteFooter />
     </>

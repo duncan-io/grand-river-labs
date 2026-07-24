@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import { sendToN8nForms } from "@/lib/n8n/forms";
+import {
+  getClientIp,
+  readTurnstileToken,
+  verifyTurnstileToken,
+} from "@/lib/turnstile";
 
 type ContactRequest = {
   name?: unknown;
   email?: unknown;
   message?: unknown;
+  "cf-turnstile-response"?: unknown;
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,6 +24,19 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { message: "Please send valid contact details." },
       { status: 400 },
+    );
+  }
+
+  const turnstileToken = readTurnstileToken(body);
+  const verified = await verifyTurnstileToken(
+    turnstileToken,
+    getClientIp(request),
+  );
+
+  if (!verified) {
+    return NextResponse.json(
+      { message: "Verification failed. Please try again." },
+      { status: 403 },
     );
   }
 

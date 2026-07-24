@@ -13,6 +13,10 @@ import remarkGfm from "remark-gfm";
 import { EMAIL_MAX_LENGTH, normalizeEmail } from "@/lib/chat/email";
 import type { SseEvent } from "@/lib/chat/types";
 import { Arrow, SiteHeader } from "./site-header";
+import {
+  TurnstileField,
+  type TurnstileFieldHandle,
+} from "./turnstile-field";
 
 type Role = "user" | "assistant";
 
@@ -80,17 +84,29 @@ function parseSseChunk(buffer: string): { events: SseEvent[]; rest: string } {
   return { events, rest };
 }
 
-export function ChatPanel() {
+type ChatPanelProps = {
+  turnstileSiteKey: string;
+};
+
+export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
   const listId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
+  const gateTurnstileRef = useRef<TurnstileFieldHandle>(null);
+  const composerTurnstileRef = useRef<TurnstileFieldHandle>(null);
   const [sessionId, setSessionId] = useState("");
   const [email, setEmail] = useState("");
   const [emailUnlocked, setEmailUnlocked] = useState(false);
   const [emailDraft, setEmailDraft] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
+  const [gateTurnstileToken, setGateTurnstileToken] = useState<string | null>(
+    null,
+  );
+  const [composerTurnstileToken, setComposerTurnstileToken] = useState<
+    string | null
+  >(null);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [streamingId, setStreamingId] = useState<string | null>(null);
@@ -144,6 +160,13 @@ export function ChatPanel() {
       return;
     }
 
+    const token =
+      gateTurnstileToken ?? gateTurnstileRef.current?.getResponse() ?? "";
+    if (!token) {
+      setEmailError("Please complete the verification challenge.");
+      return;
+    }
+
     setEmailError(null);
     setIsSubmittingEmail(true);
 
@@ -151,7 +174,11 @@ export function ChatPanel() {
       const response = await fetch("/api/chat/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: normalized, sessionId }),
+        body: JSON.stringify({
+          email: normalized,
+          sessionId,
+          "cf-turnstile-response": token,
+        }),
       });
 
       const result = (await response.json().catch(() => null)) as {
@@ -168,7 +195,10 @@ export function ChatPanel() {
       setEmail(normalized);
       setEmailDraft(normalized);
       setEmailUnlocked(true);
+      setGateTurnstileToken(null);
     } catch (error) {
+      gateTurnstileRef.current?.reset();
+      setGateTurnstileToken(null);
       setEmailError(
         error instanceof Error
           ? error.message
@@ -182,6 +212,15 @@ export function ChatPanel() {
   async function sendMessage(raw: string) {
     const message = raw.trim();
     if (!message || isSending || !sessionId || !emailUnlocked || !email) {
+      return;
+    }
+
+    const token =
+      composerTurnstileToken ??
+      composerTurnstileRef.current?.getResponse() ??
+      "";
+    if (!token) {
+      setError("Please complete the verification challenge.");
       return;
     }
 
@@ -201,8 +240,16 @@ export function ChatPanel() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, sessionId, email }),
+        body: JSON.stringify({
+          message,
+          sessionId,
+          email,
+          "cf-turnstile-response": token,
+        }),
       });
+
+      composerTurnstileRef.current?.reset();
+      setComposerTurnstileToken(null);
 
       if (!response.ok) {
         const result = (await response.json().catch(() => null)) as {
@@ -380,6 +427,11 @@ export function ChatPanel() {
                 disabled={isSending || !sessionId}
                 maxLength={4000}
               />
+              <TurnstileField
+                ref={composerTurnstileRef}
+                siteKey={turnstileSiteKey}
+                onTokenChange={setComposerTurnstileToken}
+              />
               <div className="chat__composer-footer">
                 <p className="chat__hint">
                   Enter to send · Shift+Enter for a new line
@@ -387,7 +439,12 @@ export function ChatPanel() {
                 <button
                   className="button button-primary"
                   type="submit"
-                  disabled={isSending || !sessionId || !input.trim()}
+                  disabled={
+                    isSending ||
+                    !sessionId ||
+                    !input.trim() ||
+                    !composerTurnstileToken
+                  }
                 >
                   Send
                   <Arrow />
@@ -427,6 +484,11 @@ export function ChatPanel() {
                 required
                 disabled={isSubmittingEmail}
               />
+              <TurnstileField
+                ref={gateTurnstileRef}
+                siteKey={turnstileSiteKey}
+                onTokenChange={setGateTurnstileToken}
+              />
               <div className="chat__composer-footer">
                 <p className="chat__hint">
                   We’ll only use this to follow up if it’s useful.
@@ -435,7 +497,10 @@ export function ChatPanel() {
                   className="button button-primary"
                   type="submit"
                   disabled={
-                    isSubmittingEmail || !sessionId || !emailDraft.trim()
+                    isSubmittingEmail ||
+                    !sessionId ||
+                    !emailDraft.trim() ||
+                    !gateTurnstileToken
                   }
                 >
                   {isSubmittingEmail ? "Saving…" : "Continue"}

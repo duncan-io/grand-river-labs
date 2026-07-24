@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import { normalizeEmail } from "@/lib/chat/email";
 import { captureChatLead } from "@/lib/chat/session-store";
+import {
+  getClientIp,
+  readTurnstileToken,
+  verifyTurnstileToken,
+} from "@/lib/turnstile";
 
 type LeadRequest = {
   email?: unknown;
   sessionId?: unknown;
+  "cf-turnstile-response"?: unknown;
 };
 
 export async function POST(request: Request) {
@@ -16,6 +22,19 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: "Please send a valid email." },
       { status: 400 },
+    );
+  }
+
+  const turnstileToken = readTurnstileToken(body);
+  const verified = await verifyTurnstileToken(
+    turnstileToken,
+    getClientIp(request),
+  );
+
+  if (!verified) {
+    return NextResponse.json(
+      { error: "Verification failed. Please try again." },
+      { status: 403 },
     );
   }
 

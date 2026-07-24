@@ -8,11 +8,17 @@ import {
   getMessages,
 } from "@/lib/chat/session-store";
 import type { SseEvent } from "@/lib/chat/types";
+import {
+  getClientIp,
+  readTurnstileToken,
+  verifyTurnstileToken,
+} from "@/lib/turnstile";
 
 type ChatRequest = {
   message?: unknown;
   sessionId?: unknown;
   email?: unknown;
+  "cf-turnstile-response"?: unknown;
 };
 
 function encodeSse(event: SseEvent): string {
@@ -28,6 +34,19 @@ export async function POST(request: Request) {
     return Response.json(
       { error: "Please send a valid chat message." },
       { status: 400 },
+    );
+  }
+
+  const turnstileToken = readTurnstileToken(body);
+  const verified = await verifyTurnstileToken(
+    turnstileToken,
+    getClientIp(request),
+  );
+
+  if (!verified) {
+    return Response.json(
+      { error: "Verification failed. Please try again." },
+      { status: 403 },
     );
   }
 

@@ -1,15 +1,25 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
+import {
+  TurnstileField,
+  type TurnstileFieldHandle,
+} from "./turnstile-field";
 
 type FormStatus = {
   state: "idle" | "success" | "error";
   message: string;
 };
 
-export function ContactSection() {
+type ContactSectionProps = {
+  turnstileSiteKey: string;
+};
+
+export function ContactSection({ turnstileSiteKey }: ContactSectionProps) {
+  const turnstileRef = useRef<TurnstileFieldHandle>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<FormStatus>({
     state: "idle",
@@ -23,6 +33,19 @@ export function ContactSection() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const token =
+      turnstileToken ??
+      turnstileRef.current?.getResponse() ??
+      String(formData.get("cf-turnstile-response") ?? "");
+
+    if (!token) {
+      setIsSubmitting(false);
+      setStatus({
+        state: "error",
+        message: "Please complete the verification challenge.",
+      });
+      return;
+    }
 
     try {
       const response = await fetch("/api/contact", {
@@ -32,6 +55,7 @@ export function ContactSection() {
           name: formData.get("name"),
           email: formData.get("email"),
           message: formData.get("message"),
+          "cf-turnstile-response": token,
         }),
       });
 
@@ -42,11 +66,15 @@ export function ContactSection() {
       }
 
       form.reset();
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
       setStatus({
         state: "success",
         message: "Thanks—your note is with us. We’ll be in touch soon.",
       });
     } catch (error) {
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
       setStatus({
         state: "error",
         message:
@@ -124,6 +152,12 @@ export function ContactSection() {
             />
           </div>
 
+          <TurnstileField
+            ref={turnstileRef}
+            siteKey={turnstileSiteKey}
+            onTokenChange={setTurnstileToken}
+          />
+
           <div className="contact-form__footer">
             <p
               className="form-status"
@@ -135,7 +169,7 @@ export function ContactSection() {
             <button
               className="button button-primary"
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !turnstileToken}
             >
               {isSubmitting ? "Sending…" : "Send your note"}
               {!isSubmitting && <Arrow />}

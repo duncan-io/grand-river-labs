@@ -8,10 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default function ChatPage() {
+  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
+
   return (
     <div id="top" className="chat-page">
       <main>
-        <ChatPanel />
+        <ChatPanel turnstileSiteKey={turnstileSiteKey} />
       </main>
     </div>
   );
