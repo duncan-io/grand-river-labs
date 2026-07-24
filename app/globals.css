@@ -4437,6 +4437,25 @@ a {
   line-height: 1.55;
 }
 
+.chat__disclaimer {
+  margin: auto 0 0;
+  max-width: 22rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.chat__disclaimer--mobile {
+  display: none;
+  margin: 0;
+  max-width: none;
+}
+
+.chat__disclaimer--gate {
+  margin: 0;
+  max-width: none;
+}
+
 .chat__main {
   position: relative;
   display: flex;
@@ -5249,6 +5268,10 @@ a {
 
   .chat__main {
     padding-left: 0;
+  }
+
+  .chat__disclaimer--mobile {
+    display: block;
   }
 }
 

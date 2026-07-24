@@ -351,7 +351,7 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
       </h1>
 
       <div className="chat__body">
-        <aside className="chat__rail" aria-hidden="true">
+        <aside className="chat__rail">
           <p className="eyebrow">Ask the assistant</p>
           <p className="display chat__title">
             Ask how automation could fit your workflow
@@ -359,6 +359,11 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
           <p className="chat__lede">
             Chat with our AI to learn what we automate, how engagements work,
             and whether a first project makes sense for your team.
+          </p>
+          <p className="chat__disclaimer">
+            This assistant can make mistakes. It can&apos;t make legally binding
+            offers, commitments, or deals—anything binding comes from a human at
+            Grand River Labs.
           </p>
         </aside>
 
@@ -452,6 +457,12 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
             </div>
           </form>
 
+          <p className="chat__disclaimer chat__disclaimer--mobile">
+            This assistant can make mistakes. It can&apos;t make legally binding
+            offers, commitments, or deals—anything binding comes from a human at
+            Grand River Labs.
+          </p>
+
           {!emailUnlocked ? (
             <div className="chat__gate-overlay">
               <form
@@ -511,6 +522,10 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
                   {isSubmittingEmail ? "Saving…" : "Continue"}
                   {!isSubmittingEmail && <Arrow />}
                 </button>
+                <p className="chat__disclaimer chat__disclaimer--gate">
+                  This assistant can make mistakes and can&apos;t make legally
+                  binding deals.
+                </p>
               </form>
             </div>
           ) : null}
