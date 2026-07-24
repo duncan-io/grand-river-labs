@@ -15,7 +15,6 @@ type TurnstileApi = {
   reset: (widgetId: string) => void;
   remove: (widgetId: string) => void;
   getResponse: (widgetId: string) => string;
-  ready: (callback: () => void) => void;
 };
 
 declare global {
@@ -91,23 +90,17 @@ export const TurnstileField = forwardRef<
       });
     };
 
-    const start = () => {
-      if (!window.turnstile) {
-        return;
-      }
-
-      window.turnstile.ready(mount);
-    };
-
+    // Next.js Script loads api.js with async; turnstile.ready() forbids that.
+    // Poll until the API exists, then render directly.
     if (window.turnstile) {
-      start();
+      mount();
     } else {
       pollId = setInterval(() => {
         if (window.turnstile) {
           if (pollId) {
             clearInterval(pollId);
           }
-          start();
+          mount();
         }
       }, 50);
     }
