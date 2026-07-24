@@ -94,7 +94,6 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const gateTurnstileRef = useRef<TurnstileFieldHandle>(null);
-  const composerTurnstileRef = useRef<TurnstileFieldHandle>(null);
   const [sessionId, setSessionId] = useState("");
   const [email, setEmail] = useState("");
   const [emailUnlocked, setEmailUnlocked] = useState(false);
@@ -104,9 +103,6 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
   const [gateTurnstileToken, setGateTurnstileToken] = useState<string | null>(
     null,
   );
-  const [composerTurnstileToken, setComposerTurnstileToken] = useState<
-    string | null
-  >(null);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [streamingId, setStreamingId] = useState<string | null>(null);
@@ -123,9 +119,7 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
     setSessionId(getOrCreateSessionId());
     const stored = getStoredEmail();
     if (stored) {
-      setEmail(stored);
       setEmailDraft(stored);
-      setEmailUnlocked(true);
     }
   }, []);
 
@@ -146,6 +140,16 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
 
     emailInputRef.current?.focus();
   }, [emailUnlocked]);
+
+  function lockChat(message?: string) {
+    setEmailUnlocked(false);
+    setEmail("");
+    setGateTurnstileToken(null);
+    gateTurnstileRef.current?.reset();
+    if (message) {
+      setEmailError(message);
+    }
+  }
 
   async function handleEmailSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -196,6 +200,7 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
       setEmailDraft(normalized);
       setEmailUnlocked(true);
       setGateTurnstileToken(null);
+      setError(null);
     } catch (error) {
       gateTurnstileRef.current?.reset();
       setGateTurnstileToken(null);
@@ -215,15 +220,6 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
       return;
     }
 
-    const token =
-      composerTurnstileToken ??
-      composerTurnstileRef.current?.getResponse() ??
-      "";
-    if (!token) {
-      setError("Please complete the verification challenge.");
-      return;
-    }
-
     const assistantId = createId();
 
     setError(null);
@@ -240,21 +236,25 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message,
-          sessionId,
-          email,
-          "cf-turnstile-response": token,
-        }),
+        body: JSON.stringify({ message, sessionId, email }),
       });
-
-      composerTurnstileRef.current?.reset();
-      setComposerTurnstileToken(null);
 
       if (!response.ok) {
         const result = (await response.json().catch(() => null)) as {
           error?: string;
+          code?: string;
         } | null;
+
+        if (result?.code === "email_required") {
+          setMessages((current) =>
+            current.filter((entry) => entry.id !== assistantId),
+          );
+          lockChat(
+            result.error ?? "Please verify your email to start chatting.",
+          );
+          return;
+        }
+
         throw new Error(
           result?.error ?? "Couldn’t reach the assistant. Please try again.",
         );
@@ -324,7 +324,9 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
     } finally {
       setIsSending(false);
       setStreamingId(null);
-      inputRef.current?.focus();
+      if (emailUnlocked) {
+        inputRef.current?.focus();
+      }
     }
   }
 
@@ -405,94 +407,97 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
             </ul>
           </div>
 
-          {emailUnlocked ? (
-            <form className="chat__composer" onSubmit={handleSubmit}>
-              {error ? (
-                <p className="chat__error" role="alert">
-                  {error}
-                </p>
-              ) : null}
-              <label className="visually-hidden" htmlFor={`${listId}-input`}>
-                Message
-              </label>
-              <textarea
-                id={`${listId}-input`}
-                ref={inputRef}
-                className="chat__input"
-                rows={2}
-                value={input}
-                onChange={(event) => setInput(event.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask about automation, use cases, or getting started…"
-                disabled={isSending || !sessionId}
-                maxLength={4000}
-              />
-              <TurnstileField
-                ref={composerTurnstileRef}
-                siteKey={turnstileSiteKey}
-                onTokenChange={setComposerTurnstileToken}
-              />
-              <div className="chat__composer-footer">
-                <p className="chat__hint">
-                  Enter to send · Shift+Enter for a new line
-                </p>
-                <button
-                  className="button button-primary"
-                  type="submit"
-                  disabled={
-                    isSending ||
-                    !sessionId ||
-                    !input.trim() ||
-                    !composerTurnstileToken
-                  }
-                >
-                  Send
-                  <Arrow />
-                </button>
-              </div>
-            </form>
-          ) : (
-            <form className="chat__gate" onSubmit={handleEmailSubmit}>
-              <p className="chat__gate-copy">
-                Leave your email to start chatting.
+          <form
+            className="chat__composer"
+            onSubmit={handleSubmit}
+            aria-hidden={!emailUnlocked}
+          >
+            {error ? (
+              <p className="chat__error" role="alert">
+                {error}
               </p>
-              {emailError ? (
-                <p className="chat__error" role="alert">
-                  {emailError}
+            ) : null}
+            <label className="visually-hidden" htmlFor={`${listId}-input`}>
+              Message
+            </label>
+            <textarea
+              id={`${listId}-input`}
+              ref={inputRef}
+              className="chat__input"
+              rows={2}
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Ask about automation, use cases, or getting started…"
+              disabled={!emailUnlocked || isSending || !sessionId}
+              maxLength={4000}
+            />
+            <div className="chat__composer-footer">
+              <p className="chat__hint">
+                Enter to send · Shift+Enter for a new line
+              </p>
+              <button
+                className="button button-primary"
+                type="submit"
+                disabled={
+                  !emailUnlocked ||
+                  isSending ||
+                  !sessionId ||
+                  !input.trim()
+                }
+              >
+                Send
+                <Arrow />
+              </button>
+            </div>
+          </form>
+
+          {!emailUnlocked ? (
+            <div className="chat__gate-overlay">
+              <form
+                className="chat__gate-dialog"
+                onSubmit={handleEmailSubmit}
+                aria-labelledby={`${listId}-gate-title`}
+              >
+                <p className="chat__gate-copy" id={`${listId}-gate-title`}>
+                  Leave your email to start chatting.
                 </p>
-              ) : null}
-              <label className="visually-hidden" htmlFor={`${listId}-email`}>
-                Email
-              </label>
-              <input
-                id={`${listId}-email`}
-                ref={emailInputRef}
-                className="chat__gate-input"
-                type="email"
-                name="email"
-                autoComplete="email"
-                inputMode="email"
-                placeholder="you@company.com"
-                value={emailDraft}
-                onChange={(event) => {
-                  setEmailDraft(event.target.value);
-                  if (emailError) {
-                    setEmailError(null);
-                  }
-                }}
-                maxLength={EMAIL_MAX_LENGTH}
-                required
-                disabled={isSubmittingEmail}
-              />
-              <TurnstileField
-                ref={gateTurnstileRef}
-                siteKey={turnstileSiteKey}
-                onTokenChange={setGateTurnstileToken}
-              />
-              <div className="chat__composer-footer">
                 <p className="chat__hint">
                   We’ll only use this to follow up if it’s useful.
                 </p>
+                {emailError ? (
+                  <p className="chat__error" role="alert">
+                    {emailError}
+                  </p>
+                ) : null}
+                <TurnstileField
+                  ref={gateTurnstileRef}
+                  siteKey={turnstileSiteKey}
+                  onTokenChange={setGateTurnstileToken}
+                />
+                <label className="visually-hidden" htmlFor={`${listId}-email`}>
+                  Email
+                </label>
+                <input
+                  id={`${listId}-email`}
+                  ref={emailInputRef}
+                  className="chat__gate-input"
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  inputMode="email"
+                  placeholder="you@company.com"
+                  value={emailDraft}
+                  onChange={(event) => {
+                    setEmailDraft(event.target.value);
+                    if (emailError) {
+                      setEmailError(null);
+                    }
+                  }}
+                  maxLength={EMAIL_MAX_LENGTH}
+                  required
+                  disabled={isSubmittingEmail}
+                />
                 <button
                   className="button button-primary"
                   type="submit"
@@ -506,9 +511,9 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
                   {isSubmittingEmail ? "Saving…" : "Continue"}
                   {!isSubmittingEmail && <Arrow />}
                 </button>
-              </div>
-            </form>
-          )}
+              </form>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

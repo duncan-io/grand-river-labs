@@ -78,10 +78,17 @@ export async function captureChatLead(sessionId: string, email: string) {
 }
 
 /**
- * Attach a normalized email to the session. Forwards to n8n once on first attach.
+ * True when this session completed the Turnstile-gated lead capture for `email`.
  */
-export async function ensureSessionEmail(sessionId: string, email: string) {
-  await captureChatLead(sessionId, email);
+export function isVerifiedChatSession(sessionId: string, email: string) {
+  pruneExpired();
+  const entry = sessions.get(sessionId);
+  if (!entry?.email || !entry.emailLogged) {
+    return false;
+  }
+
+  entry.updatedAt = Date.now();
+  return entry.email === email;
 }
 
 export function appendTurn(

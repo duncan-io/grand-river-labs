@@ -4,21 +4,15 @@ import { normalizeEmail } from "@/lib/chat/email";
 import { SYSTEM_PROMPT } from "@/lib/chat/prompts";
 import {
   appendTurn,
-  ensureSessionEmail,
   getMessages,
+  isVerifiedChatSession,
 } from "@/lib/chat/session-store";
 import type { SseEvent } from "@/lib/chat/types";
-import {
-  getClientIp,
-  readTurnstileToken,
-  verifyTurnstileToken,
-} from "@/lib/turnstile";
 
 type ChatRequest = {
   message?: unknown;
   sessionId?: unknown;
   email?: unknown;
-  "cf-turnstile-response"?: unknown;
 };
 
 function encodeSse(event: SseEvent): string {
@@ -34,19 +28,6 @@ export async function POST(request: Request) {
     return Response.json(
       { error: "Please send a valid chat message." },
       { status: 400 },
-    );
-  }
-
-  const turnstileToken = readTurnstileToken(body);
-  const verified = await verifyTurnstileToken(
-    turnstileToken,
-    getClientIp(request),
-  );
-
-  if (!verified) {
-    return Response.json(
-      { error: "Verification failed. Please try again." },
-      { status: 403 },
     );
   }
 
@@ -72,17 +53,18 @@ export async function POST(request: Request) {
 
   if (!email) {
     return Response.json(
-      { error: "Please enter a valid email to chat." },
-      { status: 400 },
+      { error: "Please enter a valid email to chat.", code: "email_required" },
+      { status: 403 },
     );
   }
 
-  try {
-    await ensureSessionEmail(sessionId, email);
-  } catch {
+  if (!isVerifiedChatSession(sessionId, email)) {
     return Response.json(
-      { error: "We couldn’t save your email. Please try again." },
-      { status: 502 },
+      {
+        error: "Please verify your email to start chatting.",
+        code: "email_required",
+      },
+      { status: 403 },
     );
   }
 

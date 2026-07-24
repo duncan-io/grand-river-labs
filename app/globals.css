@@ -3885,7 +3885,7 @@ a {
 }
 
 .chat__composer .turnstile-field,
-.chat__gate .turnstile-field {
+.chat__gate-dialog .turnstile-field {
   margin: 0;
 }
 
@@ -4438,6 +4438,7 @@ a {
 }
 
 .chat__main {
+  position: relative;
   display: flex;
   min-width: 0;
   min-height: 0;
@@ -4657,8 +4658,7 @@ a {
   }
 }
 
-.chat__composer,
-.chat__gate {
+.chat__composer {
   display: grid;
   flex-shrink: 0;
   gap: 0.75rem;
@@ -4669,12 +4669,39 @@ a {
   box-shadow: 0 12px 40px rgba(16, 47, 47, 0.06);
 }
 
+.chat__gate-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: rgba(12, 52, 50, 0.45);
+  backdrop-filter: blur(5px);
+}
+
+.chat__gate-dialog {
+  display: grid;
+  width: min(100%, 24rem);
+  gap: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: var(--surface);
+  padding: 1.25rem;
+  box-shadow: 0 18px 48px rgba(16, 47, 47, 0.2);
+}
+
+.chat__gate-dialog .button {
+  justify-self: end;
+}
+
 .chat__gate-copy {
   margin: 0;
   color: var(--foreground);
-  font-size: 0.98rem;
-  font-weight: 600;
-  line-height: 1.4;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.35;
 }
 
 .chat__input,
@@ -5778,8 +5805,17 @@ a {
   }
 
   .chat__composer,
-  .chat__gate {
+  .chat__gate-dialog {
     padding: 0.85rem;
+  }
+
+  .chat__gate-overlay {
+    border-radius: 1rem;
+  }
+
+  .chat__gate-dialog .button {
+    width: 100%;
+    justify-self: stretch;
   }
 
   .chat__input {
