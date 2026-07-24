@@ -1,12 +1,18 @@
 import { chatConfig } from "@/lib/chat/config";
 import { getFireworksClient } from "@/lib/chat/client";
+import { normalizeEmail } from "@/lib/chat/email";
 import { SYSTEM_PROMPT } from "@/lib/chat/prompts";
-import { appendTurn, getMessages } from "@/lib/chat/session-store";
+import {
+  appendTurn,
+  ensureSessionEmail,
+  getMessages,
+} from "@/lib/chat/session-store";
 import type { SseEvent } from "@/lib/chat/types";
 
 type ChatRequest = {
   message?: unknown;
   sessionId?: unknown;
+  email?: unknown;
 };
 
 function encodeSse(event: SseEvent): string {
@@ -29,6 +35,7 @@ export async function POST(request: Request) {
     typeof body.message === "string" ? body.message.trim() : "";
   const sessionId =
     typeof body.sessionId === "string" ? body.sessionId.trim() : "";
+  const email = normalizeEmail(body.email);
 
   if (!message || message.length > 4000) {
     return Response.json(
@@ -43,6 +50,15 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
+
+  if (!email) {
+    return Response.json(
+      { error: "Please enter a valid email to chat." },
+      { status: 400 },
+    );
+  }
+
+  ensureSessionEmail(sessionId, email);
 
   if (!process.env.FIREWORKS_API_KEY?.trim()) {
     return Response.json(

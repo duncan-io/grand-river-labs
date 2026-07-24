@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import {
+  HomeServicesCta,
+  HomeServicesSections,
+} from "@/components/home-services";
 import { getIndustry } from "@/components/industries";
-import { IndustryUseCase } from "@/components/industry-use-case";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { UseCasesCta } from "@/components/use-cases";
 
 const industry = getIndustry("home-services")!;
 
@@ -17,8 +19,8 @@ export default function HomeServicesUseCasePage() {
     <div id="top">
       <SiteHeader />
       <main>
-        <IndustryUseCase content={industry} />
-        <UseCasesCta />
+        <HomeServicesSections />
+        <HomeServicesCta />
       </main>
       <SiteFooter />
     </div>

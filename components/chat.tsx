@@ -10,8 +10,9 @@ import {
 } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Arrow, SiteHeader } from "./site-header";
+import { EMAIL_MAX_LENGTH, normalizeEmail } from "@/lib/chat/email";
 import type { SseEvent } from "@/lib/chat/types";
+import { Arrow, SiteHeader } from "./site-header";
 
 type Role = "user" | "assistant";
 
@@ -22,6 +23,7 @@ type ChatMessage = {
 };
 
 const SESSION_KEY = "grl-chat-session";
+const EMAIL_KEY = "grl-chat-email";
 
 const WELCOME_MESSAGE =
   "Hi—I’m the Grand River Labs assistant. Ask me how AI automation could fit your workflow, what we typically build, or where to start.";
@@ -43,6 +45,15 @@ function getOrCreateSessionId() {
   const next = createId();
   sessionStorage.setItem(SESSION_KEY, next);
   return next;
+}
+
+function getStoredEmail() {
+  const existing = sessionStorage.getItem(EMAIL_KEY);
+  if (!existing) {
+    return null;
+  }
+
+  return normalizeEmail(existing);
 }
 
 function parseSseChunk(buffer: string): { events: SseEvent[]; rest: string } {
@@ -73,7 +84,12 @@ export function ChatPanel() {
   const listId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const [sessionId, setSessionId] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailUnlocked, setEmailUnlocked] = useState(false);
+  const [emailDraft, setEmailDraft] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [streamingId, setStreamingId] = useState<string | null>(null);
@@ -88,6 +104,12 @@ export function ChatPanel() {
 
   useEffect(() => {
     setSessionId(getOrCreateSessionId());
+    const stored = getStoredEmail();
+    if (stored) {
+      setEmail(stored);
+      setEmailDraft(stored);
+      setEmailUnlocked(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -99,9 +121,33 @@ export function ChatPanel() {
     panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
   }, [messages, isSending]);
 
+  useEffect(() => {
+    if (emailUnlocked) {
+      inputRef.current?.focus();
+      return;
+    }
+
+    emailInputRef.current?.focus();
+  }, [emailUnlocked]);
+
+  function handleEmailSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const normalized = normalizeEmail(emailDraft);
+    if (!normalized) {
+      setEmailError("Please enter a valid work email.");
+      return;
+    }
+
+    sessionStorage.setItem(EMAIL_KEY, normalized);
+    setEmail(normalized);
+    setEmailDraft(normalized);
+    setEmailError(null);
+    setEmailUnlocked(true);
+  }
+
   async function sendMessage(raw: string) {
     const message = raw.trim();
-    if (!message || isSending || !sessionId) {
+    if (!message || isSending || !sessionId || !emailUnlocked || !email) {
       return;
     }
 
@@ -121,7 +167,7 @@ export function ChatPanel() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, sessionId }),
+        body: JSON.stringify({ message, sessionId, email }),
       });
 
       if (!response.ok) {
@@ -278,41 +324,89 @@ export function ChatPanel() {
             </ul>
           </div>
 
-          <form className="chat__composer" onSubmit={handleSubmit}>
-            {error ? (
-              <p className="chat__error" role="alert">
-                {error}
+          {emailUnlocked ? (
+            <form className="chat__composer" onSubmit={handleSubmit}>
+              {error ? (
+                <p className="chat__error" role="alert">
+                  {error}
+                </p>
+              ) : null}
+              <label className="visually-hidden" htmlFor={`${listId}-input`}>
+                Message
+              </label>
+              <textarea
+                id={`${listId}-input`}
+                ref={inputRef}
+                className="chat__input"
+                rows={2}
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask about automation, use cases, or getting started…"
+                disabled={isSending || !sessionId}
+                maxLength={4000}
+              />
+              <div className="chat__composer-footer">
+                <p className="chat__hint">
+                  Enter to send · Shift+Enter for a new line
+                </p>
+                <button
+                  className="button button-primary"
+                  type="submit"
+                  disabled={isSending || !sessionId || !input.trim()}
+                >
+                  Send
+                  <Arrow />
+                </button>
+              </div>
+            </form>
+          ) : (
+            <form className="chat__gate" onSubmit={handleEmailSubmit}>
+              <p className="chat__gate-copy">
+                Leave your email to start chatting.
               </p>
-            ) : null}
-            <label className="visually-hidden" htmlFor={`${listId}-input`}>
-              Message
-            </label>
-            <textarea
-              id={`${listId}-input`}
-              ref={inputRef}
-              className="chat__input"
-              rows={2}
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask about automation, use cases, or getting started…"
-              disabled={isSending || !sessionId}
-              maxLength={4000}
-            />
-            <div className="chat__composer-footer">
-              <p className="chat__hint">
-                Enter to send · Shift+Enter for a new line
-              </p>
-              <button
-                className="button button-primary"
-                type="submit"
-                disabled={isSending || !sessionId || !input.trim()}
-              >
-                Send
-                <Arrow />
-              </button>
-            </div>
-          </form>
+              {emailError ? (
+                <p className="chat__error" role="alert">
+                  {emailError}
+                </p>
+              ) : null}
+              <label className="visually-hidden" htmlFor={`${listId}-email`}>
+                Email
+              </label>
+              <input
+                id={`${listId}-email`}
+                ref={emailInputRef}
+                className="chat__gate-input"
+                type="email"
+                name="email"
+                autoComplete="email"
+                inputMode="email"
+                placeholder="you@company.com"
+                value={emailDraft}
+                onChange={(event) => {
+                  setEmailDraft(event.target.value);
+                  if (emailError) {
+                    setEmailError(null);
+                  }
+                }}
+                maxLength={EMAIL_MAX_LENGTH}
+                required
+              />
+              <div className="chat__composer-footer">
+                <p className="chat__hint">
+                  We’ll only use this to follow up if it’s useful.
+                </p>
+                <button
+                  className="button button-primary"
+                  type="submit"
+                  disabled={!sessionId || !emailDraft.trim()}
+                >
+                  Continue
+                  <Arrow />
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </section>

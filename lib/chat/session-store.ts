@@ -4,6 +4,8 @@ import type { ChatMessage } from "./types";
 type SessionEntry = {
   messages: ChatMessage[];
   updatedAt: number;
+  email?: string;
+  emailLogged?: boolean;
 };
 
 // In-memory only: resets on deploy; multi-instance deploys do not share memory.
@@ -35,15 +37,42 @@ export function getMessages(sessionId: string): ChatMessage[] {
   return [...entry.messages];
 }
 
+/**
+ * Attach a normalized email to the session. Logs once on first attach.
+ */
+export function ensureSessionEmail(sessionId: string, email: string) {
+  pruneExpired();
+  const existing = sessions.get(sessionId);
+  const entry: SessionEntry = existing ?? {
+    messages: [],
+    updatedAt: Date.now(),
+  };
+
+  entry.email = email;
+  entry.updatedAt = Date.now();
+
+  if (!entry.emailLogged) {
+    console.info("Grand River Labs chat lead", {
+      email,
+      sessionId,
+      submittedAt: new Date().toISOString(),
+    });
+    entry.emailLogged = true;
+  }
+
+  sessions.set(sessionId, entry);
+}
+
 export function appendTurn(
   sessionId: string,
   userMessage: string,
   assistantMessage: string,
 ) {
   pruneExpired();
-  const existing = sessions.get(sessionId)?.messages ?? [];
+  const existing = sessions.get(sessionId);
+  const priorMessages = existing?.messages ?? [];
   const next = trimHistory([
-    ...existing,
+    ...priorMessages,
     { role: "user", content: userMessage },
     { role: "assistant", content: assistantMessage },
   ]);
@@ -51,5 +80,7 @@ export function appendTurn(
   sessions.set(sessionId, {
     messages: next,
     updatedAt: Date.now(),
+    email: existing?.email,
+    emailLogged: existing?.emailLogged,
   });
 }
