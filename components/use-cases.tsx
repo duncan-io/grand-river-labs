@@ -1,3 +1,4 @@
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 const useCases = [
@@ -97,7 +98,9 @@ export function UseCasesCta() {
             </a>
             <a
               className="button button-secondary"
-              href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+              href={BOOK_CALL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />

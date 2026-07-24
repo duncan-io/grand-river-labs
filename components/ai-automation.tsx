@@ -1,3 +1,4 @@
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 const contrast = [
@@ -344,7 +345,9 @@ export function AiAutomationSections() {
             <div className="ai-automation-hero__actions">
               <a
                 className="button button-primary"
-                href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+                href={BOOK_CALL_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
@@ -508,7 +511,9 @@ export function AiAutomationCta() {
           <div className="use-cases-cta__buttons">
             <a
               className="button button-primary"
-              href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+              href={BOOK_CALL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />

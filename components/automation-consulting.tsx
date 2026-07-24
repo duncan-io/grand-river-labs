@@ -1,3 +1,4 @@
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 const whenHelps = [
@@ -314,7 +315,9 @@ export function ConsultingSections() {
             <div className="consulting-hero__actions">
               <a
                 className="button button-primary"
-                href="mailto:hello@grandriverlabs.com?subject=Automation%20consulting"
+                href={BOOK_CALL_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
@@ -522,7 +525,9 @@ export function ConsultingCta() {
           <div className="use-cases-cta__buttons">
             <a
               className="button button-primary"
-              href="mailto:hello@grandriverlabs.com?subject=Automation%20consulting"
+              href={BOOK_CALL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />

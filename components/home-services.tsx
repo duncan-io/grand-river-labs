@@ -1,3 +1,4 @@
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { getIndustry } from "./industries";
 import { Arrow } from "./site-header";
 
@@ -260,7 +261,9 @@ export function HomeServicesSections() {
             <div className="hs-hero__actions">
               <a
                 className="button button-primary"
-                href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+                href={BOOK_CALL_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
@@ -393,7 +396,9 @@ export function HomeServicesCta() {
           <div className="use-cases-cta__buttons">
             <a
               className="button button-primary"
-              href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+              href={BOOK_CALL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />

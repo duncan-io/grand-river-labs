@@ -1,3 +1,4 @@
+import { sendToN8nForms } from "@/lib/n8n/forms";
 import { chatConfig } from "./config";
 import type { ChatMessage } from "./types";
 
@@ -27,6 +28,22 @@ function trimHistory(messages: ChatMessage[]): ChatMessage[] {
   return messages.slice(messages.length - max);
 }
 
+function getOrCreateSession(sessionId: string): SessionEntry {
+  pruneExpired();
+  const existing = sessions.get(sessionId);
+  if (existing) {
+    existing.updatedAt = Date.now();
+    return existing;
+  }
+
+  const entry: SessionEntry = {
+    messages: [],
+    updatedAt: Date.now(),
+  };
+  sessions.set(sessionId, entry);
+  return entry;
+}
+
 export function getMessages(sessionId: string): ChatMessage[] {
   pruneExpired();
   const entry = sessions.get(sessionId);
@@ -38,29 +55,33 @@ export function getMessages(sessionId: string): ChatMessage[] {
 }
 
 /**
- * Attach a normalized email to the session. Logs once on first attach.
+ * Attach a normalized email and forward to n8n once per session.
  */
-export function ensureSessionEmail(sessionId: string, email: string) {
-  pruneExpired();
-  const existing = sessions.get(sessionId);
-  const entry: SessionEntry = existing ?? {
-    messages: [],
-    updatedAt: Date.now(),
-  };
-
+export async function captureChatLead(sessionId: string, email: string) {
+  const entry = getOrCreateSession(sessionId);
   entry.email = email;
   entry.updatedAt = Date.now();
 
-  if (!entry.emailLogged) {
-    console.info("Grand River Labs chat lead", {
-      email,
-      sessionId,
-      submittedAt: new Date().toISOString(),
-    });
-    entry.emailLogged = true;
+  if (entry.emailLogged) {
+    return;
   }
 
+  await sendToN8nForms({
+    source: "chat",
+    email,
+    sessionId,
+    submittedAt: new Date().toISOString(),
+  });
+
+  entry.emailLogged = true;
   sessions.set(sessionId, entry);
+}
+
+/**
+ * Attach a normalized email to the session. Forwards to n8n once on first attach.
+ */
+export async function ensureSessionEmail(sessionId: string, email: string) {
+  await captureChatLead(sessionId, email);
 }
 
 export function appendTurn(

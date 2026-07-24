@@ -7,14 +7,14 @@ const promises = [
     copy: "Cut hours off repetitive process work—so your team has capacity for higher-value work.",
   },
   {
-    label: "Labor",
-    title: "Save labor",
-    copy: "Fewer handoffs, less re-entry, less busywork. More focus on work that moves the needle.",
+    label: "Efficiency",
+    title: "Increase efficiency",
+    copy: "Fewer handoffs, less re-entry, less busywork. Work that moves faster with less friction.",
   },
   {
-    label: "Money",
-    title: "Multiply impact",
-    copy: "More throughput and results for less spend—productivity gained on every dollar.",
+    label: "Impact",
+    title: "Magnify impact",
+    copy: "More throughput and results from the same team—productivity that compounds.",
   },
 ];
 
@@ -22,7 +22,7 @@ const steps = [
   {
     number: "01",
     title: "Discover",
-    copy: "We start by mapping where your time, labor, and cost leak—so we fix what matters most.",
+    copy: "We start by mapping where your time and efficiency leak—so we fix what matters most.",
   },
   {
     number: "02",
@@ -32,7 +32,7 @@ const steps = [
   {
     number: "03",
     title: "Amplify",
-    copy: "Finally, we measure the savings and refine so the gains keep compounding.",
+    copy: "Finally, we measure the gains and refine so they keep compounding.",
   },
 ];
 
@@ -121,11 +121,11 @@ function TributaryScene() {
         y="154"
         textAnchor="end"
         fill="#075752"
-        fontSize="13"
+        fontSize="11"
         fontWeight="700"
-        letterSpacing="0.12em"
+        letterSpacing="0.06em"
       >
-        LABOR
+        EFFICIENCY
       </text>
       <text
         x="100"
@@ -136,14 +136,14 @@ function TributaryScene() {
         fontWeight="700"
         letterSpacing="0.12em"
       >
-        MONEY
+        IMPACT
       </text>
 
       {/* Merge junction */}
       <circle cx="340" cy="150" r="15" fill="#057A72" />
       <circle cx="340" cy="150" r="6.5" fill="#EAF9F7" />
 
-      {/* Impact node + label */}
+      {/* Results node + label */}
       <circle cx="526" cy="150" r="17" fill="#075752" />
       <circle cx="526" cy="150" r="7.5" fill="#EAF9F7" />
       <text
@@ -154,7 +154,7 @@ function TributaryScene() {
         fontWeight="700"
         letterSpacing="0.12em"
       >
-        IMPACT
+        RESULTS
       </text>
     </svg>
   );
@@ -218,11 +218,11 @@ export function PromiseSection() {
           <div className="promise__intro">
             <p className="eyebrow">What you get</p>
             <h2 className="section-heading">
-              Reclaim hours. Reduce effort. Cut cost. Increase impact.
+              Reclaim hours. Work smarter. Magnify impact.
             </h2>
             <p className="section-copy">
-              The point isn&apos;t just less busywork—it&apos;s more output for
-              every dollar. Automation should fit your business, free your team
+              The point isn&apos;t just less busywork—it&apos;s more output from
+              the same team. Automation should fit your business, free your team
               for higher-value work, and compound productivity without a
               rip-and-replace.
             </p>
@@ -230,7 +230,7 @@ export function PromiseSection() {
           <div className="promise__visual">
             <TributaryScene />
             <p className="promise__caption">
-              Three leaks. One clearer path to impact.
+              Three gains. One clearer path to results.
             </p>
           </div>
         </div>
@@ -261,7 +261,7 @@ export function ProcessSection() {
             </h2>
           </div>
           <p className="section-copy">
-            A clear path from today&apos;s bottleneck to measurable savings.
+            A clear path from today&apos;s bottleneck to measurable gains.
           </p>
         </div>
 

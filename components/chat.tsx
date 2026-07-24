@@ -90,6 +90,7 @@ export function ChatPanel() {
   const [emailUnlocked, setEmailUnlocked] = useState(false);
   const [emailDraft, setEmailDraft] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [streamingId, setStreamingId] = useState<string | null>(null);
@@ -130,7 +131,7 @@ export function ChatPanel() {
     emailInputRef.current?.focus();
   }, [emailUnlocked]);
 
-  function handleEmailSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleEmailSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const normalized = normalizeEmail(emailDraft);
     if (!normalized) {
@@ -138,11 +139,44 @@ export function ChatPanel() {
       return;
     }
 
-    sessionStorage.setItem(EMAIL_KEY, normalized);
-    setEmail(normalized);
-    setEmailDraft(normalized);
+    if (!sessionId) {
+      setEmailError("Chat isn’t ready yet. Please try again.");
+      return;
+    }
+
     setEmailError(null);
-    setEmailUnlocked(true);
+    setIsSubmittingEmail(true);
+
+    try {
+      const response = await fetch("/api/chat/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: normalized, sessionId }),
+      });
+
+      const result = (await response.json().catch(() => null)) as {
+        error?: string;
+      } | null;
+
+      if (!response.ok) {
+        throw new Error(
+          result?.error ?? "We couldn’t save your email. Please try again.",
+        );
+      }
+
+      sessionStorage.setItem(EMAIL_KEY, normalized);
+      setEmail(normalized);
+      setEmailDraft(normalized);
+      setEmailUnlocked(true);
+    } catch (error) {
+      setEmailError(
+        error instanceof Error
+          ? error.message
+          : "We couldn’t save your email. Please try again.",
+      );
+    } finally {
+      setIsSubmittingEmail(false);
+    }
   }
 
   async function sendMessage(raw: string) {
@@ -391,6 +425,7 @@ export function ChatPanel() {
                 }}
                 maxLength={EMAIL_MAX_LENGTH}
                 required
+                disabled={isSubmittingEmail}
               />
               <div className="chat__composer-footer">
                 <p className="chat__hint">
@@ -399,10 +434,12 @@ export function ChatPanel() {
                 <button
                   className="button button-primary"
                   type="submit"
-                  disabled={!sessionId || !emailDraft.trim()}
+                  disabled={
+                    isSubmittingEmail || !sessionId || !emailDraft.trim()
+                  }
                 >
-                  Continue
-                  <Arrow />
+                  {isSubmittingEmail ? "Saving…" : "Continue"}
+                  {!isSubmittingEmail && <Arrow />}
                 </button>
               </div>
             </form>

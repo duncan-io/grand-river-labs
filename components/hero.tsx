@@ -1,3 +1,4 @@
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 function RiverScene() {
@@ -157,16 +158,20 @@ export function Hero() {
         <div className="hero__content">
           <h1 className="hero__brand">Grand River Labs</h1>
           <p className="hero__headline">
-            Automation that saves you time, labor, and money.
+            Automation that saves you time, increases efficiency, and magnifies
+            impact.
           </p>
           <p className="hero__copy">
             We improve the processes you already use—so your team spends fewer
-            hours, less effort, and less cost getting the same work done better.
+            hours, works more efficiently, and gets more impact from the same
+            work.
           </p>
           <div className="hero__actions">
             <a
               className="button button-primary"
-              href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+              href={BOOK_CALL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />

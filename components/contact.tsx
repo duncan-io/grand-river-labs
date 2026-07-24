@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 type FormStatus = {
@@ -63,15 +64,17 @@ export function ContactSection() {
       <div className="shell contact__layout">
         <div className="contact__intro reveal">
           <p className="eyebrow">Start a conversation</p>
-          <h2 className="section-heading">What&apos;s costing you time or money?</h2>
+          <h2 className="section-heading">What&apos;s costing you time?</h2>
           <p className="section-copy">
-            Tell us where work feels harder—or more expensive—than it should.
+            Tell us where work feels harder—or slower—than it should.
             We&apos;ll help you see what&apos;s possible: clearer, leaner, and
             without the jargon.
           </p>
           <a
             className="contact__direct"
-            href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+            href={BOOK_CALL_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Prefer to talk? Book a call →
           </a>
@@ -109,11 +112,11 @@ export function ContactSection() {
           </div>
 
           <div className="field">
-            <label htmlFor="message">Where are you losing time or money?</label>
+            <label htmlFor="message">Where are you losing time or efficiency?</label>
             <textarea
               id="message"
               name="message"
-              placeholder="A slow process, too much manual work, rising costs—start wherever you are."
+              placeholder="A slow process, too much manual work, a stubborn bottleneck—start wherever you are."
               minLength={10}
               maxLength={3000}
               required

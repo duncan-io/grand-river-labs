@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 import type { IndustryContent } from "./industries";
 import { industries } from "./industries";
@@ -20,7 +21,9 @@ export function IndustryUseCase({ content }: { content: IndustryContent }) {
             </a>
             <a
               className="button button-secondary"
-              href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+              href={BOOK_CALL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />

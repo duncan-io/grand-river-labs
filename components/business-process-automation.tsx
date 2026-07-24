@@ -1,3 +1,4 @@
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 import { WhiteGloveEngagement } from "./white-glove-engagement";
 
@@ -301,7 +302,9 @@ export function BpaSections() {
             <div className="bpa-hero__actions">
               <a
                 className="button button-primary"
-                href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+                href={BOOK_CALL_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
@@ -413,7 +416,9 @@ export function BpaCta() {
           <div className="use-cases-cta__buttons">
             <a
               className="button button-primary"
-              href="mailto:hello@grandriverlabs.com?subject=Book%20a%20call"
+              href={BOOK_CALL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />

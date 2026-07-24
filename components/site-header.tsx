@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
+import { BOOK_CALL_HREF } from "@/lib/site";
 import { industries } from "./industries";
 
 const Arrow = () => (
@@ -79,9 +80,6 @@ export function BrandMark() {
   );
 }
 
-const BOOK_CALL_HREF =
-  "mailto:hello@grandriverlabs.com?subject=Book%20a%20call";
-
 export function SiteHeader({
   embedded = false,
 }: {
@@ -152,7 +150,12 @@ export function SiteHeader({
             </div>
           </div>
           <a href="/whitelabel">White-label</a>
-          <a className="button button-primary" href={BOOK_CALL_HREF}>
+          <a
+            className="button button-primary"
+            href={BOOK_CALL_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Book a call
             <Arrow />
           </a>
@@ -203,6 +206,8 @@ export function SiteHeader({
           <a
             className="button button-primary site-nav-panel__cta"
             href={BOOK_CALL_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={closeMenu}
           >
             Book a call

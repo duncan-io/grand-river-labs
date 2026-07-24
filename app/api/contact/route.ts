@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendToN8nForms } from "@/lib/n8n/forms";
 
 type ContactRequest = {
   name?: unknown;
@@ -31,10 +32,7 @@ export async function POST(request: Request) {
     );
   }
 
-  if (
-    email.length > 254 ||
-    !EMAIL_PATTERN.test(email)
-  ) {
+  if (email.length > 254 || !EMAIL_PATTERN.test(email)) {
     return NextResponse.json(
       { message: "Please enter a valid work email." },
       { status: 400 },
@@ -48,13 +46,23 @@ export async function POST(request: Request) {
     );
   }
 
-  // Temporary delivery while an email or CRM provider is being selected.
-  // Keep the message body out of logs to avoid recording sensitive details.
-  console.info("Grand River Labs contact submission", {
-    name,
-    email,
-    submittedAt: new Date().toISOString(),
-  });
+  try {
+    await sendToN8nForms({
+      source: "contact",
+      name,
+      email,
+      message,
+      submittedAt: new Date().toISOString(),
+    });
+  } catch {
+    return NextResponse.json(
+      {
+        message:
+          "We couldn’t send your note right now. Please try again or email us directly.",
+      },
+      { status: 502 },
+    );
+  }
 
   return NextResponse.json({
     message: "Thanks—your note is with us. We’ll be in touch soon.",

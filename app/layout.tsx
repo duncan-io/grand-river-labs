@@ -14,9 +14,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Grand River Labs | Automation That Saves Time, Labor, and Money",
+  title: "Grand River Labs | Automation That Saves Time and Magnifies Impact",
   description:
-    "Grand River Labs builds practical automation that improves the processes you already use—so you spend less time, labor, and money getting work done.",
+    "Grand River Labs builds practical automation that improves the processes you already use—so you save time, increase efficiency, and magnify impact.",
 };
 
 export default function RootLayout({

@@ -58,7 +58,14 @@ export async function POST(request: Request) {
     );
   }
 
-  ensureSessionEmail(sessionId, email);
+  try {
+    await ensureSessionEmail(sessionId, email);
+  } catch {
+    return Response.json(
+      { error: "We couldn’t save your email. Please try again." },
+      { status: 502 },
+    );
+  }
 
   if (!process.env.FIREWORKS_API_KEY?.trim()) {
     return Response.json(
