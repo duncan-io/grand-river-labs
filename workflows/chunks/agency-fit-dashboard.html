@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agency Fit Review</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen">
+  <div
+    x-data="dashboard()"
+    x-init="init()"
+    x-cloak
+    class="max-w-[1400px] mx-auto px-4 py-6"
+  >
+    <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight">Agency Fit Review</h1>
+        <p class="text-sm text-slate-600 mt-1">
+          Review and adjust white-label / ops fit scores from Grand River Postgres.
+        </p>
+      </div>
+      <div class="text-sm text-slate-500" x-text="statusText"></div>
+    </header>
+
+    <template x-if="!token">
+      <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+        <p class="text-sm font-medium text-amber-900 mb-2">Access token required</p>
+        <p class="text-sm text-amber-800 mb-3">Open this page with <code>?token=…</code> or paste the token below.</p>
+        <form @submit.prevent="saveToken()" class="flex gap-2 max-w-lg">
+          <input
+            type="password"
+            x-model="tokenInput"
+            placeholder="Access token"
+            class="flex-1 border border-amber-300 rounded px-3 py-2 text-sm bg-white"
+          />
+          <button type="submit" class="bg-slate-900 text-white px-4 py-2 rounded text-sm">Continue</button>
+        </form>
+      </div>
+    </template>
+
+    <template x-if="token">
+      <div>
+        <div class="bg-white border border-slate-200 rounded-lg p-4 mb-4 space-y-3">
+          <div class="flex flex-wrap gap-3">
+            <input
+              type="search"
+              x-model="search"
+              placeholder="Search name, domain, city…"
+              class="border border-slate-300 rounded px-3 py-2 text-sm min-w-[220px] flex-1"
+            />
+            <select x-model="filters.tier" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">All tiers</option>
+              <option value="priority">priority</option>
+              <option value="review">review</option>
+              <option value="low">low</option>
+            </select>
+            <input
+              type="number"
+              x-model.number="filters.minFit"
+              placeholder="Min fit"
+              min="0"
+              max="100"
+              class="border border-slate-300 rounded px-3 py-2 text-sm w-24"
+            />
+            <input
+              type="number"
+              x-model.number="filters.maxFit"
+              placeholder="Max fit"
+              min="0"
+              max="100"
+              class="border border-slate-300 rounded px-3 py-2 text-sm w-24"
+            />
+            <select x-model="filters.whiteLabelFit" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">WL fit: any</option>
+              <option value="true">WL fit: yes</option>
+              <option value="false">WL fit: no</option>
+            </select>
+            <select x-model="filters.opsFit" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">Ops fit: any</option>
+              <option value="true">Ops fit: yes</option>
+              <option value="false">Ops fit: no</option>
+            </select>
+            <select x-model="filters.isRealAgency" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">Real agency: any</option>
+              <option value="true">Real agency: yes</option>
+              <option value="false">Real agency: no</option>
+            </select>
+            <select x-model="filters.agencyType" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">All types</option>
+              <template x-for="t in agencyTypes" :key="t">
+                <option :value="t" x-text="t"></option>
+              </template>
+            </select>
+            <select x-model="filters.estimatedSize" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">All sizes</option>
+              <template x-for="s in estimatedSizes" :key="s">
+                <option :value="s" x-text="s"></option>
+              </template>
+            </select>
+            <button
+              type="button"
+              @click="resetFilters()"
+              class="border border-slate-300 rounded px-3 py-2 text-sm hover:bg-slate-50"
+            >Reset</button>
+            <button
+              type="button"
+              @click="loadAgencies()"
+              class="bg-slate-900 text-white rounded px-3 py-2 text-sm"
+              :disabled="loading"
+            >
+              <span x-text="loading ? 'Loading…' : 'Refresh'"></span>
+            </button>
+          </div>
+          <p class="text-xs text-slate-500">
+            Showing <span x-text="filtered.length"></span> of <span x-text="agencies.length"></span> agencies
+          </p>
+        </div>
+
+        <div x-show="error" class="bg-red-50 border border-red-200 text-red-800 rounded-lg p-3 mb-4 text-sm" x-text="error"></div>
+
+        <div class="bg-white border border-slate-200 rounded-lg overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200 text-left text-slate-600">
+                <tr>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('agency_name')">Name</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('city')">City</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('tier')">Tier</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('fit_score')">Fit</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('white_label_score')">WL</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('ops_automation_score')">Ops</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('agency_type')">Type</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('scored_at')">Scored</th>
+                  <th class="px-3 py-2 font-medium">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="row in filtered" :key="row.agency_id">
+                  <tr class="border-b border-slate-100 align-top hover:bg-slate-50/60">
+                    <td class="px-3 py-2">
+                      <button type="button" class="text-left" @click="toggleExpand(row.agency_id)">
+                        <div class="font-medium" x-text="row.agency_name"></div>
+                        <div class="text-xs text-slate-500" x-text="row.domain"></div>
+                      </button>
+                      <div x-show="expandedId === row.agency_id" class="mt-2 space-y-2 text-xs text-slate-600 max-w-md">
+                        <p x-show="row.synopsis"><span class="font-medium">Synopsis:</span> <span x-text="row.synopsis"></span></p>
+                        <p x-show="row.reasons && row.reasons.length">
+                          <span class="font-medium">Reasons:</span>
+                          <span x-text="Array.isArray(row.reasons) ? row.reasons.join('; ') : row.reasons"></span>
+                        </p>
+                        <p x-show="row.red_flags && row.red_flags.length" class="text-red-700">
+                          <span class="font-medium">Red flags:</span>
+                          <span x-text="Array.isArray(row.red_flags) ? row.red_flags.join('; ') : row.red_flags"></span>
+                        </p>
+                        <p>
+                          <a
+                            x-show="row.website"
+                            :href="row.website"
+                            target="_blank"
+                            rel="noopener"
+                            class="text-blue-700 underline"
+                            x-text="row.website"
+                          ></a>
+                        </p>
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                          <label class="block">
+                            <span class="text-slate-500">Synopsis edit</span>
+                            <textarea
+                              x-model="drafts[row.agency_id].synopsis"
+                              rows="2"
+                              class="mt-1 w-full border border-slate-300 rounded px-2 py-1"
+                            ></textarea>
+                          </label>
+                          <div class="space-y-1">
+                            <label class="flex items-center gap-2">
+                              <input type="checkbox" x-model="drafts[row.agency_id].is_real_agency" />
+                              Real agency
+                            </label>
+                            <label class="flex items-center gap-2">
+                              <input type="checkbox" x-model="drafts[row.agency_id].white_label_fit" />
+                              White-label fit
+                            </label>
+                            <label class="flex items-center gap-2">
+                              <input type="checkbox" x-model="drafts[row.agency_id].ops_fit" />
+                              Ops fit
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-3 py-2 whitespace-nowrap" x-text="row.city || '—'"></td>
+                    <td class="px-3 py-2">
+                      <select
+                        x-model="drafts[row.agency_id].tier"
+                        class="border border-slate-300 rounded px-2 py-1 text-sm"
+                      >
+                        <option value="priority">priority</option>
+                        <option value="review">review</option>
+                        <option value="low">low</option>
+                      </select>
+                    </td>
+                    <td class="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        x-model.number="drafts[row.agency_id].fit_score"
+                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                      />
+                    </td>
+                    <td class="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        x-model.number="drafts[row.agency_id].white_label_score"
+                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                      />
+                    </td>
+                    <td class="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        x-model.number="drafts[row.agency_id].ops_automation_score"
+                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                      />
+                    </td>
+                    <td class="px-3 py-2 whitespace-nowrap" x-text="row.agency_type || '—'"></td>
+                    <td class="px-3 py-2 whitespace-nowrap text-xs text-slate-500" x-text="formatDate(row.scored_at)"></td>
+                    <td class="px-3 py-2">
+                      <button
+                        type="button"
+                        class="bg-emerald-700 text-white rounded px-3 py-1.5 text-xs disabled:opacity-50"
+                        :disabled="savingId === row.agency_id || !isDirty(row)"
+                        @click="saveRow(row)"
+                      >
+                        <span x-text="savingId === row.agency_id ? 'Saving…' : 'Save'"></span>
+                      </button>
+                      <div
+                        x-show="savedId === row.agency_id"
+                        class="text-xs text-emerald-700 mt-1"
+                      >Saved</div>
+                    </td>
+                  </tr>
+                </template>
+                <tr x-show="!loading && filtered.length === 0">
+                  <td colspan="9" class="px-3 py-8 text-center text-slate-500">No agencies match the current filters.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <script id="__data" type="application/json">__DATA_PLACEHOLDER__</script>
+  <script>
+    function dashboard() {
+      const boot = (() => {
+        try {
+          const raw = document.getElementById('__data').textContent.trim();
+          if (!raw || raw === '__DATA_PLACEHOLDER__') return {};
+          return JSON.parse(atob(raw));
+        } catch (e) {
+          return {};
+        }
+      })();
+
+      return {
+        token: '',
+        tokenInput: '',
+        agencies: [],
+        drafts: {},
+        loading: false,
+        savingId: null,
+        savedId: null,
+        error: '',
+        search: '',
+        expandedId: null,
+        sortKey: 'fit_score',
+        sortDir: 'desc',
+        filters: {
+          tier: '',
+          minFit: null,
+          maxFit: null,
+          whiteLabelFit: '',
+          opsFit: '',
+          isRealAgency: '',
+          agencyType: '',
+          estimatedSize: '',
+        },
+        apiBase: boot.apiBase || '',
+        urls: boot.urls || {},
+
+        get statusText() {
+          if (!this.token) return 'Not authenticated';
+          if (this.loading) return 'Loading…';
+          return this.agencies.length + ' loaded';
+        },
+
+        get agencyTypes() {
+          return [...new Set(this.agencies.map((a) => a.agency_type).filter(Boolean))].sort();
+        },
+
+        get estimatedSizes() {
+          return [...new Set(this.agencies.map((a) => a.estimated_size).filter(Boolean))].sort();
+        },
+
+        get filtered() {
+          const q = (this.search || '').trim().toLowerCase();
+          let rows = this.agencies.filter((a) => {
+            if (q) {
+              const hay = [a.agency_name, a.domain, a.city, a.category].filter(Boolean).join(' ').toLowerCase();
+              if (!hay.includes(q)) return false;
+            }
+            if (this.filters.tier && a.tier !== this.filters.tier) return false;
+            if (this.filters.minFit != null && this.filters.minFit !== '' && Number(a.fit_score) < Number(this.filters.minFit)) return false;
+            if (this.filters.maxFit != null && this.filters.maxFit !== '' && Number(a.fit_score) > Number(this.filters.maxFit)) return false;
+            if (this.filters.whiteLabelFit !== '' && String(!!a.white_label_fit) !== this.filters.whiteLabelFit) return false;
+            if (this.filters.opsFit !== '' && String(!!a.ops_fit) !== this.filters.opsFit) return false;
+            if (this.filters.isRealAgency !== '' && String(!!a.is_real_agency) !== this.filters.isRealAgency) return false;
+            if (this.filters.agencyType && a.agency_type !== this.filters.agencyType) return false;
+            if (this.filters.estimatedSize && a.estimated_size !== this.filters.estimatedSize) return false;
+            return true;
+          });
+
+          const key = this.sortKey;
+          const dir = this.sortDir === 'asc' ? 1 : -1;
+          rows = [...rows].sort((a, b) => {
+            const av = a[key];
+            const bv = b[key];
+            if (av == null && bv == null) return 0;
+            if (av == null) return 1;
+            if (bv == null) return -1;
+            if (typeof av === 'number' && typeof bv === 'number') return (av - bv) * dir;
+            return String(av).localeCompare(String(bv)) * dir;
+          });
+          return rows;
+        },
+
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          const fromUrl = params.get('token');
+          if (fromUrl) {
+            sessionStorage.setItem('agencyFitToken', fromUrl);
+            this.token = fromUrl;
+          } else {
+            this.token = sessionStorage.getItem('agencyFitToken') || '';
+          }
+          if (this.token) this.loadAgencies();
+        },
+
+        saveToken() {
+          const t = (this.tokenInput || '').trim();
+          if (!t) return;
+          sessionStorage.setItem('agencyFitToken', t);
+          this.token = t;
+          this.loadAgencies();
+        },
+
+        resetFilters() {
+          this.search = '';
+          this.filters = {
+            tier: '',
+            minFit: null,
+            maxFit: null,
+            whiteLabelFit: '',
+            opsFit: '',
+            isRealAgency: '',
+            agencyType: '',
+            estimatedSize: '',
+          };
+        },
+
+        setSort(key) {
+          if (this.sortKey === key) {
+            this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+          } else {
+            this.sortKey = key;
+            this.sortDir = key === 'agency_name' || key === 'city' || key === 'tier' ? 'asc' : 'desc';
+          }
+        },
+
+        toggleExpand(id) {
+          this.expandedId = this.expandedId === id ? null : id;
+        },
+
+        formatDate(v) {
+          if (!v) return '—';
+          try {
+            return new Date(v).toLocaleString();
+          } catch (e) {
+            return String(v);
+          }
+        },
+
+        draftFrom(row) {
+          return {
+            fit_score: Number(row.fit_score) || 0,
+            white_label_score: Number(row.white_label_score) || 0,
+            ops_automation_score: Number(row.ops_automation_score) || 0,
+            tier: row.tier || 'low',
+            synopsis: row.synopsis || '',
+            is_real_agency: !!row.is_real_agency,
+            white_label_fit: !!row.white_label_fit,
+            ops_fit: !!row.ops_fit,
+          };
+        },
+
+        isDirty(row) {
+          const d = this.drafts[row.agency_id];
+          if (!d) return false;
+          const o = this.draftFrom(row);
+          return (
+            Number(d.fit_score) !== o.fit_score ||
+            Number(d.white_label_score) !== o.white_label_score ||
+            Number(d.ops_automation_score) !== o.ops_automation_score ||
+            d.tier !== o.tier ||
+            (d.synopsis || '') !== o.synopsis ||
+            !!d.is_real_agency !== o.is_real_agency ||
+            !!d.white_label_fit !== o.white_label_fit ||
+            !!d.ops_fit !== o.ops_fit
+          );
+        },
+
+        apiUrl(kind) {
+          const mapped = {
+            list: this.urls.list || '/webhook/agency-fit/agencies',
+            update: this.urls.update || '/webhook/agency-fit/agencies/update',
+          };
+          const url = new URL(mapped[kind] || kind, window.location.origin);
+          url.searchParams.set('token', this.token);
+          return url.toString();
+        },
+
+        async loadAgencies() {
+          this.loading = true;
+          this.error = '';
+          try {
+            const res = await fetch(this.apiUrl('list'), {
+              headers: { Authorization: 'Bearer ' + this.token },
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            const data = await res.json();
+            const rows = Array.isArray(data) ? data : (data.agencies || data.data || []);
+            this.agencies = rows.map((r) => ({
+              ...r,
+              reasons: typeof r.reasons === 'string' ? (() => { try { return JSON.parse(r.reasons); } catch { return r.reasons; } })() : r.reasons,
+              red_flags: typeof r.red_flags === 'string' ? (() => { try { return JSON.parse(r.red_flags); } catch { return r.red_flags; } })() : r.red_flags,
+            }));
+            const next = {};
+            for (const row of this.agencies) next[row.agency_id] = this.draftFrom(row);
+            this.drafts = next;
+          } catch (e) {
+            this.error = e.message || String(e);
+          } finally {
+            this.loading = false;
+          }
+        },
+
+        async saveRow(row) {
+          const d = this.drafts[row.agency_id];
+          if (!d) return;
+          this.savingId = row.agency_id;
+          this.savedId = null;
+          this.error = '';
+          try {
+            const res = await fetch(this.apiUrl('update'), {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + this.token,
+              },
+              body: JSON.stringify({
+                agency_id: row.agency_id,
+                fit_score: Number(d.fit_score),
+                white_label_score: Number(d.white_label_score),
+                ops_automation_score: Number(d.ops_automation_score),
+                tier: d.tier,
+                synopsis: d.synopsis,
+                is_real_agency: !!d.is_real_agency,
+                white_label_fit: !!d.white_label_fit,
+                ops_fit: !!d.ops_fit,
+              }),
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            const updated = await res.json();
+            const payload = Array.isArray(updated) ? updated[0] : updated;
+            const idx = this.agencies.findIndex((a) => a.agency_id === row.agency_id);
+            if (idx >= 0) {
+              this.agencies[idx] = {
+                ...this.agencies[idx],
+                fit_score: payload.fit_score ?? d.fit_score,
+                white_label_score: payload.white_label_score ?? d.white_label_score,
+                ops_automation_score: payload.ops_automation_score ?? d.ops_automation_score,
+                tier: payload.tier ?? d.tier,
+                synopsis: payload.synopsis ?? d.synopsis,
+                is_real_agency: payload.is_real_agency ?? d.is_real_agency,
+                white_label_fit: payload.white_label_fit ?? d.white_label_fit,
+                ops_fit: payload.ops_fit ?? d.ops_fit,
+                updated_at: payload.updated_at || new Date().toISOString(),
+              };
+              this.drafts[row.agency_id] = this.draftFrom(this.agencies[idx]);
+            }
+            this.savedId = row.agency_id;
+            setTimeout(() => { if (this.savedId === row.agency_id) this.savedId = null; }, 2000);
+          } catch (e) {
+            this.error = e.message || String(e);
+          } finally {
+            this.savingId = null;
+          }
+        },
+      };
+    }
+  </script>
+</body>
+</html>
