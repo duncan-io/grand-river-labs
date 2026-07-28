@@ -2,6 +2,7 @@ import { ContactSection } from "@/components/contact";
 import { Hero } from "@/components/hero";
 import {
   AudienceSection,
+  OfferingsSection,
   ProcessSection,
   PromiseSection,
 } from "@/components/sections";
@@ -18,6 +19,7 @@ export default function Home() {
         <Hero />
         <PromiseSection />
         <ProcessSection />
+        <OfferingsSection />
         <AudienceSection />
         <ContactSection turnstileSiteKey={turnstileSiteKey} />
       </main>

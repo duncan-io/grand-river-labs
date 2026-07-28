@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agency Fit Review</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    pre.raw-json { white-space: pre-wrap; word-break: break-word; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen">
+  <div
+    x-data="dashboard()"
+    x-init="init()"
+    x-cloak
+    class="max-w-[1400px] mx-auto px-4 py-6"
+  >
+    <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight">Agency Fit Review</h1>
+        <p class="text-sm text-slate-600 mt-1">
+          Review and adjust white-label / ops fit scores from Grand River Postgres.
+        </p>
+      </div>
+      <div class="text-sm text-slate-500" x-text="statusText"></div>
+    </header>
+
+    <template x-if="!token">
+      <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+        <p class="text-sm font-medium text-amber-900 mb-2">Access token required</p>
+        <p class="text-sm text-amber-800 mb-3">Open this page with <code>?token=…</code> or paste the token below.</p>
+        <form @submit.prevent="saveToken()" class="flex gap-2 max-w-lg">
+          <input
+            type="password"
+            x-model="tokenInput"
+            placeholder="Access token"
+            class="flex-1 border border-amber-300 rounded px-3 py-2 text-sm bg-white"
+          />
+          <button type="submit" class="bg-slate-900 text-white px-4 py-2 rounded text-sm">Continue</button>
+        </form>
+      </div>
+    </template>
+
+    <template x-if="token && view === 'list'">
+      <div>
+        <div class="bg-white border border-slate-200 rounded-lg p-4 mb-4 space-y-3">
+          <div class="flex flex-wrap gap-3">
+            <input
+              type="search"
+              x-model="search"
+              placeholder="Search name, domain, city…"
+              class="border border-slate-300 rounded px-3 py-2 text-sm min-w-[220px] flex-1"
+            />
+            <select x-model="filters.tier" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">All tiers</option>
+              <option value="priority">priority</option>
+              <option value="review">review</option>
+              <option value="low">low</option>
+            </select>
+            <input
+              type="number"
+              x-model.number="filters.minFit"
+              placeholder="Min fit"
+              min="0"
+              max="100"
+              class="border border-slate-300 rounded px-3 py-2 text-sm w-24"
+            />
+            <input
+              type="number"
+              x-model.number="filters.maxFit"
+              placeholder="Max fit"
+              min="0"
+              max="100"
+              class="border border-slate-300 rounded px-3 py-2 text-sm w-24"
+            />
+            <select x-model="filters.whiteLabelFit" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">WL fit: any</option>
+              <option value="true">WL fit: yes</option>
+              <option value="false">WL fit: no</option>
+            </select>
+            <select x-model="filters.opsFit" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">Ops fit: any</option>
+              <option value="true">Ops fit: yes</option>
+              <option value="false">Ops fit: no</option>
+            </select>
+            <select x-model="filters.isRealAgency" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">Real agency: any</option>
+              <option value="true">Real agency: yes</option>
+              <option value="false">Real agency: no</option>
+            </select>
+            <select x-model="filters.agencyType" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">All types</option>
+              <template x-for="t in agencyTypes" :key="t">
+                <option :value="t" x-text="t"></option>
+              </template>
+            </select>
+            <select x-model="filters.estimatedSize" class="border border-slate-300 rounded px-3 py-2 text-sm">
+              <option value="">All sizes</option>
+              <template x-for="s in estimatedSizes" :key="s">
+                <option :value="s" x-text="s"></option>
+              </template>
+            </select>
+            <button
+              type="button"
+              @click="resetFilters()"
+              class="border border-slate-300 rounded px-3 py-2 text-sm hover:bg-slate-50"
+            >Reset</button>
+            <button
+              type="button"
+              @click="loadAgencies()"
+              class="bg-slate-900 text-white rounded px-3 py-2 text-sm"
+              :disabled="loading"
+            >
+              <span x-text="loading ? 'Loading…' : 'Refresh'"></span>
+            </button>
+          </div>
+          <p class="text-xs text-slate-500">
+            Showing <span x-text="filtered.length"></span> of <span x-text="agencies.length"></span> agencies
+          </p>
+        </div>
+
+        <div x-show="error" class="bg-red-50 border border-red-200 text-red-800 rounded-lg p-3 mb-4 text-sm" x-text="error"></div>
+
+        <div class="bg-white border border-slate-200 rounded-lg overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200 text-left text-slate-600">
+                <tr>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('agency_name')">Name</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('city')">City</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('contact_name')">Contact</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('tier')">Tier</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('fit_score')">Fit</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('white_label_score')">WL</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('ops_automation_score')">Ops</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('agency_type')">Type</th>
+                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('scored_at')">Scored</th>
+                  <th class="px-3 py-2 font-medium">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="row in filtered" :key="row.agency_id">
+                  <tr class="border-b border-slate-100 align-top hover:bg-slate-50/60">
+                    <td class="px-3 py-2">
+                      <button type="button" class="text-left hover:underline" @click="openDetail(row.agency_id)">
+                        <div class="font-medium text-slate-900" x-text="row.agency_name"></div>
+                        <div class="text-xs text-slate-500" x-text="row.domain"></div>
+                      </button>
+                    </td>
+                    <td class="px-3 py-2 whitespace-nowrap" x-text="row.city || '—'"></td>
+                    <td class="px-3 py-2">
+                      <div class="font-medium text-slate-800" x-text="row.contact_name || '—'"></div>
+                      <div class="text-xs text-slate-500 break-all" x-text="row.contact_email || ''"></div>
+                    </td>
+                    <td class="px-3 py-2">
+                      <select
+                        x-model="drafts[row.agency_id].tier"
+                        class="border border-slate-300 rounded px-2 py-1 text-sm"
+                      >
+                        <option value="priority">priority</option>
+                        <option value="review">review</option>
+                        <option value="low">low</option>
+                      </select>
+                    </td>
+                    <td class="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        x-model.number="drafts[row.agency_id].fit_score"
+                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                      />
+                    </td>
+                    <td class="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        x-model.number="drafts[row.agency_id].white_label_score"
+                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                      />
+                    </td>
+                    <td class="px-3 py-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        x-model.number="drafts[row.agency_id].ops_automation_score"
+                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                      />
+                    </td>
+                    <td class="px-3 py-2 whitespace-nowrap" x-text="row.agency_type || '—'"></td>
+                    <td class="px-3 py-2 whitespace-nowrap text-xs text-slate-500" x-text="formatDate(row.scored_at)"></td>
+                    <td class="px-3 py-2">
+                      <div class="flex flex-col gap-1 items-start">
+                        <button
+                          type="button"
+                          class="text-xs text-blue-700 underline"
+                          @click="openDetail(row.agency_id)"
+                        >View</button>
+                        <button
+                          type="button"
+                          class="bg-emerald-700 text-white rounded px-3 py-1.5 text-xs disabled:opacity-50"
+                          :disabled="savingId === row.agency_id || !isDirty(row)"
+                          @click="saveRow(row)"
+                        >
+                          <span x-text="savingId === row.agency_id ? 'Saving…' : 'Save'"></span>
+                        </button>
+                        <div
+                          x-show="savedId === row.agency_id"
+                          class="text-xs text-emerald-700"
+                        >Saved</div>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+                <tr x-show="!loading && filtered.length === 0">
+                  <td colspan="10" class="px-3 py-8 text-center text-slate-500">No agencies match the current filters.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template x-if="token && view === 'detail'">
+      <div>
+        <div class="mb-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            class="border border-slate-300 bg-white rounded px-3 py-1.5 text-sm hover:bg-slate-50"
+            @click="closeDetail()"
+          >← Back to list</button>
+          <template x-if="detail">
+            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h2 class="text-xl font-semibold" x-text="detail.agency_name"></h2>
+              <span class="text-sm text-slate-500" x-text="detail.domain"></span>
+              <a
+                x-show="detail.website"
+                :href="detail.website"
+                target="_blank"
+                rel="noopener"
+                class="text-sm text-blue-700 underline"
+              >Website</a>
+            </div>
+          </template>
+        </div>
+
+        <div x-show="error" class="bg-red-50 border border-red-200 text-red-800 rounded-lg p-3 mb-4 text-sm" x-text="error"></div>
+        <div x-show="detailLoading" class="text-sm text-slate-500 mb-4">Loading agency…</div>
+
+        <template x-if="detail && !detailLoading">
+          <div class="space-y-4">
+            <section class="bg-white border border-slate-200 rounded-lg p-4">
+              <h3 class="text-sm font-semibold text-slate-700 mb-3">Identity</h3>
+              <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
+                <div><dt class="text-slate-500">Agency ID</dt><dd class="font-medium" x-text="detail.agency_id"></dd></div>
+                <div><dt class="text-slate-500">Source agency ID</dt><dd class="font-medium" x-text="detail.source_agency_id ?? '—'"></dd></div>
+                <div><dt class="text-slate-500">Domain</dt><dd class="font-medium" x-text="detail.domain || '—'"></dd></div>
+                <div><dt class="text-slate-500">Website</dt>
+                  <dd>
+                    <a x-show="detail.website" :href="detail.website" target="_blank" rel="noopener" class="text-blue-700 underline break-all" x-text="detail.website"></a>
+                    <span x-show="!detail.website">—</span>
+                  </dd>
+                </div>
+                <div><dt class="text-slate-500">Source URL</dt>
+                  <dd>
+                    <a x-show="detail.source_url" :href="detail.source_url" target="_blank" rel="noopener" class="text-blue-700 underline break-all" x-text="detail.source_url"></a>
+                    <span x-show="!detail.source_url">—</span>
+                  </dd>
+                </div>
+                <div><dt class="text-slate-500">Category</dt><dd class="font-medium" x-text="detail.category || '—'"></dd></div>
+              </dl>
+            </section>
+
+            <section class="bg-white border border-slate-200 rounded-lg p-4">
+              <h3 class="text-sm font-semibold text-slate-700 mb-3">Location & contact</h3>
+              <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
+                <div><dt class="text-slate-500">City</dt><dd class="font-medium" x-text="detail.city || '—'"></dd></div>
+                <div><dt class="text-slate-500">Phone</dt><dd class="font-medium" x-text="detail.phone || '—'"></dd></div>
+                <div><dt class="text-slate-500">Rating</dt><dd class="font-medium" x-text="detail.rating ?? '—'"></dd></div>
+                <div><dt class="text-slate-500">Review count</dt><dd class="font-medium" x-text="detail.review_count ?? '—'"></dd></div>
+                <div><dt class="text-slate-500">LocalScout qualification</dt><dd class="font-medium" x-text="detail.localscout_qualification_score ?? '—'"></dd></div>
+              </dl>
+            </section>
+
+            <section class="bg-white border border-slate-200 rounded-lg p-4">
+              <h3 class="text-sm font-semibold text-slate-700 mb-3">Preferred contact</h3>
+              <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
+                <div><dt class="text-slate-500">Name</dt><dd class="font-medium" x-text="detail.contact_name || '—'"></dd></div>
+                <div><dt class="text-slate-500">Email</dt>
+                  <dd>
+                    <a x-show="detail.contact_email" :href="'mailto:' + detail.contact_email" class="text-blue-700 underline break-all" x-text="detail.contact_email"></a>
+                    <span x-show="!detail.contact_email">—</span>
+                  </dd>
+                </div>
+                <div><dt class="text-slate-500">Title</dt><dd class="font-medium" x-text="detail.contact_title || '—'"></dd></div>
+                <div><dt class="text-slate-500">Verification</dt><dd class="font-medium" x-text="detail.contact_verification_status || '—'"></dd></div>
+                <div><dt class="text-slate-500">Source</dt><dd class="font-medium" x-text="detail.contact_source || '—'"></dd></div>
+                <div><dt class="text-slate-500">LinkedIn</dt>
+                  <dd>
+                    <a x-show="detail.contact_linkedin_url" :href="detail.contact_linkedin_url" target="_blank" rel="noopener" class="text-blue-700 underline break-all" x-text="detail.contact_linkedin_url"></a>
+                    <span x-show="!detail.contact_linkedin_url">—</span>
+                  </dd>
+                </div>
+              </dl>
+            </section>
+
+            <section class="bg-white border border-slate-200 rounded-lg p-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <h3 class="text-sm font-semibold text-slate-700">Scores</h3>
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    class="bg-emerald-700 text-white rounded px-3 py-1.5 text-xs disabled:opacity-50"
+                    :disabled="savingId === detail.agency_id || !isDirty(detail)"
+                    @click="saveRow(detail)"
+                  >
+                    <span x-text="savingId === detail.agency_id ? 'Saving…' : 'Save scores'"></span>
+                  </button>
+                  <span x-show="savedId === detail.agency_id" class="text-xs text-emerald-700">Saved</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                <label class="block">
+                  <span class="text-slate-500">Fit score</span>
+                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].fit_score" class="mt-1 w-full border border-slate-300 rounded px-2 py-1.5" />
+                </label>
+                <label class="block">
+                  <span class="text-slate-500">White-label score</span>
+                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].white_label_score" class="mt-1 w-full border border-slate-300 rounded px-2 py-1.5" />
+                </label>
+                <label class="block">
+                  <span class="text-slate-500">Ops automation score</span>
+                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].ops_automation_score" class="mt-1 w-full border border-slate-300 rounded px-2 py-1.5" />
+                </label>
+                <label class="block">
+                  <span class="text-slate-500">Tier</span>
+                  <select x-model="drafts[detail.agency_id].tier" class="mt-1 w-full border border-slate-300 rounded px-2 py-1.5">
+                    <option value="priority">priority</option>
+                    <option value="review">review</option>
+                    <option value="low">low</option>
+                  </select>
+                </label>
+              </div>
+            </section>
+
+            <section class="bg-white border border-slate-200 rounded-lg p-4">
+              <h3 class="text-sm font-semibold text-slate-700 mb-3">Flags & classification</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div class="space-y-2">
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" x-model="drafts[detail.agency_id].is_real_agency" />
+                    Real agency
+                  </label>
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" x-model="drafts[detail.agency_id].white_label_fit" />
+                    White-label fit
+                  </label>
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" x-model="drafts[detail.agency_id].ops_fit" />
+                    Ops fit
+                  </label>
+                </div>
+                <dl class="space-y-2">
+                  <div><dt class="text-slate-500">Agency type</dt><dd class="font-medium" x-text="detail.agency_type || '—'"></dd></div>
+                  <div><dt class="text-slate-500">Estimated size</dt><dd class="font-medium" x-text="detail.estimated_size || '—'"></dd></div>
+                </dl>
+              </div>
+              <label class="block mt-4 text-sm">
+                <span class="text-slate-500">Synopsis</span>
+                <textarea
+                  x-model="drafts[detail.agency_id].synopsis"
+                  rows="3"
+                  class="mt-1 w-full border border-slate-300 rounded px-3 py-2"
+                ></textarea>
+              </label>
+            </section>
+
+            <section class="bg-white border border-slate-200 rounded-lg p-4">
+              <h3 class="text-sm font-semibold text-slate-700 mb-3">Analysis</h3>
+              <div class="space-y-4 text-sm">
+                <div>
+                  <h4 class="text-slate-500 mb-1">Reasons</h4>
+                  <ul x-show="Array.isArray(detail.reasons) && detail.reasons.length" class="list-disc pl-5 space-y-1">
+                    <template x-for="(reason, idx) in (Array.isArray(detail.reasons) ? detail.reasons : [])" :key="idx">
+                      <li x-text="reason"></li>
+                    </template>
+                  </ul>
+                  <p x-show="!Array.isArray(detail.reasons) || !detail.reasons.length" class="text-slate-400">None</p>
+                </div>
+                <div>
+                  <h4 class="text-slate-500 mb-1">Red flags</h4>
+                  <ul x-show="Array.isArray(detail.red_flags) && detail.red_flags.length" class="list-disc pl-5 space-y-1 text-red-700">
+                    <template x-for="(flag, idx) in (Array.isArray(detail.red_flags) ? detail.red_flags : [])" :key="idx">
+                      <li x-text="flag"></li>
+                    </template>
+                  </ul>
+                  <p x-show="!Array.isArray(detail.red_flags) || !detail.red_flags.length" class="text-slate-400">None</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="bg-white border border-slate-200 rounded-lg p-4">
+              <h3 class="text-sm font-semibold text-slate-700 mb-3">Timestamps</h3>
+              <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3 text-sm">
+                <div><dt class="text-slate-500">Scored at</dt><dd class="font-medium" x-text="formatDate(detail.scored_at)"></dd></div>
+                <div><dt class="text-slate-500">Score updated</dt><dd class="font-medium" x-text="formatDate(detail.updated_at)"></dd></div>
+                <div><dt class="text-slate-500">Agency created</dt><dd class="font-medium" x-text="formatDate(detail.created_at)"></dd></div>
+                <div><dt class="text-slate-500">Agency updated</dt><dd class="font-medium" x-text="formatDate(detail.agency_updated_at)"></dd></div>
+              </dl>
+            </section>
+
+            <section class="bg-white border border-slate-200 rounded-lg p-4">
+              <button
+                type="button"
+                class="flex items-center justify-between w-full text-left"
+                @click="showRaw = !showRaw"
+              >
+                <h3 class="text-sm font-semibold text-slate-700">Raw AI score payload</h3>
+                <span class="text-xs text-slate-500" x-text="showRaw ? 'Hide' : 'Show'"></span>
+              </button>
+              <pre
+                x-show="showRaw"
+                class="raw-json mt-3 text-xs bg-slate-50 border border-slate-200 rounded p-3 overflow-auto max-h-[28rem]"
+                x-text="formatRawScore(detail.raw_score)"
+              ></pre>
+            </section>
+          </div>
+        </template>
+      </div>
+    </template>
+  </div>
+
+  <script>
+    function dashboard() {
+      return {
+        token: '',
+        tokenInput: '',
+        agencies: [],
+        drafts: {},
+        loading: false,
+        savingId: null,
+        savedId: null,
+        error: '',
+        search: '',
+        sortKey: 'fit_score',
+        sortDir: 'desc',
+        view: 'list',
+        selectedId: null,
+        detail: null,
+        detailLoading: false,
+        showRaw: false,
+        filters: {
+          tier: '',
+          minFit: null,
+          maxFit: null,
+          whiteLabelFit: '',
+          opsFit: '',
+          isRealAgency: '',
+          agencyType: '',
+          estimatedSize: '',
+        },
+
+        get statusText() {
+          if (!this.token) return 'Not authenticated';
+          if (this.detailLoading) return 'Loading detail…';
+          if (this.loading) return 'Loading…';
+          if (this.view === 'detail' && this.detail) return this.detail.agency_name;
+          return this.agencies.length + ' loaded';
+        },
+
+        get agencyTypes() {
+          return [...new Set(this.agencies.map((a) => a.agency_type).filter(Boolean))].sort();
+        },
+
+        get estimatedSizes() {
+          return [...new Set(this.agencies.map((a) => a.estimated_size).filter(Boolean))].sort();
+        },
+
+        get filtered() {
+          const q = (this.search || '').trim().toLowerCase();
+          let rows = this.agencies.filter((a) => {
+            if (q) {
+              const hay = [a.agency_name, a.domain, a.city, a.category].filter(Boolean).join(' ').toLowerCase();
+              if (!hay.includes(q)) return false;
+            }
+            if (this.filters.tier && a.tier !== this.filters.tier) return false;
+            if (this.filters.minFit != null && this.filters.minFit !== '' && Number(a.fit_score) < Number(this.filters.minFit)) return false;
+            if (this.filters.maxFit != null && this.filters.maxFit !== '' && Number(a.fit_score) > Number(this.filters.maxFit)) return false;
+            if (this.filters.whiteLabelFit !== '' && String(!!a.white_label_fit) !== this.filters.whiteLabelFit) return false;
+            if (this.filters.opsFit !== '' && String(!!a.ops_fit) !== this.filters.opsFit) return false;
+            if (this.filters.isRealAgency !== '' && String(!!a.is_real_agency) !== this.filters.isRealAgency) return false;
+            if (this.filters.agencyType && a.agency_type !== this.filters.agencyType) return false;
+            if (this.filters.estimatedSize && a.estimated_size !== this.filters.estimatedSize) return false;
+            return true;
+          });
+
+          const key = this.sortKey;
+          const dir = this.sortDir === 'asc' ? 1 : -1;
+          rows = [...rows].sort((a, b) => {
+            const av = a[key];
+            const bv = b[key];
+            if (av == null && bv == null) return 0;
+            if (av == null) return 1;
+            if (bv == null) return -1;
+            if (typeof av === 'number' && typeof bv === 'number') return (av - bv) * dir;
+            return String(av).localeCompare(String(bv)) * dir;
+          });
+          return rows;
+        },
+
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          const fromUrl = (params.get('token') || '').trim();
+          if (fromUrl) {
+            sessionStorage.setItem('agencyFitToken', fromUrl);
+            this.token = fromUrl;
+          } else {
+            this.token = (sessionStorage.getItem('agencyFitToken') || '').trim();
+          }
+
+          window.addEventListener('hashchange', () => this.syncHash());
+
+          if (this.token) {
+            this.loadAgencies().then(() => this.syncHash());
+          }
+        },
+
+        saveToken() {
+          const t = (this.tokenInput || '').trim();
+          if (!t) return;
+          sessionStorage.setItem('agencyFitToken', t);
+          this.token = t;
+          this.loadAgencies().then(() => this.syncHash());
+        },
+
+        parseAgencyHash() {
+          const m = (window.location.hash || '').match(/^#\/agency\/(\d+)$/);
+          return m ? Number(m[1]) : null;
+        },
+
+        syncHash() {
+          if (!this.token) return;
+          const id = this.parseAgencyHash();
+          if (id) {
+            if (this.view !== 'detail' || this.selectedId !== id) this.openDetail(id, false);
+          } else if (this.view === 'detail') {
+            this.closeDetail(false);
+          }
+        },
+
+        resetFilters() {
+          this.search = '';
+          this.filters = {
+            tier: '',
+            minFit: null,
+            maxFit: null,
+            whiteLabelFit: '',
+            opsFit: '',
+            isRealAgency: '',
+            agencyType: '',
+            estimatedSize: '',
+          };
+        },
+
+        setSort(key) {
+          if (this.sortKey === key) {
+            this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+          } else {
+            this.sortKey = key;
+            this.sortDir = key === 'agency_name' || key === 'city' || key === 'tier' ? 'asc' : 'desc';
+          }
+        },
+
+        formatDate(v) {
+          if (!v) return '—';
+          try {
+            return new Date(v).toLocaleString();
+          } catch (e) {
+            return String(v);
+          }
+        },
+
+        formatRawScore(raw) {
+          if (raw == null || raw === '') return '—';
+          try {
+            const obj = typeof raw === 'string' ? JSON.parse(raw) : raw;
+            return JSON.stringify(obj, null, 2);
+          } catch (e) {
+            return String(raw);
+          }
+        },
+
+        normalizeRow(r) {
+          return {
+            ...r,
+            reasons: typeof r.reasons === 'string' ? (() => { try { return JSON.parse(r.reasons); } catch { return r.reasons; } })() : r.reasons,
+            red_flags: typeof r.red_flags === 'string' ? (() => { try { return JSON.parse(r.red_flags); } catch { return r.red_flags; } })() : r.red_flags,
+            raw_score: typeof r.raw_score === 'string' ? (() => { try { return JSON.parse(r.raw_score); } catch { return r.raw_score; } })() : r.raw_score,
+          };
+        },
+
+        draftFrom(row) {
+          return {
+            fit_score: Number(row.fit_score) || 0,
+            white_label_score: Number(row.white_label_score) || 0,
+            ops_automation_score: Number(row.ops_automation_score) || 0,
+            tier: row.tier || 'low',
+            synopsis: row.synopsis || '',
+            is_real_agency: !!row.is_real_agency,
+            white_label_fit: !!row.white_label_fit,
+            ops_fit: !!row.ops_fit,
+          };
+        },
+
+        isDirty(row) {
+          const d = this.drafts[row.agency_id];
+          if (!d) return false;
+          const o = this.draftFrom(row);
+          return (
+            Number(d.fit_score) !== o.fit_score ||
+            Number(d.white_label_score) !== o.white_label_score ||
+            Number(d.ops_automation_score) !== o.ops_automation_score ||
+            d.tier !== o.tier ||
+            (d.synopsis || '') !== o.synopsis ||
+            !!d.is_real_agency !== o.is_real_agency ||
+            !!d.white_label_fit !== o.white_label_fit ||
+            !!d.ops_fit !== o.ops_fit
+          );
+        },
+
+        apiUrl(kind, id) {
+          const mapped = {
+            list: '/api/agencies',
+            update: '/api/agencies/update',
+            detail: '/api/agencies/' + id,
+          };
+          const url = new URL(mapped[kind] || kind, window.location.origin);
+          url.searchParams.set('token', this.token);
+          return url.toString();
+        },
+
+        async loadAgencies() {
+          this.loading = true;
+          this.error = '';
+          try {
+            const res = await fetch(this.apiUrl('list'), {
+              headers: { Authorization: 'Bearer ' + this.token },
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            const data = await res.json();
+            const rows = Array.isArray(data) ? data : (data.agencies || data.data || []);
+            this.agencies = rows.map((r) => this.normalizeRow(r));
+            const next = {};
+            for (const row of this.agencies) next[row.agency_id] = this.draftFrom(row);
+            this.drafts = next;
+          } catch (e) {
+            this.error = e.message || String(e);
+          } finally {
+            this.loading = false;
+          }
+        },
+
+        async openDetail(agencyId, pushHash = true) {
+          const id = Number(agencyId);
+          if (!Number.isFinite(id) || id <= 0) return;
+          this.view = 'detail';
+          this.selectedId = id;
+          this.detailLoading = true;
+          this.error = '';
+          this.showRaw = false;
+          if (pushHash) {
+            const next = '#/agency/' + id;
+            if (window.location.hash !== next) window.location.hash = next;
+          }
+          try {
+            const res = await fetch(this.apiUrl('detail', id), {
+              headers: { Authorization: 'Bearer ' + this.token },
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            const row = this.normalizeRow(await res.json());
+            this.detail = row;
+            this.drafts[row.agency_id] = this.draftFrom(row);
+          } catch (e) {
+            this.error = e.message || String(e);
+            this.detail = null;
+          } finally {
+            this.detailLoading = false;
+          }
+        },
+
+        closeDetail(clearHash = true) {
+          this.view = 'list';
+          this.selectedId = null;
+          this.detail = null;
+          this.detailLoading = false;
+          this.showRaw = false;
+          if (clearHash && window.location.hash) {
+            history.pushState('', document.title, window.location.pathname + window.location.search);
+          }
+        },
+
+        async saveRow(row) {
+          const d = this.drafts[row.agency_id];
+          if (!d) return;
+          this.savingId = row.agency_id;
+          this.savedId = null;
+          this.error = '';
+          try {
+            const res = await fetch(this.apiUrl('update'), {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + this.token,
+              },
+              body: JSON.stringify({
+                agency_id: row.agency_id,
+                fit_score: Number(d.fit_score),
+                white_label_score: Number(d.white_label_score),
+                ops_automation_score: Number(d.ops_automation_score),
+                tier: d.tier,
+                synopsis: d.synopsis,
+                is_real_agency: !!d.is_real_agency,
+                white_label_fit: !!d.white_label_fit,
+                ops_fit: !!d.ops_fit,
+              }),
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            const updated = await res.json();
+            const payload = Array.isArray(updated) ? updated[0] : updated;
+            const patch = {
+              fit_score: payload.fit_score ?? d.fit_score,
+              white_label_score: payload.white_label_score ?? d.white_label_score,
+              ops_automation_score: payload.ops_automation_score ?? d.ops_automation_score,
+              tier: payload.tier ?? d.tier,
+              synopsis: payload.synopsis ?? d.synopsis,
+              is_real_agency: payload.is_real_agency ?? d.is_real_agency,
+              white_label_fit: payload.white_label_fit ?? d.white_label_fit,
+              ops_fit: payload.ops_fit ?? d.ops_fit,
+              updated_at: payload.updated_at || new Date().toISOString(),
+            };
+
+            const idx = this.agencies.findIndex((a) => a.agency_id === row.agency_id);
+            if (idx >= 0) {
+              this.agencies[idx] = { ...this.agencies[idx], ...patch };
+              this.drafts[row.agency_id] = this.draftFrom(this.agencies[idx]);
+            }
+            if (this.detail && this.detail.agency_id === row.agency_id) {
+              this.detail = { ...this.detail, ...patch };
+              this.drafts[row.agency_id] = this.draftFrom(this.detail);
+            }
+            this.savedId = row.agency_id;
+            setTimeout(() => { if (this.savedId === row.agency_id) this.savedId = null; }, 2000);
+          } catch (e) {
+            this.error = e.message || String(e);
+          } finally {
+            this.savingId = null;
+          }
+        },
+      };
+    }
+  </script>
+</body>
+</html>

@@ -36,6 +36,21 @@ const steps = [
   },
 ];
 
+const offerings = [
+  {
+    label: "Build",
+    title: "Custom AI tools",
+    copy: "Purpose-built AI for your workflows—extraction, triage, drafting, assistants—tied to the systems you already run.",
+    href: "/ai-automation",
+  },
+  {
+    label: "Train",
+    title: "Custom AI training",
+    copy: "We train models on your data so they speak your business—and we equip your team to use them with confidence.",
+    href: "/ai-automation",
+  },
+];
+
 const industryLinks = industries.map((item) => ({
   href: `/use-cases/${item.slug}`,
   label: item.industry,
@@ -278,6 +293,41 @@ export function ProcessSection() {
             </li>
           ))}
         </ol>
+      </div>
+    </section>
+  );
+}
+
+export function OfferingsSection() {
+  return (
+    <section className="section offerings" id="offerings">
+      <div className="shell">
+        <div className="offerings__top reveal">
+          <div>
+            <p className="eyebrow">Also available</p>
+            <h2 className="section-heading">Custom AI tools and training.</h2>
+          </div>
+          <p className="section-copy">
+            Beyond process automation—tools built for your stack, models trained
+            on your data, and a team ready to use them.
+          </p>
+        </div>
+
+        <div className="offerings__grid reveal">
+          {offerings.map((item) => (
+            <article className="offering" key={item.title}>
+              <span className="offering__label">{item.label}</span>
+              <h3>
+                <a href={item.href}>{item.title}</a>
+              </h3>
+              <p>{item.copy}</p>
+            </article>
+          ))}
+        </div>
+
+        <p className="offerings__more reveal">
+          <a href="/what-we-do">See what we do →</a>
+        </p>
       </div>
     </section>
   );

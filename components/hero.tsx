@@ -162,9 +162,9 @@ export function Hero() {
             impact.
           </p>
           <p className="hero__copy">
-            We improve the processes you already use—so your team spends fewer
-            hours, works more efficiently, and gets more impact from the same
-            work.
+            We improve the processes you already use—and when the work calls for
+            it, we build custom AI tools and train models on your data—so your
+            team spends fewer hours and gets more impact from the same work.
           </p>
           <div className="hero__actions">
             <a

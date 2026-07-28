@@ -149,7 +149,7 @@ export function SiteHeader({
               ))}
             </div>
           </div>
-          <a href="/whitelabel">White-label</a>
+          <a href="/white-label">White-label</a>
           <a
             className="button button-primary"
             href={BOOK_CALL_HREF}
@@ -200,7 +200,7 @@ export function SiteHeader({
               ))}
             </div>
           </div>
-          <a href="/whitelabel" onClick={closeMenu}>
+          <a href="/white-label" onClick={closeMenu}>
             White-label
           </a>
           <a

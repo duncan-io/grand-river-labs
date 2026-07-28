@@ -11,7 +11,7 @@ export function SiteFooter() {
         <p>© {new Date().getFullYear()} Grand River Labs</p>
         <div className="site-footer__links">
           <a href="/what-we-do">What we do</a>
-          <a href="/whitelabel">White-label</a>
+          <a href="/white-label">White-label</a>
           <a href="/chat">Ask us</a>
           <a href="/#contact">Contact</a>
           <a href="mailto:hello@grandriverlabs.com">
