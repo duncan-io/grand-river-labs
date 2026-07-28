@@ -43,6 +43,26 @@ function requireToken(req, res, next) {
   return next();
 }
 
+async function hasOutreachTable() {
+  const { rows } = await pool.query(`
+    SELECT to_regclass('public.agency_outreach_drafts') IS NOT NULL AS exists
+  `);
+  return !!rows[0]?.exists;
+}
+
+const emptyOutreachOverview = {
+  never_contacted: 0,
+  drafted: 0,
+  sent: 0,
+  needs_rewrite: 0,
+  failed: 0,
+  ready: 0,
+  pending_rating: 0,
+  drafted_last_7_days: 0,
+  eligible_awaiting: 0,
+  avg_overall_score: null,
+};
+
 app.get('/health', (_req, res) => {
   res.status(200).json({ ok: true });
 });
@@ -82,18 +102,143 @@ const AGENCY_LIST_SELECT = `
   s.scored_at,
   s.updated_at`;
 
+const OUTREACH_LIST_SELECT = `
+  d.status AS outreach_status,
+  d.gmail_draft_id,
+  d.drafted_at,
+  d.overall_score,
+  d.accuracy_pass,
+  d.rewrite_attempts,
+  d.error AS outreach_error`;
+
+const OUTREACH_DETAIL_SELECT = `
+  ${OUTREACH_LIST_SELECT},
+  d.subject AS outreach_subject,
+  d.accuracy_score,
+  d.quality_score,
+  d.updated_at AS outreach_updated_at`;
+
 const AGENCY_DETAIL_SELECT = `
   ${AGENCY_LIST_SELECT},
   a.created_at,
   a.updated_at AS agency_updated_at,
   s.raw_score`;
 
-app.get('/api/agencies', requireToken, async (_req, res) => {
+const nullOutreachList = `
+  NULL::text AS outreach_status,
+  NULL::text AS gmail_draft_id,
+  NULL::timestamptz AS drafted_at,
+  NULL::integer AS overall_score,
+  NULL::boolean AS accuracy_pass,
+  NULL::integer AS rewrite_attempts,
+  NULL::text AS outreach_error`;
+
+const nullOutreachDetail = `
+  ${nullOutreachList},
+  NULL::text AS outreach_subject,
+  NULL::integer AS accuracy_score,
+  NULL::integer AS quality_score,
+  NULL::timestamptz AS outreach_updated_at`;
+
+app.get('/api/overview', requireToken, async (_req, res) => {
   try {
-    const { rows } = await pool.query(`
-      SELECT ${AGENCY_LIST_SELECT}
+    const { rows: fitRows } = await pool.query(`
+      SELECT
+        COUNT(*)::int AS total_scored,
+        COUNT(*) FILTER (WHERE s.tier = 'priority')::int AS tier_priority,
+        COUNT(*) FILTER (WHERE s.tier = 'review')::int AS tier_review,
+        COUNT(*) FILTER (WHERE s.tier = 'low')::int AS tier_low,
+        ROUND(AVG(s.fit_score)::numeric, 1) AS avg_fit_score,
+        ROUND(AVG(s.white_label_score)::numeric, 1) AS avg_white_label_score
       FROM agencies a
       JOIN agency_fit_scores s ON s.agency_id = a.id
+    `);
+    const fit = fitRows[0] || {};
+
+    let outreach = { ...emptyOutreachOverview };
+    const hasOutreach = await hasOutreachTable();
+
+    if (hasOutreach) {
+      const { rows: outreachRows } = await pool.query(`
+        SELECT
+          COUNT(*) FILTER (WHERE d.agency_id IS NULL)::int AS never_contacted,
+          COUNT(*) FILTER (WHERE d.status = 'drafted')::int AS drafted,
+          COUNT(*) FILTER (WHERE d.status = 'sent')::int AS sent,
+          COUNT(*) FILTER (WHERE d.status = 'needs_rewrite')::int AS needs_rewrite,
+          COUNT(*) FILTER (WHERE d.status = 'failed')::int AS failed,
+          COUNT(*) FILTER (WHERE d.status = 'ready')::int AS ready,
+          COUNT(*) FILTER (WHERE d.status = 'pending_rating')::int AS pending_rating,
+          COUNT(*) FILTER (
+            WHERE d.status = 'drafted'
+              AND d.drafted_at >= NOW() - INTERVAL '7 days'
+          )::int AS drafted_last_7_days,
+          COUNT(*) FILTER (
+            WHERE s.white_label_fit = true
+              AND s.is_real_agency = true
+              AND s.white_label_score >= 70
+              AND NULLIF(TRIM(a.contact_email), '') IS NOT NULL
+              AND (d.agency_id IS NULL OR d.status NOT IN ('drafted', 'sent'))
+          )::int AS eligible_awaiting,
+          ROUND(AVG(d.overall_score) FILTER (WHERE d.overall_score IS NOT NULL)::numeric, 1)
+            AS avg_overall_score
+        FROM agencies a
+        JOIN agency_fit_scores s ON s.agency_id = a.id
+        LEFT JOIN agency_outreach_drafts d ON d.agency_id = a.id
+      `);
+      outreach = { ...emptyOutreachOverview, ...(outreachRows[0] || {}) };
+    } else {
+      const { rows: eligibleRows } = await pool.query(`
+        SELECT COUNT(*)::int AS eligible_awaiting
+        FROM agencies a
+        JOIN agency_fit_scores s ON s.agency_id = a.id
+        WHERE s.white_label_fit = true
+          AND s.is_real_agency = true
+          AND s.white_label_score >= 70
+          AND NULLIF(TRIM(a.contact_email), '') IS NOT NULL
+      `);
+      outreach.never_contacted = Number(fit.total_scored) || 0;
+      outreach.eligible_awaiting = eligibleRows[0]?.eligible_awaiting || 0;
+    }
+
+    return res.json({
+      total_scored: Number(fit.total_scored) || 0,
+      tier_priority: Number(fit.tier_priority) || 0,
+      tier_review: Number(fit.tier_review) || 0,
+      tier_low: Number(fit.tier_low) || 0,
+      avg_fit_score: fit.avg_fit_score != null ? Number(fit.avg_fit_score) : null,
+      avg_white_label_score: fit.avg_white_label_score != null ? Number(fit.avg_white_label_score) : null,
+      never_contacted: Number(outreach.never_contacted) || 0,
+      drafted: Number(outreach.drafted) || 0,
+      sent: Number(outreach.sent) || 0,
+      needs_rewrite: Number(outreach.needs_rewrite) || 0,
+      failed: Number(outreach.failed) || 0,
+      ready: Number(outreach.ready) || 0,
+      pending_rating: Number(outreach.pending_rating) || 0,
+      drafted_last_7_days: Number(outreach.drafted_last_7_days) || 0,
+      eligible_awaiting: Number(outreach.eligible_awaiting) || 0,
+      avg_overall_score: outreach.avg_overall_score != null ? Number(outreach.avg_overall_score) : null,
+      outreach_table_present: hasOutreach,
+    });
+  } catch (err) {
+    console.error('overview failed', err);
+    return res.status(500).json({ error: 'Failed to load overview' });
+  }
+});
+
+app.get('/api/agencies', requireToken, async (_req, res) => {
+  try {
+    const hasOutreach = await hasOutreachTable();
+    const select = hasOutreach
+      ? `${AGENCY_LIST_SELECT}, ${OUTREACH_LIST_SELECT}`
+      : `${AGENCY_LIST_SELECT}, ${nullOutreachList}`;
+    const join = hasOutreach
+      ? 'LEFT JOIN agency_outreach_drafts d ON d.agency_id = a.id'
+      : '';
+    const { rows } = await pool.query(`
+      SELECT ${select}
+      FROM agencies a
+      JOIN agency_fit_scores s ON s.agency_id = a.id
+      ${join}
       ORDER BY s.fit_score DESC, a.agency_name ASC
     `);
     res.json(rows);
@@ -109,11 +254,19 @@ app.get('/api/agencies/:id', requireToken, async (req, res) => {
     if (!Number.isFinite(agencyId) || agencyId <= 0) {
       return res.status(400).json({ error: 'Invalid agency id' });
     }
+    const hasOutreach = await hasOutreachTable();
+    const select = hasOutreach
+      ? `${AGENCY_DETAIL_SELECT}, ${OUTREACH_DETAIL_SELECT}`
+      : `${AGENCY_DETAIL_SELECT}, ${nullOutreachDetail}`;
+    const join = hasOutreach
+      ? 'LEFT JOIN agency_outreach_drafts d ON d.agency_id = a.id'
+      : '';
     const { rows } = await pool.query(
       `
-      SELECT ${AGENCY_DETAIL_SELECT}
+      SELECT ${select}
       FROM agencies a
       JOIN agency_fit_scores s ON s.agency_id = a.id
+      ${join}
       WHERE a.id = $1
       LIMIT 1
     `,

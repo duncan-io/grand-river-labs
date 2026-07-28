@@ -3,66 +3,357 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agency Fit Review</title>
+  <title>Agency Outreach Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#102f2f',
+            accent: { DEFAULT: '#057a72', dark: '#075752', soft: '#ccebe5' },
+            mist: '#edf8f5',
+            sky: '#d8f2f4',
+            muted: '#5f7976',
+            line: 'rgba(16, 47, 47, 0.12)',
+          },
+          fontFamily: {
+            sans: ['Outfit', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            card: '0 1px 2px rgba(16, 47, 47, 0.04), 0 8px 24px rgba(16, 47, 47, 0.06)',
+            lift: '0 4px 16px rgba(16, 47, 47, 0.1)',
+          },
+        },
+      },
+    };
+  </script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
   <style>
+    :root {
+      --ink: #102f2f;
+      --accent: #057a72;
+      --accent-dark: #075752;
+      --accent-soft: #ccebe5;
+      --mist: #edf8f5;
+      --sky: #d8f2f4;
+      --muted: #5f7976;
+      --surface: #ffffff;
+      --line: rgba(16, 47, 47, 0.12);
+    }
     [x-cloak] { display: none !important; }
-    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    body {
+      font-family: Outfit, ui-sans-serif, system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, rgba(5, 122, 114, 0.12), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 0%, rgba(216, 242, 244, 0.7), transparent 50%),
+        linear-gradient(180deg, #f4fbf9 0%, #edf8f5 40%, #e8f4f1 100%);
+      color: var(--ink);
+      min-height: 100vh;
+    }
     input[type="number"] { -moz-appearance: textfield; }
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     pre.raw-json { white-space: pre-wrap; word-break: break-word; }
+    .surface {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 2px rgba(16, 47, 47, 0.04), 0 8px 24px rgba(16, 47, 47, 0.06);
+    }
+    .field {
+      border: 1px solid var(--line);
+      border-radius: 0.5rem;
+      background: #fff;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .field:focus {
+      outline: none;
+      border-color: rgba(5, 122, 114, 0.55);
+      box-shadow: 0 0 0 3px rgba(5, 122, 114, 0.15);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.875rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-dark); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-ghost {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.875rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .btn-ghost:hover { background: var(--mist); border-color: rgba(5, 122, 114, 0.25); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 0.35rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .badge-priority { background: #dff5ef; color: #075752; }
+    .badge-review { background: #e8f0ff; color: #2a4a8a; }
+    .badge-low { background: #f0f2f2; color: #5f7976; }
+    .badge-drafted { background: #dff5ef; color: #075752; }
+    .badge-sent { background: #d8f2f4; color: #0a5c66; }
+    .badge-ready { background: #e8f0ff; color: #2a4a8a; }
+    .badge-pending_rating { background: #fff3d6; color: #8a6500; }
+    .badge-needs_rewrite { background: #ffe8d6; color: #9a4a12; }
+    .badge-failed { background: #fde8e8; color: #9b2c2c; }
+    .badge-none { background: #f0f2f2; color: #5f7976; }
+    .kpi {
+      text-align: left;
+      padding: 1rem 1.1rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 1px 2px rgba(16, 47, 47, 0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      cursor: pointer;
+    }
+    .kpi:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(16, 47, 47, 0.1);
+      border-color: rgba(5, 122, 114, 0.35);
+    }
+    .kpi.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(5, 122, 114, 0.18), 0 4px 16px rgba(16, 47, 47, 0.08);
+      background: #fff;
+    }
+    .kpi-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .kpi-value {
+      margin-top: 0.35rem;
+      font-size: 1.5rem;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .kpi-hint {
+      margin-top: 0.25rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+      animation: fadeUp 0.4s ease both;
+    }
+    .animate-fade-up-delay-1 { animation-delay: 0.05s; }
+    .animate-fade-up-delay-2 { animation-delay: 0.1s; }
+    .animate-fade-up-delay-3 { animation-delay: 0.15s; }
+    .table-wrap thead th {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      background: rgba(237, 248, 245, 0.85);
+    }
+    .table-wrap tbody tr {
+      transition: background 0.12s ease;
+    }
+    .table-wrap tbody tr:hover {
+      background: rgba(237, 248, 245, 0.55);
+    }
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-900 min-h-screen">
+<body>
   <div
     x-data="dashboard()"
     x-init="init()"
     x-cloak
-    class="max-w-[1400px] mx-auto px-4 py-6"
+    class="max-w-[1400px] mx-auto px-4 py-6 sm:px-6"
   >
-    <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+    <header class="mb-6 flex flex-wrap items-end justify-between gap-3 animate-fade-up">
       <div>
-        <h1 class="text-2xl font-semibold tracking-tight">Agency Fit Review</h1>
-        <p class="text-sm text-slate-600 mt-1">
-          Review and adjust white-label / ops fit scores from Grand River Postgres.
+        <p class="text-xs font-semibold uppercase tracking-[0.08em] text-accent mb-1">Grand River Labs</p>
+        <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-ink">Agency Outreach</h1>
+        <p class="text-sm text-muted mt-1">
+          Review fit scores, triage outreach status, and track pipeline health.
         </p>
       </div>
-      <div class="text-sm text-slate-500" x-text="statusText"></div>
+      <div class="flex items-center gap-2">
+        <span
+          class="badge"
+          :class="token ? 'badge-drafted' : 'badge-pending_rating'"
+          x-text="token ? 'Authenticated' : 'Needs token'"
+        ></span>
+        <span class="text-sm text-muted" x-text="statusText"></span>
+      </div>
     </header>
 
     <template x-if="!token">
-      <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-        <p class="text-sm font-medium text-amber-900 mb-2">Access token required</p>
-        <p class="text-sm text-amber-800 mb-3">Open this page with <code>?token=…</code> or paste the token below.</p>
+      <div class="surface p-5 mb-6 border-l-4 border-l-amber-400 animate-fade-up">
+        <p class="text-sm font-medium text-ink mb-1">Access token required</p>
+        <p class="text-sm text-muted mb-3">Open this page with <code class="text-accent">?token=…</code> or paste the token below.</p>
         <form @submit.prevent="saveToken()" class="flex gap-2 max-w-lg">
           <input
             type="password"
             x-model="tokenInput"
             placeholder="Access token"
-            class="flex-1 border border-amber-300 rounded px-3 py-2 text-sm bg-white"
+            class="field flex-1"
           />
-          <button type="submit" class="bg-slate-900 text-white px-4 py-2 rounded text-sm">Continue</button>
+          <button type="submit" class="btn-primary">Continue</button>
         </form>
       </div>
     </template>
 
     <template x-if="token && view === 'list'">
       <div>
-        <div class="bg-white border border-slate-200 rounded-lg p-4 mb-4 space-y-3">
-          <div class="flex flex-wrap gap-3">
+        <!-- Overview board -->
+        <div class="mb-5 animate-fade-up animate-fade-up-delay-1">
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <h2 class="section-title">Overview</h2>
+            <p class="text-xs text-muted" x-show="overview">Click a card to filter the list</p>
+          </div>
+          <div x-show="overviewLoading" class="text-sm text-muted mb-3">Loading overview…</div>
+          <template x-if="overview">
+            <div class="space-y-4">
+              <div>
+                <p class="kpi-label mb-2">Fit pipeline</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'total' }" @click="applyOverviewFilter('total')">
+                    <div class="kpi-label">Total scored</div>
+                    <div class="kpi-value" x-text="overview.total_scored"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'priority' }" @click="applyOverviewFilter('priority')">
+                    <div class="kpi-label">Priority</div>
+                    <div class="kpi-value" x-text="overview.tier_priority"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'review' }" @click="applyOverviewFilter('review')">
+                    <div class="kpi-label">Review</div>
+                    <div class="kpi-value" x-text="overview.tier_review"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'low' }" @click="applyOverviewFilter('low')">
+                    <div class="kpi-label">Low</div>
+                    <div class="kpi-value" x-text="overview.tier_low"></div>
+                  </button>
+                  <div class="kpi" style="cursor: default" @click.prevent>
+                    <div class="kpi-label">Avg fit</div>
+                    <div class="kpi-value" x-text="fmtAvg(overview.avg_fit_score)"></div>
+                  </div>
+                  <div class="kpi" style="cursor: default" @click.prevent>
+                    <div class="kpi-label">Avg WL</div>
+                    <div class="kpi-value" x-text="fmtAvg(overview.avg_white_label_score)"></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p class="kpi-label mb-2">Outreach funnel</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'never' }" @click="applyOverviewFilter('never')">
+                    <div class="kpi-label">Never contacted</div>
+                    <div class="kpi-value" x-text="overview.never_contacted"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'drafted' }" @click="applyOverviewFilter('drafted')">
+                    <div class="kpi-label">Drafted</div>
+                    <div class="kpi-value" x-text="overview.drafted"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'sent' }" @click="applyOverviewFilter('sent')">
+                    <div class="kpi-label">Sent</div>
+                    <div class="kpi-value" x-text="overview.sent"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'needs_rewrite' }" @click="applyOverviewFilter('needs_rewrite')">
+                    <div class="kpi-label">Needs rewrite</div>
+                    <div class="kpi-value" x-text="overview.needs_rewrite"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'failed' }" @click="applyOverviewFilter('failed')">
+                    <div class="kpi-label">Failed</div>
+                    <div class="kpi-value" x-text="overview.failed"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'ready_pending' }" @click="applyOverviewFilter('ready_pending')">
+                    <div class="kpi-label">Ready / pending</div>
+                    <div class="kpi-value" x-text="(overview.ready || 0) + (overview.pending_rating || 0)"></div>
+                    <div class="kpi-hint">
+                      <span x-text="overview.ready"></span> ready ·
+                      <span x-text="overview.pending_rating"></span> pending
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <p class="kpi-label mb-2">Activity & quality</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'drafted_7d' }" @click="applyOverviewFilter('drafted_7d')">
+                    <div class="kpi-label">Drafted (7 days)</div>
+                    <div class="kpi-value" x-text="overview.drafted_last_7_days"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'eligible' }" @click="applyOverviewFilter('eligible')">
+                    <div class="kpi-label">Eligible awaiting</div>
+                    <div class="kpi-value" x-text="overview.eligible_awaiting"></div>
+                    <div class="kpi-hint">WL fit · score ≥ 70 · email</div>
+                  </button>
+                  <div class="kpi" style="cursor: default" @click.prevent>
+                    <div class="kpi-label">Avg draft score</div>
+                    <div class="kpi-value" x-text="fmtAvg(overview.avg_overall_score)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <div class="surface p-4 mb-4 space-y-3 animate-fade-up animate-fade-up-delay-2">
+          <div class="flex flex-wrap gap-2.5">
             <input
               type="search"
               x-model="search"
               placeholder="Search name, domain, city…"
-              class="border border-slate-300 rounded px-3 py-2 text-sm min-w-[220px] flex-1"
+              class="field min-w-[220px] flex-1"
             />
-            <select x-model="filters.tier" class="border border-slate-300 rounded px-3 py-2 text-sm">
+            <select x-model="filters.tier" class="field">
               <option value="">All tiers</option>
               <option value="priority">priority</option>
               <option value="review">review</option>
               <option value="low">low</option>
+            </select>
+            <select x-model="filters.outreachStatus" class="field">
+              <option value="">Outreach: any</option>
+              <option value="never">Never contacted</option>
+              <option value="drafted">drafted</option>
+              <option value="sent">sent</option>
+              <option value="ready">ready</option>
+              <option value="pending_rating">pending_rating</option>
+              <option value="needs_rewrite">needs_rewrite</option>
+              <option value="failed">failed</option>
+              <option value="ready_pending">ready / pending</option>
             </select>
             <input
               type="number"
@@ -70,7 +361,7 @@
               placeholder="Min fit"
               min="0"
               max="100"
-              class="border border-slate-300 rounded px-3 py-2 text-sm w-24"
+              class="field w-24"
             />
             <input
               type="number"
@@ -78,136 +369,147 @@
               placeholder="Max fit"
               min="0"
               max="100"
-              class="border border-slate-300 rounded px-3 py-2 text-sm w-24"
+              class="field w-24"
             />
-            <select x-model="filters.whiteLabelFit" class="border border-slate-300 rounded px-3 py-2 text-sm">
+            <select x-model="filters.whiteLabelFit" class="field">
               <option value="">WL fit: any</option>
               <option value="true">WL fit: yes</option>
               <option value="false">WL fit: no</option>
             </select>
-            <select x-model="filters.opsFit" class="border border-slate-300 rounded px-3 py-2 text-sm">
+            <select x-model="filters.opsFit" class="field">
               <option value="">Ops fit: any</option>
               <option value="true">Ops fit: yes</option>
               <option value="false">Ops fit: no</option>
             </select>
-            <select x-model="filters.isRealAgency" class="border border-slate-300 rounded px-3 py-2 text-sm">
+            <select x-model="filters.isRealAgency" class="field">
               <option value="">Real agency: any</option>
               <option value="true">Real agency: yes</option>
               <option value="false">Real agency: no</option>
             </select>
-            <select x-model="filters.agencyType" class="border border-slate-300 rounded px-3 py-2 text-sm">
+            <select x-model="filters.agencyType" class="field">
               <option value="">All types</option>
               <template x-for="t in agencyTypes" :key="t">
                 <option :value="t" x-text="t"></option>
               </template>
             </select>
-            <select x-model="filters.estimatedSize" class="border border-slate-300 rounded px-3 py-2 text-sm">
+            <select x-model="filters.estimatedSize" class="field">
               <option value="">All sizes</option>
               <template x-for="s in estimatedSizes" :key="s">
                 <option :value="s" x-text="s"></option>
               </template>
             </select>
-            <button
-              type="button"
-              @click="resetFilters()"
-              class="border border-slate-300 rounded px-3 py-2 text-sm hover:bg-slate-50"
-            >Reset</button>
-            <button
-              type="button"
-              @click="loadAgencies()"
-              class="bg-slate-900 text-white rounded px-3 py-2 text-sm"
-              :disabled="loading"
-            >
+            <select x-model="filters.eligibleOnly" class="field">
+              <option value="">Eligibility: any</option>
+              <option value="true">Eligible awaiting</option>
+            </select>
+            <button type="button" @click="resetFilters()" class="btn-ghost">Reset</button>
+            <button type="button" @click="refreshAll()" class="btn-primary" :disabled="loading">
               <span x-text="loading ? 'Loading…' : 'Refresh'"></span>
             </button>
           </div>
-          <p class="text-xs text-slate-500">
-            Showing <span x-text="filtered.length"></span> of <span x-text="agencies.length"></span> agencies
+          <p class="text-xs text-muted">
+            Showing <span class="font-medium text-ink" x-text="filtered.length"></span> of
+            <span class="font-medium text-ink" x-text="agencies.length"></span> agencies
           </p>
         </div>
 
-        <div x-show="error" class="bg-red-50 border border-red-200 text-red-800 rounded-lg p-3 mb-4 text-sm" x-text="error"></div>
+        <div x-show="error" class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 mb-4 text-sm" x-text="error"></div>
 
-        <div class="bg-white border border-slate-200 rounded-lg overflow-hidden">
+        <div class="surface overflow-hidden animate-fade-up animate-fade-up-delay-3 table-wrap">
           <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
-              <thead class="bg-slate-50 border-b border-slate-200 text-left text-slate-600">
+              <thead class="border-b border-[var(--line)] text-left">
                 <tr>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('agency_name')">Name</th>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('city')">City</th>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('contact_name')">Contact</th>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('tier')">Tier</th>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('fit_score')">Fit</th>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('white_label_score')">WL</th>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('ops_automation_score')">Ops</th>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('agency_type')">Type</th>
-                  <th class="px-3 py-2 font-medium cursor-pointer" @click="setSort('scored_at')">Scored</th>
-                  <th class="px-3 py-2 font-medium">Actions</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('agency_name')">Name</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('city')">City</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('contact_name')">Contact</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('tier')">Tier</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('outreach_status')">Outreach</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('fit_score')">Fit</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('white_label_score')">WL</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('ops_automation_score')">Ops</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('agency_type')">Type</th>
+                  <th class="px-3 py-2.5 cursor-pointer" @click="setSort('scored_at')">Scored</th>
+                  <th class="px-3 py-2.5">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <template x-for="row in filtered" :key="row.agency_id">
-                  <tr class="border-b border-slate-100 align-top hover:bg-slate-50/60">
-                    <td class="px-3 py-2">
+                  <tr class="border-b border-[var(--line)] align-top">
+                    <td class="px-3 py-2.5">
                       <button type="button" class="text-left hover:underline" @click="openDetail(row.agency_id)">
-                        <div class="font-medium text-slate-900" x-text="row.agency_name"></div>
-                        <div class="text-xs text-slate-500" x-text="row.domain"></div>
+                        <div class="font-medium text-ink" x-text="row.agency_name"></div>
+                        <div class="text-xs text-muted" x-text="row.domain"></div>
                       </button>
                     </td>
-                    <td class="px-3 py-2 whitespace-nowrap" x-text="row.city || '—'"></td>
-                    <td class="px-3 py-2">
-                      <div class="font-medium text-slate-800" x-text="row.contact_name || '—'"></div>
-                      <div class="text-xs text-slate-500 break-all" x-text="row.contact_email || ''"></div>
+                    <td class="px-3 py-2.5 whitespace-nowrap" x-text="row.city || '—'"></td>
+                    <td class="px-3 py-2.5">
+                      <div class="font-medium text-ink/90" x-text="row.contact_name || '—'"></div>
+                      <div class="text-xs text-muted break-all" x-text="row.contact_email || ''"></div>
                     </td>
-                    <td class="px-3 py-2">
+                    <td class="px-3 py-2.5">
                       <select
                         x-model="drafts[row.agency_id].tier"
-                        class="border border-slate-300 rounded px-2 py-1 text-sm"
+                        class="field py-1 px-2 text-sm mb-1.5 w-full min-w-[6.5rem]"
                       >
                         <option value="priority">priority</option>
                         <option value="review">review</option>
                         <option value="low">low</option>
                       </select>
+                      <span class="badge" :class="tierBadgeClass(drafts[row.agency_id].tier)" x-text="drafts[row.agency_id].tier"></span>
                     </td>
-                    <td class="px-3 py-2">
+                    <td class="px-3 py-2.5">
+                      <span
+                        class="badge"
+                        :class="outreachBadgeClass(row.outreach_status)"
+                        x-text="row.outreach_status || '—'"
+                      ></span>
+                      <div
+                        x-show="row.overall_score != null"
+                        class="text-xs text-muted mt-1"
+                      >
+                        Score <span x-text="row.overall_score"></span>
+                      </div>
+                    </td>
+                    <td class="px-3 py-2.5">
                       <input
                         type="number"
                         min="0"
                         max="100"
                         x-model.number="drafts[row.agency_id].fit_score"
-                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                        class="field w-16 py-1 px-2"
                       />
                     </td>
-                    <td class="px-3 py-2">
+                    <td class="px-3 py-2.5">
                       <input
                         type="number"
                         min="0"
                         max="100"
                         x-model.number="drafts[row.agency_id].white_label_score"
-                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                        class="field w-16 py-1 px-2"
                       />
                     </td>
-                    <td class="px-3 py-2">
+                    <td class="px-3 py-2.5">
                       <input
                         type="number"
                         min="0"
                         max="100"
                         x-model.number="drafts[row.agency_id].ops_automation_score"
-                        class="w-16 border border-slate-300 rounded px-2 py-1"
+                        class="field w-16 py-1 px-2"
                       />
                     </td>
-                    <td class="px-3 py-2 whitespace-nowrap" x-text="row.agency_type || '—'"></td>
-                    <td class="px-3 py-2 whitespace-nowrap text-xs text-slate-500" x-text="formatDate(row.scored_at)"></td>
-                    <td class="px-3 py-2">
-                      <div class="flex flex-col gap-1 items-start">
+                    <td class="px-3 py-2.5 whitespace-nowrap" x-text="row.agency_type || '—'"></td>
+                    <td class="px-3 py-2.5 whitespace-nowrap text-xs text-muted" x-text="formatDate(row.scored_at)"></td>
+                    <td class="px-3 py-2.5">
+                      <div class="flex flex-col gap-1.5 items-start">
                         <button
                           type="button"
-                          class="text-xs text-blue-700 underline"
+                          class="text-xs font-medium text-accent hover:underline"
                           @click="openDetail(row.agency_id)"
                         >View</button>
                         <button
                           type="button"
-                          class="bg-emerald-700 text-white rounded px-3 py-1.5 text-xs disabled:opacity-50"
+                          class="btn-primary py-1.5 px-3 text-xs"
                           :disabled="savingId === row.agency_id || !isDirty(row)"
                           @click="saveRow(row)"
                         >
@@ -215,14 +517,14 @@
                         </button>
                         <div
                           x-show="savedId === row.agency_id"
-                          class="text-xs text-emerald-700"
+                          class="text-xs text-accent-dark font-medium"
                         >Saved</div>
                       </div>
                     </td>
                   </tr>
                 </template>
                 <tr x-show="!loading && filtered.length === 0">
-                  <td colspan="10" class="px-3 py-8 text-center text-slate-500">No agencies match the current filters.</td>
+                  <td colspan="11" class="px-3 py-10 text-center text-muted">No agencies match the current filters.</td>
                 </tr>
               </tbody>
             </table>
@@ -233,118 +535,124 @@
 
     <template x-if="token && view === 'detail'">
       <div>
-        <div class="mb-4 flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            class="border border-slate-300 bg-white rounded px-3 py-1.5 text-sm hover:bg-slate-50"
-            @click="closeDetail()"
-          >← Back to list</button>
+        <div class="mb-4 flex flex-wrap items-center gap-3 animate-fade-up">
+          <button type="button" class="btn-ghost" @click="closeDetail()">← Back to list</button>
           <template x-if="detail">
             <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <h2 class="text-xl font-semibold" x-text="detail.agency_name"></h2>
-              <span class="text-sm text-slate-500" x-text="detail.domain"></span>
+              <h2 class="text-xl font-semibold tracking-tight" x-text="detail.agency_name"></h2>
+              <span class="text-sm text-muted" x-text="detail.domain"></span>
+              <span
+                class="badge"
+                :class="tierBadgeClass(detail.tier)"
+                x-text="detail.tier || '—'"
+              ></span>
+              <span
+                class="badge"
+                :class="outreachBadgeClass(detail.outreach_status)"
+                x-text="detail.outreach_status || 'no outreach'"
+              ></span>
               <a
                 x-show="detail.website"
                 :href="detail.website"
                 target="_blank"
                 rel="noopener"
-                class="text-sm text-blue-700 underline"
+                class="text-sm text-accent font-medium hover:underline"
               >Website</a>
             </div>
           </template>
         </div>
 
-        <div x-show="error" class="bg-red-50 border border-red-200 text-red-800 rounded-lg p-3 mb-4 text-sm" x-text="error"></div>
-        <div x-show="detailLoading" class="text-sm text-slate-500 mb-4">Loading agency…</div>
+        <div x-show="error" class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 mb-4 text-sm" x-text="error"></div>
+        <div x-show="detailLoading" class="text-sm text-muted mb-4">Loading agency…</div>
 
         <template x-if="detail && !detailLoading">
-          <div class="space-y-4">
-            <section class="bg-white border border-slate-200 rounded-lg p-4">
-              <h3 class="text-sm font-semibold text-slate-700 mb-3">Identity</h3>
+          <div class="space-y-4 animate-fade-up">
+            <section class="surface p-4">
+              <h3 class="section-title mb-3">Identity</h3>
               <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
-                <div><dt class="text-slate-500">Agency ID</dt><dd class="font-medium" x-text="detail.agency_id"></dd></div>
-                <div><dt class="text-slate-500">Source agency ID</dt><dd class="font-medium" x-text="detail.source_agency_id ?? '—'"></dd></div>
-                <div><dt class="text-slate-500">Domain</dt><dd class="font-medium" x-text="detail.domain || '—'"></dd></div>
-                <div><dt class="text-slate-500">Website</dt>
+                <div><dt class="text-muted text-xs mb-0.5">Agency ID</dt><dd class="font-medium" x-text="detail.agency_id"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Source agency ID</dt><dd class="font-medium" x-text="detail.source_agency_id ?? '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Domain</dt><dd class="font-medium" x-text="detail.domain || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Website</dt>
                   <dd>
-                    <a x-show="detail.website" :href="detail.website" target="_blank" rel="noopener" class="text-blue-700 underline break-all" x-text="detail.website"></a>
+                    <a x-show="detail.website" :href="detail.website" target="_blank" rel="noopener" class="text-accent hover:underline break-all" x-text="detail.website"></a>
                     <span x-show="!detail.website">—</span>
                   </dd>
                 </div>
-                <div><dt class="text-slate-500">Source URL</dt>
+                <div><dt class="text-muted text-xs mb-0.5">Source URL</dt>
                   <dd>
-                    <a x-show="detail.source_url" :href="detail.source_url" target="_blank" rel="noopener" class="text-blue-700 underline break-all" x-text="detail.source_url"></a>
+                    <a x-show="detail.source_url" :href="detail.source_url" target="_blank" rel="noopener" class="text-accent hover:underline break-all" x-text="detail.source_url"></a>
                     <span x-show="!detail.source_url">—</span>
                   </dd>
                 </div>
-                <div><dt class="text-slate-500">Category</dt><dd class="font-medium" x-text="detail.category || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Category</dt><dd class="font-medium" x-text="detail.category || '—'"></dd></div>
               </dl>
             </section>
 
-            <section class="bg-white border border-slate-200 rounded-lg p-4">
-              <h3 class="text-sm font-semibold text-slate-700 mb-3">Location & contact</h3>
+            <section class="surface p-4">
+              <h3 class="section-title mb-3">Location & contact</h3>
               <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
-                <div><dt class="text-slate-500">City</dt><dd class="font-medium" x-text="detail.city || '—'"></dd></div>
-                <div><dt class="text-slate-500">Phone</dt><dd class="font-medium" x-text="detail.phone || '—'"></dd></div>
-                <div><dt class="text-slate-500">Rating</dt><dd class="font-medium" x-text="detail.rating ?? '—'"></dd></div>
-                <div><dt class="text-slate-500">Review count</dt><dd class="font-medium" x-text="detail.review_count ?? '—'"></dd></div>
-                <div><dt class="text-slate-500">LocalScout qualification</dt><dd class="font-medium" x-text="detail.localscout_qualification_score ?? '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">City</dt><dd class="font-medium" x-text="detail.city || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Phone</dt><dd class="font-medium" x-text="detail.phone || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Rating</dt><dd class="font-medium" x-text="detail.rating ?? '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Review count</dt><dd class="font-medium" x-text="detail.review_count ?? '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">LocalScout qualification</dt><dd class="font-medium" x-text="detail.localscout_qualification_score ?? '—'"></dd></div>
               </dl>
             </section>
 
-            <section class="bg-white border border-slate-200 rounded-lg p-4">
-              <h3 class="text-sm font-semibold text-slate-700 mb-3">Preferred contact</h3>
+            <section class="surface p-4">
+              <h3 class="section-title mb-3">Preferred contact</h3>
               <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
-                <div><dt class="text-slate-500">Name</dt><dd class="font-medium" x-text="detail.contact_name || '—'"></dd></div>
-                <div><dt class="text-slate-500">Email</dt>
+                <div><dt class="text-muted text-xs mb-0.5">Name</dt><dd class="font-medium" x-text="detail.contact_name || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Email</dt>
                   <dd>
-                    <a x-show="detail.contact_email" :href="'mailto:' + detail.contact_email" class="text-blue-700 underline break-all" x-text="detail.contact_email"></a>
+                    <a x-show="detail.contact_email" :href="'mailto:' + detail.contact_email" class="text-accent hover:underline break-all" x-text="detail.contact_email"></a>
                     <span x-show="!detail.contact_email">—</span>
                   </dd>
                 </div>
-                <div><dt class="text-slate-500">Title</dt><dd class="font-medium" x-text="detail.contact_title || '—'"></dd></div>
-                <div><dt class="text-slate-500">Verification</dt><dd class="font-medium" x-text="detail.contact_verification_status || '—'"></dd></div>
-                <div><dt class="text-slate-500">Source</dt><dd class="font-medium" x-text="detail.contact_source || '—'"></dd></div>
-                <div><dt class="text-slate-500">LinkedIn</dt>
+                <div><dt class="text-muted text-xs mb-0.5">Title</dt><dd class="font-medium" x-text="detail.contact_title || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Verification</dt><dd class="font-medium" x-text="detail.contact_verification_status || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Source</dt><dd class="font-medium" x-text="detail.contact_source || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">LinkedIn</dt>
                   <dd>
-                    <a x-show="detail.contact_linkedin_url" :href="detail.contact_linkedin_url" target="_blank" rel="noopener" class="text-blue-700 underline break-all" x-text="detail.contact_linkedin_url"></a>
+                    <a x-show="detail.contact_linkedin_url" :href="detail.contact_linkedin_url" target="_blank" rel="noopener" class="text-accent hover:underline break-all" x-text="detail.contact_linkedin_url"></a>
                     <span x-show="!detail.contact_linkedin_url">—</span>
                   </dd>
                 </div>
               </dl>
             </section>
 
-            <section class="bg-white border border-slate-200 rounded-lg p-4">
+            <section class="surface p-4">
               <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <h3 class="text-sm font-semibold text-slate-700">Scores</h3>
+                <h3 class="section-title">Scores</h3>
                 <div class="flex items-center gap-2">
                   <button
                     type="button"
-                    class="bg-emerald-700 text-white rounded px-3 py-1.5 text-xs disabled:opacity-50"
+                    class="btn-primary py-1.5 px-3 text-xs"
                     :disabled="savingId === detail.agency_id || !isDirty(detail)"
                     @click="saveRow(detail)"
                   >
                     <span x-text="savingId === detail.agency_id ? 'Saving…' : 'Save scores'"></span>
                   </button>
-                  <span x-show="savedId === detail.agency_id" class="text-xs text-emerald-700">Saved</span>
+                  <span x-show="savedId === detail.agency_id" class="text-xs text-accent-dark font-medium">Saved</span>
                 </div>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                 <label class="block">
-                  <span class="text-slate-500">Fit score</span>
-                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].fit_score" class="mt-1 w-full border border-slate-300 rounded px-2 py-1.5" />
+                  <span class="text-muted text-xs">Fit score</span>
+                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].fit_score" class="field mt-1 w-full" />
                 </label>
                 <label class="block">
-                  <span class="text-slate-500">White-label score</span>
-                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].white_label_score" class="mt-1 w-full border border-slate-300 rounded px-2 py-1.5" />
+                  <span class="text-muted text-xs">White-label score</span>
+                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].white_label_score" class="field mt-1 w-full" />
                 </label>
                 <label class="block">
-                  <span class="text-slate-500">Ops automation score</span>
-                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].ops_automation_score" class="mt-1 w-full border border-slate-300 rounded px-2 py-1.5" />
+                  <span class="text-muted text-xs">Ops automation score</span>
+                  <input type="number" min="0" max="100" x-model.number="drafts[detail.agency_id].ops_automation_score" class="field mt-1 w-full" />
                 </label>
                 <label class="block">
-                  <span class="text-slate-500">Tier</span>
-                  <select x-model="drafts[detail.agency_id].tier" class="mt-1 w-full border border-slate-300 rounded px-2 py-1.5">
+                  <span class="text-muted text-xs">Tier</span>
+                  <select x-model="drafts[detail.agency_id].tier" class="field mt-1 w-full">
                     <option value="priority">priority</option>
                     <option value="review">review</option>
                     <option value="low">low</option>
@@ -353,84 +661,118 @@
               </div>
             </section>
 
-            <section class="bg-white border border-slate-200 rounded-lg p-4">
-              <h3 class="text-sm font-semibold text-slate-700 mb-3">Flags & classification</h3>
+            <section class="surface p-4">
+              <h3 class="section-title mb-3">Outreach</h3>
+              <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
+                <div>
+                  <dt class="text-muted text-xs mb-0.5">Status</dt>
+                  <dd>
+                    <span
+                      class="badge"
+                      :class="outreachBadgeClass(detail.outreach_status)"
+                      x-text="detail.outreach_status || '—'"
+                    ></span>
+                  </dd>
+                </div>
+                <div><dt class="text-muted text-xs mb-0.5">Subject</dt><dd class="font-medium" x-text="detail.outreach_subject || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Gmail draft ID</dt><dd class="font-medium break-all text-xs" x-text="detail.gmail_draft_id || '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Overall score</dt><dd class="font-medium" x-text="detail.overall_score ?? '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Accuracy / quality</dt>
+                  <dd class="font-medium">
+                    <span x-text="detail.accuracy_score ?? '—'"></span>
+                    /
+                    <span x-text="detail.quality_score ?? '—'"></span>
+                  </dd>
+                </div>
+                <div><dt class="text-muted text-xs mb-0.5">Accuracy pass</dt><dd class="font-medium" x-text="detail.accuracy_pass == null ? '—' : (detail.accuracy_pass ? 'yes' : 'no')"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Rewrite attempts</dt><dd class="font-medium" x-text="detail.rewrite_attempts ?? '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Drafted at</dt><dd class="font-medium" x-text="formatDate(detail.drafted_at)"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Outreach updated</dt><dd class="font-medium" x-text="formatDate(detail.outreach_updated_at)"></dd></div>
+              </dl>
+              <div x-show="detail.outreach_error" class="mt-3 text-sm bg-red-50 border border-red-200 text-red-800 rounded-lg p-3">
+                <span class="font-medium">Error:</span>
+                <span x-text="detail.outreach_error"></span>
+              </div>
+            </section>
+
+            <section class="surface p-4">
+              <h3 class="section-title mb-3">Flags & classification</h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div class="space-y-2">
                   <label class="flex items-center gap-2">
-                    <input type="checkbox" x-model="drafts[detail.agency_id].is_real_agency" />
+                    <input type="checkbox" class="accent-accent" x-model="drafts[detail.agency_id].is_real_agency" />
                     Real agency
                   </label>
                   <label class="flex items-center gap-2">
-                    <input type="checkbox" x-model="drafts[detail.agency_id].white_label_fit" />
+                    <input type="checkbox" class="accent-accent" x-model="drafts[detail.agency_id].white_label_fit" />
                     White-label fit
                   </label>
                   <label class="flex items-center gap-2">
-                    <input type="checkbox" x-model="drafts[detail.agency_id].ops_fit" />
+                    <input type="checkbox" class="accent-accent" x-model="drafts[detail.agency_id].ops_fit" />
                     Ops fit
                   </label>
                 </div>
                 <dl class="space-y-2">
-                  <div><dt class="text-slate-500">Agency type</dt><dd class="font-medium" x-text="detail.agency_type || '—'"></dd></div>
-                  <div><dt class="text-slate-500">Estimated size</dt><dd class="font-medium" x-text="detail.estimated_size || '—'"></dd></div>
+                  <div><dt class="text-muted text-xs mb-0.5">Agency type</dt><dd class="font-medium" x-text="detail.agency_type || '—'"></dd></div>
+                  <div><dt class="text-muted text-xs mb-0.5">Estimated size</dt><dd class="font-medium" x-text="detail.estimated_size || '—'"></dd></div>
                 </dl>
               </div>
               <label class="block mt-4 text-sm">
-                <span class="text-slate-500">Synopsis</span>
+                <span class="text-muted text-xs">Synopsis</span>
                 <textarea
                   x-model="drafts[detail.agency_id].synopsis"
                   rows="3"
-                  class="mt-1 w-full border border-slate-300 rounded px-3 py-2"
+                  class="field mt-1 w-full"
                 ></textarea>
               </label>
             </section>
 
-            <section class="bg-white border border-slate-200 rounded-lg p-4">
-              <h3 class="text-sm font-semibold text-slate-700 mb-3">Analysis</h3>
+            <section class="surface p-4">
+              <h3 class="section-title mb-3">Analysis</h3>
               <div class="space-y-4 text-sm">
                 <div>
-                  <h4 class="text-slate-500 mb-1">Reasons</h4>
+                  <h4 class="text-muted text-xs mb-1">Reasons</h4>
                   <ul x-show="Array.isArray(detail.reasons) && detail.reasons.length" class="list-disc pl-5 space-y-1">
                     <template x-for="(reason, idx) in (Array.isArray(detail.reasons) ? detail.reasons : [])" :key="idx">
                       <li x-text="reason"></li>
                     </template>
                   </ul>
-                  <p x-show="!Array.isArray(detail.reasons) || !detail.reasons.length" class="text-slate-400">None</p>
+                  <p x-show="!Array.isArray(detail.reasons) || !detail.reasons.length" class="text-muted/70">None</p>
                 </div>
                 <div>
-                  <h4 class="text-slate-500 mb-1">Red flags</h4>
+                  <h4 class="text-muted text-xs mb-1">Red flags</h4>
                   <ul x-show="Array.isArray(detail.red_flags) && detail.red_flags.length" class="list-disc pl-5 space-y-1 text-red-700">
                     <template x-for="(flag, idx) in (Array.isArray(detail.red_flags) ? detail.red_flags : [])" :key="idx">
                       <li x-text="flag"></li>
                     </template>
                   </ul>
-                  <p x-show="!Array.isArray(detail.red_flags) || !detail.red_flags.length" class="text-slate-400">None</p>
+                  <p x-show="!Array.isArray(detail.red_flags) || !detail.red_flags.length" class="text-muted/70">None</p>
                 </div>
               </div>
             </section>
 
-            <section class="bg-white border border-slate-200 rounded-lg p-4">
-              <h3 class="text-sm font-semibold text-slate-700 mb-3">Timestamps</h3>
+            <section class="surface p-4">
+              <h3 class="section-title mb-3">Timestamps</h3>
               <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3 text-sm">
-                <div><dt class="text-slate-500">Scored at</dt><dd class="font-medium" x-text="formatDate(detail.scored_at)"></dd></div>
-                <div><dt class="text-slate-500">Score updated</dt><dd class="font-medium" x-text="formatDate(detail.updated_at)"></dd></div>
-                <div><dt class="text-slate-500">Agency created</dt><dd class="font-medium" x-text="formatDate(detail.created_at)"></dd></div>
-                <div><dt class="text-slate-500">Agency updated</dt><dd class="font-medium" x-text="formatDate(detail.agency_updated_at)"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Scored at</dt><dd class="font-medium" x-text="formatDate(detail.scored_at)"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Score updated</dt><dd class="font-medium" x-text="formatDate(detail.updated_at)"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Agency created</dt><dd class="font-medium" x-text="formatDate(detail.created_at)"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Agency updated</dt><dd class="font-medium" x-text="formatDate(detail.agency_updated_at)"></dd></div>
               </dl>
             </section>
 
-            <section class="bg-white border border-slate-200 rounded-lg p-4">
+            <section class="surface p-4">
               <button
                 type="button"
                 class="flex items-center justify-between w-full text-left"
                 @click="showRaw = !showRaw"
               >
-                <h3 class="text-sm font-semibold text-slate-700">Raw AI score payload</h3>
-                <span class="text-xs text-slate-500" x-text="showRaw ? 'Hide' : 'Show'"></span>
+                <h3 class="section-title">Raw AI score payload</h3>
+                <span class="text-xs text-muted" x-text="showRaw ? 'Hide' : 'Show'"></span>
               </button>
               <pre
                 x-show="showRaw"
-                class="raw-json mt-3 text-xs bg-slate-50 border border-slate-200 rounded p-3 overflow-auto max-h-[28rem]"
+                class="raw-json mt-3 text-xs bg-mist/60 border border-[var(--line)] rounded-lg p-3 overflow-auto max-h-[28rem]"
                 x-text="formatRawScore(detail.raw_score)"
               ></pre>
             </section>
@@ -447,6 +789,8 @@
         tokenInput: '',
         agencies: [],
         drafts: {},
+        overview: null,
+        overviewLoading: false,
         loading: false,
         savingId: null,
         savedId: null,
@@ -459,8 +803,12 @@
         detail: null,
         detailLoading: false,
         showRaw: false,
+        activeKpi: '',
         filters: {
           tier: '',
+          outreachStatus: '',
+          eligibleOnly: '',
+          draftedWithinDays: null,
           minFit: null,
           maxFit: null,
           whiteLabelFit: '',
@@ -486,6 +834,29 @@
           return [...new Set(this.agencies.map((a) => a.estimated_size).filter(Boolean))].sort();
         },
 
+        isEligibleAwaiting(a) {
+          const hasEmail = !!(a.contact_email && String(a.contact_email).trim());
+          const status = a.outreach_status;
+          const notContacted = !status || !['drafted', 'sent'].includes(status);
+          return (
+            !!a.white_label_fit &&
+            !!a.is_real_agency &&
+            Number(a.white_label_score) >= 70 &&
+            hasEmail &&
+            notContacted
+          );
+        },
+
+        matchesOutreachFilter(a, statusFilter) {
+          if (!statusFilter) return true;
+          const status = a.outreach_status || null;
+          if (statusFilter === 'never') return !status;
+          if (statusFilter === 'ready_pending') {
+            return status === 'ready' || status === 'pending_rating';
+          }
+          return status === statusFilter;
+        },
+
         get filtered() {
           const q = (this.search || '').trim().toLowerCase();
           let rows = this.agencies.filter((a) => {
@@ -494,6 +865,14 @@
               if (!hay.includes(q)) return false;
             }
             if (this.filters.tier && a.tier !== this.filters.tier) return false;
+            if (!this.matchesOutreachFilter(a, this.filters.outreachStatus)) return false;
+            if (this.filters.eligibleOnly === 'true' && !this.isEligibleAwaiting(a)) return false;
+            if (this.filters.draftedWithinDays != null) {
+              if (a.outreach_status !== 'drafted' || !a.drafted_at) return false;
+              const days = Number(this.filters.draftedWithinDays);
+              const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+              if (new Date(a.drafted_at).getTime() < cutoff) return false;
+            }
             if (this.filters.minFit != null && this.filters.minFit !== '' && Number(a.fit_score) < Number(this.filters.minFit)) return false;
             if (this.filters.maxFit != null && this.filters.maxFit !== '' && Number(a.fit_score) > Number(this.filters.maxFit)) return false;
             if (this.filters.whiteLabelFit !== '' && String(!!a.white_label_fit) !== this.filters.whiteLabelFit) return false;
@@ -531,7 +910,7 @@
           window.addEventListener('hashchange', () => this.syncHash());
 
           if (this.token) {
-            this.loadAgencies().then(() => this.syncHash());
+            this.refreshAll().then(() => this.syncHash());
           }
         },
 
@@ -540,7 +919,7 @@
           if (!t) return;
           sessionStorage.setItem('agencyFitToken', t);
           this.token = t;
-          this.loadAgencies().then(() => this.syncHash());
+          this.refreshAll().then(() => this.syncHash());
         },
 
         parseAgencyHash() {
@@ -558,10 +937,12 @@
           }
         },
 
-        resetFilters() {
-          this.search = '';
-          this.filters = {
+        emptyFilters() {
+          return {
             tier: '',
+            outreachStatus: '',
+            eligibleOnly: '',
+            draftedWithinDays: null,
             minFit: null,
             maxFit: null,
             whiteLabelFit: '',
@@ -572,12 +953,70 @@
           };
         },
 
+        resetFilters() {
+          this.search = '';
+          this.activeKpi = '';
+          this.filters = this.emptyFilters();
+        },
+
+        applyOverviewFilter(key) {
+          if (this.activeKpi === key) {
+            this.resetFilters();
+            return;
+          }
+          this.activeKpi = key;
+          this.search = '';
+          this.filters = this.emptyFilters();
+
+          if (key === 'total') {
+            // no filters — show all
+          } else if (key === 'priority' || key === 'review' || key === 'low') {
+            this.filters.tier = key;
+          } else if (key === 'never') {
+            this.filters.outreachStatus = 'never';
+          } else if (key === 'drafted' || key === 'sent' || key === 'needs_rewrite' || key === 'failed') {
+            this.filters.outreachStatus = key;
+          } else if (key === 'ready_pending') {
+            this.filters.outreachStatus = 'ready_pending';
+          } else if (key === 'drafted_7d') {
+            this.filters.outreachStatus = 'drafted';
+            this.filters.draftedWithinDays = 7;
+          } else if (key === 'eligible') {
+            this.filters.eligibleOnly = 'true';
+          }
+        },
+
+        fmtAvg(v) {
+          if (v == null || v === '') return '—';
+          return Number(v).toFixed(1);
+        },
+
+        tierBadgeClass(tier) {
+          if (tier === 'priority') return 'badge-priority';
+          if (tier === 'review') return 'badge-review';
+          if (tier === 'low') return 'badge-low';
+          return 'badge-none';
+        },
+
+        outreachBadgeClass(status) {
+          if (!status) return 'badge-none';
+          const map = {
+            drafted: 'badge-drafted',
+            sent: 'badge-sent',
+            ready: 'badge-ready',
+            pending_rating: 'badge-pending_rating',
+            needs_rewrite: 'badge-needs_rewrite',
+            failed: 'badge-failed',
+          };
+          return map[status] || 'badge-none';
+        },
+
         setSort(key) {
           if (this.sortKey === key) {
             this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
           } else {
             this.sortKey = key;
-            this.sortDir = key === 'agency_name' || key === 'city' || key === 'tier' ? 'asc' : 'desc';
+            this.sortDir = key === 'agency_name' || key === 'city' || key === 'tier' || key === 'outreach_status' ? 'asc' : 'desc';
           }
         },
 
@@ -641,12 +1080,36 @@
         apiUrl(kind, id) {
           const mapped = {
             list: '/api/agencies',
+            overview: '/api/overview',
             update: '/api/agencies/update',
             detail: '/api/agencies/' + id,
           };
           const url = new URL(mapped[kind] || kind, window.location.origin);
           url.searchParams.set('token', this.token);
           return url.toString();
+        },
+
+        async refreshAll() {
+          await Promise.all([this.loadOverview(), this.loadAgencies()]);
+        },
+
+        async loadOverview() {
+          this.overviewLoading = true;
+          try {
+            const res = await fetch(this.apiUrl('overview'), {
+              headers: { Authorization: 'Bearer ' + this.token },
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            this.overview = await res.json();
+          } catch (e) {
+            console.error('overview load failed', e);
+            // Keep list usable even if overview fails
+          } finally {
+            this.overviewLoading = false;
+          }
         },
 
         async loadAgencies() {
@@ -769,6 +1232,7 @@
             }
             this.savedId = row.agency_id;
             setTimeout(() => { if (this.savedId === row.agency_id) this.savedId = null; }, 2000);
+            this.loadOverview();
           } catch (e) {
             this.error = e.message || String(e);
           } finally {
