@@ -113,7 +113,8 @@ const OUTREACH_LIST_SELECT = `
   d.accuracy_pass,
   d.rewrite_attempts,
   d.error AS outreach_error,
-  d.subject AS outreach_subject`;
+  d.subject AS outreach_subject,
+  LEFT(d.body_text, 140) AS outreach_snippet`;
 
 const OUTREACH_DETAIL_SELECT = `
   ${OUTREACH_LIST_SELECT},
@@ -136,7 +137,8 @@ const nullOutreachList = `
   NULL::boolean AS accuracy_pass,
   NULL::integer AS rewrite_attempts,
   NULL::text AS outreach_error,
-  NULL::text AS outreach_subject`;
+  NULL::text AS outreach_subject,
+  NULL::text AS outreach_snippet`;
 
 const nullOutreachDetail = `
   ${nullOutreachList},
@@ -383,6 +385,23 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
       return res.status(400).json({ error: 'action must be approve or reject' });
     }
 
+    let nextSubject = null;
+    let nextBody = null;
+    if (action === 'approve') {
+      if (body.subject != null) {
+        nextSubject = String(body.subject).trim();
+        if (!nextSubject) {
+          return res.status(400).json({ error: 'subject cannot be empty' });
+        }
+      }
+      if (body.body != null) {
+        nextBody = String(body.body).trim();
+        if (!nextBody) {
+          return res.status(400).json({ error: 'body cannot be empty' });
+        }
+      }
+    }
+
     const { rows: currentRows } = await pool.query(
       `SELECT agency_id, status FROM agency_outreach_drafts WHERE agency_id = $1 LIMIT 1`,
       [agencyId],
@@ -405,6 +424,8 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
       `UPDATE agency_outreach_drafts SET
         status = $2,
         error = $3,
+        subject = COALESCE($4, subject),
+        body_text = COALESCE($5, body_text),
         updated_at = NOW()
       WHERE agency_id = $1
         AND status = 'pending_review'
@@ -420,7 +441,7 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
         gmail_draft_id,
         drafted_at,
         updated_at`,
-      [agencyId, nextStatus, nextError],
+      [agencyId, nextStatus, nextError, nextSubject, nextBody],
     );
 
     if (!rows.length) {
@@ -433,6 +454,7 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
       outreach_status: row.status,
       outreach_subject: row.subject,
       outreach_body: row.body_text,
+      outreach_snippet: row.body_text ? String(row.body_text).slice(0, 140) : null,
       outreach_error: row.error,
       overall_score: row.overall_score,
       accuracy_score: row.accuracy_score,

@@ -195,6 +195,122 @@
       color: var(--ink);
       letter-spacing: 0.01em;
     }
+    .nav-tab {
+      padding: 0.4rem 0.85rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .nav-tab:hover { background: rgba(5, 122, 114, 0.08); color: var(--ink); }
+    .nav-tab.active {
+      background: #fff;
+      color: var(--accent-dark);
+      box-shadow: 0 1px 2px rgba(16, 47, 47, 0.06);
+      border: 1px solid var(--line);
+    }
+    .inbox-shell {
+      display: grid;
+      grid-template-columns: 11rem minmax(16rem, 22rem) 1fr;
+      height: calc(100vh - 8.5rem);
+      min-height: 28rem;
+      overflow: hidden;
+    }
+    @media (max-width: 900px) {
+      .inbox-shell {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 0;
+      }
+      .inbox-shell.mobile-reading .inbox-folders,
+      .inbox-shell.mobile-reading .inbox-list { display: none; }
+      .inbox-shell:not(.mobile-reading) .inbox-pane { display: none; }
+    }
+    .inbox-folder {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      width: 100%;
+      text-align: left;
+      padding: 0.55rem 0.7rem;
+      border-radius: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--ink);
+      transition: background 0.12s ease;
+    }
+    .inbox-folder:hover { background: rgba(5, 122, 114, 0.08); }
+    .inbox-folder.active {
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 600;
+    }
+    .inbox-folder-count {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: rgba(16, 47, 47, 0.06);
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      min-width: 1.4rem;
+      text-align: center;
+    }
+    .inbox-folder.active .inbox-folder-count {
+      background: rgba(5, 122, 114, 0.2);
+      color: var(--accent-dark);
+    }
+    .inbox-row {
+      width: 100%;
+      text-align: left;
+      padding: 0.75rem 0.9rem;
+      border-bottom: 1px solid var(--line);
+      transition: background 0.12s ease;
+      cursor: pointer;
+    }
+    .inbox-row:hover { background: rgba(237, 248, 245, 0.7); }
+    .inbox-row.selected {
+      background: rgba(5, 122, 114, 0.1);
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+    .inbox-row-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.15rem;
+    }
+    .inbox-compose {
+      border: 1px solid var(--line);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: #fff;
+    }
+    .inbox-compose input,
+    .inbox-compose textarea {
+      width: 100%;
+      border: 0;
+      resize: vertical;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      background: transparent;
+    }
+    .inbox-compose input {
+      font-weight: 600;
+      border-bottom: 1px solid var(--line);
+    }
+    .inbox-compose textarea {
+      min-height: 18rem;
+      line-height: 1.55;
+      font-family: inherit;
+    }
+    .inbox-compose input:focus,
+    .inbox-compose textarea:focus {
+      outline: none;
+      background: rgba(237, 248, 245, 0.45);
+    }
   </style>
 </head>
 <body>
@@ -202,15 +318,41 @@
     x-data="dashboard()"
     x-init="init()"
     x-cloak
-    class="max-w-[1400px] mx-auto px-4 py-6 sm:px-6"
+    class="mx-auto px-4 py-6 sm:px-6"
+    :class="view === 'inbox' ? 'max-w-[1600px]' : 'max-w-[1400px]'"
+    @keydown.window="onInboxKey($event)"
   >
-    <header class="mb-6 flex flex-wrap items-end justify-between gap-3 animate-fade-up">
+    <header class="mb-5 flex flex-wrap items-end justify-between gap-3 animate-fade-up">
       <div>
         <p class="text-xs font-semibold uppercase tracking-[0.08em] text-accent mb-1">Grand River Labs</p>
         <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-ink">Agency Outreach</h1>
-        <p class="text-sm text-muted mt-1">
+        <p class="text-sm text-muted mt-1" x-show="view !== 'inbox'">
           Review fit scores, approve or reject outreach drafts, and track pipeline health.
         </p>
+        <p class="text-sm text-muted mt-1" x-show="view === 'inbox'">
+          Review drafted emails — edit, approve, or reject. Use j/k to move, a to approve.
+        </p>
+        <nav x-show="token" class="mt-3 flex items-center gap-1 p-1 rounded-xl bg-white/60 border border-[var(--line)] w-fit">
+          <button
+            type="button"
+            class="nav-tab"
+            :class="{ active: view === 'list' || view === 'detail' }"
+            @click="openAgencies()"
+          >Agencies</button>
+          <button
+            type="button"
+            class="nav-tab"
+            :class="{ active: view === 'inbox' }"
+            @click="openInbox()"
+          >
+            Inbox
+            <span
+              x-show="overview && overview.pending_review > 0"
+              class="ml-1 inline-flex items-center justify-center min-w-[1.15rem] h-[1.15rem] px-1 rounded-full text-[0.65rem] font-semibold bg-amber-100 text-amber-800"
+              x-text="overview.pending_review"
+            ></span>
+          </button>
+        </nav>
       </div>
       <div class="flex items-center gap-2">
         <span
@@ -822,6 +964,254 @@
         </template>
       </div>
     </template>
+
+    <!-- Gmail-style draft inbox -->
+    <template x-if="token && view === 'inbox'">
+      <div>
+        <div x-show="error" class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 mb-4 text-sm" x-text="error"></div>
+        <div
+          class="inbox-shell surface animate-fade-up"
+          :class="{ 'mobile-reading': inboxMobileReading }"
+        >
+        <!-- Folders -->
+        <aside class="inbox-folders border-r border-[var(--line)] p-2 sm:p-3 bg-mist/40 overflow-y-auto">
+          <p class="px-2 mb-2 text-[0.65rem] font-semibold uppercase tracking-[0.06em] text-muted">Folders</p>
+          <div class="flex sm:flex-col gap-1 overflow-x-auto sm:overflow-visible pb-1 sm:pb-0">
+            <template x-for="folder in inboxFolders" :key="folder.id">
+              <button
+                type="button"
+                class="inbox-folder shrink-0"
+                :class="{ active: inboxFolder === folder.id }"
+                @click="setInboxFolder(folder.id)"
+              >
+                <span x-text="folder.label"></span>
+                <span class="inbox-folder-count" x-text="folderCount(folder.id)"></span>
+              </button>
+            </template>
+          </div>
+          <p class="hidden sm:block mt-4 px-2 text-[0.65rem] text-muted leading-relaxed">
+            Pending is your review queue. Edit freely, then approve — or reject to re-draft.
+          </p>
+        </aside>
+
+        <!-- Message list -->
+        <section class="inbox-list border-r border-[var(--line)] flex flex-col min-h-0 bg-white">
+          <div class="p-3 border-b border-[var(--line)] shrink-0 space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <h2 class="text-sm font-semibold text-ink" x-text="inboxFolderLabel"></h2>
+              <span class="text-xs text-muted" x-text="inboxMessages.length + ' email' + (inboxMessages.length === 1 ? '' : 's')"></span>
+            </div>
+            <input
+              type="search"
+              class="field w-full"
+              placeholder="Search agency, contact, subject…"
+              x-model="inboxSearch"
+            />
+          </div>
+          <div class="flex-1 overflow-y-auto min-h-[14rem] sm:min-h-0">
+            <div x-show="loading" class="p-4 text-sm text-muted">Loading drafts…</div>
+            <div
+              x-show="!loading && inboxMessages.length === 0"
+              class="p-6 text-center"
+            >
+              <p class="text-sm font-medium text-ink" x-text="inboxEmptyTitle"></p>
+              <p class="text-xs text-muted mt-1" x-text="inboxEmptyHint"></p>
+            </div>
+            <template x-for="row in inboxMessages" :key="row.agency_id">
+              <button
+                type="button"
+                class="inbox-row block"
+                :class="{ selected: inboxSelectedId === row.agency_id }"
+                @click="selectInboxDraft(row.agency_id)"
+              >
+                <div class="inbox-row-meta">
+                  <span class="text-sm font-semibold text-ink truncate" x-text="row.contact_name || row.agency_name || 'Unknown'"></span>
+                  <span class="text-[0.65rem] text-muted shrink-0" x-text="formatShortDate(row.drafted_at)"></span>
+                </div>
+                <div class="text-xs text-muted truncate mb-0.5" x-text="row.agency_name || '—'"></div>
+                <div class="text-sm text-ink truncate font-medium" x-text="row.outreach_subject || '(no subject)'"></div>
+                <div class="text-xs text-muted truncate mt-0.5" x-text="row.outreach_snippet || ''"></div>
+                <div class="mt-1.5 flex items-center gap-1.5">
+                  <span
+                    class="badge"
+                    :class="outreachBadgeClass(row.outreach_status)"
+                    x-text="row.outreach_status || '—'"
+                  ></span>
+                  <span
+                    x-show="row.overall_score != null"
+                    class="text-[0.65rem] text-muted"
+                    x-text="'Score ' + row.overall_score"
+                  ></span>
+                </div>
+              </button>
+            </template>
+          </div>
+        </section>
+
+        <!-- Reading pane -->
+        <section class="inbox-pane flex flex-col min-h-0 min-w-0 bg-white">
+          <div x-show="!inboxSelectedId" class="flex-1 flex items-center justify-center p-8 text-center">
+            <div>
+              <p class="text-sm font-medium text-ink">Select an email to review</p>
+              <p class="text-xs text-muted mt-1">Pick a draft from the list — oldest pending first.</p>
+            </div>
+          </div>
+
+          <div x-show="inboxSelectedId && inboxLoading" class="flex-1 flex items-center justify-center p-8 text-sm text-muted">
+            Loading email…
+          </div>
+
+          <template x-if="inboxSelectedId && !inboxLoading && inboxDraft">
+            <div class="flex flex-col h-full min-h-0">
+              <div class="shrink-0 p-4 border-b border-[var(--line)] space-y-3">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="min-w-0">
+                    <button
+                      type="button"
+                      class="sm:hidden text-xs text-accent font-medium mb-2"
+                      @click="inboxMobileReading = false; inboxSelectedId = null; inboxDraft = null; syncInboxHash()"
+                    >← Back to list</button>
+                    <h2 class="text-lg font-semibold text-ink leading-snug" x-text="inboxDraft.outreach_subject || '(no subject)'"></h2>
+                    <p class="text-sm text-muted mt-0.5">
+                      <span x-text="inboxDraft.agency_name"></span>
+                      <span x-show="inboxDraft.website"> · </span>
+                      <a
+                        x-show="inboxDraft.website"
+                        :href="inboxDraft.website"
+                        target="_blank"
+                        rel="noopener"
+                        class="text-accent hover:underline"
+                        x-text="inboxDraft.domain || 'website'"
+                      ></a>
+                    </p>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-1.5 shrink-0">
+                    <span
+                      class="badge"
+                      :class="outreachBadgeClass(inboxDraft.outreach_status)"
+                      x-text="inboxDraft.outreach_status || '—'"
+                    ></span>
+                    <span
+                      x-show="inboxDraft.overall_score != null"
+                      class="badge badge-none"
+                      x-text="'Overall ' + inboxDraft.overall_score"
+                    ></span>
+                  </div>
+                </div>
+
+                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                  <div class="flex gap-2 min-w-0">
+                    <dt class="text-muted shrink-0">To</dt>
+                    <dd class="font-medium truncate" x-text="formatInboxTo(inboxDraft)"></dd>
+                  </div>
+                  <div class="flex gap-2 min-w-0">
+                    <dt class="text-muted shrink-0">Drafted</dt>
+                    <dd class="font-medium" x-text="formatDate(inboxDraft.drafted_at)"></dd>
+                  </div>
+                  <div class="flex gap-2" x-show="inboxDraft.accuracy_score != null || inboxDraft.quality_score != null">
+                    <dt class="text-muted shrink-0">A / Q</dt>
+                    <dd class="font-medium">
+                      <span x-text="inboxDraft.accuracy_score ?? '—'"></span>
+                      /
+                      <span x-text="inboxDraft.quality_score ?? '—'"></span>
+                    </dd>
+                  </div>
+                  <div class="flex gap-2">
+                    <dt class="text-muted shrink-0">Agency</dt>
+                    <dd>
+                      <button type="button" class="text-accent hover:underline font-medium" @click="openDetail(inboxDraft.agency_id)">
+                        View profile
+                      </button>
+                    </dd>
+                  </div>
+                </dl>
+
+                <div
+                  x-show="inboxDraft.outreach_error && inboxDraft.outreach_status !== 'pending_review'"
+                  class="text-sm bg-red-50 border border-red-200 text-red-800 rounded-lg p-3"
+                >
+                  <span class="font-medium">Note:</span>
+                  <span x-text="inboxDraft.outreach_error"></span>
+                </div>
+              </div>
+
+              <div class="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
+                <template x-if="inboxDraft.outreach_status === 'pending_review'">
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                      <p class="text-xs font-medium text-muted uppercase tracking-[0.04em]">Draft</p>
+                      <span x-show="inboxEditDirty" class="text-xs font-medium text-amber-700">Unsaved edits</span>
+                    </div>
+                    <div class="inbox-compose">
+                      <input type="text" x-model="inboxEdit.subject" placeholder="Subject" />
+                      <textarea x-model="inboxEdit.body" placeholder="Email body" rows="16"></textarea>
+                    </div>
+                  </div>
+                </template>
+                <template x-if="inboxDraft.outreach_status !== 'pending_review'">
+                  <div class="space-y-3">
+                    <div>
+                      <p class="text-xs text-muted mb-1">Subject</p>
+                      <p class="text-sm font-semibold text-ink" x-text="inboxDraft.outreach_subject || '—'"></p>
+                    </div>
+                    <div>
+                      <p class="text-xs text-muted mb-1">Body</p>
+                      <pre
+                        class="text-sm whitespace-pre-wrap break-words bg-mist/60 border border-[var(--line)] rounded-lg p-4"
+                        x-text="inboxDraft.outreach_body || '—'"
+                      ></pre>
+                    </div>
+                  </div>
+                </template>
+              </div>
+
+              <div
+                x-show="inboxDraft.outreach_status === 'pending_review'"
+                class="shrink-0 p-4 border-t border-[var(--line)] bg-mist/30 space-y-3"
+              >
+                <label class="block text-sm">
+                  <span class="text-muted text-xs">Reject reason (optional)</span>
+                  <input
+                    type="text"
+                    class="field mt-1 w-full"
+                    x-model="inboxReviewNote"
+                    x-ref="inboxRejectNote"
+                    placeholder="Why reject this draft?"
+                    @keydown.enter.prevent="reviewInboxDraft('reject')"
+                  />
+                </label>
+                <div class="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    class="btn-primary"
+                    :disabled="reviewing"
+                    @click="reviewInboxDraft('approve')"
+                  >
+                    <span x-text="reviewing === 'approve' ? 'Approving…' : (inboxEditDirty ? 'Save & approve' : 'Approve')"></span>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-ghost text-red-700 border-red-200 hover:bg-red-50"
+                    :disabled="reviewing"
+                    @click="reviewInboxDraft('reject')"
+                  >
+                    <span x-text="reviewing === 'reject' ? 'Rejecting…' : 'Reject (re-queue)'"></span>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-ghost"
+                    :disabled="!inboxHasNext"
+                    @click="selectNextInboxDraft()"
+                  >Next</button>
+                  <span class="text-xs text-muted ml-auto hidden sm:inline">j/k navigate · a approve · r reject note</span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </section>
+      </div>
+      </div>
+    </template>
   </div>
 
   <script>
@@ -848,6 +1238,20 @@
         activeKpi: '',
         reviewNote: '',
         reviewing: null,
+        inboxFolder: 'pending_review',
+        inboxSelectedId: null,
+        inboxDraft: null,
+        inboxLoading: false,
+        inboxSearch: '',
+        inboxReviewNote: '',
+        inboxEdit: { subject: '', body: '' },
+        inboxMobileReading: false,
+        inboxFolders: [
+          { id: 'pending_review', label: 'Pending' },
+          { id: 'approved', label: 'Approved' },
+          { id: 'rejected', label: 'Rejected' },
+          { id: 'failed', label: 'Failed' },
+        ],
         filters: {
           tier: '',
           outreachStatus: '',
@@ -864,8 +1268,13 @@
 
         get statusText() {
           if (!this.token) return 'Not authenticated';
+          if (this.inboxLoading) return 'Loading email…';
           if (this.detailLoading) return 'Loading detail…';
           if (this.loading) return 'Loading…';
+          if (this.view === 'inbox') {
+            const n = this.folderCount('pending_review');
+            return n + ' pending review';
+          }
           if (this.view === 'detail' && this.detail) return this.detail.agency_name;
           return this.agencies.length + ' loaded';
         },
@@ -876,6 +1285,100 @@
 
         get estimatedSizes() {
           return [...new Set(this.agencies.map((a) => a.estimated_size).filter(Boolean))].sort();
+        },
+
+        get inboxFolderLabel() {
+          const f = this.inboxFolders.find((x) => x.id === this.inboxFolder);
+          return f ? f.label : 'Inbox';
+        },
+
+        get inboxEmptyTitle() {
+          if (this.inboxFolder === 'pending_review') return "You're caught up";
+          if (this.inboxFolder === 'approved') return 'No approved emails yet';
+          if (this.inboxFolder === 'rejected') return 'No rejected drafts';
+          if (this.inboxFolder === 'failed') return 'No failed drafts';
+          return 'Nothing here';
+        },
+
+        get inboxEmptyHint() {
+          if (this.inboxFolder === 'pending_review') return 'No drafts pending review. New ones appear after the drafting workflow runs.';
+          if (this.inboxFolder === 'failed') return 'Drafting failures will show up here with an error note.';
+          return 'Switch folders or check back after the next draft run.';
+        },
+
+        get inboxMessages() {
+          const q = (this.inboxSearch || '').trim().toLowerCase();
+          let rows = this.agencies.filter((a) => a.outreach_status === this.inboxFolder);
+          if (q) {
+            rows = rows.filter((a) => {
+              const hay = [
+                a.agency_name,
+                a.contact_name,
+                a.contact_email,
+                a.outreach_subject,
+                a.outreach_snippet,
+                a.domain,
+              ].filter(Boolean).join(' ').toLowerCase();
+              return hay.includes(q);
+            });
+          }
+          const asc = this.inboxFolder === 'pending_review';
+          return [...rows].sort((a, b) => {
+            const at = a.drafted_at ? new Date(a.drafted_at).getTime() : 0;
+            const bt = b.drafted_at ? new Date(b.drafted_at).getTime() : 0;
+            return asc ? at - bt : bt - at;
+          });
+        },
+
+        get inboxEditDirty() {
+          if (!this.inboxDraft || this.inboxDraft.outreach_status !== 'pending_review') return false;
+          return (
+            (this.inboxEdit.subject || '') !== (this.inboxDraft.outreach_subject || '') ||
+            (this.inboxEdit.body || '') !== (this.inboxDraft.outreach_body || '')
+          );
+        },
+
+        get inboxHasNext() {
+          const list = this.inboxMessages;
+          if (!list.length || !this.inboxSelectedId) return false;
+          const idx = list.findIndex((a) => a.agency_id === this.inboxSelectedId);
+          return idx >= 0 && idx < list.length - 1;
+        },
+
+        folderCount(folderId) {
+          if (this.overview) {
+            const map = {
+              pending_review: this.overview.pending_review,
+              approved: this.overview.approved,
+              rejected: this.overview.rejected,
+              failed: this.overview.failed,
+            };
+            if (map[folderId] != null) return Number(map[folderId]) || 0;
+          }
+          return this.agencies.filter((a) => a.outreach_status === folderId).length;
+        },
+
+        formatInboxTo(row) {
+          if (!row) return '—';
+          const name = row.contact_name || '';
+          const email = row.contact_email || '';
+          if (name && email) return name + ' <' + email + '>';
+          return email || name || '—';
+        },
+
+        formatShortDate(v) {
+          if (!v) return '';
+          try {
+            const d = new Date(v);
+            const now = new Date();
+            const sameDay = d.toDateString() === now.toDateString();
+            if (sameDay) {
+              return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+            }
+            return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+          } catch (e) {
+            return '';
+          }
         },
 
         isEligibleAwaiting(a) {
@@ -971,13 +1474,266 @@
           return m ? Number(m[1]) : null;
         },
 
+        parseInboxHash() {
+          const hash = window.location.hash || '';
+          const withId = hash.match(/^#\/inbox\/(\d+)$/);
+          if (withId) return { inbox: true, id: Number(withId[1]) };
+          if (hash === '#/inbox' || hash === '#/inbox/') return { inbox: true, id: null };
+          return null;
+        },
+
         syncHash() {
           if (!this.token) return;
+          const inbox = this.parseInboxHash();
+          if (inbox) {
+            this.view = 'inbox';
+            this.selectedId = null;
+            this.detail = null;
+            if (inbox.id) {
+              if (this.inboxSelectedId !== inbox.id || !this.inboxDraft) {
+                this.selectInboxDraft(inbox.id, false);
+              }
+            } else if (!this.inboxSelectedId && this.inboxFolder === 'pending_review') {
+              const first = this.inboxMessages[0];
+              if (first) this.selectInboxDraft(first.agency_id, true);
+            }
+            return;
+          }
           const id = this.parseAgencyHash();
           if (id) {
             if (this.view !== 'detail' || this.selectedId !== id) this.openDetail(id, false);
           } else if (this.view === 'detail') {
             this.closeDetail(false);
+          } else if (this.view === 'inbox') {
+            this.view = 'list';
+            this.inboxSelectedId = null;
+            this.inboxDraft = null;
+            this.inboxMobileReading = false;
+          }
+        },
+
+        openAgencies() {
+          this.view = 'list';
+          this.selectedId = null;
+          this.detail = null;
+          this.inboxSelectedId = null;
+          this.inboxDraft = null;
+          this.inboxMobileReading = false;
+          if (window.location.hash) {
+            history.pushState('', document.title, window.location.pathname + window.location.search);
+          }
+        },
+
+        openInbox(folder = 'pending_review', agencyId = null) {
+          this.view = 'inbox';
+          this.selectedId = null;
+          this.detail = null;
+          this.inboxFolder = folder || 'pending_review';
+          this.inboxMobileReading = false;
+          this.error = '';
+          if (agencyId) {
+            this.selectInboxDraft(agencyId, true);
+          } else {
+            this.inboxSelectedId = null;
+            this.inboxDraft = null;
+            this.syncInboxHash();
+            const first = this.inboxMessages[0];
+            if (first && this.inboxFolder === 'pending_review') {
+              this.selectInboxDraft(first.agency_id, true);
+            }
+          }
+        },
+
+        syncInboxHash() {
+          let next = '#/inbox';
+          if (this.inboxSelectedId) next = '#/inbox/' + this.inboxSelectedId;
+          if (window.location.hash !== next) window.location.hash = next;
+        },
+
+        setInboxFolder(folderId) {
+          if (this.inboxFolder === folderId) return;
+          this.inboxFolder = folderId;
+          this.inboxSelectedId = null;
+          this.inboxDraft = null;
+          this.inboxEdit = { subject: '', body: '' };
+          this.inboxReviewNote = '';
+          this.inboxMobileReading = false;
+          this.syncInboxHash();
+          if (folderId === 'pending_review' && this.inboxMessages[0]) {
+            this.selectInboxDraft(this.inboxMessages[0].agency_id, true);
+          }
+        },
+
+        async selectInboxDraft(agencyId, pushHash = true) {
+          const id = Number(agencyId);
+          if (!Number.isFinite(id) || id <= 0) return;
+          this.view = 'inbox';
+          this.inboxSelectedId = id;
+          this.inboxLoading = true;
+          this.inboxMobileReading = true;
+          this.error = '';
+          this.inboxReviewNote = '';
+          this.reviewing = null;
+          if (pushHash) this.syncInboxHash();
+          try {
+            const res = await fetch(this.apiUrl('detail', id), {
+              headers: { Authorization: 'Bearer ' + this.token },
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            const row = this.normalizeRow(await res.json());
+            this.inboxDraft = row;
+            if (row.outreach_status && row.outreach_status !== this.inboxFolder) {
+              this.inboxFolder = row.outreach_status;
+            }
+            this.inboxEdit = {
+              subject: row.outreach_subject || '',
+              body: row.outreach_body || '',
+            };
+            const listIdx = this.agencies.findIndex((a) => a.agency_id === id);
+            if (listIdx >= 0) {
+              this.agencies[listIdx] = {
+                ...this.agencies[listIdx],
+                outreach_status: row.outreach_status,
+                outreach_subject: row.outreach_subject,
+                outreach_snippet: row.outreach_body
+                  ? String(row.outreach_body).slice(0, 140)
+                  : this.agencies[listIdx].outreach_snippet,
+                outreach_error: row.outreach_error,
+                overall_score: row.overall_score,
+                drafted_at: row.drafted_at,
+              };
+            }
+          } catch (e) {
+            this.error = e.message || String(e);
+            this.inboxDraft = null;
+          } finally {
+            this.inboxLoading = false;
+          }
+        },
+
+        selectNextInboxDraft() {
+          const list = this.inboxMessages;
+          const idx = list.findIndex((a) => a.agency_id === this.inboxSelectedId);
+          if (idx >= 0 && idx < list.length - 1) {
+            this.selectInboxDraft(list[idx + 1].agency_id);
+          }
+        },
+
+        selectPrevInboxDraft() {
+          const list = this.inboxMessages;
+          const idx = list.findIndex((a) => a.agency_id === this.inboxSelectedId);
+          if (idx > 0) {
+            this.selectInboxDraft(list[idx - 1].agency_id);
+          }
+        },
+
+        onInboxKey(e) {
+          if (this.view !== 'inbox' || this.reviewing) return;
+          const tag = (e.target && e.target.tagName) || '';
+          const typing = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable);
+          if (typing) return;
+          const key = (e.key || '').toLowerCase();
+          if (key === 'j') {
+            e.preventDefault();
+            this.selectNextInboxDraft();
+          } else if (key === 'k') {
+            e.preventDefault();
+            this.selectPrevInboxDraft();
+          } else if (key === 'a' && this.inboxFolder === 'pending_review' && this.inboxDraft?.outreach_status === 'pending_review') {
+            e.preventDefault();
+            this.reviewInboxDraft('approve');
+          } else if (key === 'r' && this.inboxFolder === 'pending_review' && this.inboxDraft?.outreach_status === 'pending_review') {
+            e.preventDefault();
+            this.$nextTick(() => {
+              const el = this.$refs.inboxRejectNote;
+              if (el) el.focus();
+            });
+          }
+        },
+
+        async reviewInboxDraft(action) {
+          if (!this.inboxDraft || this.inboxDraft.outreach_status !== 'pending_review') return;
+          if (action === 'approve') {
+            if (!(this.inboxEdit.subject || '').trim()) {
+              this.error = 'Subject cannot be empty';
+              return;
+            }
+            if (!(this.inboxEdit.body || '').trim()) {
+              this.error = 'Body cannot be empty';
+              return;
+            }
+          }
+
+          const list = this.inboxMessages;
+          const idx = list.findIndex((a) => a.agency_id === this.inboxDraft.agency_id);
+          const nextId = (idx >= 0 && list[idx + 1])
+            ? list[idx + 1].agency_id
+            : (idx > 0 ? list[idx - 1].agency_id : null);
+
+          this.reviewing = action;
+          this.error = '';
+          try {
+            const payload = {
+              agency_id: this.inboxDraft.agency_id,
+              action,
+              note: this.inboxReviewNote || null,
+            };
+            if (action === 'approve') {
+              payload.subject = this.inboxEdit.subject;
+              payload.body = this.inboxEdit.body;
+            }
+            const res = await fetch(this.apiUrl('review'), {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + this.token,
+              },
+              body: JSON.stringify(payload),
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            const updated = await res.json();
+            const patch = {
+              outreach_status: updated.outreach_status,
+              outreach_subject: updated.outreach_subject,
+              outreach_body: updated.outreach_body,
+              outreach_snippet: updated.outreach_snippet
+                || (updated.outreach_body ? String(updated.outreach_body).slice(0, 140) : null),
+              outreach_error: updated.outreach_error,
+              overall_score: updated.overall_score,
+              accuracy_score: updated.accuracy_score,
+              quality_score: updated.quality_score,
+              gmail_draft_id: updated.gmail_draft_id,
+              drafted_at: updated.drafted_at,
+              outreach_updated_at: updated.outreach_updated_at,
+            };
+            const listIdx = this.agencies.findIndex((a) => a.agency_id === this.inboxDraft.agency_id);
+            if (listIdx >= 0) {
+              this.agencies[listIdx] = { ...this.agencies[listIdx], ...patch };
+            }
+            if (this.detail && this.detail.agency_id === this.inboxDraft.agency_id) {
+              this.detail = { ...this.detail, ...patch };
+            }
+            this.inboxReviewNote = '';
+            this.loadOverview();
+
+            if (this.inboxFolder === 'pending_review' && nextId) {
+              await this.selectInboxDraft(nextId, true);
+            } else {
+              this.inboxSelectedId = null;
+              this.inboxDraft = null;
+              this.inboxMobileReading = false;
+              this.syncInboxHash();
+            }
+          } catch (e) {
+            this.error = e.message || String(e);
+          } finally {
+            this.reviewing = null;
           }
         },
 
@@ -1004,6 +1760,11 @@
         },
 
         applyOverviewFilter(key) {
+          if (key === 'pending_review') {
+            this.activeKpi = key;
+            this.openInbox('pending_review');
+            return;
+          }
           if (this.activeKpi === key) {
             this.resetFilters();
             return;
@@ -1011,6 +1772,7 @@
           this.activeKpi = key;
           this.search = '';
           this.filters = this.emptyFilters();
+          if (this.view === 'inbox') this.openAgencies();
 
           if (key === 'total') {
             // no filters — show all
@@ -1023,7 +1785,6 @@
             || key === 'sent'
             || key === 'needs_rewrite'
             || key === 'failed'
-            || key === 'pending_review'
             || key === 'approved'
             || key === 'rejected'
           ) {
@@ -1262,6 +2023,8 @@
               outreach_status: updated.outreach_status,
               outreach_subject: updated.outreach_subject,
               outreach_body: updated.outreach_body,
+              outreach_snippet: updated.outreach_snippet
+                || (updated.outreach_body ? String(updated.outreach_body).slice(0, 140) : null),
               outreach_error: updated.outreach_error,
               overall_score: updated.overall_score,
               accuracy_score: updated.accuracy_score,
