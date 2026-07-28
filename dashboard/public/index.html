@@ -118,6 +118,9 @@
     .badge-sent { background: #d8f2f4; color: #0a5c66; }
     .badge-ready { background: #e8f0ff; color: #2a4a8a; }
     .badge-pending_rating { background: #fff3d6; color: #8a6500; }
+    .badge-pending_review { background: #fff3d6; color: #8a6500; }
+    .badge-approved { background: #dff5ef; color: #075752; }
+    .badge-rejected { background: #fde8e8; color: #9b2c2c; }
     .badge-needs_rewrite { background: #ffe8d6; color: #9a4a12; }
     .badge-failed { background: #fde8e8; color: #9b2c2c; }
     .badge-none { background: #f0f2f2; color: #5f7976; }
@@ -206,7 +209,7 @@
         <p class="text-xs font-semibold uppercase tracking-[0.08em] text-accent mb-1">Grand River Labs</p>
         <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-ink">Agency Outreach</h1>
         <p class="text-sm text-muted mt-1">
-          Review fit scores, triage outreach status, and track pipeline health.
+          Review fit scores, approve or reject outreach drafts, and track pipeline health.
         </p>
       </div>
       <div class="flex items-center gap-2">
@@ -278,6 +281,18 @@
               <div>
                 <p class="kpi-label mb-2">Outreach funnel</p>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'pending_review' }" @click="applyOverviewFilter('pending_review')">
+                    <div class="kpi-label">Pending review</div>
+                    <div class="kpi-value" x-text="overview.pending_review"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'approved' }" @click="applyOverviewFilter('approved')">
+                    <div class="kpi-label">Approved</div>
+                    <div class="kpi-value" x-text="overview.approved"></div>
+                  </button>
+                  <button type="button" class="kpi" :class="{ active: activeKpi === 'rejected' }" @click="applyOverviewFilter('rejected')">
+                    <div class="kpi-label">Rejected</div>
+                    <div class="kpi-value" x-text="overview.rejected"></div>
+                  </button>
                   <button type="button" class="kpi" :class="{ active: activeKpi === 'never' }" @click="applyOverviewFilter('never')">
                     <div class="kpi-label">Never contacted</div>
                     <div class="kpi-value" x-text="overview.never_contacted"></div>
@@ -286,25 +301,9 @@
                     <div class="kpi-label">Drafted</div>
                     <div class="kpi-value" x-text="overview.drafted"></div>
                   </button>
-                  <button type="button" class="kpi" :class="{ active: activeKpi === 'sent' }" @click="applyOverviewFilter('sent')">
-                    <div class="kpi-label">Sent</div>
-                    <div class="kpi-value" x-text="overview.sent"></div>
-                  </button>
-                  <button type="button" class="kpi" :class="{ active: activeKpi === 'needs_rewrite' }" @click="applyOverviewFilter('needs_rewrite')">
-                    <div class="kpi-label">Needs rewrite</div>
-                    <div class="kpi-value" x-text="overview.needs_rewrite"></div>
-                  </button>
                   <button type="button" class="kpi" :class="{ active: activeKpi === 'failed' }" @click="applyOverviewFilter('failed')">
                     <div class="kpi-label">Failed</div>
                     <div class="kpi-value" x-text="overview.failed"></div>
-                  </button>
-                  <button type="button" class="kpi" :class="{ active: activeKpi === 'ready_pending' }" @click="applyOverviewFilter('ready_pending')">
-                    <div class="kpi-label">Ready / pending</div>
-                    <div class="kpi-value" x-text="(overview.ready || 0) + (overview.pending_rating || 0)"></div>
-                    <div class="kpi-hint">
-                      <span x-text="overview.ready"></span> ready ·
-                      <span x-text="overview.pending_rating"></span> pending
-                    </div>
                   </button>
                 </div>
               </div>
@@ -347,13 +346,15 @@
             <select x-model="filters.outreachStatus" class="field">
               <option value="">Outreach: any</option>
               <option value="never">Never contacted</option>
+              <option value="pending_review">pending_review</option>
+              <option value="approved">approved</option>
+              <option value="rejected">rejected</option>
               <option value="drafted">drafted</option>
               <option value="sent">sent</option>
+              <option value="failed">failed</option>
+              <option value="needs_rewrite">needs_rewrite</option>
               <option value="ready">ready</option>
               <option value="pending_rating">pending_rating</option>
-              <option value="needs_rewrite">needs_rewrite</option>
-              <option value="failed">failed</option>
-              <option value="ready_pending">ready / pending</option>
             </select>
             <input
               type="number"
@@ -674,8 +675,6 @@
                     ></span>
                   </dd>
                 </div>
-                <div><dt class="text-muted text-xs mb-0.5">Subject</dt><dd class="font-medium" x-text="detail.outreach_subject || '—'"></dd></div>
-                <div><dt class="text-muted text-xs mb-0.5">Gmail draft ID</dt><dd class="font-medium break-all text-xs" x-text="detail.gmail_draft_id || '—'"></dd></div>
                 <div><dt class="text-muted text-xs mb-0.5">Overall score</dt><dd class="font-medium" x-text="detail.overall_score ?? '—'"></dd></div>
                 <div><dt class="text-muted text-xs mb-0.5">Accuracy / quality</dt>
                   <dd class="font-medium">
@@ -686,12 +685,55 @@
                 </div>
                 <div><dt class="text-muted text-xs mb-0.5">Accuracy pass</dt><dd class="font-medium" x-text="detail.accuracy_pass == null ? '—' : (detail.accuracy_pass ? 'yes' : 'no')"></dd></div>
                 <div><dt class="text-muted text-xs mb-0.5">Rewrite attempts</dt><dd class="font-medium" x-text="detail.rewrite_attempts ?? '—'"></dd></div>
+                <div><dt class="text-muted text-xs mb-0.5">Gmail draft ID</dt><dd class="font-medium break-all text-xs" x-text="detail.gmail_draft_id || '—'"></dd></div>
                 <div><dt class="text-muted text-xs mb-0.5">Drafted at</dt><dd class="font-medium" x-text="formatDate(detail.drafted_at)"></dd></div>
                 <div><dt class="text-muted text-xs mb-0.5">Outreach updated</dt><dd class="font-medium" x-text="formatDate(detail.outreach_updated_at)"></dd></div>
               </dl>
+
+              <div class="mt-4 space-y-2">
+                <div>
+                  <p class="text-muted text-xs mb-1">Subject</p>
+                  <p class="text-sm font-medium text-ink" x-text="detail.outreach_subject || '—'"></p>
+                </div>
+                <div>
+                  <p class="text-muted text-xs mb-1">Body</p>
+                  <pre
+                    class="text-sm whitespace-pre-wrap break-words bg-mist/60 border border-[var(--line)] rounded-lg p-3 max-h-[28rem] overflow-auto"
+                    x-text="detail.outreach_body || '—'"
+                  ></pre>
+                </div>
+              </div>
+
               <div x-show="detail.outreach_error" class="mt-3 text-sm bg-red-50 border border-red-200 text-red-800 rounded-lg p-3">
                 <span class="font-medium">Error:</span>
                 <span x-text="detail.outreach_error"></span>
+              </div>
+
+              <div x-show="detail.outreach_status === 'pending_review'" class="mt-4 pt-4 border-t border-[var(--line)] space-y-3">
+                <p class="text-sm font-medium text-ink">Human review</p>
+                <label class="block text-sm">
+                  <span class="text-muted text-xs">Reject reason (optional)</span>
+                  <input type="text" class="field mt-1 w-full" x-model="reviewNote" placeholder="Why reject this draft?" />
+                </label>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    class="btn-primary"
+                    :disabled="reviewing"
+                    @click="reviewOutreach('approve')"
+                  >
+                    <span x-text="reviewing === 'approve' ? 'Approving…' : 'Approve'"></span>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-ghost text-red-700 border-red-200 hover:bg-red-50"
+                    :disabled="reviewing"
+                    @click="reviewOutreach('reject')"
+                  >
+                    <span x-text="reviewing === 'reject' ? 'Rejecting…' : 'Reject (re-queue)'"></span>
+                  </button>
+                </div>
+                <p class="text-xs text-muted">Approve holds for a later send flow. Reject returns the agency to the drafting queue.</p>
               </div>
             </section>
 
@@ -804,6 +846,8 @@
         detailLoading: false,
         showRaw: false,
         activeKpi: '',
+        reviewNote: '',
+        reviewing: null,
         filters: {
           tier: '',
           outreachStatus: '',
@@ -837,13 +881,13 @@
         isEligibleAwaiting(a) {
           const hasEmail = !!(a.contact_email && String(a.contact_email).trim());
           const status = a.outreach_status;
-          const notContacted = !status || !['drafted', 'sent'].includes(status);
+          const blocked = ['drafted', 'sent', 'pending_review', 'approved'].includes(status);
           return (
             !!a.white_label_fit &&
             !!a.is_real_agency &&
             Number(a.white_label_score) >= 70 &&
             hasEmail &&
-            notContacted
+            !blocked
           );
         },
 
@@ -974,10 +1018,16 @@
             this.filters.tier = key;
           } else if (key === 'never') {
             this.filters.outreachStatus = 'never';
-          } else if (key === 'drafted' || key === 'sent' || key === 'needs_rewrite' || key === 'failed') {
+          } else if (
+            key === 'drafted'
+            || key === 'sent'
+            || key === 'needs_rewrite'
+            || key === 'failed'
+            || key === 'pending_review'
+            || key === 'approved'
+            || key === 'rejected'
+          ) {
             this.filters.outreachStatus = key;
-          } else if (key === 'ready_pending') {
-            this.filters.outreachStatus = 'ready_pending';
           } else if (key === 'drafted_7d') {
             this.filters.outreachStatus = 'drafted';
             this.filters.draftedWithinDays = 7;
@@ -1005,6 +1055,9 @@
             sent: 'badge-sent',
             ready: 'badge-ready',
             pending_rating: 'badge-pending_rating',
+            pending_review: 'badge-pending_review',
+            approved: 'badge-approved',
+            rejected: 'badge-rejected',
             needs_rewrite: 'badge-needs_rewrite',
             failed: 'badge-failed',
           };
@@ -1082,6 +1135,7 @@
             list: '/api/agencies',
             overview: '/api/overview',
             update: '/api/agencies/update',
+            review: '/api/outreach/review',
             detail: '/api/agencies/' + id,
           };
           const url = new URL(mapped[kind] || kind, window.location.origin);
@@ -1144,6 +1198,8 @@
           this.detailLoading = true;
           this.error = '';
           this.showRaw = false;
+          this.reviewNote = '';
+          this.reviewing = null;
           if (pushHash) {
             const next = '#/agency/' + id;
             if (window.location.hash !== next) window.location.hash = next;
@@ -1173,8 +1229,58 @@
           this.detail = null;
           this.detailLoading = false;
           this.showRaw = false;
+          this.reviewNote = '';
+          this.reviewing = null;
           if (clearHash && window.location.hash) {
             history.pushState('', document.title, window.location.pathname + window.location.search);
+          }
+        },
+
+        async reviewOutreach(action) {
+          if (!this.detail || this.detail.outreach_status !== 'pending_review') return;
+          this.reviewing = action;
+          this.error = '';
+          try {
+            const res = await fetch(this.apiUrl('review'), {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + this.token,
+              },
+              body: JSON.stringify({
+                agency_id: this.detail.agency_id,
+                action,
+                note: this.reviewNote || null,
+              }),
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || ('HTTP ' + res.status));
+            }
+            const updated = await res.json();
+            const patch = {
+              outreach_status: updated.outreach_status,
+              outreach_subject: updated.outreach_subject,
+              outreach_body: updated.outreach_body,
+              outreach_error: updated.outreach_error,
+              overall_score: updated.overall_score,
+              accuracy_score: updated.accuracy_score,
+              quality_score: updated.quality_score,
+              gmail_draft_id: updated.gmail_draft_id,
+              drafted_at: updated.drafted_at,
+              outreach_updated_at: updated.outreach_updated_at,
+            };
+            this.detail = { ...this.detail, ...patch };
+            const idx = this.agencies.findIndex((a) => a.agency_id === this.detail.agency_id);
+            if (idx >= 0) {
+              this.agencies[idx] = { ...this.agencies[idx], ...patch };
+            }
+            this.reviewNote = '';
+            this.loadOverview();
+          } catch (e) {
+            this.error = e.message || String(e);
+          } finally {
+            this.reviewing = null;
           }
         },
 

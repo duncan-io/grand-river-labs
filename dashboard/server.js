@@ -58,6 +58,9 @@ const emptyOutreachOverview = {
   failed: 0,
   ready: 0,
   pending_rating: 0,
+  pending_review: 0,
+  approved: 0,
+  rejected: 0,
   drafted_last_7_days: 0,
   eligible_awaiting: 0,
   avg_overall_score: null,
@@ -109,11 +112,12 @@ const OUTREACH_LIST_SELECT = `
   d.overall_score,
   d.accuracy_pass,
   d.rewrite_attempts,
-  d.error AS outreach_error`;
+  d.error AS outreach_error,
+  d.subject AS outreach_subject`;
 
 const OUTREACH_DETAIL_SELECT = `
   ${OUTREACH_LIST_SELECT},
-  d.subject AS outreach_subject,
+  d.body_text AS outreach_body,
   d.accuracy_score,
   d.quality_score,
   d.updated_at AS outreach_updated_at`;
@@ -131,11 +135,12 @@ const nullOutreachList = `
   NULL::integer AS overall_score,
   NULL::boolean AS accuracy_pass,
   NULL::integer AS rewrite_attempts,
-  NULL::text AS outreach_error`;
+  NULL::text AS outreach_error,
+  NULL::text AS outreach_subject`;
 
 const nullOutreachDetail = `
   ${nullOutreachList},
-  NULL::text AS outreach_subject,
+  NULL::text AS outreach_body,
   NULL::integer AS accuracy_score,
   NULL::integer AS quality_score,
   NULL::timestamptz AS outreach_updated_at`;
@@ -168,8 +173,11 @@ app.get('/api/overview', requireToken, async (_req, res) => {
           COUNT(*) FILTER (WHERE d.status = 'failed')::int AS failed,
           COUNT(*) FILTER (WHERE d.status = 'ready')::int AS ready,
           COUNT(*) FILTER (WHERE d.status = 'pending_rating')::int AS pending_rating,
+          COUNT(*) FILTER (WHERE d.status = 'pending_review')::int AS pending_review,
+          COUNT(*) FILTER (WHERE d.status = 'approved')::int AS approved,
+          COUNT(*) FILTER (WHERE d.status = 'rejected')::int AS rejected,
           COUNT(*) FILTER (
-            WHERE d.status = 'drafted'
+            WHERE d.status IN ('drafted', 'pending_review')
               AND d.drafted_at >= NOW() - INTERVAL '7 days'
           )::int AS drafted_last_7_days,
           COUNT(*) FILTER (
@@ -177,7 +185,10 @@ app.get('/api/overview', requireToken, async (_req, res) => {
               AND s.is_real_agency = true
               AND s.white_label_score >= 70
               AND NULLIF(TRIM(a.contact_email), '') IS NOT NULL
-              AND (d.agency_id IS NULL OR d.status NOT IN ('drafted', 'sent'))
+              AND (
+                d.agency_id IS NULL
+                OR d.status IN ('failed', 'rejected')
+              )
           )::int AS eligible_awaiting,
           ROUND(AVG(d.overall_score) FILTER (WHERE d.overall_score IS NOT NULL)::numeric, 1)
             AS avg_overall_score
@@ -214,6 +225,9 @@ app.get('/api/overview', requireToken, async (_req, res) => {
       failed: Number(outreach.failed) || 0,
       ready: Number(outreach.ready) || 0,
       pending_rating: Number(outreach.pending_rating) || 0,
+      pending_review: Number(outreach.pending_review) || 0,
+      approved: Number(outreach.approved) || 0,
+      rejected: Number(outreach.rejected) || 0,
       drafted_last_7_days: Number(outreach.drafted_last_7_days) || 0,
       eligible_awaiting: Number(outreach.eligible_awaiting) || 0,
       avg_overall_score: outreach.avg_overall_score != null ? Number(outreach.avg_overall_score) : null,
@@ -349,6 +363,87 @@ app.post('/api/agencies/update', requireToken, async (req, res) => {
   } catch (err) {
     console.error('update agency failed', err);
     return res.status(500).json({ error: 'Failed to update agency' });
+  }
+});
+
+app.post('/api/outreach/review', requireToken, async (req, res) => {
+  try {
+    if (!(await hasOutreachTable())) {
+      return res.status(400).json({ error: 'Outreach drafts table not found' });
+    }
+    const body = req.body || {};
+    const agencyId = Number(body.agency_id);
+    const action = String(body.action || '').trim().toLowerCase();
+    const note = body.note == null ? '' : String(body.note).trim();
+
+    if (!Number.isFinite(agencyId) || agencyId <= 0) {
+      return res.status(400).json({ error: 'agency_id is required' });
+    }
+    if (!['approve', 'reject'].includes(action)) {
+      return res.status(400).json({ error: 'action must be approve or reject' });
+    }
+
+    const { rows: currentRows } = await pool.query(
+      `SELECT agency_id, status FROM agency_outreach_drafts WHERE agency_id = $1 LIMIT 1`,
+      [agencyId],
+    );
+    if (!currentRows.length) {
+      return res.status(404).json({ error: 'Outreach draft not found' });
+    }
+    if (currentRows[0].status !== 'pending_review') {
+      return res.status(400).json({
+        error: `Draft status must be pending_review (got ${currentRows[0].status})`,
+      });
+    }
+
+    const nextStatus = action === 'approve' ? 'approved' : 'rejected';
+    const nextError = action === 'reject'
+      ? (note || 'Rejected by human reviewer')
+      : null;
+
+    const { rows } = await pool.query(
+      `UPDATE agency_outreach_drafts SET
+        status = $2,
+        error = $3,
+        updated_at = NOW()
+      WHERE agency_id = $1
+        AND status = 'pending_review'
+      RETURNING
+        agency_id,
+        status,
+        subject,
+        body_text,
+        error,
+        overall_score,
+        accuracy_score,
+        quality_score,
+        gmail_draft_id,
+        drafted_at,
+        updated_at`,
+      [agencyId, nextStatus, nextError],
+    );
+
+    if (!rows.length) {
+      return res.status(409).json({ error: 'Draft was no longer pending_review' });
+    }
+
+    const row = rows[0];
+    return res.json({
+      agency_id: row.agency_id,
+      outreach_status: row.status,
+      outreach_subject: row.subject,
+      outreach_body: row.body_text,
+      outreach_error: row.error,
+      overall_score: row.overall_score,
+      accuracy_score: row.accuracy_score,
+      quality_score: row.quality_score,
+      gmail_draft_id: row.gmail_draft_id,
+      drafted_at: row.drafted_at,
+      outreach_updated_at: row.updated_at,
+    });
+  } catch (err) {
+    console.error('outreach review failed', err);
+    return res.status(500).json({ error: 'Failed to review outreach draft' });
   }
 });
 
