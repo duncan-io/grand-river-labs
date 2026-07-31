@@ -106,15 +106,22 @@ const AGENCY_LIST_SELECT = `
   s.updated_at`;
 
 const OUTREACH_LIST_SELECT = `
+  d.outreach_id,
+  d.sequence_no,
+  d.parent_outreach_id,
   d.status AS outreach_status,
   d.gmail_draft_id,
+  d.gmail_thread_id,
+  d.gmail_message_id,
   d.drafted_at,
+  d.sent_at,
   d.overall_score,
   d.accuracy_pass,
   d.rewrite_attempts,
   d.error AS outreach_error,
   d.subject AS outreach_subject,
-  LEFT(d.body_text, 140) AS outreach_snippet`;
+  LEFT(d.body_text, 140) AS outreach_snippet,
+  d.reply_detected`;
 
 const OUTREACH_DETAIL_SELECT = `
   ${OUTREACH_LIST_SELECT},
@@ -130,15 +137,22 @@ const AGENCY_DETAIL_SELECT = `
   s.raw_score`;
 
 const nullOutreachList = `
+  NULL::integer AS outreach_id,
+  NULL::integer AS sequence_no,
+  NULL::integer AS parent_outreach_id,
   NULL::text AS outreach_status,
   NULL::text AS gmail_draft_id,
+  NULL::text AS gmail_thread_id,
+  NULL::text AS gmail_message_id,
   NULL::timestamptz AS drafted_at,
+  NULL::timestamptz AS sent_at,
   NULL::integer AS overall_score,
   NULL::boolean AS accuracy_pass,
   NULL::integer AS rewrite_attempts,
   NULL::text AS outreach_error,
   NULL::text AS outreach_subject,
-  NULL::text AS outreach_snippet`;
+  NULL::text AS outreach_snippet,
+  NULL::boolean AS reply_detected`;
 
 const nullOutreachDetail = `
   ${nullOutreachList},
@@ -172,7 +186,7 @@ app.get('/api/overview', requireToken, async (_req, res) => {
           COUNT(*) FILTER (WHERE d.status = 'drafted')::int AS drafted,
           COUNT(*) FILTER (WHERE d.status = 'sent')::int AS sent,
           COUNT(*) FILTER (WHERE d.status = 'needs_rewrite')::int AS needs_rewrite,
-          COUNT(*) FILTER (WHERE d.status = 'failed')::int AS failed,
+          COUNT(*) FILTER (WHERE d.status IN ('failed', 'send_failed'))::int AS failed,
           COUNT(*) FILTER (WHERE d.status = 'ready')::int AS ready,
           COUNT(*) FILTER (WHERE d.status = 'pending_rating')::int AS pending_rating,
           COUNT(*) FILTER (WHERE d.status = 'pending_review')::int AS pending_review,
@@ -182,14 +196,17 @@ app.get('/api/overview', requireToken, async (_req, res) => {
             WHERE d.status IN ('drafted', 'pending_review')
               AND d.drafted_at >= NOW() - INTERVAL '7 days'
           )::int AS drafted_last_7_days,
-          COUNT(*) FILTER (
+          COUNT(DISTINCT a.id) FILTER (
             WHERE s.white_label_fit = true
               AND s.is_real_agency = true
               AND s.white_label_score >= 70
               AND NULLIF(TRIM(a.contact_email), '') IS NOT NULL
-              AND (
-                d.agency_id IS NULL
-                OR d.status IN ('failed', 'rejected')
+              AND NOT EXISTS (
+                SELECT 1
+                FROM agency_outreach_drafts x
+                WHERE x.agency_id = a.id
+                  AND x.sequence_no = 0
+                  AND x.status NOT IN ('failed', 'rejected')
               )
           )::int AS eligible_awaiting,
           ROUND(AVG(d.overall_score) FILTER (WHERE d.overall_score IS NOT NULL)::numeric, 1)
@@ -244,20 +261,38 @@ app.get('/api/overview', requireToken, async (_req, res) => {
 app.get('/api/agencies', requireToken, async (_req, res) => {
   try {
     const hasOutreach = await hasOutreachTable();
-    const select = hasOutreach
-      ? `${AGENCY_LIST_SELECT}, ${OUTREACH_LIST_SELECT}`
-      : `${AGENCY_LIST_SELECT}, ${nullOutreachList}`;
-    const join = hasOutreach
-      ? 'LEFT JOIN agency_outreach_drafts d ON d.agency_id = a.id'
-      : '';
+    if (!hasOutreach) {
+      const { rows } = await pool.query(`
+        SELECT ${AGENCY_LIST_SELECT}, ${nullOutreachList}
+        FROM agencies a
+        JOIN agency_fit_scores s ON s.agency_id = a.id
+        ORDER BY s.fit_score DESC, a.agency_name ASC
+      `);
+      return res.json(rows);
+    }
+
+    // One row per outreach message (plus agencies with no outreach) so the inbox
+    // can show initial + follow-up drafts in the same queue.
     const { rows } = await pool.query(`
-      SELECT ${select}
+      SELECT ${AGENCY_LIST_SELECT}, ${OUTREACH_LIST_SELECT}
       FROM agencies a
       JOIN agency_fit_scores s ON s.agency_id = a.id
-      ${join}
-      ORDER BY s.fit_score DESC, a.agency_name ASC
+      JOIN agency_outreach_drafts d ON d.agency_id = a.id
+      UNION ALL
+      SELECT ${AGENCY_LIST_SELECT}, ${nullOutreachList}
+      FROM agencies a
+      JOIN agency_fit_scores s ON s.agency_id = a.id
+      WHERE NOT EXISTS (
+        SELECT 1 FROM agency_outreach_drafts d2 WHERE d2.agency_id = a.id
+      )
     `);
-    res.json(rows);
+
+    rows.sort((a, b) => {
+      const fitDiff = Number(b.fit_score || 0) - Number(a.fit_score || 0);
+      if (fitDiff !== 0) return fitDiff;
+      return String(a.agency_name || '').localeCompare(String(b.agency_name || ''));
+    });
+    return res.json(rows);
   } catch (err) {
     console.error('list agencies failed', err);
     res.status(500).json({ error: 'Failed to load agencies' });
@@ -271,22 +306,42 @@ app.get('/api/agencies/:id', requireToken, async (req, res) => {
       return res.status(400).json({ error: 'Invalid agency id' });
     }
     const hasOutreach = await hasOutreachTable();
-    const select = hasOutreach
-      ? `${AGENCY_DETAIL_SELECT}, ${OUTREACH_DETAIL_SELECT}`
-      : `${AGENCY_DETAIL_SELECT}, ${nullOutreachDetail}`;
-    const join = hasOutreach
-      ? 'LEFT JOIN agency_outreach_drafts d ON d.agency_id = a.id'
-      : '';
+    if (!hasOutreach) {
+      const { rows } = await pool.query(
+        `
+        SELECT ${AGENCY_DETAIL_SELECT}, ${nullOutreachDetail}
+        FROM agencies a
+        JOIN agency_fit_scores s ON s.agency_id = a.id
+        WHERE a.id = $1
+        LIMIT 1
+      `,
+        [agencyId],
+      );
+      if (!rows.length) return res.status(404).json({ error: 'Agency not found' });
+      return res.json(rows[0]);
+    }
+
+    const outreachId = req.query.outreach_id != null ? Number(req.query.outreach_id) : null;
     const { rows } = await pool.query(
       `
-      SELECT ${select}
+      SELECT ${AGENCY_DETAIL_SELECT}, ${OUTREACH_DETAIL_SELECT}
       FROM agencies a
       JOIN agency_fit_scores s ON s.agency_id = a.id
-      ${join}
+      LEFT JOIN LATERAL (
+        SELECT d.*
+        FROM agency_outreach_drafts d
+        WHERE d.agency_id = a.id
+          AND ($2::int IS NULL OR d.outreach_id = $2::int)
+        ORDER BY
+          CASE WHEN d.status = 'pending_review' THEN 0 ELSE 1 END,
+          d.sequence_no DESC,
+          d.drafted_at DESC NULLS LAST
+        LIMIT 1
+      ) d ON true
       WHERE a.id = $1
       LIMIT 1
     `,
-      [agencyId],
+      [agencyId, Number.isFinite(outreachId) && outreachId > 0 ? outreachId : null],
     );
     if (!rows.length) {
       return res.status(404).json({ error: 'Agency not found' });
@@ -374,6 +429,7 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
       return res.status(400).json({ error: 'Outreach drafts table not found' });
     }
     const body = req.body || {};
+    const outreachId = body.outreach_id != null ? Number(body.outreach_id) : null;
     const agencyId = Number(body.agency_id);
     const action = String(body.action || '').trim().toLowerCase();
     const note = body.note == null ? '' : String(body.note).trim();
@@ -402,10 +458,32 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
       }
     }
 
-    const { rows: currentRows } = await pool.query(
-      `SELECT agency_id, status FROM agency_outreach_drafts WHERE agency_id = $1 LIMIT 1`,
-      [agencyId],
-    );
+    let currentRows;
+    if (Number.isFinite(outreachId) && outreachId > 0) {
+      const result = await pool.query(
+        `SELECT outreach_id, agency_id, sequence_no, status
+         FROM agency_outreach_drafts
+         WHERE outreach_id = $1
+         LIMIT 1`,
+        [outreachId],
+      );
+      currentRows = result.rows;
+      if (currentRows.length && Number(currentRows[0].agency_id) !== agencyId) {
+        return res.status(400).json({ error: 'outreach_id does not match agency_id' });
+      }
+    } else {
+      const result = await pool.query(
+        `SELECT outreach_id, agency_id, sequence_no, status
+         FROM agency_outreach_drafts
+         WHERE agency_id = $1
+           AND status = 'pending_review'
+         ORDER BY sequence_no DESC, drafted_at DESC
+         LIMIT 1`,
+        [agencyId],
+      );
+      currentRows = result.rows;
+    }
+
     if (!currentRows.length) {
       return res.status(404).json({ error: 'Outreach draft not found' });
     }
@@ -415,6 +493,7 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
       });
     }
 
+    const targetOutreachId = currentRows[0].outreach_id;
     const nextStatus = action === 'approve' ? 'approved' : 'rejected';
     const nextError = action === 'reject'
       ? (note || 'Rejected by human reviewer')
@@ -427,10 +506,12 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
         subject = COALESCE($4, subject),
         body_text = COALESCE($5, body_text),
         updated_at = NOW()
-      WHERE agency_id = $1
+      WHERE outreach_id = $1
         AND status = 'pending_review'
       RETURNING
+        outreach_id,
         agency_id,
+        sequence_no,
         status,
         subject,
         body_text,
@@ -439,9 +520,10 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
         accuracy_score,
         quality_score,
         gmail_draft_id,
+        gmail_thread_id,
         drafted_at,
         updated_at`,
-      [agencyId, nextStatus, nextError, nextSubject, nextBody],
+      [targetOutreachId, nextStatus, nextError, nextSubject, nextBody],
     );
 
     if (!rows.length) {
@@ -450,7 +532,9 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
 
     const row = rows[0];
     return res.json({
+      outreach_id: row.outreach_id,
       agency_id: row.agency_id,
+      sequence_no: row.sequence_no,
       outreach_status: row.status,
       outreach_subject: row.subject,
       outreach_body: row.body_text,
@@ -460,6 +544,7 @@ app.post('/api/outreach/review', requireToken, async (req, res) => {
       accuracy_score: row.accuracy_score,
       quality_score: row.quality_score,
       gmail_draft_id: row.gmail_draft_id,
+      gmail_thread_id: row.gmail_thread_id,
       drafted_at: row.drafted_at,
       outreach_updated_at: row.updated_at,
     });

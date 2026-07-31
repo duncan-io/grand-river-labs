@@ -123,6 +123,9 @@
     .badge-rejected { background: #fde8e8; color: #9b2c2c; }
     .badge-needs_rewrite { background: #ffe8d6; color: #9a4a12; }
     .badge-failed { background: #fde8e8; color: #9b2c2c; }
+    .badge-send_failed { background: #fde8e8; color: #9b2c2c; }
+    .badge-cancelled_replied { background: #e8f0ff; color: #2a4a8a; }
+    .badge-followup { background: #efe7ff; color: #5b3d9a; }
     .badge-none { background: #f0f2f2; color: #5f7976; }
     .kpi {
       text-align: left;
@@ -607,6 +610,11 @@
                         :class="outreachBadgeClass(row.outreach_status)"
                         x-text="row.outreach_status || '—'"
                       ></span>
+                      <span
+                        x-show="followUpLabel(row)"
+                        class="badge badge-followup ml-1"
+                        x-text="followUpLabel(row)"
+                      ></span>
                       <div
                         x-show="row.overall_score != null"
                         class="text-xs text-muted mt-1"
@@ -1017,25 +1025,30 @@
               <p class="text-sm font-medium text-ink" x-text="inboxEmptyTitle"></p>
               <p class="text-xs text-muted mt-1" x-text="inboxEmptyHint"></p>
             </div>
-            <template x-for="row in inboxMessages" :key="row.agency_id">
+            <template x-for="row in inboxMessages" :key="row.outreach_id || ('a-' + row.agency_id)">
               <button
                 type="button"
                 class="inbox-row block"
-                :class="{ selected: inboxSelectedId === row.agency_id }"
-                @click="selectInboxDraft(row.agency_id)"
+                :class="{ selected: inboxSelectedId === row.outreach_id }"
+                @click="selectInboxDraft(row.outreach_id)"
               >
                 <div class="inbox-row-meta">
                   <span class="text-sm font-semibold text-ink truncate" x-text="row.contact_name || row.agency_name || 'Unknown'"></span>
-                  <span class="text-[0.65rem] text-muted shrink-0" x-text="formatShortDate(row.drafted_at)"></span>
+                  <span class="text-[0.65rem] text-muted shrink-0" x-text="formatShortDate(inboxFolder === 'sent' && row.sent_at ? row.sent_at : row.drafted_at)"></span>
                 </div>
                 <div class="text-xs text-muted truncate mb-0.5" x-text="row.agency_name || '—'"></div>
                 <div class="text-sm text-ink truncate font-medium" x-text="row.outreach_subject || '(no subject)'"></div>
                 <div class="text-xs text-muted truncate mt-0.5" x-text="row.outreach_snippet || ''"></div>
-                <div class="mt-1.5 flex items-center gap-1.5">
+                <div class="mt-1.5 flex items-center gap-1.5 flex-wrap">
                   <span
                     class="badge"
                     :class="outreachBadgeClass(row.outreach_status)"
                     x-text="row.outreach_status || '—'"
+                  ></span>
+                  <span
+                    x-show="followUpLabel(row)"
+                    class="badge badge-followup"
+                    x-text="followUpLabel(row)"
                   ></span>
                   <span
                     x-show="row.overall_score != null"
@@ -1092,6 +1105,11 @@
                       x-text="inboxDraft.outreach_status || '—'"
                     ></span>
                     <span
+                      x-show="followUpLabel(inboxDraft)"
+                      class="badge badge-followup"
+                      x-text="followUpLabel(inboxDraft)"
+                    ></span>
+                    <span
                       x-show="inboxDraft.overall_score != null"
                       class="badge badge-none"
                       x-text="'Overall ' + inboxDraft.overall_score"
@@ -1105,8 +1123,8 @@
                     <dd class="font-medium truncate" x-text="formatInboxTo(inboxDraft)"></dd>
                   </div>
                   <div class="flex gap-2 min-w-0">
-                    <dt class="text-muted shrink-0">Drafted</dt>
-                    <dd class="font-medium" x-text="formatDate(inboxDraft.drafted_at)"></dd>
+                    <dt class="text-muted shrink-0" x-text="inboxDraft.outreach_status === 'sent' ? 'Sent' : 'Drafted'"></dt>
+                    <dd class="font-medium" x-text="formatDate(inboxDraft.outreach_status === 'sent' && inboxDraft.sent_at ? inboxDraft.sent_at : inboxDraft.drafted_at)"></dd>
                   </div>
                   <div class="flex gap-2" x-show="inboxDraft.accuracy_score != null || inboxDraft.quality_score != null">
                     <dt class="text-muted shrink-0">A / Q</dt>
@@ -1249,6 +1267,7 @@
         inboxFolders: [
           { id: 'pending_review', label: 'Pending' },
           { id: 'approved', label: 'Approved' },
+          { id: 'sent', label: 'Sent' },
           { id: 'rejected', label: 'Rejected' },
           { id: 'failed', label: 'Failed' },
         ],
@@ -1295,6 +1314,7 @@
         get inboxEmptyTitle() {
           if (this.inboxFolder === 'pending_review') return "You're caught up";
           if (this.inboxFolder === 'approved') return 'No approved emails yet';
+          if (this.inboxFolder === 'sent') return 'No sent emails yet';
           if (this.inboxFolder === 'rejected') return 'No rejected drafts';
           if (this.inboxFolder === 'failed') return 'No failed drafts';
           return 'Nothing here';
@@ -1302,13 +1322,20 @@
 
         get inboxEmptyHint() {
           if (this.inboxFolder === 'pending_review') return 'No drafts pending review. New ones appear after the drafting workflow runs.';
+          if (this.inboxFolder === 'sent') return 'Approved drafts appear here after the send workflow runs.';
           if (this.inboxFolder === 'failed') return 'Drafting failures will show up here with an error note.';
           return 'Switch folders or check back after the next draft run.';
         },
 
         get inboxMessages() {
           const q = (this.inboxSearch || '').trim().toLowerCase();
-          let rows = this.agencies.filter((a) => a.outreach_status === this.inboxFolder);
+          let rows = this.agencies.filter((a) => {
+            if (!a.outreach_id) return false;
+            if (this.inboxFolder === 'failed') {
+              return a.outreach_status === 'failed' || a.outreach_status === 'send_failed';
+            }
+            return a.outreach_status === this.inboxFolder;
+          });
           if (q) {
             rows = rows.filter((a) => {
               const hay = [
@@ -1318,14 +1345,20 @@
                 a.outreach_subject,
                 a.outreach_snippet,
                 a.domain,
+                this.followUpLabel(a),
               ].filter(Boolean).join(' ').toLowerCase();
               return hay.includes(q);
             });
           }
           const asc = this.inboxFolder === 'pending_review';
+          const useSentAt = this.inboxFolder === 'sent';
           return [...rows].sort((a, b) => {
-            const at = a.drafted_at ? new Date(a.drafted_at).getTime() : 0;
-            const bt = b.drafted_at ? new Date(b.drafted_at).getTime() : 0;
+            const at = useSentAt
+              ? (a.sent_at ? new Date(a.sent_at).getTime() : (a.drafted_at ? new Date(a.drafted_at).getTime() : 0))
+              : (a.drafted_at ? new Date(a.drafted_at).getTime() : 0);
+            const bt = useSentAt
+              ? (b.sent_at ? new Date(b.sent_at).getTime() : (b.drafted_at ? new Date(b.drafted_at).getTime() : 0))
+              : (b.drafted_at ? new Date(b.drafted_at).getTime() : 0);
             return asc ? at - bt : bt - at;
           });
         },
@@ -1341,7 +1374,7 @@
         get inboxHasNext() {
           const list = this.inboxMessages;
           if (!list.length || !this.inboxSelectedId) return false;
-          const idx = list.findIndex((a) => a.agency_id === this.inboxSelectedId);
+          const idx = list.findIndex((a) => a.outreach_id === this.inboxSelectedId);
           return idx >= 0 && idx < list.length - 1;
         },
 
@@ -1350,12 +1383,44 @@
             const map = {
               pending_review: this.overview.pending_review,
               approved: this.overview.approved,
+              sent: this.overview.sent,
               rejected: this.overview.rejected,
               failed: this.overview.failed,
             };
             if (map[folderId] != null) return Number(map[folderId]) || 0;
           }
           return this.agencies.filter((a) => a.outreach_status === folderId).length;
+        },
+
+        followUpLabel(row) {
+          const n = Number(row?.sequence_no || 0);
+          if (n === 1) return 'Follow up 1';
+          if (n === 2) return 'Follow up 2';
+          return '';
+        },
+
+        messageKey(row) {
+          return row?.outreach_id || ('a-' + row?.agency_id);
+        },
+
+        dedupeAgenciesForList(rows) {
+          const byAgency = new Map();
+          for (const row of rows) {
+            const id = row.agency_id;
+            const prev = byAgency.get(id);
+            if (!prev) {
+              byAgency.set(id, row);
+              continue;
+            }
+            const prevSeq = Number(prev.sequence_no || 0);
+            const nextSeq = Number(row.sequence_no || 0);
+            const prevPending = prev.outreach_status === 'pending_review' ? 1 : 0;
+            const nextPending = row.outreach_status === 'pending_review' ? 1 : 0;
+            if (nextPending > prevPending || (nextPending === prevPending && nextSeq > prevSeq)) {
+              byAgency.set(id, row);
+            }
+          }
+          return [...byAgency.values()];
         },
 
         formatInboxTo(row) {
@@ -1406,7 +1471,7 @@
 
         get filtered() {
           const q = (this.search || '').trim().toLowerCase();
-          let rows = this.agencies.filter((a) => {
+          let rows = this.dedupeAgenciesForList(this.agencies).filter((a) => {
             if (q) {
               const hay = [a.agency_name, a.domain, a.city, a.category].filter(Boolean).join(' ').toLowerCase();
               if (!hay.includes(q)) return false;
@@ -1495,7 +1560,7 @@
               }
             } else if (!this.inboxSelectedId && this.inboxFolder === 'pending_review') {
               const first = this.inboxMessages[0];
-              if (first) this.selectInboxDraft(first.agency_id, true);
+              if (first) this.selectInboxDraft(first.outreach_id, true);
             }
             return;
           }
@@ -1524,22 +1589,22 @@
           }
         },
 
-        openInbox(folder = 'pending_review', agencyId = null) {
+        openInbox(folder = 'pending_review', outreachId = null) {
           this.view = 'inbox';
           this.selectedId = null;
           this.detail = null;
           this.inboxFolder = folder || 'pending_review';
           this.inboxMobileReading = false;
           this.error = '';
-          if (agencyId) {
-            this.selectInboxDraft(agencyId, true);
+          if (outreachId) {
+            this.selectInboxDraft(outreachId, true);
           } else {
             this.inboxSelectedId = null;
             this.inboxDraft = null;
             this.syncInboxHash();
             const first = this.inboxMessages[0];
             if (first && this.inboxFolder === 'pending_review') {
-              this.selectInboxDraft(first.agency_id, true);
+              this.selectInboxDraft(first.outreach_id, true);
             }
           }
         },
@@ -1560,13 +1625,19 @@
           this.inboxMobileReading = false;
           this.syncInboxHash();
           if (folderId === 'pending_review' && this.inboxMessages[0]) {
-            this.selectInboxDraft(this.inboxMessages[0].agency_id, true);
+            this.selectInboxDraft(this.inboxMessages[0].outreach_id, true);
           }
         },
 
-        async selectInboxDraft(agencyId, pushHash = true) {
-          const id = Number(agencyId);
+        async selectInboxDraft(outreachId, pushHash = true) {
+          const id = Number(outreachId);
           if (!Number.isFinite(id) || id <= 0) return;
+          const listRow = this.agencies.find((a) => Number(a.outreach_id) === id);
+          const agencyId = listRow?.agency_id;
+          if (!agencyId) {
+            this.error = 'Outreach draft not found in loaded list';
+            return;
+          }
           this.view = 'inbox';
           this.inboxSelectedId = id;
           this.inboxLoading = true;
@@ -1576,7 +1647,7 @@
           this.reviewing = null;
           if (pushHash) this.syncInboxHash();
           try {
-            const res = await fetch(this.apiUrl('detail', id), {
+            const res = await fetch(this.apiUrl('detail', agencyId, { outreach_id: id }), {
               headers: { Authorization: 'Bearer ' + this.token },
             });
             if (!res.ok) {
@@ -1592,10 +1663,12 @@
               subject: row.outreach_subject || '',
               body: row.outreach_body || '',
             };
-            const listIdx = this.agencies.findIndex((a) => a.agency_id === id);
+            const listIdx = this.agencies.findIndex((a) => Number(a.outreach_id) === id);
             if (listIdx >= 0) {
               this.agencies[listIdx] = {
                 ...this.agencies[listIdx],
+                outreach_id: row.outreach_id,
+                sequence_no: row.sequence_no,
                 outreach_status: row.outreach_status,
                 outreach_subject: row.outreach_subject,
                 outreach_snippet: row.outreach_body
@@ -1616,17 +1689,17 @@
 
         selectNextInboxDraft() {
           const list = this.inboxMessages;
-          const idx = list.findIndex((a) => a.agency_id === this.inboxSelectedId);
+          const idx = list.findIndex((a) => a.outreach_id === this.inboxSelectedId);
           if (idx >= 0 && idx < list.length - 1) {
-            this.selectInboxDraft(list[idx + 1].agency_id);
+            this.selectInboxDraft(list[idx + 1].outreach_id);
           }
         },
 
         selectPrevInboxDraft() {
           const list = this.inboxMessages;
-          const idx = list.findIndex((a) => a.agency_id === this.inboxSelectedId);
+          const idx = list.findIndex((a) => a.outreach_id === this.inboxSelectedId);
           if (idx > 0) {
-            this.selectInboxDraft(list[idx - 1].agency_id);
+            this.selectInboxDraft(list[idx - 1].outreach_id);
           }
         },
 
@@ -1668,16 +1741,17 @@
           }
 
           const list = this.inboxMessages;
-          const idx = list.findIndex((a) => a.agency_id === this.inboxDraft.agency_id);
+          const idx = list.findIndex((a) => a.outreach_id === this.inboxDraft.outreach_id);
           const nextId = (idx >= 0 && list[idx + 1])
-            ? list[idx + 1].agency_id
-            : (idx > 0 ? list[idx - 1].agency_id : null);
+            ? list[idx + 1].outreach_id
+            : (idx > 0 ? list[idx - 1].outreach_id : null);
 
           this.reviewing = action;
           this.error = '';
           try {
             const payload = {
               agency_id: this.inboxDraft.agency_id,
+              outreach_id: this.inboxDraft.outreach_id,
               action,
               note: this.inboxReviewNote || null,
             };
@@ -1699,6 +1773,8 @@
             }
             const updated = await res.json();
             const patch = {
+              outreach_id: updated.outreach_id,
+              sequence_no: updated.sequence_no,
               outreach_status: updated.outreach_status,
               outreach_subject: updated.outreach_subject,
               outreach_body: updated.outreach_body,
@@ -1712,11 +1788,11 @@
               drafted_at: updated.drafted_at,
               outreach_updated_at: updated.outreach_updated_at,
             };
-            const listIdx = this.agencies.findIndex((a) => a.agency_id === this.inboxDraft.agency_id);
+            const listIdx = this.agencies.findIndex((a) => Number(a.outreach_id) === Number(this.inboxDraft.outreach_id));
             if (listIdx >= 0) {
               this.agencies[listIdx] = { ...this.agencies[listIdx], ...patch };
             }
-            if (this.detail && this.detail.agency_id === this.inboxDraft.agency_id) {
+            if (this.detail && this.detail.outreach_id === this.inboxDraft.outreach_id) {
               this.detail = { ...this.detail, ...patch };
             }
             this.inboxReviewNote = '';
@@ -1821,6 +1897,8 @@
             rejected: 'badge-rejected',
             needs_rewrite: 'badge-needs_rewrite',
             failed: 'badge-failed',
+            send_failed: 'badge-send_failed',
+            cancelled_replied: 'badge-cancelled_replied',
           };
           return map[status] || 'badge-none';
         },
@@ -1891,7 +1969,7 @@
           );
         },
 
-        apiUrl(kind, id) {
+        apiUrl(kind, id, query = {}) {
           const mapped = {
             list: '/api/agencies',
             overview: '/api/overview',
@@ -1901,6 +1979,9 @@
           };
           const url = new URL(mapped[kind] || kind, window.location.origin);
           url.searchParams.set('token', this.token);
+          for (const [k, v] of Object.entries(query || {})) {
+            if (v != null && v !== '') url.searchParams.set(k, String(v));
+          }
           return url.toString();
         },
 
@@ -2010,6 +2091,7 @@
               },
               body: JSON.stringify({
                 agency_id: this.detail.agency_id,
+                outreach_id: this.detail.outreach_id || null,
                 action,
                 note: this.reviewNote || null,
               }),
