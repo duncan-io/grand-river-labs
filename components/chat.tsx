@@ -30,7 +30,7 @@ const SESSION_KEY = "grl-chat-session";
 const EMAIL_KEY = "grl-chat-email";
 
 const WELCOME_MESSAGE =
-  "Hi—I’m the Grand River Labs assistant. Ask me how AI automation could fit your workflow, what we typically build, or where to start.";
+  "Hi—I’m the Grand River Labs assistant. We help with website strategy, analytics, and automation & AI. Ask about growing your site into a revenue engine, measuring what actually works, streamlining operations—or where to start.";
 
 function createId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -347,18 +347,19 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
       <SiteHeader embedded />
 
       <h1 className="visually-hidden" id={`${listId}-title`}>
-        Ask how automation could fit your workflow
+        Ask about website strategy, analytics, or automation
       </h1>
 
       <div className="chat__body">
         <aside className="chat__rail">
           <p className="eyebrow">Ask the assistant</p>
           <p className="display chat__title">
-            Ask how automation could fit your workflow
+            Ask about websites, analytics, or automation
           </p>
           <p className="chat__lede">
-            Chat with our AI to learn what we automate, how engagements work,
-            and whether a first project makes sense for your team.
+            Chat with our AI about website strategy, measurement you can trust,
+            and automation & AI—and whether a first project makes sense for your
+            team.
           </p>
           <p className="chat__disclaimer">
             This assistant can make mistakes. It can&apos;t make legally binding
@@ -433,7 +434,7 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
               value={input}
               onChange={(event) => setInput(event.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask about automation, use cases, or getting started…"
+              placeholder="Ask about websites, analytics, automation, or getting started…"
               disabled={!emailUnlocked || isSending || !sessionId}
               maxLength={4000}
             />
