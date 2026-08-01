@@ -69,58 +69,35 @@ const steps = [
   },
 ];
 
-/** One seamless tile: overall rise of `rise` over `segmentWidth`, wiggle returns to 0 at seams. */
+/** One seamless tile: net rise of `rise` over `segmentWidth`, with sharp local zigzags. */
 const TREND_SEGMENT_WIDTH = 900;
 const TREND_RISE = 150;
-const TREND_BASE_Y = 680;
+const TREND_BASE_Y = 640;
 const TREND_SEGMENTS = 5;
-const TREND_TIP_X = 1320;
 const TREND_DURATION = "12s";
-const TREND_WIGGLE = [0, -28, 12, -46, 22, -10, -52, 16, -34, 10, -20, 0];
+/**
+ * Signed step deltas (SVG y decreases = up). Must sum to TREND_RISE.
+ * Negative values are short pullbacks so the line reads as a sharp zigzag.
+ */
+const TREND_CLIMBS = [30, -12, 36, -10, 28, -14, 40, -8, 24, -12, 32, -8, 24];
 
 function buildTrendPoints() {
-  const steps = TREND_WIGGLE.length;
+  const steps = TREND_CLIMBS.length;
+  const stepX = TREND_SEGMENT_WIDTH / steps;
   const points: { x: number; y: number }[] = [];
 
   for (let seg = 0; seg < TREND_SEGMENTS; seg++) {
-    for (let i = 0; i < steps; i++) {
-      if (seg > 0 && i === 0) continue;
-      const t = i / (steps - 1);
-      const x = seg * TREND_SEGMENT_WIDTH + t * TREND_SEGMENT_WIDTH;
-      const y =
-        TREND_BASE_Y - (seg + t) * TREND_RISE + TREND_WIGGLE[i];
-      points.push({ x, y });
+    let y = TREND_BASE_Y - seg * TREND_RISE;
+    for (let i = 0; i <= steps; i++) {
+      const x = seg * TREND_SEGMENT_WIDTH + i * stepX;
+      if (!(seg > 0 && i === 0)) {
+        points.push({ x, y });
+      }
+      if (i < steps) y -= TREND_CLIMBS[i];
     }
   }
 
   return points;
-}
-
-function trendYAt(points: { x: number; y: number }[], x: number) {
-  for (let i = 0; i < points.length - 1; i++) {
-    const a = points[i];
-    const b = points[i + 1];
-    if (x >= a.x && x <= b.x) {
-      const t = (x - a.x) / (b.x - a.x);
-      return a.y + (b.y - a.y) * t;
-    }
-  }
-  return points[0]?.y ?? TREND_BASE_Y;
-}
-
-/** Screen-space Y of the line at TREND_TIP_X as the tiled path pans one segment. */
-function buildTipTranslateValues(points: { x: number; y: number }[]) {
-  const frames = TREND_WIGGLE.length - 1;
-  const values: string[] = [];
-
-  for (let i = 0; i <= frames; i++) {
-    const s = i / frames;
-    const pathX = TREND_TIP_X + s * TREND_SEGMENT_WIDTH;
-    const screenY = trendYAt(points, pathX) + s * TREND_RISE;
-    values.push(`${TREND_TIP_X} ${screenY.toFixed(1)}`);
-  }
-
-  return values.join(";");
 }
 
 function pointsToLinePath(points: { x: number; y: number }[]) {
@@ -142,7 +119,6 @@ function AnalyticsScene() {
   const points = buildTrendPoints();
   const linePath = pointsToLinePath(points);
   const areaPath = pointsToAreaPath(points, 980);
-  const tipValues = buildTipTranslateValues(points);
 
   return (
     <svg
@@ -165,8 +141,8 @@ function AnalyticsScene() {
           y2="0"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#3A948C" stopOpacity=".25" />
-          <stop offset=".45" stopColor="#057A72" stopOpacity=".9" />
+          <stop stopColor="#3A948C" stopOpacity=".45" />
+          <stop offset=".5" stopColor="#057A72" stopOpacity=".95" />
           <stop offset="1" stopColor="#024E49" stopOpacity="1" />
         </linearGradient>
         <linearGradient
@@ -216,27 +192,9 @@ function AnalyticsScene() {
             stroke="url(#analytics-trend-stroke)"
             strokeWidth="3.25"
             strokeLinecap="round"
-            strokeLinejoin="round"
+            strokeLinejoin="miter"
+            strokeMiterlimit={3}
           />
-        </g>
-
-        <g className="analytics-hero__trend-tip">
-          <animateTransform
-            attributeName="transform"
-            type="translate"
-            values={tipValues}
-            dur={TREND_DURATION}
-            repeatCount="indefinite"
-            calcMode="linear"
-          />
-          <circle
-            className="analytics-hero__trend-tip-ring"
-            r="18"
-            stroke="#6FB8B0"
-            strokeWidth="1.25"
-            fill="none"
-          />
-          <circle r="6.5" fill="#FFFDF4" stroke="#057A72" strokeWidth="2" />
         </g>
       </g>
 
@@ -253,7 +211,9 @@ export function AnalyticsSections() {
   return (
     <>
       <section className="analytics-hero">
-        <AnalyticsScene />
+        <div className="analytics-hero__scene-wrap">
+          <AnalyticsScene />
+        </div>
         <div className="shell">
           <div className="analytics-hero__content">
             <p className="eyebrow">Analytics</p>
@@ -276,7 +236,7 @@ export function AnalyticsSections() {
                 Book a call
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="#pillars">
+              <a className="button button-secondary" href="#ways">
                 See what&apos;s covered
                 <Arrow />
               </a>
@@ -317,40 +277,34 @@ export function AnalyticsSections() {
         </div>
       </section>
 
-      <section className="section analytics-pillars" id="pillars">
+      <section className="section analytics-ways" id="ways">
         <div className="shell">
-          <div className="analytics-pillars__top reveal">
+          <div className="analytics-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">
-                Four pillars of trustworthy analytics.
-              </h2>
+              <h2 className="section-heading">Ways we help analytics.</h2>
             </div>
             <p className="section-copy">
               We build the stack you need to see, trust, and act—without
               drowning the team in tags and dashboards nobody believes.
             </p>
           </div>
-          <div className="analytics-pillar-list reveal">
-            {pillars.map((item, index) => (
-              <article className="analytics-pillar" key={item.title}>
-                <span className="analytics-pillar__number">
+          <div className="analytics-ways__grid reveal">
+            {ways.map((item, index) => (
+              <article className="analytics-way" key={item.title}>
+                <span className="analytics-way__number">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <div className="analytics-pillar__body">
-                  <h3>{item.title}</h3>
-                  <p className="analytics-pillar__lead">{item.lead}</p>
-                  <p className="analytics-pillar__setup">
-                    <span className="analytics-pillar__label">
-                      What we set up
-                    </span>
-                    {item.setup}
-                  </p>
-                  <p className="analytics-pillar__outcome">
-                    <span className="analytics-pillar__label">You get</span>
-                    {item.outcome}
-                  </p>
-                </div>
+                <h3>{item.title}</h3>
+                <p className="analytics-way__lead">{item.lead}</p>
+                <p className="analytics-way__setup">
+                  <span className="analytics-way__label">What we set up</span>
+                  {item.setup}
+                </p>
+                <p className="analytics-way__outcome">
+                  <span className="analytics-way__label">You get</span>
+                  {item.outcome}
+                </p>
               </article>
             ))}
           </div>

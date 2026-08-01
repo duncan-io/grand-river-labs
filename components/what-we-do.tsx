@@ -1,4 +1,5 @@
 import { BOOK_CALL_HREF } from "@/lib/site";
+import { IndustryStrip } from "./industry-use-case";
 import { Arrow } from "./site-header";
 import { WhiteGloveEngagement } from "./white-glove-engagement";
 
@@ -1197,6 +1198,8 @@ export function WhatWeDoSections() {
       </section>
 
       <WhiteGloveEngagement />
+
+      <IndustryStrip headingAs="h2" />
     </>
   );
 }

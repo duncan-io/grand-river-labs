@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useEffect, useId, useState } from "react";
 import { BOOK_CALL_HREF } from "@/lib/site";
-import { industries } from "./industries";
 import { whatWeDoNav } from "./what-we-do-nav";
 
 const Arrow = () => (
@@ -139,23 +138,6 @@ export function SiteHeader({
               ))}
             </div>
           </div>
-          <div className="site-nav__item">
-            <a className="site-nav__trigger" href="/use-cases">
-              Use cases
-              <Chevron />
-            </a>
-            <div className="site-nav__dropdown" role="list">
-              {industries.map((item) => (
-                <a
-                  href={`/use-cases/${item.slug}`}
-                  key={item.slug}
-                  role="listitem"
-                >
-                  {item.industry}
-                </a>
-              ))}
-            </div>
-          </div>
           <a href="/white-label">White-label</a>
           <a
             className="button button-primary"
@@ -198,23 +180,6 @@ export function SiteHeader({
                   onClick={closeMenu}
                 >
                   {item.label}
-                </a>
-              ))}
-            </div>
-          </div>
-          <div className="site-nav-panel__group">
-            <a href="/use-cases" onClick={closeMenu}>
-              Use cases
-            </a>
-            <div className="site-nav-panel__industries" role="list">
-              {industries.map((item) => (
-                <a
-                  href={`/use-cases/${item.slug}`}
-                  key={item.slug}
-                  role="listitem"
-                  onClick={closeMenu}
-                >
-                  {item.industry}
                 </a>
               ))}
             </div>

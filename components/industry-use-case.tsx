@@ -104,14 +104,20 @@ export function IndustryUseCase({ content }: { content: IndustryContent }) {
   );
 }
 
-export function IndustryStrip() {
+export function IndustryStrip({
+  headingAs = "h1",
+}: {
+  headingAs?: "h1" | "h2";
+}) {
+  const Heading = headingAs;
+
   return (
     <section className="section industry-strip" id="by-industry">
       <div className="shell">
         <div className="industry-strip__top reveal">
           <div>
             <p className="eyebrow">By industry</p>
-            <h1 className="section-heading">See it in your world.</h1>
+            <Heading className="section-heading">See it in your world.</Heading>
           </div>
           <p className="section-copy">
             Same idea—hours back, fewer handoffs—told through the work your
