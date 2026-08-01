@@ -25,7 +25,7 @@ const FIREWORKS_BASE_URL = 'https://api.fireworks.ai/inference/v1';
 const MODEL_RL = { __rl: true, mode: 'id', value: MODEL };
 
 const SCHEMA_SQL = `CREATE TABLE IF NOT EXISTS agency_outreach_drafts (
-  agency_id      INTEGER PRIMARY KEY REFERENCES agencies(id) ON DELETE CASCADE,
+  agency_id      INTEGER NOT NULL REFERENCES agencies(id) ON DELETE CASCADE,
   contact_email  TEXT,
   contact_name   TEXT,
   subject        TEXT,
@@ -39,8 +39,6 @@ const SCHEMA_SQL = `CREATE TABLE IF NOT EXISTS agency_outreach_drafts (
   drafted_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_status ON agency_outreach_drafts(status);
-CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_drafted_at ON agency_outreach_drafts(drafted_at DESC);
 
 ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS accuracy_score INTEGER;
 ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS quality_score INTEGER;
@@ -50,6 +48,60 @@ ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS critiques JSONB;
 ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS quality_issues JSONB;
 ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS rewrite_attempts INTEGER;
 ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS rater_model TEXT;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS send_claimed_at TIMESTAMPTZ;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS gmail_message_id TEXT;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS outreach_id INTEGER;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS sequence_no INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS parent_outreach_id INTEGER;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS gmail_thread_id TEXT;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS replied_at TIMESTAMPTZ;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS reply_detected BOOLEAN NOT NULL DEFAULT FALSE;
+
+CREATE SEQUENCE IF NOT EXISTS agency_outreach_drafts_outreach_id_seq;
+
+UPDATE agency_outreach_drafts
+SET outreach_id = nextval('agency_outreach_drafts_outreach_id_seq')
+WHERE outreach_id IS NULL;
+
+ALTER TABLE agency_outreach_drafts
+  ALTER COLUMN outreach_id SET DEFAULT nextval('agency_outreach_drafts_outreach_id_seq');
+ALTER SEQUENCE agency_outreach_drafts_outreach_id_seq OWNED BY agency_outreach_drafts.outreach_id;
+ALTER TABLE agency_outreach_drafts ALTER COLUMN outreach_id SET NOT NULL;
+
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM pg_constraint c
+    JOIN pg_class t ON t.oid = c.conrelid
+    WHERE t.relname = 'agency_outreach_drafts'
+      AND c.contype = 'p'
+      AND pg_get_constraintdef(c.oid) = 'PRIMARY KEY (agency_id)'
+  ) THEN
+    ALTER TABLE agency_outreach_drafts DROP CONSTRAINT agency_outreach_drafts_pkey;
+  END IF;
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_constraint c
+    JOIN pg_class t ON t.oid = c.conrelid
+    WHERE t.relname = 'agency_outreach_drafts'
+      AND c.contype = 'p'
+  ) THEN
+    ALTER TABLE agency_outreach_drafts ADD PRIMARY KEY (outreach_id);
+  END IF;
+END $$;
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_agency_outreach_agency_sequence
+  ON agency_outreach_drafts(agency_id, sequence_no);
+CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_status ON agency_outreach_drafts(status);
+CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_drafted_at ON agency_outreach_drafts(drafted_at DESC);
+CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_sent_at ON agency_outreach_drafts(sent_at DESC);
+CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_status_updated
+  ON agency_outreach_drafts(status, updated_at);
+CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_thread
+  ON agency_outreach_drafts(gmail_thread_id)
+  WHERE gmail_thread_id IS NOT NULL;
 
 SELECT
   true AS schema_ready,
@@ -516,7 +568,7 @@ SELECT
   s.red_flags AS "redFlags"
 FROM agencies a
 JOIN agency_fit_scores s ON s.agency_id = a.id
-LEFT JOIN agency_outreach_drafts d ON d.agency_id = a.id
+LEFT JOIN agency_outreach_drafts d ON d.agency_id = a.id AND d.sequence_no = 0
 CROSS JOIN cfg
 WHERE s.white_label_fit = true
   AND s.is_real_agency = true
@@ -524,7 +576,7 @@ WHERE s.white_label_fit = true
   AND a.contact_email IS NOT NULL
   AND btrim(a.contact_email) <> ''
   AND (
-    d.agency_id IS NULL
+    d.outreach_id IS NULL
     OR d.status IN ('failed', 'rejected')
     OR (
       d.status IN ('drafted', 'sent')
@@ -1342,6 +1394,7 @@ const upsertDraftLog = node({
       operation: 'executeQuery',
       query: `INSERT INTO agency_outreach_drafts (
   agency_id,
+  sequence_no,
   contact_email,
   contact_name,
   subject,
@@ -1364,6 +1417,7 @@ const upsertDraftLog = node({
 )
 VALUES (
   ($1::json->>'agency_id')::int,
+  0,
   NULLIF($1::json->>'contact_email', ''),
   NULLIF($1::json->>'contact_name', ''),
   NULLIF($1::json->>'subject', ''),
@@ -1384,7 +1438,7 @@ VALUES (
   NOW(),
   NOW()
 )
-ON CONFLICT (agency_id) DO UPDATE SET
+ON CONFLICT (agency_id, sequence_no) DO UPDATE SET
   contact_email = EXCLUDED.contact_email,
   contact_name = EXCLUDED.contact_name,
   subject = COALESCE(EXCLUDED.subject, agency_outreach_drafts.subject),
@@ -1407,7 +1461,7 @@ ON CONFLICT (agency_id) DO UPDATE SET
     ELSE agency_outreach_drafts.drafted_at
   END,
   updated_at = NOW()
-RETURNING agency_id, status, gmail_draft_id, overall_score, rewrite_attempts;`,
+RETURNING outreach_id, agency_id, sequence_no, status, gmail_draft_id, overall_score, rewrite_attempts;`,
       options: {
         connectionTimeout: 30,
         queryReplacement: expr(`{{ JSON.stringify({
@@ -1434,7 +1488,7 @@ RETURNING agency_id, status, gmail_draft_id, overall_score, rewrite_attempts;`,
     },
     credentials: { postgres: newCredential('Grand River Postgres') },
   },
-  output: [{ agency_id: 1, status: 'pending_review', gmail_draft_id: null, overall_score: 88, rewrite_attempts: 0 }],
+  output: [{ outreach_id: 1, agency_id: 1, sequence_no: 0, status: 'pending_review', gmail_draft_id: null, overall_score: 88, rewrite_attempts: 0 }],
 });
 
 const credentialsSticky = sticky(

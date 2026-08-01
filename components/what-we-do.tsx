@@ -6,7 +6,7 @@ const services = [
   {
     title: "Business process automation",
     copy: "We map the work that slows your team down—handoffs, re-entry, approvals—and automate the path across the tools you already run. Same outcomes, fewer hours in the weeds.",
-    href: "/what-we-do/business-process-automation",
+    href: "/automation/business-process-automation",
     motif: "bpa" as const,
   },
   {
@@ -1096,7 +1096,7 @@ export function WhatWeDoSections() {
         <WhatWeDoScene />
         <div className="shell">
           <div className="what-we-do-hero__content">
-            <p className="eyebrow">What we do</p>
+            <p className="eyebrow">Automation and AI</p>
             
             <h1 className="what-we-do-hero__headline">
               Automate the busywork between the tools you already trust.

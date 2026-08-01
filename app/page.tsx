@@ -3,8 +3,8 @@ import { Hero } from "@/components/hero";
 import {
   AudienceSection,
   OfferingsSection,
-  ProcessSection,
   PromiseSection,
+  WebsiteStrategySection,
 } from "@/components/sections";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -18,7 +18,7 @@ export default function Home() {
       <main>
         <Hero />
         <PromiseSection />
-        <ProcessSection />
+        <WebsiteStrategySection />
         <OfferingsSection />
         <AudienceSection />
         <ContactSection turnstileSiteKey={turnstileSiteKey} />

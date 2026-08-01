@@ -18,12 +18,52 @@ const GMAIL_RETRY = {
   onError: 'continueErrorOutput',
 };
 
-const SCHEMA_SQL = `ALTER TABLE agency_outreach_drafts
-  ADD COLUMN IF NOT EXISTS send_claimed_at TIMESTAMPTZ;
+const SCHEMA_SQL = `ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS send_claimed_at TIMESTAMPTZ;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS gmail_message_id TEXT;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS outreach_id INTEGER;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS sequence_no INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS parent_outreach_id INTEGER;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS gmail_thread_id TEXT;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS replied_at TIMESTAMPTZ;
+ALTER TABLE agency_outreach_drafts ADD COLUMN IF NOT EXISTS reply_detected BOOLEAN NOT NULL DEFAULT FALSE;
+
+CREATE SEQUENCE IF NOT EXISTS agency_outreach_drafts_outreach_id_seq;
+
+UPDATE agency_outreach_drafts
+SET outreach_id = nextval('agency_outreach_drafts_outreach_id_seq')
+WHERE outreach_id IS NULL;
+
 ALTER TABLE agency_outreach_drafts
-  ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ;
-ALTER TABLE agency_outreach_drafts
-  ADD COLUMN IF NOT EXISTS gmail_message_id TEXT;
+  ALTER COLUMN outreach_id SET DEFAULT nextval('agency_outreach_drafts_outreach_id_seq');
+ALTER SEQUENCE agency_outreach_drafts_outreach_id_seq OWNED BY agency_outreach_drafts.outreach_id;
+ALTER TABLE agency_outreach_drafts ALTER COLUMN outreach_id SET NOT NULL;
+
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM pg_constraint c
+    JOIN pg_class t ON t.oid = c.conrelid
+    WHERE t.relname = 'agency_outreach_drafts'
+      AND c.contype = 'p'
+      AND pg_get_constraintdef(c.oid) = 'PRIMARY KEY (agency_id)'
+  ) THEN
+    ALTER TABLE agency_outreach_drafts DROP CONSTRAINT agency_outreach_drafts_pkey;
+  END IF;
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_constraint c
+    JOIN pg_class t ON t.oid = c.conrelid
+    WHERE t.relname = 'agency_outreach_drafts'
+      AND c.contype = 'p'
+  ) THEN
+    ALTER TABLE agency_outreach_drafts ADD PRIMARY KEY (outreach_id);
+  END IF;
+END $$;
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_agency_outreach_agency_sequence
+  ON agency_outreach_drafts(agency_id, sequence_no);
 CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_sent_at
   ON agency_outreach_drafts(sent_at DESC);
 CREATE INDEX IF NOT EXISTS idx_agency_outreach_drafts_status_updated
@@ -56,15 +96,20 @@ capacity AS (
   CROSS JOIN sent_today s
 ),
 to_claim AS (
-  SELECT d.agency_id
+  SELECT d.outreach_id
   FROM agency_outreach_drafts d
   CROSS JOIN capacity c
   WHERE d.status = 'approved'
+    AND COALESCE(d.reply_detected, false) = false
     AND NULLIF(btrim(d.contact_email), '') IS NOT NULL
     AND NULLIF(btrim(d.subject), '') IS NOT NULL
     AND (
       NULLIF(btrim(COALESCE(d.body_text, '')), '') IS NOT NULL
       OR NULLIF(btrim(COALESCE(d.body_html, '')), '') IS NOT NULL
+    )
+    AND (
+      COALESCE(d.sequence_no, 0) = 0
+      OR NULLIF(btrim(COALESCE(d.gmail_thread_id, '')), '') IS NOT NULL
     )
     AND c.remaining > 0
   ORDER BY d.updated_at ASC
@@ -78,14 +123,19 @@ SET
   error = NULL,
   updated_at = NOW()
 FROM to_claim c
-WHERE d.agency_id = c.agency_id
+WHERE d.outreach_id = c.outreach_id
 RETURNING
+  d.outreach_id AS "outreachId",
   d.agency_id AS "agencyId",
+  d.sequence_no AS "sequenceNo",
+  d.parent_outreach_id AS "parentOutreachId",
   d.contact_email AS "contactEmail",
   d.contact_name AS "contactName",
   d.subject,
   d.body_text AS "bodyText",
   d.body_html AS "bodyHtml",
+  d.gmail_thread_id AS "gmailThreadId",
+  d.gmail_message_id AS "gmailMessageId",
   d.status,
   d.send_claimed_at AS "sendClaimedAt";`;
 
@@ -93,15 +143,22 @@ const MARK_SENT_SQL = `UPDATE agency_outreach_drafts
 SET
   status = 'sent',
   gmail_message_id = NULLIF($1::json->>'gmail_message_id', ''),
+  gmail_thread_id = COALESCE(
+    NULLIF($1::json->>'gmail_thread_id', ''),
+    gmail_thread_id
+  ),
   sent_at = NOW(),
   error = NULL,
   updated_at = NOW()
-WHERE agency_id = ($1::json->>'agency_id')::int
+WHERE outreach_id = ($1::json->>'outreach_id')::int
   AND status = 'sending'
 RETURNING
+  outreach_id AS "outreachId",
   agency_id AS "agencyId",
+  sequence_no AS "sequenceNo",
   status,
   gmail_message_id AS "gmailMessageId",
+  gmail_thread_id AS "gmailThreadId",
   sent_at AS "sentAt";`;
 
 const MARK_FAILED_SQL = `UPDATE agency_outreach_drafts
@@ -109,12 +166,34 @@ SET
   status = 'send_failed',
   error = NULLIF($1::json->>'error', ''),
   updated_at = NOW()
-WHERE agency_id = ($1::json->>'agency_id')::int
+WHERE outreach_id = ($1::json->>'outreach_id')::int
   AND status = 'sending'
 RETURNING
+  outreach_id AS "outreachId",
   agency_id AS "agencyId",
   status,
   error;`;
+
+const MARK_REPLIED_SQL = `UPDATE agency_outreach_drafts
+SET
+  reply_detected = true,
+  replied_at = COALESCE(replied_at, NOW()),
+  status = CASE
+    WHEN status IN ('pending_review', 'approved', 'sending') THEN 'cancelled_replied'
+    ELSE status
+  END,
+  error = CASE
+    WHEN status IN ('pending_review', 'approved', 'sending')
+      THEN 'Cancelled: reply detected before send'
+    ELSE error
+  END,
+  updated_at = NOW()
+WHERE outreach_id = ($1::json->>'outreach_id')::int
+RETURNING
+  outreach_id AS "outreachId",
+  agency_id AS "agencyId",
+  status,
+  reply_detected AS "replyDetected";`;
 
 const PREPARE_EMAIL_JS = `const row = $input.item.json;
 const config = $('Send Config').first().json;
@@ -132,16 +211,65 @@ if (!message && html) {
     .replace(/&gt;/g, '>')
     .trim();
 }
+const sequenceNo = Number(row.sequenceNo || 0);
 return {
   json: {
+    outreachId: row.outreachId,
     agencyId: row.agencyId,
+    sequenceNo,
+    isFollowUp: sequenceNo > 0,
+    parentOutreachId: row.parentOutreachId || null,
     contactEmail: String(row.contactEmail || '').trim(),
     contactName: row.contactName || null,
     subject: String(row.subject || '').trim(),
     message,
     replyTo: config.replyTo,
     senderName: config.fromName,
+    gmailThreadId: row.gmailThreadId || null,
+    gmailMessageId: row.gmailMessageId || null,
     status: row.status,
+  },
+};`;
+
+const DETECT_REPLY_JS = `const payload = $('Prepare Email Payload').item.json;
+const item = $input.item.json;
+const messages = Array.isArray(item.messages)
+  ? item.messages
+  : (Array.isArray(item) ? item : []);
+
+function isAutomated(fromText) {
+  const f = String(fromText || '').toLowerCase();
+  return (
+    f.includes('mailer-daemon') ||
+    f.includes('postmaster') ||
+    f.includes('no-reply') ||
+    f.includes('noreply') ||
+    f.includes('bounce')
+  );
+}
+
+function isFromUs(fromText, labels) {
+  const f = String(fromText || '').toLowerCase();
+  const labelIds = Array.isArray(labels) ? labels.map((l) => String(l.id || l || '').toUpperCase()) : [];
+  if (labelIds.includes('SENT')) return true;
+  return f.includes('grandriverlabs') || f.includes('duncan@');
+}
+
+let hasReply = false;
+for (const msg of messages) {
+  const from = msg.From || msg.from || '';
+  const labels = msg.labels || msg.labelIds || [];
+  if (isAutomated(from)) continue;
+  if (isFromUs(from, labels)) continue;
+  hasReply = true;
+  break;
+}
+
+return {
+  json: {
+    ...payload,
+    hasReply,
+    replyCheckStatus: hasReply ? 'replied' : 'unanswered',
   },
 };`;
 
@@ -153,6 +281,7 @@ const failureReason = typeof err === 'string'
   : (err.message || err.description || err.error || 'Gmail send failed');
 return {
   json: {
+    outreachId: claimed.outreachId,
     agencyId: claimed.agencyId,
     contactEmail: claimed.contactEmail,
     subject: claimed.subject,
@@ -163,7 +292,7 @@ return {
 
 const NORMALIZE_QUEUE_JS = `const rows = $input.all()
   .map((item) => item.json)
-  .filter((row) => row && row.agencyId && row.contactEmail && row.subject);
+  .filter((row) => row && row.outreachId && row.contactEmail && row.subject);
 
 if (!rows.length) {
   return [];
@@ -354,12 +483,17 @@ const claimApprovedRows = node({
   },
   output: [
     {
+      outreachId: 1,
       agencyId: 1,
+      sequenceNo: 0,
+      parentOutreachId: null,
       contactEmail: 'partner@example.com',
       contactName: 'Alex',
       subject: 'Partnership idea',
       bodyText: 'Hello...',
       bodyHtml: null,
+      gmailThreadId: null,
+      gmailMessageId: null,
       status: 'sending',
       sendClaimedAt: '2026-07-28T13:00:00.000Z',
     },
@@ -380,7 +514,9 @@ const normalizeSendQueue = node({
   },
   output: [
     {
+      outreachId: 1,
       agencyId: 1,
+      sequenceNo: 0,
       contactEmail: 'partner@example.com',
       contactName: 'Alex',
       subject: 'Partnership idea',
@@ -418,14 +554,152 @@ const prepareEmailPayload = node({
   },
   output: [
     {
+      outreachId: 1,
       agencyId: 1,
+      sequenceNo: 0,
+      isFollowUp: false,
       contactEmail: 'partner@example.com',
       contactName: 'Alex',
       subject: 'Partnership idea',
       message: 'Hello...',
       replyTo: 'duncan@grandriverlabs.com',
       senderName: 'Duncan',
+      gmailThreadId: null,
       status: 'sending',
+    },
+  ],
+});
+
+const isFollowUp = ifElse({
+  version: 2.2,
+  config: {
+    name: 'Is Follow Up?',
+    position: [1760, 300],
+    parameters: {
+      conditions: {
+        options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
+        conditions: [
+          {
+            id: 'is-follow-up',
+            leftValue: expr('{{ $json.isFollowUp }}'),
+            operator: { type: 'boolean', operation: 'true', singleValue: true },
+            rightValue: '',
+          },
+        ],
+        combinator: 'and',
+      },
+    },
+  },
+  output: [
+    [{ isFollowUp: true, gmailThreadId: 'thr456', outreachId: 2 }],
+    [{ isFollowUp: false, outreachId: 1 }],
+  ],
+});
+
+const getThreadForReplyCheck = node({
+  type: 'n8n-nodes-base.gmail',
+  version: 2.2,
+  config: {
+    name: 'Get Thread For Reply Check',
+    position: [1980, 120],
+    ...GMAIL_RETRY,
+    parameters: {
+      resource: 'thread',
+      operation: 'get',
+      threadId: expr('{{ $json.gmailThreadId }}'),
+      simple: false,
+      options: {
+        returnOnlyMessages: true,
+      },
+    },
+    credentials: { gmailOAuth2: newCredential('Gmail account') },
+  },
+  output: [
+    {
+      id: 'thr456',
+      messages: [
+        { id: 'msg1', From: 'Duncan <duncan@grandriverlabs.com>', labels: [{ id: 'SENT' }] },
+      ],
+    },
+  ],
+});
+
+const detectReplyBeforeSend = node({
+  type: 'n8n-nodes-base.code',
+  version: 2,
+  config: {
+    name: 'Detect Reply Before Send',
+    position: [2200, 120],
+    parameters: {
+      mode: 'runOnceForEachItem',
+      language: 'javaScript',
+      jsCode: DETECT_REPLY_JS,
+    },
+  },
+  output: [
+    {
+      outreachId: 2,
+      isFollowUp: true,
+      hasReply: false,
+      replyCheckStatus: 'unanswered',
+      gmailThreadId: 'thr456',
+      message: 'Quick follow-up...',
+      senderName: 'Duncan',
+    },
+  ],
+});
+
+const stillUnanswered = ifElse({
+  version: 2.2,
+  config: {
+    name: 'Still Unanswered?',
+    position: [2420, 120],
+    parameters: {
+      conditions: {
+        options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
+        conditions: [
+          {
+            id: 'no-reply',
+            leftValue: expr('{{ $json.hasReply }}'),
+            operator: { type: 'boolean', operation: 'false', singleValue: true },
+            rightValue: '',
+          },
+        ],
+        combinator: 'and',
+      },
+    },
+  },
+  output: [
+    [{ hasReply: false, outreachId: 2 }],
+    [{ hasReply: true, outreachId: 2 }],
+  ],
+});
+
+const markRepliedCancel = node({
+  type: 'n8n-nodes-base.postgres',
+  version: 2.6,
+  config: {
+    name: 'Mark Replied Cancel Send',
+    position: [2640, 280],
+    ...DB_RETRY,
+    parameters: {
+      operation: 'executeQuery',
+      query: MARK_REPLIED_SQL,
+      options: {
+        connectionTimeout: 30,
+        queryReplacement: expr(
+          '{{ JSON.stringify({ outreach_id: $json.outreachId }) }}',
+        ),
+      },
+    },
+    credentials: { postgres: newCredential('Grand River Postgres') },
+  },
+  output: [
+    {
+      outreachId: 2,
+      agencyId: 1,
+      status: 'cancelled_replied',
+      replyDetected: true,
     },
   ],
 });
@@ -435,7 +709,7 @@ const sendGmailMessage = node({
   version: 2.2,
   config: {
     name: 'Send Gmail Message',
-    position: [1760, 300],
+    position: [1980, 400],
     ...GMAIL_RETRY,
     parameters: {
       resource: 'message',
@@ -455,12 +729,36 @@ const sendGmailMessage = node({
   output: [{ id: 'msg123', threadId: 'thr456', labelIds: ['SENT'] }],
 });
 
+const replyInThread = node({
+  type: 'n8n-nodes-base.gmail',
+  version: 2.2,
+  config: {
+    name: 'Reply In Thread',
+    position: [2640, 40],
+    ...GMAIL_RETRY,
+    parameters: {
+      resource: 'thread',
+      operation: 'reply',
+      threadId: expr('{{ $json.gmailThreadId }}'),
+      messageId: expr('{{ $json.gmailMessageId || "" }}'),
+      emailType: 'text',
+      message: expr('{{ $json.message }}'),
+      options: {
+        senderName: expr('{{ $json.senderName }}'),
+        replyToSenderOnly: true,
+      },
+    },
+    credentials: { gmailOAuth2: newCredential('Gmail account') },
+  },
+  output: [{ id: 'msg789', threadId: 'thr456', labelIds: ['SENT'] }],
+});
+
 const markSent = node({
   type: 'n8n-nodes-base.postgres',
   version: 2.6,
   config: {
     name: 'Mark Sent',
-    position: [1980, 200],
+    position: [2860, 200],
     ...DB_RETRY,
     parameters: {
       operation: 'executeQuery',
@@ -468,7 +766,7 @@ const markSent = node({
       options: {
         connectionTimeout: 30,
         queryReplacement: expr(
-          '{{ JSON.stringify({ gmail_message_id: $json.id || null, agency_id: $("Prepare Email Payload").item.json.agencyId }) }}',
+          '{{ JSON.stringify({ gmail_message_id: $json.id || null, gmail_thread_id: $json.threadId || null, outreach_id: $("Prepare Email Payload").item.json.outreachId }) }}',
         ),
       },
     },
@@ -476,9 +774,12 @@ const markSent = node({
   },
   output: [
     {
+      outreachId: 1,
       agencyId: 1,
+      sequenceNo: 0,
       status: 'sent',
       gmailMessageId: 'msg123',
+      gmailThreadId: 'thr456',
       sentAt: '2026-07-28T13:01:00.000Z',
     },
   ],
@@ -489,7 +790,7 @@ const prepareSendError = node({
   version: 2,
   config: {
     name: 'Prepare Send Error',
-    position: [1980, 440],
+    position: [2860, 440],
     parameters: {
       mode: 'runOnceForEachItem',
       language: 'javaScript',
@@ -498,6 +799,7 @@ const prepareSendError = node({
   },
   output: [
     {
+      outreachId: 1,
       agencyId: 1,
       contactEmail: 'partner@example.com',
       subject: 'Partnership idea',
@@ -512,7 +814,7 @@ const markSendFailed = node({
   version: 2.6,
   config: {
     name: 'Mark Send Failed',
-    position: [2200, 440],
+    position: [3080, 440],
     ...DB_RETRY,
     parameters: {
       operation: 'executeQuery',
@@ -520,7 +822,7 @@ const markSendFailed = node({
       options: {
         connectionTimeout: 30,
         queryReplacement: expr(
-          '{{ JSON.stringify({ error: $json.error || "Gmail send failed", agency_id: $json.agencyId }) }}',
+          '{{ JSON.stringify({ error: $json.error || "Gmail send failed", outreach_id: $json.outreachId }) }}',
         ),
       },
     },
@@ -528,6 +830,7 @@ const markSendFailed = node({
   },
   output: [
     {
+      outreachId: 1,
       agencyId: 1,
       status: 'send_failed',
       error: 'Gmail send failed',
@@ -560,23 +863,35 @@ const sendComplete = node({
 });
 
 const overviewSticky = sticky(
-  '## Send Approved Agency Outreach\n\nPolls Grand River Postgres every 5 minutes, claims human-approved drafts, and sends via Gmail.\n\nGuardrails: weekdays 09:00–16:00 America/Toronto, max 3/run and 10 sent/day.\nStatus path: `approved` → `sending` → `sent` | `send_failed`.',
+  '## Send Approved Agency Outreach\n\nPolls Grand River Postgres every 5 minutes, claims human-approved drafts (initial + follow-ups), and sends via Gmail.\n\nFollow-ups reply in the original thread after a final no-response check.\nGuardrails: weekdays 09:00–16:00 America/Toronto, max 3/run and 10 sent/day.\nStatus path: `approved` → `sending` → `sent` | `send_failed` | `cancelled_replied`.',
   [sendConfig, ensureSendSchema, withinSendWindow],
   { color: 4, position: [220, 40] },
 );
 
 const credentialsSticky = sticky(
-  '## Credentials\n\n- **Grand River Postgres** — claim approved drafts + write delivery status\n- **Gmail account** — send approved outreach (never create drafts here)',
-  [claimApprovedRows, sendGmailMessage, markSent],
+  '## Credentials\n\n- **Grand River Postgres** — claim approved drafts + write delivery status\n- **Gmail account** — send initial outreach and thread-reply follow-ups',
+  [claimApprovedRows, sendGmailMessage, replyInThread, markSent],
   { color: 5, position: [880, 40] },
 );
 
 const successPath = markSent.to(nextBatch(sendLoop));
 const failurePath = prepareSendError.to(markSendFailed).to(nextBatch(sendLoop));
+const cancelledPath = markRepliedCancel.to(nextBatch(sendLoop));
+
+const followUpPath = getThreadForReplyCheck
+  .to(detectReplyBeforeSend)
+  .to(
+    stillUnanswered
+      .onTrue(replyInThread.to(successPath))
+      .onFalse(cancelledPath),
+  );
 
 const sendPipeline = prepareEmailPayload
-  .to(sendGmailMessage)
-  .to(successPath);
+  .to(
+    isFollowUp
+      .onTrue(followUpPath)
+      .onFalse(sendGmailMessage.to(successPath)),
+  );
 
 export default workflow(
   'send-approved-agency-outreach',
@@ -602,5 +917,7 @@ export default workflow(
       .onFalse(outsideSendWindow),
   )
   .add(sendGmailMessage.onError(failurePath))
+  .add(replyInThread.onError(failurePath))
+  .add(getThreadForReplyCheck.onError(failurePath))
   .add(overviewSticky)
   .add(credentialsSticky);

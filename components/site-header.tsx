@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useId, useState } from "react";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { industries } from "./industries";
+import { whatWeDoNav } from "./what-we-do-nav";
 
 const Arrow = () => (
   <svg
@@ -66,14 +68,7 @@ export function BrandMark() {
   return (
     <span className="wordmark">
       <span className="wordmark__mark" aria-hidden="true">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path
-            d="M2.5 6.5c2.8-2.8 5.2-2.8 7.2 0s3.9 2.8 5.8 0M2.5 11.5c2.8-2.8 5.2-2.8 7.2 0s3.9 2.8 5.8 0"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-          />
-        </svg>
+        <Image src="/brand-mark.png" alt="" width={76} height={76} />
       </span>
       Grand River Labs
     </span>
@@ -131,7 +126,19 @@ export function SiteHeader({
         </a>
 
         <nav className="site-nav" aria-label="Main navigation">
-          <a href="/what-we-do">What we do</a>
+          <div className="site-nav__item">
+            <span className="site-nav__trigger" tabIndex={0}>
+              What we do
+              <Chevron />
+            </span>
+            <div className="site-nav__dropdown" role="list">
+              {whatWeDoNav.map((item) => (
+                <a href={item.href} key={item.href} role="listitem">
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
           <div className="site-nav__item">
             <a className="site-nav__trigger" href="/use-cases">
               Use cases
@@ -180,9 +187,21 @@ export function SiteHeader({
         inert={!menuOpen ? true : undefined}
       >
         <nav className="site-nav-panel__nav" aria-label="Mobile navigation">
-          <a href="/what-we-do" onClick={closeMenu}>
-            What we do
-          </a>
+          <div className="site-nav-panel__group">
+            <span className="site-nav-panel__label">What we do</span>
+            <div className="site-nav-panel__industries" role="list">
+              {whatWeDoNav.map((item) => (
+                <a
+                  href={item.href}
+                  key={item.href}
+                  role="listitem"
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
           <div className="site-nav-panel__group">
             <a href="/use-cases" onClick={closeMenu}>
               Use cases

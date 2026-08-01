@@ -498,8 +498,8 @@ export function MarketingAutomationCta() {
               Book a call
               <Arrow />
             </a>
-            <a className="button button-secondary" href="/what-we-do">
-              Back to what we do
+            <a className="button button-secondary" href="/automation">
+              Back to Automation and AI
               <Arrow />
             </a>
           </div>

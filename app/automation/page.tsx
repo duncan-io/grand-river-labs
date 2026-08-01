@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { WhatWeDoCta, WhatWeDoSections } from "@/components/what-we-do";
 
 export const metadata: Metadata = {
-  title: "What We Do | Grand River Labs",
+  title: "Automation and AI | Grand River Labs",
   description:
     "Automate the busywork between the tools you already trust—business process, marketing, consulting, and AI—without a rip-and-replace.",
 };

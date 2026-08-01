@@ -1,4 +1,4 @@
-import { industries } from "./industries";
+import { whatWeDoNav } from "./what-we-do-nav";
 
 const promises = [
   {
@@ -18,21 +18,26 @@ const promises = [
   },
 ];
 
-const steps = [
+const websiteStrategyPillars = [
   {
-    number: "01",
-    title: "Discover",
-    copy: "We start by mapping where your time and efficiency leak—so we fix what matters most.",
+    label: "SEO",
+    title: "Findability",
+    copy: "Search, structure, and content that match how people look for you—so growth compounds instead of staying rented from ads.",
   },
   {
-    number: "02",
-    title: "Automate",
-    copy: "Then we build around your current workflow and the tools you already use.",
+    label: "CRO",
+    title: "Conversion",
+    copy: "Clearer paths from interest to inquiry or booking—so visits turn into real conversations.",
   },
   {
-    number: "03",
-    title: "Amplify",
-    copy: "Finally, we measure the gains and refine so they keep compounding.",
+    label: "Connect",
+    title: "Integrations",
+    copy: "Forms, CRM, booking, and chat that hand off cleanly—so every lead keeps one shared story.",
+  },
+  {
+    label: "Measure",
+    title: "Analytics",
+    copy: "GA4, Tag Manager, event tracking, and attribution—so marketing, sales, and leadership share one trustworthy story of what’s working.",
   },
 ];
 
@@ -50,11 +55,6 @@ const offerings = [
     href: "/ai-automation",
   },
 ];
-
-const industryLinks = industries.map((item) => ({
-  href: `/use-cases/${item.slug}`,
-  label: item.industry,
-}));
 
 function TributaryScene() {
   return (
@@ -264,35 +264,35 @@ export function PromiseSection() {
   );
 }
 
-export function ProcessSection() {
+export function WebsiteStrategySection() {
   return (
-    <section className="section process" id="process">
+    <section className="section home-ws" id="website-strategy">
       <div className="shell">
-        <div className="process__top reveal">
+        <div className="home-ws__top reveal">
           <div>
-            <p className="eyebrow">Our process</p>
-            <h2 className="section-heading">
-              Here&apos;s how we&apos;ll work together.
-            </h2>
+            <p className="eyebrow">Website strategy</p>
+            <h2 className="section-heading">Websites that grow revenue.</h2>
           </div>
           <p className="section-copy">
-            A clear path from today&apos;s bottleneck to measurable gains.
+            SEO and conversion work that makes the site discoverable—and turns
+            the traffic you earn into inquiries, bookings, and real
+            conversations.
           </p>
         </div>
 
-        <ol className="process-timeline reveal">
-          {steps.map((step) => (
-            <li className="process-timeline__step" key={step.number}>
-              <span className="process-timeline__marker">
-                <span className="process-timeline__number">{step.number}</span>
-              </span>
-              <div className="process-timeline__body">
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
-              </div>
-            </li>
+        <div className="home-ws__grid reveal">
+          {websiteStrategyPillars.map((item) => (
+            <article className="home-ws__pillar" key={item.title}>
+              <span className="home-ws__label">{item.label}</span>
+              <h3>{item.title}</h3>
+              <p>{item.copy}</p>
+            </article>
           ))}
-        </ol>
+        </div>
+
+        <p className="home-ws__more reveal">
+          <a href="/website-strategy">See website strategy →</a>
+        </p>
       </div>
     </section>
   );
@@ -326,7 +326,7 @@ export function OfferingsSection() {
         </div>
 
         <p className="offerings__more reveal">
-          <a href="/what-we-do">See what we do →</a>
+          <a href="/automation">See Automation and AI →</a>
         </p>
       </div>
     </section>
@@ -344,18 +344,18 @@ export function AudienceSection() {
             Big enough to transform. Small enough to feel personal.
           </h2>
           <p className="section-copy">
-            From owner-led teams to growing enterprises—you bring the context,
-            we bring the automation expertise.
+            Website strategy, analytics, and automation—you bring the
+            context, we bring the systems that make growth stick.
           </p>
         </div>
-        <nav className="audience__industries" aria-label="Industries">
-          {industryLinks.map((link) => (
+        <nav className="audience__industries" aria-label="Services">
+          {whatWeDoNav.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}
             </a>
           ))}
-          <a className="audience__industries-all" href="/use-cases">
-            All use cases →
+          <a className="audience__industries-all" href="/automation">
+            See what we do →
           </a>
         </nav>
       </div>
