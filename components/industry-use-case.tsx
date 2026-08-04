@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 import type { IndustryContent } from "./industries";
@@ -133,12 +132,10 @@ export function IndustryStrip({
             >
               <span className="industry-strip__media">
                 {item.image ? (
-                  <Image
+                  <img
                     className="industry-strip__image"
                     src={item.image}
-                    alt=""
-                    fill
-                    sizes="(max-width: 900px) 100vw, 50vw"
+                    alt={item.industry}
                   />
                 ) : null}
               </span>

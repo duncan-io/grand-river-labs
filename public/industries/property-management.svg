@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="pm-bg" x1="0" y1="0" x2="800" y2="600">
+      <stop stop-color="#D8F2F4"/>
+      <stop offset=".5" stop-color="#EDF8F5"/>
+      <stop offset="1" stop-color="#CCEBE5"/>
+    </linearGradient>
+    <linearGradient id="pm-bldg" x1="300" y1="80" x2="500" y2="480">
+      <stop stop-color="#F7FFFE"/>
+      <stop offset="1" stop-color="#CCEBE5"/>
+    </linearGradient>
+    <linearGradient id="pm-hub" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#6FB8B0"/>
+      <stop offset="1" stop-color="#057A72"/>
+    </linearGradient>
+    <radialGradient id="pm-glow" cx="68%" cy="24%" r="40%">
+      <stop stop-color="#FFFDF4" stop-opacity=".78"/>
+      <stop offset="1" stop-color="#B0E4DC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#pm-bg)"/>
+  <circle cx="540" cy="150" r="190" fill="url(#pm-glow)"/>
+
+  <path d="M0 525c190-38 360-26 540 8 120 22 170 14 260-18v85H0V525Z" fill="#EAF7F4" opacity=".85"/>
+
+  <!-- Soft building silhouette -->
+  <g>
+    <rect x="280" y="140" width="240" height="340" rx="6" fill="url(#pm-bldg)" stroke="#057A72" stroke-width="1.75"/>
+    <!-- Roof cap -->
+    <rect x="260" y="118" width="280" height="28" rx="4" fill="#D7F0EC" stroke="#057A72" stroke-width="1.5"/>
+    <!-- Windows grid -->
+    <g fill="#6FB8B0" opacity=".35">
+      <rect x="308" y="180" width="36" height="36" rx="3"/>
+      <rect x="382" y="180" width="36" height="36" rx="3"/>
+      <rect x="456" y="180" width="36" height="36" rx="3"/>
+      <rect x="308" y="248" width="36" height="36" rx="3"/>
+      <rect x="382" y="248" width="36" height="36" rx="3"/>
+      <rect x="456" y="248" width="36" height="36" rx="3"/>
+      <rect x="308" y="316" width="36" height="36" rx="3"/>
+      <rect x="382" y="316" width="36" height="36" rx="3"/>
+      <rect x="456" y="316" width="36" height="36" rx="3"/>
+    </g>
+    <!-- Door -->
+    <rect x="372" y="400" width="56" height="80" rx="4" fill="#057A72" opacity=".45"/>
+    <circle cx="416" cy="444" r="3.5" fill="#F7FFFE" opacity=".8"/>
+  </g>
+
+  <!-- Portal / key nodes -->
+  <g>
+    <circle cx="140" cy="280" r="42" fill="url(#pm-hub)"/>
+    <circle cx="140" cy="280" r="42" fill="#FFFDF4" opacity=".14"/>
+    <!-- Key silhouette -->
+    <circle cx="132" cy="268" r="11" fill="none" stroke="#F7FFFE" stroke-width="3"/>
+    <path d="M142 274 L176 298 M164 290 L174 284 M170 296 L180 290" stroke="#F7FFFE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g>
+    <circle cx="660" cy="320" r="38" fill="#F7FFFE" stroke="#057A72" stroke-width="1.75"/>
+    <!-- Message / portal mark -->
+    <rect x="640" y="304" width="40" height="30" rx="5" fill="none" stroke="#057A72" stroke-width="2.5"/>
+    <path d="M640 310 L660 324 L680 310" stroke="#057A72" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Lease doc node -->
+  <g>
+    <rect x="100" y="400" width="72" height="96" rx="6" fill="#F7FFFE" stroke="#057A72" stroke-width="1.5"/>
+    <path d="M116 426h40M116 448h30M116 470h36" stroke="#3A948C" stroke-width="2.25" stroke-linecap="round" opacity=".55"/>
+  </g>
+
+  <!-- Linking paths -->
+  <path d="M182 280 Q230 240 280 220" stroke="#3A948C" stroke-width="1.5" opacity=".3"/>
+  <path d="M182 280 Q230 240 280 220" stroke="#057A72" stroke-width="1.75" stroke-dasharray="6 9" opacity=".65"/>
+  <path d="M172 420 Q230 380 280 360" stroke="#3A948C" stroke-width="1.5" opacity=".3"/>
+  <path d="M172 420 Q230 380 280 360" stroke="#057A72" stroke-width="1.75" stroke-dasharray="6 9" opacity=".55"/>
+  <path d="M520 300 Q580 290 622 310" stroke="#3A948C" stroke-width="1.5" opacity=".3"/>
+  <path d="M520 300 Q580 290 622 310" stroke="#057A72" stroke-width="1.75" stroke-dasharray="6 9" opacity=".65"/>
+
+  <circle cx="230" cy="250" r="4.5" fill="#FFFDF4" stroke="#057A72" stroke-width="1.25"/>
+  <circle cx="575" cy="298" r="4.5" fill="#FFFDF4" stroke="#057A72" stroke-width="1.25"/>
+</svg>

@@ -17,8 +17,8 @@ export default function Home() {
       <SiteHeader />
       <main>
         <Hero />
-        <PromiseSection />
         <WebsiteStrategySection />
+        <PromiseSection />
         <OfferingsSection />
         <AudienceSection />
         <ContactSection turnstileSiteKey={turnstileSiteKey} />

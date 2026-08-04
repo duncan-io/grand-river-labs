@@ -15,9 +15,23 @@ type FormStatus = {
 
 type ContactSectionProps = {
   turnstileSiteKey: string;
+  variant?: "default" | "cta";
+  eyebrow?: string;
+  heading?: string;
+  copy?: string;
+  messageLabel?: string;
+  messagePlaceholder?: string;
 };
 
-export function ContactSection({ turnstileSiteKey }: ContactSectionProps) {
+export function ContactSection({
+  turnstileSiteKey,
+  variant = "default",
+  eyebrow = "Start a conversation",
+  heading = "What's costing you time?",
+  copy = "Tell us where work feels harder—or slower—than it should. We'll help you see what's possible: clearer, leaner, and without the jargon.",
+  messageLabel = "Where are you losing time or efficiency?",
+  messagePlaceholder = "A slow process, too much manual work, a stubborn bottleneck—start wherever you are.",
+}: ContactSectionProps) {
   const turnstileRef = useRef<TurnstileFieldHandle>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -88,16 +102,15 @@ export function ContactSection({ turnstileSiteKey }: ContactSectionProps) {
   }
 
   return (
-    <section className="section contact" id="contact">
+    <section
+      className={`section contact${variant === "cta" ? " contact--cta" : ""}`}
+      id="contact"
+    >
       <div className="shell contact__layout">
         <div className="contact__intro reveal">
-          <p className="eyebrow">Start a conversation</p>
-          <h2 className="section-heading">What&apos;s costing you time?</h2>
-          <p className="section-copy">
-            Tell us where work feels harder—or slower—than it should.
-            We&apos;ll help you see what&apos;s possible: clearer, leaner, and
-            without the jargon.
-          </p>
+          <p className="eyebrow">{eyebrow}</p>
+          <h2 className="section-heading">{heading}</h2>
+          <p className="section-copy">{copy}</p>
           <a
             className="contact__direct"
             href={BOOK_CALL_HREF}
@@ -140,11 +153,11 @@ export function ContactSection({ turnstileSiteKey }: ContactSectionProps) {
           </div>
 
           <div className="field">
-            <label htmlFor="message">Where are you losing time or efficiency?</label>
+            <label htmlFor="message">{messageLabel}</label>
             <textarea
               id="message"
               name="message"
-              placeholder="A slow process, too much manual work, a stubborn bottleneck—start wherever you are."
+              placeholder={messagePlaceholder}
               minLength={10}
               maxLength={3000}
               required

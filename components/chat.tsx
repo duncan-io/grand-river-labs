@@ -30,7 +30,7 @@ const SESSION_KEY = "grl-chat-session";
 const EMAIL_KEY = "grl-chat-email";
 
 const WELCOME_MESSAGE =
-  "Hi—I’m the Grand River Labs assistant. We help with website strategy, analytics, and automation & AI. Ask about growing your site into a revenue engine, measuring what actually works, streamlining operations—or where to start.";
+  "What’s slowing your business down right now—your website, your measurement, or the manual work in between? I’m the Grand River Labs assistant. We help with a fractional website department, analytics, and automation & AI.";
 
 function createId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -347,7 +347,7 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
       <SiteHeader embedded />
 
       <h1 className="visually-hidden" id={`${listId}-title`}>
-        Ask about website strategy, analytics, or automation
+        Ask about the fractional website department, analytics, or automation
       </h1>
 
       <div className="chat__body">
@@ -357,9 +357,9 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
             Ask about websites, analytics, or automation
           </p>
           <p className="chat__lede">
-            Chat with our AI about website strategy, measurement you can trust,
-            and automation & AI—and whether a first project makes sense for your
-            team.
+            Chat with our AI about an embedded website team, measurement you can
+            trust, and automation & AI—and whether a first project makes sense
+            for your team.
           </p>
           <p className="chat__disclaimer">
             This assistant can make mistakes. It can&apos;t make legally binding

@@ -156,15 +156,13 @@ export function Hero() {
       <RiverScene />
       <div className="shell">
         <div className="hero__content">
-          <h1 className="hero__brand">Grand River Labs</h1>
-          <p className="hero__headline">
-            Automation that saves you time, increases efficiency, and magnifies
-            impact.
-          </p>
+          <h1 className="hero__headline">
+            Website Strategy And Automation To Drive More Revenue
+          </h1>
           <p className="hero__copy">
-            We improve the processes you already use—and when the work calls for
-            it, we build custom AI tools and train models on your data—so your
-            team spends fewer hours and gets more impact from the same work.
+            We own your website like an embedded department, make measurement
+            decision-ready, and automate the work that drains your team—so you
+            get more from the same hours.
           </p>
           <div className="hero__actions">
             <a

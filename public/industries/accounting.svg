@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="acct-bg" x1="0" y1="0" x2="800" y2="600">
+      <stop stop-color="#D8F2F4"/>
+      <stop offset=".55" stop-color="#EDF8F5"/>
+      <stop offset="1" stop-color="#CCEBE5"/>
+    </linearGradient>
+    <linearGradient id="acct-doc" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F7FFFE"/>
+      <stop offset="1" stop-color="#D7F0EC"/>
+    </linearGradient>
+    <linearGradient id="acct-sys" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#6FB8B0"/>
+      <stop offset="1" stop-color="#057A72"/>
+    </linearGradient>
+    <radialGradient id="acct-glow" cx="70%" cy="26%" r="42%">
+      <stop stop-color="#FFFDF4" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#B0E4DC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#acct-bg)"/>
+  <circle cx="560" cy="150" r="190" fill="url(#acct-glow)"/>
+  <path d="M0 525c190-38 360-26 540 8 120 22 170 14 260-18v85H0V525Z" fill="#EAF7F4" opacity=".85"/>
+
+  <!-- Soft ledger grid backdrop -->
+  <g opacity=".12" stroke="#057A72" stroke-width="1">
+    <path d="M90 160h280M90 200h280M90 240h280M90 280h280M90 320h280M90 360h280M90 400h280"/>
+    <path d="M130 140v280M210 140v280M290 140v280"/>
+  </g>
+
+  <!-- Stacked invoices / statements -->
+  <g>
+    <rect x="130" y="150" width="200" height="260" rx="12" fill="url(#acct-doc)" stroke="#3A948C" stroke-width="1.5" opacity=".55"/>
+    <rect x="155" y="175" width="200" height="260" rx="12" fill="url(#acct-doc)" stroke="#3A948C" stroke-width="1.5" opacity=".75"/>
+    <rect x="180" y="200" width="210" height="270" rx="12" fill="url(#acct-doc)" stroke="#057A72" stroke-width="2"/>
+    <!-- Header band -->
+    <rect x="200" y="222" width="170" height="28" rx="4" fill="#CCEBE5" opacity=".85"/>
+    <path d="M214 236h90" stroke="#057A72" stroke-width="3.5" stroke-linecap="round" opacity=".55"/>
+    <!-- Line items with amounts -->
+    <path d="M214 280h100" stroke="#3A948C" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+    <path d="M330 280h40" stroke="#057A72" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+    <path d="M214 316h88" stroke="#3A948C" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+    <path d="M330 316h40" stroke="#057A72" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+    <path d="M214 352h96" stroke="#3A948C" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+    <path d="M330 352h40" stroke="#057A72" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+    <path d="M214 388h80" stroke="#3A948C" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+    <path d="M330 388h40" stroke="#057A72" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+    <!-- Total row -->
+    <path d="M214 430h156" stroke="#6FB8B0" stroke-width="1.5" opacity=".5"/>
+    <path d="M214 452h70" stroke="#057A72" stroke-width="4" stroke-linecap="round" opacity=".65"/>
+    <path d="M320 452h50" stroke="#057A72" stroke-width="4" stroke-linecap="round" opacity=".75"/>
+  </g>
+
+  <!-- Flow into practice system -->
+  <path d="M390 340 C470 310 510 290 560 270" stroke="#3A948C" stroke-width="1.6" opacity=".35"/>
+  <path d="M390 340 C470 310 510 290 560 270" stroke="#057A72" stroke-width="2.1" stroke-dasharray="7 10" opacity=".75"/>
+  <circle cx="480" cy="308" r="5" fill="#FFFDF4" stroke="#057A72" stroke-width="1.5"/>
+
+  <!-- Practice / CRM system block -->
+  <g>
+    <rect x="560" y="200" width="140" height="150" rx="18" fill="url(#acct-sys)"/>
+    <rect x="560" y="200" width="140" height="150" rx="18" fill="#FFFDF4" opacity=".12"/>
+    <circle cx="630" cy="275" r="88" stroke="#6FB8B0" stroke-width="1.25" opacity=".35"/>
+    <!-- Clean fields -->
+    <rect x="586" y="236" width="88" height="12" rx="3" fill="#F7FFFE" opacity=".9"/>
+    <rect x="586" y="262" width="64" height="12" rx="3" fill="#F7FFFE" opacity=".7"/>
+    <rect x="586" y="288" width="76" height="12" rx="3" fill="#F7FFFE" opacity=".55"/>
+    <rect x="586" y="314" width="52" height="12" rx="3" fill="#F7FFFE" opacity=".4"/>
+  </g>
+
+  <!-- Calculator / totals accent -->
+  <g>
+    <rect x="620" y="400" width="100" height="120" rx="12" fill="url(#acct-doc)" stroke="#057A72" stroke-width="1.75"/>
+    <rect x="636" y="416" width="68" height="22" rx="4" fill="#CCEBE5"/>
+    <g fill="#6FB8B0" opacity=".7">
+      <rect x="636" y="452" width="18" height="16" rx="3"/>
+      <rect x="661" y="452" width="18" height="16" rx="3"/>
+      <rect x="686" y="452" width="18" height="16" rx="3"/>
+      <rect x="636" y="476" width="18" height="16" rx="3"/>
+      <rect x="661" y="476" width="18" height="16" rx="3"/>
+      <rect x="686" y="476" width="18" height="16" rx="3"/>
+    </g>
+    <rect x="636" y="500" width="68" height="8" rx="2" fill="#057A72" opacity=".45"/>
+  </g>
+  <path d="M630 350 Q660 370 670 400" stroke="#057A72" stroke-width="1.5" stroke-dasharray="5 8" opacity=".4"/>
+</svg>

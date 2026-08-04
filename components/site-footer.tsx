@@ -6,17 +6,13 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="shell site-footer__inner">
-        <a href="/" aria-label="Grand River Labs, home">
-          <BrandMark />
-        </a>
-        <p>© {new Date().getFullYear()} Grand River Labs</p>
+        <div className="site-footer__brand">
+          <a href="/" aria-label="Grand River Labs, home">
+            <BrandMark />
+          </a>
+          <p>© {new Date().getFullYear()} Grand River Labs</p>
+        </div>
         <div className="site-footer__links">
-          {whatWeDoNav.map((item) => (
-            <a href={item.href} key={item.href}>
-              {item.label}
-            </a>
-          ))}
-          <a href="/white-label">White-label</a>
           <a href="/chat">Ask us</a>
           <a href="/#contact">Contact</a>
           <a href="mailto:hello@grandriverlabs.com">
@@ -25,8 +21,17 @@ export function SiteFooter() {
           <a href="#top">Back to top</a>
         </div>
       </div>
-      <div className="shell site-footer__industries">
-        <span className="site-footer__industries-label">Industries</span>
+      <div className="shell site-footer__row">
+        <span className="site-footer__row-label">Services</span>
+        {whatWeDoNav.map((item) => (
+          <a href={item.href} key={item.href}>
+            {item.label}
+          </a>
+        ))}
+        <a href="/white-label">White-label</a>
+      </div>
+      <div className="shell site-footer__row">
+        <span className="site-footer__row-label">Industries</span>
         {industries.map((item) => (
           <a href={`/use-cases/${item.slug}`} key={item.slug}>
             {item.industry}

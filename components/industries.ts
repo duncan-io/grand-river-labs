@@ -31,6 +31,7 @@ export const industries: IndustryContent[] = [
     industry: "Accounting & professional services",
     headline: "Give your team the week back.",
     copy: "Client documents, duplicate entry, and month-end scramble steal hours that should go to advisory work. We clear that friction so your practice runs cleaner—and your people do higher-value work.",
+    image: "/industries/accounting.svg",
     metaTitle: "Accounting & Professional Services | Grand River Labs",
     metaDescription:
       "Reclaim hours every week in accounting and professional services—less retyping, cleaner client data, faster reporting, without the upheaval.",
@@ -101,6 +102,7 @@ export const industries: IndustryContent[] = [
     industry: "Insurance brokerages",
     headline: "Move submissions without the shuffle.",
     copy: "Certificates, renewals, and inbox triage chew through your producers’ and CSRs’ day. We remove the handoffs so coverage work moves faster—and your team spends less time chasing paper.",
+    image: "/industries/insurance.svg",
     metaTitle: "Insurance Brokerages | Grand River Labs",
     metaDescription:
       "Save hours every week in insurance brokerages—faster submissions, cleaner CRM, routine questions handled, renewals without spreadsheet chase.",
@@ -171,6 +173,7 @@ export const industries: IndustryContent[] = [
     industry: "Property management",
     headline: "Fewer handoffs between inbox, docs, and your system.",
     copy: "Leases, applications, and tenant messages pile up faster than anyone can process by hand. We clear the bottlenecks so your team spends less time retyping—and more time keeping properties running.",
+    image: "/industries/property-management.svg",
     metaTitle: "Property Management | Grand River Labs",
     metaDescription:
       "Reclaim hours in property management—faster lease intake, first responses on common tenant asks, cleaner records, clearer weekly ops snapshots.",
@@ -241,6 +244,7 @@ export const industries: IndustryContent[] = [
     industry: "Home services",
     headline: "Win the job. Stop living in the inbox.",
     copy: "For roofing, decking, and painting crews, the money is on the jobsite—not in estimate follow-up, CRM updates, and proposal rewriting. We give owners and office staff hours back every week.",
+    image: "/industries/home-services.svg",
     metaTitle: "Home Services — Roofing, Decking & Painting | Grand River Labs",
     metaDescription:
       "Save hours every week in roofing, decking, and painting—faster estimates, CRM that updates itself, lead triage, and a clear weekly pipeline view.",

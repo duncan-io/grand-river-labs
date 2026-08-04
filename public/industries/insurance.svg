@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="ins-bg" x1="0" y1="0" x2="800" y2="600">
+      <stop stop-color="#D8F2F4"/>
+      <stop offset=".5" stop-color="#EDF8F5"/>
+      <stop offset="1" stop-color="#CCEBE5"/>
+    </linearGradient>
+    <linearGradient id="ins-shield" x1="360" y1="80" x2="440" y2="420">
+      <stop stop-color="#6FB8B0"/>
+      <stop offset="1" stop-color="#057A72"/>
+    </linearGradient>
+    <linearGradient id="ins-doc" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F7FFFE"/>
+      <stop offset="1" stop-color="#D7F0EC"/>
+    </linearGradient>
+    <radialGradient id="ins-glow" cx="50%" cy="22%" r="42%">
+      <stop stop-color="#FFFDF4" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#B0E4DC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#ins-bg)"/>
+  <circle cx="400" cy="140" r="200" fill="url(#ins-glow)"/>
+
+  <path d="M0 530c200-40 380-30 560 4 130 24 170 16 240-14v80H0V530Z" fill="#EAF7F4" opacity=".85"/>
+
+  <!-- Soft umbrella / protection arc -->
+  <path d="M160 260 Q400 40 640 260" stroke="#6FB8B0" stroke-width="1.5" opacity=".35"/>
+  <path d="M200 250 Q400 70 600 250" stroke="#057A72" stroke-width="2" opacity=".22"/>
+
+  <!-- Shield -->
+  <g>
+    <path
+      d="M400 112 L520 168 V268 C520 340 460 392 400 418 C340 392 280 340 280 268 V168 Z"
+      fill="url(#ins-shield)"
+    />
+    <path
+      d="M400 112 L520 168 V268 C520 340 460 392 400 418 C340 392 280 340 280 268 V168 Z"
+      fill="#FFFDF4"
+      opacity=".12"
+    />
+    <path
+      d="M400 148 L484 186 V266 C484 320 440 358 400 378 C360 358 316 320 316 266 V186 Z"
+      fill="none"
+      stroke="#F7FFFE"
+      stroke-width="1.5"
+      opacity=".35"
+    />
+    <!-- Check / secure mark -->
+    <path d="M362 268 L388 294 L446 232" stroke="#F7FFFE" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  </g>
+
+  <!-- Policy / form nodes -->
+  <g>
+    <rect x="98" y="340" width="112" height="148" rx="8" fill="url(#ins-doc)" stroke="#057A72" stroke-width="1.5"/>
+    <path d="M122 380h64M122 408h48M122 436h56" stroke="#3A948C" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+  </g>
+  <g>
+    <rect x="590" y="340" width="112" height="148" rx="8" fill="url(#ins-doc)" stroke="#057A72" stroke-width="1.5"/>
+    <path d="M614 380h64M614 408h48M614 436h56" stroke="#3A948C" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+  </g>
+
+  <!-- Connection paths -->
+  <path d="M210 380 Q280 320 310 280" stroke="#3A948C" stroke-width="1.5" opacity=".35"/>
+  <path d="M210 380 Q280 320 310 280" stroke="#057A72" stroke-width="1.75" stroke-dasharray="6 9" opacity=".65"/>
+  <path d="M590 380 Q520 320 490 280" stroke="#3A948C" stroke-width="1.5" opacity=".35"/>
+  <path d="M590 380 Q520 320 490 280" stroke="#057A72" stroke-width="1.75" stroke-dasharray="6 9" opacity=".65"/>
+
+  <!-- Status nodes -->
+  <circle cx="240" cy="360" r="7" fill="#FFFDF4" stroke="#057A72" stroke-width="1.5"/>
+  <circle cx="560" cy="360" r="7" fill="#FFFDF4" stroke="#057A72" stroke-width="1.5"/>
+  <circle cx="400" cy="460" r="8" fill="#6FB8B0" stroke="#057A72" stroke-width="1.25" opacity=".9"/>
+  <path d="M400 418 V452" stroke="#057A72" stroke-width="1.5" opacity=".4"/>
+</svg>

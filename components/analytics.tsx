@@ -217,7 +217,6 @@ export function AnalyticsSections() {
         <div className="shell">
           <div className="analytics-hero__content">
             <p className="eyebrow">Analytics</p>
-            <p className="analytics-hero__brand">Grand River Labs</p>
             <h1 className="analytics-hero__headline">
               Measurement you can make decisions on.
             </h1>
@@ -389,7 +388,7 @@ export function AnalyticsCta() {
               <Arrow />
             </a>
             <a className="button button-secondary" href="/website-strategy">
-              See website strategy
+              See fractional website department
               <Arrow />
             </a>
           </div>

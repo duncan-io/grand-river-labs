@@ -20,24 +20,24 @@ const promises = [
 
 const websiteStrategyPillars = [
   {
-    label: "SEO",
-    title: "Findability",
-    copy: "Search, structure, and content that match how people look for you—so growth compounds instead of staying rented from ads.",
+    label: "Guide",
+    title: "Strategy & roadmaps",
+    copy: "Prioritize what the site should do next—based on how you win work, not what’s loudest in the backlog.",
   },
   {
-    label: "CRO",
-    title: "Conversion",
-    copy: "Clearer paths from interest to inquiry or booking—so visits turn into real conversations.",
+    label: "Ship",
+    title: "Changes & CRO",
+    copy: "Updates, launches, and conversion paths that turn visits into inquiries—without a giant redesign project.",
   },
   {
-    label: "Connect",
-    title: "Integrations",
-    copy: "Forms, CRM, booking, and chat that hand off cleanly—so every lead keeps one shared story.",
+    label: "Find",
+    title: "Technical SEO",
+    copy: "Structure, titles, and content that match search intent—so organic findability compounds over time.",
   },
   {
-    label: "Measure",
-    title: "Analytics",
-    copy: "GA4, Tag Manager, event tracking, and attribution—so marketing, sales, and leadership share one trustworthy story of what’s working.",
+    label: "Support",
+    title: "Setup & technical care",
+    copy: "Integrations, hosting, performance, and the Monday-morning surprises—owned so the site stays healthy.",
   },
 ];
 
@@ -270,13 +270,15 @@ export function WebsiteStrategySection() {
       <div className="shell">
         <div className="home-ws__top reveal">
           <div>
-            <p className="eyebrow">Website strategy</p>
-            <h2 className="section-heading">Websites that grow revenue.</h2>
+            <p className="eyebrow">Fractional Website Department</p>
+            <h2 className="section-heading">
+              Your website team—without hiring one.
+            </h2>
           </div>
           <p className="section-copy">
-            SEO and conversion work that makes the site discoverable—and turns
-            the traffic you earn into inquiries, bookings, and real
-            conversations.
+            Guidance, changes, setup, technical support, technical SEO, and
+            CRO—owned end to end so the site stays healthy, findable, and
+            converting.
           </p>
         </div>
 
@@ -291,7 +293,7 @@ export function WebsiteStrategySection() {
         </div>
 
         <p className="home-ws__more reveal">
-          <a href="/website-strategy">See website strategy →</a>
+          <a href="/website-strategy">See the fractional website department →</a>
         </p>
       </div>
     </section>
@@ -344,8 +346,8 @@ export function AudienceSection() {
             Big enough to transform. Small enough to feel personal.
           </h2>
           <p className="section-copy">
-            Website strategy, analytics, and automation—you bring the
-            context, we bring the systems that make growth stick.
+            A fractional website department, analytics, and automation—you bring
+            the context, we bring the systems that make growth stick.
           </p>
         </div>
         <nav className="audience__industries" aria-label="Services">
