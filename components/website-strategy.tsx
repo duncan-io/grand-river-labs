@@ -1287,7 +1287,7 @@ export function WebsiteStrategySections() {
           <div className="mkt-hero__content">
             <p className="eyebrow">Fractional Website Department</p>
             <h1 className="mkt-hero__headline">
-              Your website team—without hiring one.
+              Website ownership, without the in-house hire.
             </h1>
             <p className="mkt-hero__copy">
               On-demand website operations, growth recommendations, setup, and
