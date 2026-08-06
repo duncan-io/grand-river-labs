@@ -157,7 +157,7 @@ export function Hero() {
       <div className="shell">
         <div className="hero__content">
           <h1 className="hero__headline">
-            Website Strategy And Automation To Drive More Revenue
+            Digital Strategy And Automation To Drive More Revenue
           </h1>
           <p className="hero__copy">
             We own your website like a trusted partner, make measurement
