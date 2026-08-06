@@ -160,7 +160,7 @@ export function Hero() {
             Website Strategy And Automation To Drive More Revenue
           </h1>
           <p className="hero__copy">
-            We own your website like an embedded department, make measurement
+            We own your website like a trusted partner, make measurement
             decision-ready, and automate the work that drains your team—so you
             get more from the same hours.
           </p>

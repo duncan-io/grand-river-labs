@@ -388,7 +388,7 @@ export function AnalyticsCta() {
               <Arrow />
             </a>
             <a className="button button-secondary" href="/website-strategy">
-              See fractional website department
+              See fractional website partner
               <Arrow />
             </a>
           </div>

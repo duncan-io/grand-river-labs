@@ -30,7 +30,7 @@ const SESSION_KEY = "grl-chat-session";
 const EMAIL_KEY = "grl-chat-email";
 
 const WELCOME_MESSAGE =
-  "What’s slowing your business down right now—your website, your measurement, or the manual work in between? I’m the Grand River Labs assistant. We help with a fractional website department, analytics, and automation & AI.";
+  "What’s slowing your business down right now—your website, your measurement, or the manual work in between? I’m the Grand River Labs assistant. We help with a fractional website partner, analytics, and automation & AI.";
 
 function createId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -347,7 +347,7 @@ export function ChatPanel({ turnstileSiteKey }: ChatPanelProps) {
       <SiteHeader embedded />
 
       <h1 className="visually-hidden" id={`${listId}-title`}>
-        Ask about the fractional website department, analytics, or automation
+        Ask about the fractional website partner, analytics, or automation
       </h1>
 
       <div className="chat__body">

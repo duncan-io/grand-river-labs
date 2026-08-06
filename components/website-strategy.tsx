@@ -68,7 +68,7 @@ const peacePaths = [
   },
   {
     title: "Need a new one?",
-    copy: "We help build and host a site that fits how you win work—then stay on as your Fractional Website Department after launch.",
+    copy: "We help build and host a site that fits how you win work—then stay on as your Fractional Website Partner after launch.",
   },
 ];
 
@@ -1285,7 +1285,7 @@ export function WebsiteStrategySections() {
         <FractionalDeptScene />
         <div className="shell">
           <div className="mkt-hero__content">
-            <p className="eyebrow">Fractional Website Department</p>
+            <p className="eyebrow">Fractional Website Partner</p>
             <h1 className="mkt-hero__headline">
               Website ownership, without the in-house hire.
             </h1>
@@ -1327,7 +1327,7 @@ export function WebsiteStrategySections() {
               <p className="section-copy">
                 Most sites don&apos;t fail from a lack of ideas. They fail from
                 fragmented ownership—backlogs, vendors, and fire drills instead of
-                a department that ships on purpose.
+                a trusted partner that ships on purpose.
               </p>
             </div>
             <OwnershipGapScene />
@@ -1346,17 +1346,17 @@ export function WebsiteStrategySections() {
         </div>
       </section>
 
-      <section className="section fwd-services" id="department">
+      <section className="section fwd-services" id="partnership">
         <div className="shell">
           <div className="fwd-services__top reveal">
             <div className="fwd-services__intro">
-              <p className="eyebrow">The department</p>
+              <p className="eyebrow">The partnership</p>
               <h2 className="section-heading">
                 Everything a website team should cover.
               </h2>
               <p className="section-copy">
-                Not a one-off project. An embedded Fractional Website
-                Department—strategy, on-demand operations, ownership, growth
+                Not a one-off project. A trusted Fractional Website
+                Partner—strategy, on-demand operations, ownership, growth
                 recommendations, and conversion—working as one system.
               </p>
             </div>
@@ -1393,8 +1393,8 @@ export function WebsiteStrategySections() {
               </h2>
             </div>
             <p className="section-copy">
-              A trusted Fractional Website Department takes ownership—so the
-              site stays healthy, findable, and converting while you run the
+              A trusted Fractional Website Partner takes ownership—so the site
+              stays healthy, findable, and converting while you run the
               business.
             </p>
           </div>

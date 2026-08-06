@@ -270,7 +270,7 @@ export function WebsiteStrategySection() {
       <div className="shell">
         <div className="home-ws__top reveal">
           <div>
-            <p className="eyebrow">Fractional Website Department</p>
+            <p className="eyebrow">Fractional Website Partner</p>
             <h2 className="section-heading">
               Your website team—without hiring one.
             </h2>
@@ -293,7 +293,7 @@ export function WebsiteStrategySection() {
         </div>
 
         <p className="home-ws__more reveal">
-          <a href="/website-strategy">See the fractional website department →</a>
+          <a href="/website-strategy">See the fractional website partner →</a>
         </p>
       </div>
     </section>
@@ -346,7 +346,7 @@ export function AudienceSection() {
             Big enough to transform. Small enough to feel personal.
           </h2>
           <p className="section-copy">
-            A fractional website department, analytics, and automation—you bring
+            A fractional website partner, analytics, and automation—you bring
             the context, we bring the systems that make growth stick.
           </p>
         </div>

@@ -15,9 +15,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Grand River Labs | Fractional Website Department, Analytics & Automation",
+  title: "Grand River Labs | Fractional Website Partner, Analytics & Automation",
   description:
-    "Grand River Labs provides a fractional website department, analytics, and automation & AI—so you save time, increase efficiency, and magnify impact.",
+    "Grand River Labs provides a fractional website partner, analytics, and automation & AI—so you save time, increase efficiency, and magnify impact.",
 };
 
 export default function RootLayout({

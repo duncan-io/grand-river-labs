@@ -5,9 +5,9 @@ import { SiteHeader } from "@/components/site-header";
 import { WebsiteStrategySections } from "@/components/website-strategy";
 
 export const metadata: Metadata = {
-  title: "Fractional Website Department | Grand River Labs",
+  title: "Fractional Website Partner | Grand River Labs",
   description:
-    "A trusted Fractional Website Department—on-demand website operations, growth recommendations, ownership, and CRO. Existing sites or new builds, across WordPress, Webflow, Wix, Squarespace, and more.",
+    "A trusted Fractional Website Partner—on-demand website operations, growth recommendations, ownership, and CRO. Existing sites or new builds, across WordPress, Webflow, Wix, Squarespace, and more.",
 };
 
 export default function WebsiteStrategyPage() {
@@ -23,7 +23,7 @@ export default function WebsiteStrategyPage() {
           variant="cta"
           eyebrow="Start a conversation"
           heading="What's going on with your website?"
-          copy="Tell us about ownership, the backlog, a site that needs building—or what you wish someone would just handle. We'll map how a Fractional Website Department can take it on."
+          copy="Tell us about ownership, the backlog, a site that needs building—or what you wish someone would just handle. We'll map how a Fractional Website Partner can take it on."
           messageLabel="What's happening with your website?"
           messagePlaceholder="Ownership gaps, a stubborn backlog, underperforming pages, a new site to build—start wherever you are."
         />
