@@ -4,7 +4,7 @@ import {
   AudienceSection,
   OfferingsSection,
   PromiseSection,
-  WebsiteStrategySection,
+  DigitalStrategySection,
 } from "@/components/sections";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -17,7 +17,7 @@ export default function Home() {
       <SiteHeader />
       <main>
         <Hero />
-        <WebsiteStrategySection />
+        <DigitalStrategySection />
         <PromiseSection />
         <OfferingsSection />
         <AudienceSection />

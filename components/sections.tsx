@@ -18,26 +18,26 @@ const promises = [
   },
 ];
 
-const websiteStrategyPillars = [
+const digitalStrategyPillars = [
   {
-    label: "Guide",
-    title: "Strategy & roadmaps",
-    copy: "Prioritize what the site should do next—based on how you win work, not what’s loudest in the backlog.",
+    label: "Prioritize",
+    title: "Channel mix & roadmap",
+    copy: "Decide what deserves attention now across website, paid, SEO, email, and social—based on goals, not the loudest request.",
   },
   {
-    label: "Ship",
-    title: "Changes & CRO",
-    copy: "Updates, launches, and conversion paths that turn visits into inquiries—without a giant redesign project.",
+    label: "Website",
+    title: "Site’s job in the journey",
+    copy: "Clarify what the site must do commercially, which pages matter, and which improvements move the needle.",
   },
   {
-    label: "Find",
-    title: "Technical SEO",
-    copy: "Structure, titles, and content that match search intent—so organic findability compounds over time.",
+    label: "Acquire",
+    title: "PPC, SEO & content",
+    copy: "Focus paid and organic effort where demand can grow efficiently—and know when to scale, test, or stop.",
   },
   {
-    label: "Support",
-    title: "Setup & technical care",
-    copy: "Integrations, hosting, performance, and the Monday-morning surprises—owned so the site stays healthy.",
+    label: "Measure",
+    title: "Analytics & marketing ops",
+    copy: "Define the signals, reporting, and handoffs so the next decision is grounded in what actually worked.",
   },
 ];
 
@@ -264,26 +264,26 @@ export function PromiseSection() {
   );
 }
 
-export function WebsiteStrategySection() {
+export function DigitalStrategySection() {
   return (
-    <section className="section home-ws" id="website-strategy">
+    <section className="section home-ws" id="digital-strategy">
       <div className="shell">
         <div className="home-ws__top reveal">
           <div>
-            <p className="eyebrow">Fractional Website Partner</p>
+            <p className="eyebrow">Fractional Digital Strategy Partner</p>
             <h2 className="section-heading">
-              Your website team—without hiring one.
+              Digital strategy ownership, without the in-house hire.
             </h2>
           </div>
           <p className="section-copy">
-            Guidance, changes, setup, technical support, technical SEO, and
-            CRO—owned end to end so the site stays healthy, findable, and
-            converting.
+            Ongoing guidance across your website, PPC, SEO, email, social
+            media, and marketing operations—so every priority connects to a
+            goal and earns its place in the plan.
           </p>
         </div>
 
         <div className="home-ws__grid reveal">
-          {websiteStrategyPillars.map((item) => (
+          {digitalStrategyPillars.map((item) => (
             <article className="home-ws__pillar" key={item.title}>
               <span className="home-ws__label">{item.label}</span>
               <h3>{item.title}</h3>
@@ -293,7 +293,9 @@ export function WebsiteStrategySection() {
         </div>
 
         <p className="home-ws__more reveal">
-          <a href="/website-strategy">See the fractional website partner →</a>
+          <a href="/digital-strategy">
+            See the fractional digital strategy partner →
+          </a>
         </p>
       </div>
     </section>
@@ -346,8 +348,9 @@ export function AudienceSection() {
             Big enough to transform. Small enough to feel personal.
           </h2>
           <p className="section-copy">
-            A fractional website partner, analytics, and automation—you bring
-            the context, we bring the systems that make growth stick.
+            A fractional digital strategy partner, website partner, analytics,
+            and automation—you bring the context, we bring the systems that
+            make growth stick.
           </p>
         </div>
         <nav className="audience__industries" aria-label="Services">
