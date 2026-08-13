@@ -1,4 +1,27 @@
-import { whatWeDoNav } from "./what-we-do-nav";
+import { BOOK_CALL_HREF } from "@/lib/site";
+import { testimonials, formatTestimonialName } from "@/lib/testimonials";
+import { Arrow } from "./site-header";
+
+const processSteps = [
+  {
+    title: "Discover",
+    copy: "Map channels, the site’s job, ops busywork, and where measurement breaks—so we invest where it matters.",
+    artifact: "A working session plus a map of the leaks.",
+    roles: "You bring context; we bring the map.",
+  },
+  {
+    title: "Prioritize",
+    copy: "Decide what deserves attention now vs later, tied to a goal—not the loudest request.",
+    artifact: "A short now / next / later list.",
+    roles: "You decide; we frame the tradeoffs.",
+  },
+  {
+    title: "Ship & refine",
+    copy: "Make a live change—page, tracking, or workflow—watch real use, and feed what we learn into the next cycle.",
+    artifact: "Something in production plus a check-in on whether it moved.",
+    roles: "We ship; you keep using it.",
+  },
+];
 
 const promises = [
   {
@@ -30,9 +53,9 @@ const digitalStrategyPillars = [
     copy: "Clarify what the site must do commercially, which pages matter, and which improvements move the needle.",
   },
   {
-    label: "Acquire",
-    title: "PPC, SEO & content",
-    copy: "Focus paid and organic effort where demand can grow efficiently—and know when to scale, test, or stop.",
+    label: "Automate",
+    title: "Workflows that free capacity",
+    copy: "Take repetitive marketing and ops work off your team's plate—so effort compounds without adding headcount.",
   },
   {
     label: "Measure",
@@ -41,187 +64,45 @@ const digitalStrategyPillars = [
   },
 ];
 
-const offerings = [
-  {
-    label: "Build",
-    title: "Custom AI tools",
-    copy: "Purpose-built AI for your workflows—extraction, triage, drafting, assistants—tied to the systems you already run.",
-    href: "/ai-automation",
-  },
-  {
-    label: "Train",
-    title: "Custom AI training",
-    copy: "We train models on your data so they speak your business—and we equip your team to use them with confidence.",
-    href: "/ai-automation",
-  },
-];
-
-function TributaryScene() {
+export function TestimonialsSection() {
   return (
-    <svg
-      className="promise__scene"
-      aria-hidden="true"
-      viewBox="0 0 640 300"
-      fill="none"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      {/* Inbound streams → shared merge */}
-      <path
-        d="M130 56 C 220 56, 280 70, 340 150"
-        stroke="#69BDB6"
-        strokeWidth="11"
-        strokeLinecap="round"
-      />
-      <path
-        d="M130 150 H 340"
-        stroke="#4EAAA2"
-        strokeWidth="13"
-        strokeLinecap="round"
-      />
-      <path
-        d="M130 244 C 220 244, 280 230, 340 150"
-        stroke="#69BDB6"
-        strokeWidth="11"
-        strokeLinecap="round"
-      />
+    <section className="section testimonials" id="testimonials">
+      <div className="shell">
+        <div className="testimonials__top reveal">
+          <p className="eyebrow">From clients</p>
+          <h2 className="testimonials__heading">
+            Results that feel personal.
+          </h2>
+          <p className="testimonials__more">
+            <a href="/testimonials">All testimonials →</a>
+          </p>
+        </div>
+      </div>
 
-      {/* Outbound merged flow */}
-      <path
-        className="promise__confluence"
-        d="M340 150 H 526"
-        stroke="#057A72"
-        strokeWidth="20"
-        strokeLinecap="round"
-      />
-      <path
-        className="promise__sheen"
-        d="M360 150 H 500"
-        stroke="#FFFFFF"
-        strokeOpacity="0.35"
-        strokeWidth="7"
-        strokeLinecap="round"
-      />
-      <g
-        className="promise__current"
-        stroke="#F5FCFB"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        opacity=".7"
+      <div
+        className="testimonials__scroller reveal"
+        role="region"
+        aria-label="Client testimonials"
+        tabIndex={0}
       >
-        <path d="M385 150 h32" />
-        <path d="M440 150 h32" />
-      </g>
-
-      {/* Source nodes + left labels */}
-      <circle cx="118" cy="56" r="12" fill="#075752" />
-      <circle cx="118" cy="150" r="12" fill="#075752" />
-      <circle cx="118" cy="244" r="12" fill="#075752" />
-      <circle cx="118" cy="56" r="5" fill="#EAF9F7" />
-      <circle cx="118" cy="150" r="5" fill="#EAF9F7" />
-      <circle cx="118" cy="244" r="5" fill="#EAF9F7" />
-
-      <text
-        x="100"
-        y="60"
-        textAnchor="end"
-        fill="#075752"
-        fontSize="13"
-        fontWeight="700"
-        letterSpacing="0.12em"
-      >
-        TIME
-      </text>
-      <text
-        x="100"
-        y="154"
-        textAnchor="end"
-        fill="#075752"
-        fontSize="11"
-        fontWeight="700"
-        letterSpacing="0.06em"
-      >
-        EFFICIENCY
-      </text>
-      <text
-        x="100"
-        y="248"
-        textAnchor="end"
-        fill="#075752"
-        fontSize="13"
-        fontWeight="700"
-        letterSpacing="0.12em"
-      >
-        IMPACT
-      </text>
-
-      {/* Merge junction */}
-      <circle cx="340" cy="150" r="15" fill="#057A72" />
-      <circle cx="340" cy="150" r="6.5" fill="#EAF9F7" />
-
-      {/* Results node + label */}
-      <circle cx="526" cy="150" r="17" fill="#075752" />
-      <circle cx="526" cy="150" r="7.5" fill="#EAF9F7" />
-      <text
-        x="552"
-        y="155"
-        fill="#075752"
-        fontSize="13"
-        fontWeight="700"
-        letterSpacing="0.12em"
-      >
-        RESULTS
-      </text>
-    </svg>
-  );
-}
-
-function AudienceAtmosphere() {
-  return (
-    <svg
-      className="audience__scene"
-      aria-hidden="true"
-      viewBox="0 0 1600 600"
-      preserveAspectRatio="xMidYMid slice"
-      fill="none"
-    >
-      <ellipse
-        cx="1280"
-        cy="420"
-        rx="420"
-        ry="220"
-        stroke="rgba(255,255,255,0.1)"
-        strokeWidth="1.5"
-        transform="rotate(-12 1280 420)"
-      />
-      <ellipse
-        cx="1320"
-        cy="400"
-        rx="280"
-        ry="140"
-        stroke="rgba(255,255,255,0.08)"
-        strokeWidth="1"
-        transform="rotate(-18 1320 400)"
-      />
-      <path
-        d="M720 520c180-40 320-28 480 20 140 42 260 48 400 18"
-        stroke="rgba(139,208,202,0.22)"
-        strokeWidth="36"
-        strokeLinecap="round"
-      />
-      <path
-        d="M780 560c160-28 290-18 430 14 110 26 210 30 340 8"
-        stroke="rgba(255,255,255,0.08)"
-        strokeWidth="18"
-        strokeLinecap="round"
-      />
-      <circle
-        cx="1180"
-        cy="160"
-        r="90"
-        fill="rgba(255,253,244,0.08)"
-      />
-      <circle cx="1180" cy="160" r="48" fill="rgba(255,251,234,0.1)" />
-    </svg>
+        <div className="testimonials__track">
+          {testimonials.map((item) => (
+            <blockquote className="testimonial" key={item.name}>
+              <span className="testimonial__mark" aria-hidden="true">
+                “
+              </span>
+              <p className="testimonial__quote">{item.quote}</p>
+              <footer className="testimonial__attribution">
+                <cite className="testimonial__name">
+                  {formatTestimonialName(item.name)}
+                </cite>
+                <span className="testimonial__role">{item.role}</span>
+              </footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -242,22 +123,16 @@ export function PromiseSection() {
               rip-and-replace.
             </p>
           </div>
-          <div className="promise__visual">
-            <TributaryScene />
-            <p className="promise__caption">
-              Three gains. One clearer path to results.
-            </p>
-          </div>
-        </div>
 
-        <div className="promise__outcomes reveal">
-          {promises.map((item) => (
-            <article className="promise-outcome" key={item.title}>
-              <span className="promise-outcome__label">{item.label}</span>
-              <h3>{item.title}</h3>
-              <p>{item.copy}</p>
-            </article>
-          ))}
+          <div className="promise__outcomes">
+            {promises.map((item) => (
+              <article className="promise-outcome" key={item.title}>
+                <span className="promise-outcome__label">{item.label}</span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -294,7 +169,7 @@ export function DigitalStrategySection() {
 
         <p className="home-ws__more reveal">
           <a href="/digital-strategy">
-            See the fractional digital strategy partner →
+            Learn more about our digital strategy partnership →
           </a>
         </p>
       </div>
@@ -302,67 +177,66 @@ export function DigitalStrategySection() {
   );
 }
 
-export function OfferingsSection() {
+export function ProcessSection() {
   return (
-    <section className="section offerings" id="offerings">
+    <section className="section process" id="how-we-work">
       <div className="shell">
-        <div className="offerings__top reveal">
+        <div className="process__top reveal">
           <div>
-            <p className="eyebrow">Also available</p>
-            <h2 className="section-heading">Custom AI tools and training.</h2>
+            <p className="eyebrow">How we work</p>
+            <h2 className="section-heading">
+              Strategy that moves.
+            </h2>
           </div>
           <p className="section-copy">
-            Beyond process automation—tools built for your stack, models trained
-            on your data, and a team ready to use them.
+            You bring the business context. We map, prioritize, ship, and
+            stay—so the plan compounds instead of becoming another slide deck.
           </p>
         </div>
 
-        <div className="offerings__grid reveal">
-          {offerings.map((item) => (
-            <article className="offering" key={item.title}>
-              <span className="offering__label">{item.label}</span>
-              <h3>
-                <a href={item.href}>{item.title}</a>
-              </h3>
-              <p>{item.copy}</p>
-            </article>
+        <ol className="process__cards reveal" aria-label="How we work">
+          {processSteps.map((step, index) => (
+            <li className="process__card" key={step.title}>
+              {index > 0 ? (
+                <span className="process__connector" aria-hidden="true">
+                  →
+                </span>
+              ) : null}
+              <span className="process__marker">
+                <span className="process__number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </span>
+              <h3>{step.title}</h3>
+              <p className="process__copy">{step.copy}</p>
+              <p className="process__artifact">
+                <span className="process__meta-label">What you get</span>
+                {step.artifact}
+              </p>
+              <p className="process__roles">{step.roles}</p>
+            </li>
           ))}
-        </div>
+        </ol>
 
-        <p className="offerings__more reveal">
-          <a href="/automation">See Automation and AI →</a>
-        </p>
-      </div>
-    </section>
-  );
-}
-
-export function AudienceSection() {
-  return (
-    <section className="section audience">
-      <AudienceAtmosphere />
-      <div className="shell audience__content reveal">
-        <div className="audience__copy">
-          <p className="eyebrow">Built for real businesses</p>
-          <h2 className="section-heading">
-            Big enough to transform. Small enough to feel personal.
-          </h2>
-          <p className="section-copy">
-            A fractional digital strategy partner, website partner, analytics,
-            and automation—you bring the context, we bring the systems that
-            make growth stick.
+        <div className="process__footer reveal">
+          <p className="process__loop">
+            Then we do it again—same partner, tighter plan.
           </p>
-        </div>
-        <nav className="audience__industries" aria-label="Services">
-          {whatWeDoNav.map((link) => (
-            <a key={link.href} href={link.href}>
-              {link.label}
+          <div className="process__cta">
+            <a
+              className="button button-primary"
+              href={BOOK_CALL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Book a call
+              <Arrow />
             </a>
-          ))}
-          <a className="audience__industries-all" href="/automation">
-            See what we do →
-          </a>
-        </nav>
+            <a className="process__contact-link" href="#contact">
+              Or tell us what&apos;s getting in the way →
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

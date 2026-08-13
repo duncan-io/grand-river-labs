@@ -175,12 +175,12 @@ export function Hero() {
               <Arrow />
             </a>
             <a className="button button-secondary" href="#contact">
-              Tell us what&apos;s slowing you down
+              Tell us what&apos;s getting in the way
             </a>
           </div>
         </div>
       </div>
-      <a className="hero__cue" href="#approach">
+      <a className="hero__cue" href="#how-we-work">
         See our approach
       </a>
     </section>

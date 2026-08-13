@@ -1,10 +1,10 @@
 import { ContactSection } from "@/components/contact";
 import { Hero } from "@/components/hero";
 import {
-  AudienceSection,
-  OfferingsSection,
   PromiseSection,
+  ProcessSection,
   DigitalStrategySection,
+  TestimonialsSection,
 } from "@/components/sections";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -18,10 +18,14 @@ export default function Home() {
       <main>
         <Hero />
         <DigitalStrategySection />
+        <TestimonialsSection />
+        <ProcessSection />
         <PromiseSection />
-        <OfferingsSection />
-        <AudienceSection />
-        <ContactSection turnstileSiteKey={turnstileSiteKey} />
+        <ContactSection
+          turnstileSiteKey={turnstileSiteKey}
+          variant="cta"
+          atmosphere
+        />
       </main>
       <SiteFooter />
     </>

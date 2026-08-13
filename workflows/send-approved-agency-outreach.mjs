@@ -355,7 +355,7 @@ const sendConfig = node({
           {
             id: 'replyTo',
             name: 'replyTo',
-            value: 'duncan@grandriverlabs.com',
+            value: 'duncan@grandriverlabs.io',
             type: 'string',
           },
         ],
@@ -370,7 +370,7 @@ const sendConfig = node({
       windowEndHour: 16,
       timezone: 'America/Toronto',
       fromName: 'Duncan',
-      replyTo: 'duncan@grandriverlabs.com',
+      replyTo: 'duncan@grandriverlabs.io',
     },
   ],
 });
@@ -562,7 +562,7 @@ const prepareEmailPayload = node({
       contactName: 'Alex',
       subject: 'Partnership idea',
       message: 'Hello...',
-      replyTo: 'duncan@grandriverlabs.com',
+      replyTo: 'duncan@grandriverlabs.io',
       senderName: 'Duncan',
       gmailThreadId: null,
       status: 'sending',
@@ -618,7 +618,7 @@ const getThreadForReplyCheck = node({
     {
       id: 'thr456',
       messages: [
-        { id: 'msg1', From: 'Duncan <duncan@grandriverlabs.com>', labels: [{ id: 'SENT' }] },
+        { id: 'msg1', From: 'Duncan <duncan@grandriverlabs.io>', labels: [{ id: 'SENT' }] },
       ],
     },
   ],
@@ -745,7 +745,7 @@ const replyInThread = node({
       message: expr('{{ $json.message }}'),
       options: {
         senderName: expr('{{ $json.senderName }}'),
-        replyToSenderOnly: true,
+        replyToRecipientsOnly: true,
       },
     },
     credentials: { gmailOAuth2: newCredential('Gmail account') },
