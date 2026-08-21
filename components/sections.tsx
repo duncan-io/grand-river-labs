@@ -43,24 +43,24 @@ const promises = [
 
 const digitalStrategyPillars = [
   {
-    label: "Prioritize",
-    title: "Channel mix & roadmap",
-    copy: "Decide what deserves attention now across website, paid, SEO, email, and social—based on goals, not the loudest request.",
+    label: "Own",
+    title: "Digital ownership without the hire",
+    copy: "Someone who understands the whole picture, prioritizes what matters, and actually gets the work done.",
   },
   {
     label: "Website",
-    title: "Site’s job in the journey",
-    copy: "Clarify what the site must do commercially, which pages matter, and which improvements move the needle.",
+    title: "The site stays a core job",
+    copy: "Ongoing management, technical care, and conversion improvements—without turning the whole relationship into website tickets.",
   },
   {
-    label: "Automate",
-    title: "Workflows that free capacity",
-    copy: "Take repetitive marketing and ops work off your team's plate—so effort compounds without adding headcount.",
+    label: "Execute",
+    title: "Strategy plus hands-on work",
+    copy: "Recommendations that don't stop at a slide. GR Labs handles appropriate implementation instead of leaving a task list behind.",
   },
   {
-    label: "Measure",
-    title: "Analytics & marketing ops",
-    copy: "Define the signals, reporting, and handoffs so the next decision is grounded in what actually worked.",
+    label: "Prioritize",
+    title: "Your business sets the work",
+    copy: "Website, digital operations, analytics, or a new initiative—the focus follows what will have the greatest impact now.",
   },
 ];
 
@@ -145,15 +145,15 @@ export function DigitalStrategySection() {
       <div className="shell">
         <div className="home-ws__top reveal">
           <div>
-            <p className="eyebrow">Fractional Digital Strategy Partner</p>
+            <p className="eyebrow">Fractional Digital Department</p>
             <h2 className="section-heading">
-              Digital strategy ownership, without the in-house hire.
+              The expertise and execution of an in-house digital team, without hiring one.
             </h2>
           </div>
           <p className="section-copy">
-            Ongoing guidance across your website, PPC, SEO, email, social
-            media, and marketing operations—so every priority connects to a
-            goal and earns its place in the plan.
+            GR Labs acts as your fractional digital department—strategy,
+            technical expertise, ongoing management, and hands-on execution
+            for the digital presence your business depends on.
           </p>
         </div>
 
@@ -168,8 +168,8 @@ export function DigitalStrategySection() {
         </div>
 
         <p className="home-ws__more reveal">
-          <a href="/digital-strategy">
-            Learn more about our digital strategy partnership →
+          <a href="/fractional-digital-department">
+            Learn more about the fractional digital department →
           </a>
         </p>
       </div>

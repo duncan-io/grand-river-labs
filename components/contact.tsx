@@ -20,6 +20,7 @@ type ContactSectionProps = {
   eyebrow?: string;
   heading?: string;
   copy?: string;
+  directLabel?: string;
   messageLabel?: string;
   messagePlaceholder?: string;
 };
@@ -81,6 +82,7 @@ export function ContactSection({
   eyebrow = "Start a conversation",
   heading = "What's getting in the way of more revenue?",
   copy = "Tell us the goal that isn't getting a clear plan—channel mix, the site's job, measurement, or work that still eats the team. We'll help you see what deserves attention now.",
+  directLabel = "Prefer to talk? Book a call →",
   messageLabel = "What should we look at first?",
   messagePlaceholder = "A growth target, a channel that isn't earning its keep, a site that isn't converting, or work that's still too manual—start wherever you are.",
 }: ContactSectionProps) {
@@ -170,7 +172,7 @@ export function ContactSection({
             target="_blank"
             rel="noopener noreferrer"
           >
-            Prefer to talk? Book a call →
+            {directLabel}
           </a>
         </div>
 
