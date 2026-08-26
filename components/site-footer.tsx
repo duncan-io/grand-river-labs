@@ -13,6 +13,8 @@ export function SiteFooter() {
         </div>
         <div className="site-footer__links">
           <a href="/chat">Ask us</a>
+          <a href="/blog">Blog</a>
+          <a href="/fractional-digital-team-calculator">Cost calculator</a>
           <a href="/testimonials">Testimonials</a>
           <a href="/#contact">Contact</a>
           <a href="mailto:hello@grandriverlabs.com">

@@ -43,14 +43,14 @@ const promises = [
 
 const digitalStrategyPillars = [
   {
+    label: "Integrate",
+    title: "Inside your process",
+    copy: "We plug into how you already operate—not a parallel vendor workflow. Digital work happens without making leadership the project manager.",
+  },
+  {
     label: "Own",
     title: "Digital ownership without the hire",
     copy: "Someone who understands the whole picture, prioritizes what matters, and actually gets the work done.",
-  },
-  {
-    label: "Website",
-    title: "The site stays a core job",
-    copy: "Ongoing management, technical care, and conversion improvements—without turning the whole relationship into website tickets.",
   },
   {
     label: "Execute",
@@ -60,7 +60,7 @@ const digitalStrategyPillars = [
   {
     label: "Prioritize",
     title: "Your business sets the work",
-    copy: "Website, digital operations, analytics, or a new initiative—the focus follows what will have the greatest impact now.",
+    copy: "Strategy, systems, analytics, or a new initiative—the focus follows what will have the greatest impact now.",
   },
 ];
 
@@ -145,15 +145,14 @@ export function DigitalStrategySection() {
       <div className="shell">
         <div className="home-ws__top reveal">
           <div>
-            <p className="eyebrow">Fractional Digital Department</p>
+            <p className="eyebrow">How it works</p>
             <h2 className="section-heading">
-              The expertise and execution of an in-house digital team, without hiring one.
+              One partner across your highest-priority digital work
             </h2>
           </div>
           <p className="section-copy">
-            GR Labs acts as your fractional digital department—strategy,
-            technical expertise, ongoing management, and hands-on execution
-            for the digital presence your business depends on.
+            The mix follows what will have the greatest impact—not a
+            predetermined monthly menu.
           </p>
         </div>
 

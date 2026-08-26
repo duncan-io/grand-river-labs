@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Outfit } from "next/font/google";
 import Script from "next/script";
 import { ChatLauncher } from "@/components/chat-launcher";
-import "./globals.css";
+import "../globals.css";
 
 const outfit = Outfit({
   variable: "--font-outfit",

@@ -139,6 +139,7 @@ export function SiteHeader({
             </div>
           </div>
           <a href="/white-label">White-label</a>
+          <a href="/blog">Blog</a>
           <a href="/testimonials">Testimonials</a>
           <a
             className="button button-primary"
@@ -187,6 +188,9 @@ export function SiteHeader({
           </div>
           <a href="/white-label" onClick={closeMenu}>
             White-label
+          </a>
+          <a href="/blog" onClick={closeMenu}>
+            Blog
           </a>
           <a href="/testimonials" onClick={closeMenu}>
             Testimonials

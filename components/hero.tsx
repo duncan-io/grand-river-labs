@@ -157,12 +157,12 @@ export function Hero() {
       <div className="shell">
         <div className="hero__content">
           <h1 className="hero__headline">
-            Digital Strategy And Automation To Drive More Revenue
+            Your Fractional Digital Department
           </h1>
           <p className="hero__copy">
-            We own your website like a trusted partner, make measurement
-            decision-ready, and automate the work that drains your team—so you
-            get more from the same hours.
+            Senior digital leadership and hands-on execution—without hiring a
+            full-time team. One partner owns the digital side, sets priorities
+            from business impact, and ships the work.
           </p>
           <div className="hero__actions">
             <a
@@ -180,7 +180,7 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <a className="hero__cue" href="#how-we-work">
+      <a className="hero__cue" href="#digital-strategy">
         See our approach
       </a>
     </section>
