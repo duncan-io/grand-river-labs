@@ -6,18 +6,16 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { isAuthor, truncateBio } from "@/lib/author";
 import { getPayloadClient } from "@/lib/get-payload";
-import type { Category, Media, Post } from "@/payload-types";
+import { isMedia, mediaImageSrc } from "@/lib/media";
+import type { Category } from "@/payload-types";
 
 export const revalidate = 60;
 
 type Args = {
   params: Promise<{ slug: string }>;
 };
-
-function isMedia(value: Post["featuredImage"]): value is Media {
-  return typeof value === "object" && value !== null && "url" in value;
-}
 
 function isCategory(value: number | Category): value is Category {
   return typeof value === "object" && value !== null && "title" in value;
@@ -72,6 +70,8 @@ export default async function BlogPostPage({ params }: Args) {
   const image = isMedia(post.featuredImage) ? post.featuredImage : null;
   const date = formatDate(post.publishedAt);
   const categories = (post.categories ?? []).filter(isCategory);
+  const author = isAuthor(post.author) ? post.author : null;
+  const authorPhoto = author && isMedia(author.photo) ? author.photo : null;
 
   return (
     <div id="top">
@@ -85,6 +85,12 @@ export default async function BlogPostPage({ params }: Args) {
               </p>
               <h1 className="section-heading blog-post__headline">{post.title}</h1>
               <div className="blog-post__meta">
+                {author ? (
+                  <span>
+                    By{" "}
+                    <Link href={`/author/${author.slug}`}>{author.name}</Link>
+                  </span>
+                ) : null}
                 {date ? (
                   <time dateTime={post.publishedAt ?? undefined}>{date}</time>
                 ) : null}
@@ -98,15 +104,17 @@ export default async function BlogPostPage({ params }: Args) {
           </header>
 
           {image?.url ? (
-            <div className="shell blog-post__media">
-              <Image
-                src={image.url}
-                alt={image.alt || post.title}
-                width={image.width ?? 1600}
-                height={image.height ?? 900}
-                sizes="(min-width: 900px) 78rem, 100vw"
-                priority
-              />
+            <div className="shell">
+              <div className="blog-post__media">
+                <Image
+                  src={mediaImageSrc(image.url)}
+                  alt={image.alt || post.title}
+                  width={image.width ?? 1600}
+                  height={image.height ?? 900}
+                  sizes="(min-width: 900px) 48rem, 100vw"
+                  priority
+                />
+              </div>
             </div>
           ) : null}
 
@@ -116,6 +124,40 @@ export default async function BlogPostPage({ params }: Args) {
                 <RichText data={post.content as SerializedEditorState} />
               ) : null}
             </div>
+
+            {author ? (
+              <div className="shell">
+                <aside className="author-card">
+                  {authorPhoto?.url ? (
+                    <Link
+                      className="author-card__photo"
+                      href={`/author/${author.slug}`}
+                    >
+                      <Image
+                        src={mediaImageSrc(authorPhoto.url)}
+                        alt={authorPhoto.alt || author.name}
+                        width={authorPhoto.width ?? 96}
+                        height={authorPhoto.height ?? 96}
+                        sizes="72px"
+                      />
+                    </Link>
+                  ) : null}
+                  <div className="author-card__copy">
+                    <p className="author-card__name">
+                      <Link href={`/author/${author.slug}`}>{author.name}</Link>
+                    </p>
+                    <p className="author-card__title">{author.title}</p>
+                    <p className="author-card__bio">{truncateBio(author.bio)}</p>
+                    <Link
+                      className="author-card__more"
+                      href={`/author/${author.slug}`}
+                    >
+                      More from {author.name}
+                    </Link>
+                  </div>
+                </aside>
+              </div>
+            ) : null}
           </div>
         </article>
       </main>

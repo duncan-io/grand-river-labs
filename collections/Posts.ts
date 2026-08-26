@@ -5,7 +5,7 @@ export const Posts: CollectionConfig = {
   slug: "posts",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "slug", "publishedAt", "_status"],
+    defaultColumns: ["title", "author", "slug", "publishedAt", "_status"],
     group: "Content",
   },
   versions: {
@@ -28,6 +28,20 @@ export const Posts: CollectionConfig = {
       required: true,
     },
     {
+      name: "featuredImage",
+      type: "upload",
+      relationTo: "media",
+      label: "Hero image",
+      filterOptions: {
+        mimeType: {
+          contains: "image",
+        },
+      },
+      admin: {
+        description: "Shown at the top of the post and on the blog index cards.",
+      },
+    },
+    {
       name: "slug",
       type: "text",
       required: true,
@@ -42,11 +56,6 @@ export const Posts: CollectionConfig = {
       type: "textarea",
     },
     {
-      name: "featuredImage",
-      type: "upload",
-      relationTo: "media",
-    },
-    {
       name: "publishedAt",
       type: "date",
       admin: {
@@ -54,6 +63,15 @@ export const Posts: CollectionConfig = {
         date: {
           pickerAppearance: "dayAndTime",
         },
+      },
+    },
+    {
+      name: "author",
+      type: "relationship",
+      relationTo: "authors",
+      required: true,
+      admin: {
+        position: "sidebar",
       },
     },
     {

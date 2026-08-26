@@ -67,12 +67,45 @@ async function getPublishedPostEntries(
   }
 }
 
+async function getAuthorEntries(
+  origin: string,
+): Promise<MetadataRoute.Sitemap> {
+  try {
+    const payload = await getPayloadClient();
+    const { docs: authors } = await payload.find({
+      collection: "authors",
+      depth: 0,
+      limit: 1000,
+      pagination: false,
+      select: {
+        slug: true,
+        updatedAt: true,
+      },
+    });
+
+    return authors.flatMap((author) => {
+      if (!author.slug) return [];
+      return [
+        {
+          url: absoluteUrl(origin, `/author/${author.slug}`),
+          lastModified: author.updatedAt || undefined,
+        },
+      ];
+    });
+  } catch {
+    return [];
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = getSiteUrl();
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: absoluteUrl(origin, path),
   }));
-  const postEntries = await getPublishedPostEntries(origin);
+  const [postEntries, authorEntries] = await Promise.all([
+    getPublishedPostEntries(origin),
+    getAuthorEntries(origin),
+  ]);
 
-  return [...staticEntries, ...postEntries];
+  return [...staticEntries, ...postEntries, ...authorEntries];
 }

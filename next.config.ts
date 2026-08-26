@@ -16,6 +16,36 @@ const nextConfig: NextConfig = {
         pathname: "/api/media/file/**",
       },
     ],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        pathname: "/api/media/**",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        pathname: "/api/media/**",
+      },
+      {
+        protocol: "https",
+        hostname: "grandriverlabs.com",
+        pathname: "/api/media/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.grandriverlabs.com",
+        pathname: "/api/media/**",
+      },
+      {
+        protocol: "https",
+        hostname: "t3.storageapi.dev",
+      },
+      {
+        protocol: "https",
+        hostname: "storage.railway.app",
+      },
+    ],
   },
   async redirects() {
     return [

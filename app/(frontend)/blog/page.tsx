@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { isAuthor } from "@/lib/author";
 import { getPayloadClient } from "@/lib/get-payload";
-import type { Media, Post } from "@/payload-types";
+import { isMedia, mediaImageSrc } from "@/lib/media";
 
 export const revalidate = 60;
 
@@ -13,10 +14,6 @@ export const metadata: Metadata = {
   description:
     "Notes on digital strategy, websites, automation, and running a focused digital department.",
 };
-
-function isMedia(value: Post["featuredImage"]): value is Media {
-  return typeof value === "object" && value !== null && "url" in value;
-}
 
 function formatDate(value: string | null | undefined) {
   if (!value) return null;
@@ -67,33 +64,55 @@ export default async function BlogIndexPage() {
                     ? post.featuredImage
                     : null;
                   const date = formatDate(post.publishedAt);
+                  const author = isAuthor(post.author) ? post.author : null;
                   return (
                     <li key={post.id}>
                       <article className="blog-card">
-                        <Link className="blog-card__link" href={`/blog/${post.slug}`}>
-                          {image?.url ? (
+                        {image?.url ? (
+                          <Link
+                            className="blog-card__media-link"
+                            href={`/blog/${post.slug}`}
+                          >
                             <div className="blog-card__media">
                               <Image
-                                src={image.url}
+                                src={mediaImageSrc(image.url)}
                                 alt={image.alt || post.title}
                                 fill
                                 sizes="(min-width: 900px) 360px, 100vw"
                               />
                             </div>
-                          ) : null}
-                          <div className="blog-card__body">
+                          </Link>
+                        ) : null}
+                        <div className="blog-card__body">
+                          <div className="blog-card__meta">
                             {date ? (
-                              <time className="blog-card__date" dateTime={post.publishedAt ?? undefined}>
+                              <time
+                                className="blog-card__date"
+                                dateTime={post.publishedAt ?? undefined}
+                              >
                                 {date}
                               </time>
                             ) : null}
+                            {author ? (
+                              <Link
+                                className="blog-card__author"
+                                href={`/author/${author.slug}`}
+                              >
+                                {author.name}
+                              </Link>
+                            ) : null}
+                          </div>
+                          <Link
+                            className="blog-card__link"
+                            href={`/blog/${post.slug}`}
+                          >
                             <h2 className="blog-card__title">{post.title}</h2>
                             {post.excerpt ? (
                               <p className="blog-card__excerpt">{post.excerpt}</p>
                             ) : null}
                             <span className="blog-card__more">Read post</span>
-                          </div>
-                        </Link>
+                          </Link>
+                        </div>
                       </article>
                     </li>
                   );

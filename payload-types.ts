@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
+    authors: Author;
     posts: Post;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -81,6 +82,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    authors: AuthorsSelect<false> | AuthorsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -152,6 +154,9 @@ export interface User {
  */
 export interface Media {
   id: number;
+  /**
+   * Describe the image for screen readers and SEO.
+   */
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -178,15 +183,39 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors".
+ */
+export interface Author {
+  id: number;
+  name: string;
+  /**
+   * Job title, e.g. Founder.
+   */
+  title: string;
+  bio: string;
+  /**
+   * Optional portrait shown on author and blog pages.
+   */
+  photo?: (number | null) | Media;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
   id: number;
   title: string;
+  /**
+   * Shown at the top of the post and on the blog index cards.
+   */
+  featuredImage?: (number | null) | Media;
   slug: string;
   excerpt?: string | null;
-  featuredImage?: (number | null) | Media;
   publishedAt?: string | null;
+  author: number | Author;
   categories?: (number | Category)[] | null;
   content: {
     root: {
@@ -247,6 +276,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'authors';
+        value: number | Author;
       } | null)
     | ({
         relationTo: 'posts';
@@ -346,14 +379,28 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors_select".
+ */
+export interface AuthorsSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  bio?: T;
+  photo?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  featuredImage?: T;
   slug?: T;
   excerpt?: T;
-  featuredImage?: T;
   publishedAt?: T;
+  author?: T;
   categories?: T;
   content?: T;
   metaTitle?: T;
