@@ -157,7 +157,7 @@ export function Hero() {
       <div className="shell">
         <div className="hero__content">
           <h1 className="hero__headline">
-            Your Fractional Digital Department
+            Digital Strategy And Automation To Drive More Revenue
           </h1>
           <p className="hero__copy">
             Senior digital leadership and hands-on execution—without hiring a
