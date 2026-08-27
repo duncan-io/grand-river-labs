@@ -5,7 +5,6 @@ import { BOOK_CALL_HREF } from "@/lib/site";
 import {
   DEFAULT_ASSUMPTIONS,
   DEFAULT_FRACTIONAL_MONTHLY,
-  FRACTIONAL_MONTHLY_PER_PERSON,
   MAX_FRACTIONAL_MONTHLY,
   MAX_ROLE_QUANTITY,
   MAX_SALARY,
@@ -18,6 +17,7 @@ import {
   formatPercent,
   formatSignedUsd,
   formatUsd,
+  getCatalogItem,
   sanitizeNumber,
   suggestedFractionalMonthly,
   type CalculatorAssumptions,
@@ -32,6 +32,16 @@ function readNumber(value: string): number {
   return Number(value);
 }
 
+function composerFromCatalog(catalogId: string) {
+  const item = getCatalogItem(catalogId);
+  return {
+    catalogId: item.id,
+    seniority: item.seniority,
+    quantity: 1,
+    salary: item.salary,
+  };
+}
+
 export function FractionalTeamCalculator() {
   const [roles, setRoles] = useState<TeamRole[]>(() => defaultTeamRoles());
   const [assumptions, setAssumptions] = useState<CalculatorAssumptions>(
@@ -40,7 +50,9 @@ export function FractionalTeamCalculator() {
   const [fractionalMonthly, setFractionalMonthly] = useState(
     DEFAULT_FRACTIONAL_MONTHLY,
   );
-  const [addRoleId, setAddRoleId] = useState(ROLE_CATALOG[0].id);
+  const [composer, setComposer] = useState(() =>
+    composerFromCatalog(ROLE_CATALOG[0].id),
+  );
 
   const comparison = useMemo(
     () =>
@@ -61,15 +73,6 @@ export function FractionalTeamCalculator() {
     }
   }
 
-  function updateRole(instanceId: string, patch: Partial<TeamRole>) {
-    const nextRoles = roles.map((role) =>
-      role.instanceId === instanceId ? { ...role, ...patch } : role,
-    );
-    const teamChanged =
-      patch.seniority !== undefined || patch.quantity !== undefined;
-    applyRoles(nextRoles, teamChanged);
-  }
-
   function removeRole(instanceId: string) {
     applyRoles(
       roles.filter((role) => role.instanceId !== instanceId),
@@ -77,13 +80,29 @@ export function FractionalTeamCalculator() {
     );
   }
 
+  function selectCatalogRole(catalogId: string) {
+    setComposer(composerFromCatalog(catalogId));
+  }
+
   function addRole() {
-    applyRoles([...roles, createRole(addRoleId)], true);
+    applyRoles(
+      [
+        ...roles,
+        createRole(composer.catalogId, {
+          seniority: composer.seniority,
+          quantity: composer.quantity,
+          salary: composer.salary,
+        }),
+      ],
+      true,
+    );
+    setComposer(composerFromCatalog(composer.catalogId));
   }
 
   function resetTeam() {
     const nextRoles = defaultTeamRoles();
     setAssumptions({ ...DEFAULT_ASSUMPTIONS });
+    setComposer(composerFromCatalog(ROLE_CATALOG[0].id));
     applyRoles(nextRoles, true);
   }
 
@@ -94,9 +113,10 @@ export function FractionalTeamCalculator() {
             <section className="calc-panel" aria-labelledby="calc-fulltime-heading">
               <div className="calc-panel__header">
                 <p className="calc-panel__kicker">Full-time</p>
-                <h3 id="calc-fulltime-heading">Custom team</h3>
+                <h3 id="calc-fulltime-heading">Build Your Team</h3>
                 <p>
-                  Add or remove roles to match the in-house team you would hire.
+                  Add a hire below and it appears in the list. Remove a role to
+                  change salary or seniority, then add it again.
                 </p>
               </div>
 
@@ -110,7 +130,13 @@ export function FractionalTeamCalculator() {
                   roles.map((role, index) => (
                     <li className="calc-role" key={role.instanceId}>
                       <div className="calc-role__top">
-                        <p className="calc-role__title">{role.title}</p>
+                        <div className="calc-role__summary">
+                          <p className="calc-role__title">{role.title}</p>
+                          <p className="calc-role__meta">
+                            {SENIORITY_LABELS[role.seniority]} · {role.quantity}{" "}
+                            · {formatUsd(role.salary)}
+                          </p>
+                        </div>
                         <button
                           type="button"
                           className="calc-role__remove"
@@ -119,69 +145,6 @@ export function FractionalTeamCalculator() {
                         >
                           Remove
                         </button>
-                      </div>
-                      <div className="calc-role__fields">
-                        <label className="calc-field">
-                          <span>Seniority</span>
-                          <select
-                            value={role.seniority}
-                            onChange={(event) =>
-                              updateRole(role.instanceId, {
-                                seniority: event.target.value as Seniority,
-                              })
-                            }
-                          >
-                            {(Object.keys(SENIORITY_LABELS) as Seniority[]).map(
-                              (seniority) => (
-                                <option value={seniority} key={seniority}>
-                                  {SENIORITY_LABELS[seniority]}
-                                </option>
-                              ),
-                            )}
-                          </select>
-                        </label>
-                        <label className="calc-field">
-                          <span>People</span>
-                          <input
-                            type="number"
-                            inputMode="numeric"
-                            min={0}
-                            max={MAX_ROLE_QUANTITY}
-                            step={1}
-                            value={role.quantity}
-                            aria-label={`${role.title} headcount`}
-                            onChange={(event) =>
-                              updateRole(role.instanceId, {
-                                quantity: sanitizeNumber(
-                                  readNumber(event.target.value),
-                                  0,
-                                  MAX_ROLE_QUANTITY,
-                                ),
-                              })
-                            }
-                          />
-                        </label>
-                        <label className="calc-field">
-                          <span>Salary (USD)</span>
-                          <input
-                            type="number"
-                            inputMode="numeric"
-                            min={0}
-                            max={MAX_SALARY}
-                            step={1000}
-                            value={role.salary}
-                            aria-label={`${role.title} annual salary in US dollars`}
-                            onChange={(event) =>
-                              updateRole(role.instanceId, {
-                                salary: sanitizeNumber(
-                                  readNumber(event.target.value),
-                                  0,
-                                  MAX_SALARY,
-                                ),
-                              })
-                            }
-                          />
-                        </label>
                       </div>
                       <p className="calc-role__loaded">
                         Loaded cost{" "}
@@ -199,11 +162,12 @@ export function FractionalTeamCalculator() {
               </ul>
 
               <div className="calc-add">
-                <label className="calc-field calc-add__field">
-                  <span>Add a role</span>
+                <p className="calc-add__kicker">Add a hire</p>
+                <label className="calc-field calc-add__role">
+                  <span>Role</span>
                   <select
-                    value={addRoleId}
-                    onChange={(event) => setAddRoleId(event.target.value)}
+                    value={composer.catalogId}
+                    onChange={(event) => selectCatalogRole(event.target.value)}
                   >
                     {ROLE_CATALOG.map((item) => (
                       <option value={item.id} key={item.id}>
@@ -211,6 +175,70 @@ export function FractionalTeamCalculator() {
                       </option>
                     ))}
                   </select>
+                </label>
+                <label className="calc-field">
+                  <span>Seniority</span>
+                  <select
+                    value={composer.seniority}
+                    onChange={(event) =>
+                      setComposer((current) => ({
+                        ...current,
+                        seniority: event.target.value as Seniority,
+                      }))
+                    }
+                  >
+                    {(Object.keys(SENIORITY_LABELS) as Seniority[]).map(
+                      (seniority) => (
+                        <option value={seniority} key={seniority}>
+                          {SENIORITY_LABELS[seniority]}
+                        </option>
+                      ),
+                    )}
+                  </select>
+                </label>
+                <label className="calc-field">
+                  <span>People</span>
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    max={MAX_ROLE_QUANTITY}
+                    step={1}
+                    value={composer.quantity}
+                    aria-label="Headcount to add"
+                    onChange={(event) =>
+                      setComposer((current) => ({
+                        ...current,
+                        quantity: sanitizeNumber(
+                          readNumber(event.target.value),
+                          0,
+                          MAX_ROLE_QUANTITY,
+                        ),
+                      }))
+                    }
+                  />
+                </label>
+                <label className="calc-field">
+                  <span>Salary (USD)</span>
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    max={MAX_SALARY}
+                    step={1000}
+                    value={composer.salary}
+                    aria-label="Annual salary in US dollars"
+                    onChange={(event) =>
+                      setComposer((current) => ({
+                        ...current,
+                        salary: sanitizeNumber(
+                          readNumber(event.target.value),
+                          0,
+                          MAX_SALARY,
+                        ),
+                      }))
+                    }
+                  />
                 </label>
                 <button
                   type="button"
@@ -298,12 +326,8 @@ export function FractionalTeamCalculator() {
                 <p className="calc-panel__kicker">Fractional</p>
                 <h3 id="calc-fractional-heading">GR Labs engagement</h3>
                 <p>
-                  Defaults to {formatUsd(DEFAULT_FRACTIONAL_MONTHLY)}/month for
-                  this starting team. Adding or removing people updates it by{" "}
-                  {formatUsd(FRACTIONAL_MONTHLY_PER_PERSON.junior)} for juniors,{" "}
-                  {formatUsd(FRACTIONAL_MONTHLY_PER_PERSON.mid)} for mid-level,
-                  and {formatUsd(FRACTIONAL_MONTHLY_PER_PERSON.senior)} for
-                  seniors. You can still set a different amount.
+                  This is an estimate. Any engagement would need to be
+                  discussed on a call.
                 </p>
               </div>
               <label className="calc-field calc-field--monthly">

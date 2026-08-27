@@ -23,6 +23,10 @@ export default function FractionalDigitalTeamCalculatorPage() {
               <h1 className="calc-page__headline">
                 What would a hire actually cost you?
               </h1>
+              <p className="section-copy calc-page__copy">
+                Build the in-house team you were about to hire, then see how it
+                compares to a fractional digital department.
+              </p>
             </header>
             <FractionalTeamCalculator />
           </div>

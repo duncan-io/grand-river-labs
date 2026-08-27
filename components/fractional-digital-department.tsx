@@ -41,18 +41,24 @@ const capabilities = [
   },
 ];
 
-const operatingSteps = [
+const contrastModels = [
   {
-    title: "Look",
-    copy: "Study the business, the site, the tools, and the friction. We don't wait for a spec or a backlog you already named.",
+    label: "Consultant",
+    title: "Tells you what to do.",
+    copy: "A recommendation, then you're left to staff it, sequence it, and make it happen.",
+    role: "foil",
   },
   {
-    title: "Find",
-    copy: "Surface the priorities and opportunities that will actually move the business—not the loudest request or the easiest ticket.",
+    label: "Agency",
+    title: "Does what you tell them.",
+    copy: "They wait for a brief. If you don't already know what to request, the important work never gets named.",
+    role: "foil",
   },
   {
-    title: "Attack",
-    copy: "Take on the work, review what changed, and keep hunting for the next improvement.",
+    label: "Fractional digital department",
+    title: "Does what needs doing.",
+    copy: "We look at the business, find the digital work worth doing, and take it on—so you are not the strategist or the project manager.",
+    role: "answer",
   },
 ];
 
@@ -181,19 +187,19 @@ export function FractionalDigitalDepartmentSections() {
       <section className="section fdd-problem" id="the-gap">
         <div className="shell">
           <div className="fdd-problem__top reveal">
-            <div className="fdd-problem__intro">
+            <div>
               <p className="eyebrow">The gap</p>
               <h2 className="section-heading">
                 We work inside how you already operate—and own the digital
                 side.
               </h2>
-              <p className="section-copy">
-                Agencies and specialists sit outside the business. Consultants
-                advise and leave. The gap is a partner who learns your process,
-                takes ownership of website, tools, and systems, and keeps
-                refining, enhancing, and advising.
-              </p>
             </div>
+            <p className="section-copy">
+              Agencies and specialists sit outside the business. Consultants
+              advise and leave. The gap is a partner who learns your process,
+              takes ownership of website, tools, and systems, and keeps
+              refining, enhancing, and advising.
+            </p>
           </div>
           <div className="fdd-problem__grid reveal">
             {positioningPoints.map((item, index) => (
@@ -248,52 +254,35 @@ export function FractionalDigitalDepartmentSections() {
           <div className="fdd-flow__top reveal">
             <div>
               <p className="eyebrow">How it works</p>
-              <h2 className="section-heading">
-                You don&apos;t need a brief. We find the work worth doing.
+              <h2 className="section-heading fdd-flow__heading">
+                <span>A consultant tells you what to do.</span>
+                <span>An agency does what you tell them.</span>
+                <span>A fractional digital department does what needs doing.</span>
               </h2>
             </div>
             <p className="section-copy">
-              Don&apos;t arrive with a punch list. GR Labs looks at the
-              business, seeks out the digital priorities and opportunities worth
-              attacking, and takes them on—so you are not the one figuring out
-              what to request.
+              Two familiar models. Neither owns the work.
             </p>
           </div>
-          <ol className="fdd-flow__steps reveal">
-            {operatingSteps.map((step, index) => (
-              <li className="fdd-flow__step" key={step.title}>
-                {index > 0 ? (
-                  <span className="fdd-flow__connector" aria-hidden="true">
-                    <svg viewBox="0 0 80 24" fill="none">
-                      <path
-                        className="fdd-flow__connector-line"
-                        d="M4 12h64"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeDasharray="4 6"
-                      />
-                      <path
-                        d="M62 5.5 72 12l-10 6.5"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                ) : null}
-                <span className="fdd-flow__number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
+          <ul className="fdd-flow__steps reveal">
+            {contrastModels.map((item) => (
+              <li
+                className={
+                  item.role === "answer"
+                    ? "fdd-flow__step fdd-flow__step--answer"
+                    : "fdd-flow__step"
+                }
+                key={item.label}
+              >
+                <span className="fdd-flow__label">{item.label}</span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
               </li>
             ))}
-          </ol>
+          </ul>
           <p className="fdd-flow__promise reveal">
-            You don&apos;t have to figure out what to ask us to do. That&apos;s
-            part of what you&apos;re paying us for.
+            You don&apos;t have to figure out what to ask us to do. We do what
+            needs doing.
           </p>
           <div className="fdd-offer reveal">
             <div>
