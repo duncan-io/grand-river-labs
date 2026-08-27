@@ -6,6 +6,8 @@ export const Users: CollectionConfig = {
     useAsTitle: "email",
     group: "Admin",
   },
-  auth: true,
+  auth: {
+    useAPIKey: true,
+  },
   fields: [],
 };
