@@ -39,6 +39,16 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "grandriverlabs.io",
+        pathname: "/api/media/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.grandriverlabs.io",
+        pathname: "/api/media/**",
+      },
+      {
+        protocol: "https",
         hostname: "t3.storageapi.dev",
       },
       {

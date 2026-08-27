@@ -11,7 +11,7 @@ import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Posts } from "./collections/Posts";
 import { Users } from "./collections/Users";
-import { getSiteUrl } from "./lib/site";
+import { getPayloadTrustedOrigins, getSiteUrl } from "./lib/site";
 import { migrations } from "./migrations";
 
 const filename = fileURLToPath(import.meta.url);
@@ -24,11 +24,7 @@ const siteUrl = getSiteUrl();
 const serverURL =
   process.env.PAYLOAD_SERVER_URL?.replace(/\/+$/, "") ||
   (isProduction ? siteUrl : "http://localhost:3000");
-const trustedOrigins = uniqueOrigins([
-  "http://localhost:3000",
-  siteUrl,
-  serverURL,
-]);
+const trustedOrigins = getPayloadTrustedOrigins(serverURL);
 const s3Bucket =
   process.env.S3_BUCKET ||
   process.env.BUCKET_NAME ||
@@ -73,10 +69,6 @@ function shouldUseSsl(connectionString: string) {
   if (process.env.DATABASE_SSL === "true") return true;
   if (process.env.DATABASE_SSL === "false") return false;
   return !isLocalDatabase(connectionString);
-}
-
-function uniqueOrigins(origins: Array<string | undefined>) {
-  return [...new Set(origins.filter((origin): origin is string => Boolean(origin)))];
 }
 
 export default buildConfig({
