@@ -11,7 +11,7 @@ import { getPayloadClient } from "@/lib/get-payload";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 import type { Category } from "@/payload-types";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 type Args = {
   params: Promise<{ slug: string }>;

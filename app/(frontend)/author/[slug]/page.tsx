@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { getPayloadClient } from "@/lib/get-payload";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 type Args = {
   params: Promise<{ slug: string }>;

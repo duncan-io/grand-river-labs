@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPayloadClient } from "@/lib/get-payload";
 import { getSiteUrl } from "@/lib/site";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 const staticPaths = [
   "/",

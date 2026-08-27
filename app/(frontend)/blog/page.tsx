@@ -7,7 +7,7 @@ import { isAuthor } from "@/lib/author";
 import { getPayloadClient } from "@/lib/get-payload";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Blog | Grand River Labs",
