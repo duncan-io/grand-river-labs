@@ -1,4 +1,4 @@
-const RANGE_MIN = 1_500;
+const RANGE_MIN = 2_000;
 const RANGE_MAX = 10_000;
 const TYPICAL_MIN = 2_500;
 const TYPICAL_MAX = 5_000;

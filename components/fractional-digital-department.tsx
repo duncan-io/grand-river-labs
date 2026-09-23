@@ -27,7 +27,7 @@ const capabilities = [
   {
     label: "Strategy",
     title: "Strategy & prioritization",
-    copy: "Decide what deserves attention now—and what is not worth spending money on—based on the business, not a service list.",
+    copy: "Advise on ads and social strategy—what to invest in, test, pause, or stop—and decide what else deserves attention now, based on the business. Coordinate a specialist when someone else should run the work.",
   },
   {
     label: "Systems",
@@ -81,12 +81,12 @@ const faqs = [
   {
     question: "How much does it cost?",
     answer:
-      "Engagements start at $1,500/month. The monthly investment depends on the scope of work and the priorities we take on. We'll confirm fit and scope on a 30-minute call.",
+      "Engagements start at $2,000/month. The monthly investment depends on the scope of work and the priorities we take on. We'll confirm fit and scope on a 30-minute call.",
   },
   {
     question: "Do you only manage websites?",
     answer:
-      "No. Website management is a core part of the offering. GR Labs can also help with digital strategy, analytics, automation, integrations, local presence, and technical SEO where those are the right next move. It is not a full-service SEO or marketing agency.",
+      "No. Website management is a core part of the offering. GR Labs can also help with digital strategy, ads and social strategy advisement, analytics, automation, integrations, local presence, and technical SEO where those are the right next move. We advise and coordinate—we are not a full-service ads, social, SEO, or marketing agency.",
   },
   {
     question: "Can you work with our existing team and vendors?",
@@ -229,9 +229,9 @@ export function FractionalDigitalDepartmentSections() {
               </h2>
             </div>
             <p className="section-copy">
-              These are the areas GR Labs can own. The mix follows what will
-              have the greatest impact for your business—not a predetermined
-              monthly menu.
+              These are the areas GR Labs can own, including ads and social
+              strategy advisement. The mix follows what will have the greatest
+              impact for your business—not a predetermined monthly menu.
             </p>
           </div>
           <div className="fdd-areas__grid reveal">
@@ -286,7 +286,7 @@ export function FractionalDigitalDepartmentSections() {
           </p>
           <div className="fdd-offer reveal">
             <div>
-              <p className="fdd-offer__price">Starting at $1,500/month</p>
+              <p className="fdd-offer__price">Starting at $2,000/month</p>
               <p className="fdd-offer__copy">
                 Ongoing monthly support with direct access to experienced senior
                 digital leadership. Hands-on execution, plus coordination with
@@ -358,7 +358,7 @@ export function FractionalDigitalDepartmentSections() {
             <p className="section-copy">
               Ongoing access to experienced digital leadership—not a full-time
               hire, and not a one-off project. Engagements start at
-              $1,500/month.
+              $2,000/month.
             </p>
           </div>
           <div className="fdd-faq__list reveal">

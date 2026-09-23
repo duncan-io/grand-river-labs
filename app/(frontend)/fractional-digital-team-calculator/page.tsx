@@ -48,7 +48,7 @@ export default function FractionalDigitalTeamCalculatorPage() {
               <p>
                 This compares cost, not identical hours or output. A junior hire
                 is not a digital lead. A senior hire is still one person. GR Labs
-                engagements start at $1,500/month; actual scope is confirmed on a
+                engagements start at $2,000/month; actual scope is confirmed on a
                 fit call.
               </p>
             </div>

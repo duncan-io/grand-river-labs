@@ -1,4 +1,4 @@
-import { chatConfig } from "@/lib/chat/config";
+import { chatConfig, getChatModel } from "@/lib/chat/config";
 import { getFireworksClient } from "@/lib/chat/client";
 import { normalizeEmail } from "@/lib/chat/email";
 import { SYSTEM_PROMPT } from "@/lib/chat/prompts";
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
 
       try {
         const completion = await client.chat.completions.create({
-          model: chatConfig.model,
+          model: getChatModel(),
           messages,
           stream: true,
           temperature: chatConfig.temperature,

@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 export const metadata: Metadata = {
   title: "Fractional Digital Department | Grand River Labs",
   description:
-    "Senior digital leadership and hands-on execution for owner-led growing businesses—without hiring a full-time digital team. Ongoing support starting at $1,500/month.",
+    "Senior digital leadership and hands-on execution for owner-led growing businesses—without hiring a full-time digital team. Ongoing support starting at $2,000/month.",
 };
 
 export default function FractionalDigitalDepartmentPage() {
