@@ -3879,10 +3879,11 @@ span.site-nav__trigger:focus-visible {
   align-items: start;
   justify-content: stretch;
   gap: 1.15rem;
+  margin-bottom: 0;
 }
 
 .fdd-flow__top .section-copy {
-  max-width: 28rem;
+  max-width: 40rem;
   margin: 0;
 }
 
@@ -3896,65 +3897,6 @@ span.site-nav__trigger:focus-visible {
 
 .fdd-flow__heading span:last-child {
   color: var(--accent-dark);
-}
-
-.fdd-flow__steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fdd-flow__step {
-  display: flex;
-  flex-direction: column;
-  min-height: 14rem;
-  padding: 1.75rem 1.5rem 1.65rem;
-  border: 1px solid var(--line);
-  border-radius: 1.2rem;
-  background: rgba(255, 255, 255, 0.38);
-}
-
-.fdd-flow__step--answer {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(5, 122, 114, 0.32);
-  box-shadow: 0 14px 36px rgba(7, 87, 82, 0.08);
-}
-
-.fdd-flow__label {
-  display: block;
-  margin-bottom: 1.15rem;
-  color: var(--muted);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.fdd-flow__step--answer .fdd-flow__label {
-  color: var(--accent);
-}
-
-.fdd-flow__step h3 {
-  margin: 0 0 0.85rem;
-  font-family: var(--font-fraunces), serif;
-  font-size: clamp(1.4rem, 2vw, 1.75rem);
-  font-weight: 560;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-}
-
-.fdd-flow__step--answer h3 {
-  color: var(--accent-dark);
-}
-
-.fdd-flow__step p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.96rem;
-  line-height: 1.6;
 }
 
 .fdd-flow__promise {
@@ -4128,10 +4070,6 @@ span.site-nav__trigger:focus-visible {
   .fdd-areas__grid {
     grid-template-columns: 1fr 1fr;
   }
-
-  .fdd-flow__steps {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 900px) {
@@ -4196,16 +4134,11 @@ span.site-nav__trigger:focus-visible {
     max-width: 12em;
   }
 
-  .fdd-areas__grid,
-  .fdd-flow__steps {
+  .fdd-areas__grid {
     grid-template-columns: 1fr;
   }
 
   .fdd-areas__card {
-    min-height: auto;
-  }
-
-  .fdd-flow__step {
     min-height: auto;
   }
 

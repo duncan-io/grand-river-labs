@@ -41,27 +41,6 @@ const capabilities = [
   },
 ];
 
-const contrastModels = [
-  {
-    label: "Consultant",
-    title: "Tells you what to do.",
-    copy: "A recommendation, then you're left to staff it, sequence it, and make it happen.",
-    role: "foil",
-  },
-  {
-    label: "Agency",
-    title: "Does what you tell them.",
-    copy: "They wait for a brief. If you don't already know what to request, the important work never gets named.",
-    role: "foil",
-  },
-  {
-    label: "Fractional digital department",
-    title: "Does what needs doing.",
-    copy: "We look at the business, find the digital work worth doing, and take it on—so you are not the strategist or the project manager.",
-    role: "answer",
-  },
-];
-
 const faqs = [
   {
     question: "Is this right for my business?",
@@ -261,25 +240,11 @@ export function FractionalDigitalDepartmentSections() {
               </h2>
             </div>
             <p className="section-copy">
-              Two familiar models. Neither owns the work.
+              Consultants leave a recommendation for you to staff. Agencies wait
+              for a brief, so unnamed work never starts. GR Labs looks at the
+              business, finds the digital work worth doing, and takes it on.
             </p>
           </div>
-          <ul className="fdd-flow__steps reveal">
-            {contrastModels.map((item) => (
-              <li
-                className={
-                  item.role === "answer"
-                    ? "fdd-flow__step fdd-flow__step--answer"
-                    : "fdd-flow__step"
-                }
-                key={item.label}
-              >
-                <span className="fdd-flow__label">{item.label}</span>
-                <h3>{item.title}</h3>
-                <p>{item.copy}</p>
-              </li>
-            ))}
-          </ul>
           <p className="fdd-flow__promise reveal">
             You don&apos;t have to figure out what to ask us to do. We do what
             needs doing.
