@@ -1,3 +1,4 @@
+import { renderInline } from "@/components/inline-links";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
@@ -12,7 +13,7 @@ const whenHelps = [
   },
   {
     title: "Team buried in handoffs",
-    copy: "People retype, chase status, and glue systems together by hand. The work gets done—but the week disappears into the seams.",
+    copy: "People retype, chase status, and [glue systems together by hand](/automation/business-process-automation). The work gets done—but the week disappears into the seams.",
   },
 ];
 
@@ -25,7 +26,7 @@ const examples = [
     discovery:
       "Discovery mapped every intake path: email → shared drive → practice tool, plus the cleanup pass before month-end. The leak wasn’t “we need AI.” It was double entry on high-volume documents, then another pass to fix naming and duplicates.",
     prioritize:
-      "First automation: pull structured fields from the highest-volume document types into the system of record, with a light human review on edge cases—before touching reporting or chatbots.",
+      "First automation: [pull structured fields from the highest-volume document types](/ai-automation) into the system of record, with a light human review on edge cases—before touching reporting or chatbots.",
     outcome:
       "A roadmap that put hours back into intake within weeks, with a clear second wave for client-data cleanup and partner-ready weekly briefs.",
   },
@@ -33,13 +34,13 @@ const examples = [
     industry: "Home services",
     title: "Dispatch and follow-up ping-pong",
     situation:
-      "A roofing and painting company won jobs on the site—and lost hours in the office. Estimates sat half-finished. Scheduling lived in texts. CRM notes never made it back from the field.",
+      "[A roofing and painting company](/use-cases/home-services) won jobs on the site—and lost hours in the office. Estimates sat half-finished. Scheduling lived in texts. CRM notes never made it back from the field.",
     discovery:
       "We sat with the owner and office lead, traced lead → estimate → book → job, and timed the status chase. The expensive loop wasn’t installing—it was same-day proposals stalling and coordination eating evenings.",
     prioritize:
       "First automation: turn site notes and photos into CRM updates, then draft proposals from real scopes so quotes leave the same day—before building a full scheduling platform.",
     outcome:
-      "A prioritized path: pipeline visibility and lead triage next, once the estimate loop stopped leaking deals and owner time.",
+      "A prioritized path: [pipeline visibility and lead triage](/marketing-automation) next, once the estimate loop stopped leaking deals and owner time.",
   },
   {
     industry: "Insurance brokerages",
@@ -82,7 +83,7 @@ const deliverables = [
   },
   {
     title: "ROI hypotheses",
-    copy: "Hours and cost framed in language your team trusts—so you can decide, fund, and measure the next step.",
+    copy: "Hours and cost framed in language your team trusts—so you can decide, fund, and [measure the next step](/analytics).",
   },
 ];
 
@@ -355,7 +356,7 @@ export function ConsultingSections() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>
@@ -395,7 +396,7 @@ export function ConsultingSections() {
                   <div className="consulting-example__blocks">
                     <div>
                       <p className="consulting-example__label">Situation</p>
-                      <p>{item.situation}</p>
+                      <p>{renderInline(item.situation)}</p>
                     </div>
                     <div>
                       <p className="consulting-example__label">
@@ -407,13 +408,13 @@ export function ConsultingSections() {
                       <p className="consulting-example__label">
                         First automation we&apos;d prioritize
                       </p>
-                      <p>{item.prioritize}</p>
+                      <p>{renderInline(item.prioritize)}</p>
                     </div>
                     <div>
                       <p className="consulting-example__label">
                         Expected outcome
                       </p>
-                      <p>{item.outcome}</p>
+                      <p>{renderInline(item.outcome)}</p>
                     </div>
                   </div>
                 </div>
@@ -444,7 +445,7 @@ export function ConsultingSections() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>

@@ -1,3 +1,4 @@
+import { renderInline } from "@/components/inline-links";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
@@ -23,7 +24,7 @@ const friction = [
 const examples = [
   {
     title: "Inbound lead capture → enrich → score → route",
-    copy: "A prospect fills out a form or lands from a paid click. Instead of landing in a shared inbox, the lead is enriched with company and role data, scored against your ICP, and assigned to the right owner—with a short brief already in the CRM. Sales opens a ready record, not a blank name.",
+    copy: "A prospect fills out a form or lands from a paid click. Instead of landing in a shared inbox, the lead is [enriched with company and role data](/ai-automation), scored against your ICP, and assigned to the right owner—with a short brief already in the CRM. Sales opens a ready record, not a blank name.",
   },
   {
     title: "Behavior-triggered nurture that respects the CRM",
@@ -35,22 +36,22 @@ const examples = [
   },
   {
     title: "Campaign ops: lists, UTMs, and clean attribution",
-    copy: "Audience lists sync from your CRM. Campaign tags and UTMs stay consistent across channels. When a lead converts, the source story is already on the record—so reporting stops being a weekly archaeology project.",
+    copy: "Audience lists sync from your CRM. [Campaign tags and UTMs stay consistent across channels](/analytics). When a lead converts, the source story is already on the record—so reporting stops being a weekly archaeology project.",
   },
   {
     title: "No-show and abandoned-inquiry follow-up",
-    copy: "A demo is missed or a quote request stalls mid-form. Automated, timed follow-ups go out with the right tone and a clear next step—then escalate to a human if there’s still no reply. Pipeline that would have leaked quietly gets a second chance.",
+    copy: "A demo is missed or [a quote request stalls mid-form](/use-cases/home-services). Automated, timed follow-ups go out with the right tone and a clear next step—then escalate to a human if there’s still no reply. Pipeline that would have leaked quietly gets a second chance.",
   },
   {
     title: "Closed-won → review, referral, and onboarding handoff",
-    copy: "When a deal closes, marketing doesn’t start from a spreadsheet. A review request, referral ask, and onboarding welcome fire in sequence—while the account team gets a clean handoff with context. Expansion and proof start on day one, not month three.",
+    copy: "When a deal closes, marketing doesn’t start from a spreadsheet. A review request, referral ask, and onboarding welcome fire in sequence—while [the account team gets a clean handoff with context](/automation/business-process-automation). Expansion and proof start on day one, not month three.",
   },
 ];
 
 const steps = [
   {
     title: "Discover",
-    copy: "We map how leads enter, how nurture actually runs, and where campaign ops eats the week—then prioritize what moves pipeline first.",
+    copy: "[We map how leads enter](/automation-consulting), how nurture actually runs, and where campaign ops eats the week—then prioritize what moves pipeline first.",
   },
   {
     title: "Connect & automate",
@@ -411,7 +412,7 @@ export function MarketingAutomationSections() {
                 </span>
                 <div className="mkt-example__body">
                   <h3>{item.title}</h3>
-                  <p>{item.copy}</p>
+                  <p>{renderInline(item.copy)}</p>
                 </div>
               </article>
             ))}
@@ -462,7 +463,7 @@ export function MarketingAutomationSections() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{step.title}</h3>
-                <p>{step.copy}</p>
+                <p>{renderInline(step.copy)}</p>
               </li>
             ))}
           </ol>

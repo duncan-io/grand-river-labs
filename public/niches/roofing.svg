@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="roof-bg" x1="0" y1="0" x2="800" y2="600">
+      <stop stop-color="#D8F2F4"/>
+      <stop offset=".5" stop-color="#EDF8F5"/>
+      <stop offset="1" stop-color="#CCEBE5"/>
+    </linearGradient>
+    <linearGradient id="roof-card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F7FFFE"/>
+      <stop offset="1" stop-color="#D7F0EC"/>
+    </linearGradient>
+    <linearGradient id="roof-house" x1="280" y1="160" x2="520" y2="460">
+      <stop stop-color="#6FB8B0"/>
+      <stop offset="1" stop-color="#057A72"/>
+    </linearGradient>
+    <radialGradient id="roof-glow" cx="50%" cy="38%" r="46%">
+      <stop stop-color="#FFFDF4" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#B0E4DC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#roof-bg)"/>
+  <circle cx="400" cy="280" r="210" fill="url(#roof-glow)"/>
+  <path d="M0 530c200-34 380-22 560 8 120 18 170 10 240-16v78H0V530Z" fill="#EAF7F4" opacity=".85"/>
+
+  <circle cx="400" cy="300" r="214" stroke="#6FB8B0" stroke-width="1.5" opacity=".4"/>
+  <circle cx="400" cy="300" r="214" stroke="#057A72" stroke-width="1" stroke-dasharray="6 10" opacity=".25"/>
+
+  <g>
+    <circle cx="400" cy="318" r="118" fill="url(#roof-house)"/>
+    <circle cx="400" cy="318" r="118" fill="#FFFDF4" opacity=".1"/>
+    <path d="M292 332 L400 214 L508 332" fill="#F7FFFE" stroke="#057A72" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M318 332 H482 V430 H318 Z" fill="url(#roof-card)" stroke="#057A72" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M332 250 L400 186 L468 250" fill="none" stroke="#057A72" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
+    <rect x="372" y="360" width="56" height="70" rx="3" fill="#057A72"/>
+    <rect x="336" y="352" width="42" height="34" rx="2" fill="#EAF7F4" stroke="#057A72" stroke-width="2"/>
+    <rect x="422" y="352" width="42" height="34" rx="2" fill="#EAF7F4" stroke="#057A72" stroke-width="2"/>
+    <path d="M357 352 v34 M343 369 h28 M443 352 v34 M429 369 h28" stroke="#057A72" stroke-width="1.5" opacity=".45"/>
+  </g>
+
+  <g transform="translate(168 168)">
+    <circle cx="0" cy="0" r="48" fill="url(#roof-card)" stroke="#057A72" stroke-width="2"/>
+    <path d="M-16 -6 h10 a14 14 0 0 1 28 0 h10 v8 h-8 v16 h-32 v-16 h-8 z" fill="#057A72"/>
+    <path d="M-4 -6 v-6 a8 8 0 0 1 16 0 v6" fill="none" stroke="#F7FFFE" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="4" cy="8" r="2.2" fill="#F7FFFE"/>
+  </g>
+
+  <g transform="translate(632 188)">
+    <circle cx="0" cy="0" r="48" fill="url(#roof-card)" stroke="#057A72" stroke-width="2"/>
+    <path d="M-18 8 a20 16 0 0 1 36 -8 a14 12 0 0 1 8 16 H-18 a12 10 0 0 1 0 -8 z" fill="#6FB8B0" stroke="#057A72" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M-8 22 v10 M0 24 v12 M8 22 v10" stroke="#057A72" stroke-width="2.25" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(400 508)">
+    <circle cx="0" cy="0" r="36" fill="url(#roof-card)" stroke="#057A72" stroke-width="2"/>
+    <rect x="-12" y="-16" width="24" height="32" rx="4" fill="none" stroke="#057A72" stroke-width="2.25"/>
+    <circle cx="0" cy="8" r="2" fill="#057A72"/>
+    <path d="M-5 -8 h10" stroke="#057A72" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

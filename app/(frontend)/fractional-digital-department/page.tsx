@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 export const metadata: Metadata = {
   title: "Fractional Digital Department | Grand River Labs",
   description:
-    "Senior digital leadership and hands-on execution for owner-led growing businesses—without hiring a full-time digital team. Ongoing support starting at $2,000/month.",
+    "Holistic digital strategy for owner-led growing businesses. Not an agency and not a consultant—one partner who finds what's working and steps on the gas. Starting at $2,000/month.",
 };
 
 export default function FractionalDigitalDepartmentPage() {
@@ -22,11 +22,11 @@ export default function FractionalDigitalDepartmentPage() {
           turnstileSiteKey={turnstileSiteKey}
           variant="cta"
           eyebrow="Start a conversation"
-          heading="Get The Most Out Of Your Digital Strategy"
-          copy="Tell us about your digital presence, the tools you already use, and the work that never quite gets owned. A 30-minute fit call is enough to see whether GR Labs should take ownership of it."
+          heading="Let's look at the whole picture."
+          copy="Tell us what's already running—the site, the spend, the tools—and where you're unsure. A 30-minute fit call is enough to see whether GR Labs should own the picture and decide where to step on the gas."
           directLabel="Prefer to talk? Book a 30-minute fit call →"
-          messageLabel="What should we look at first?"
-          messagePlaceholder="The website, a pile of tools that don't talk, a backlog of digital projects, or the fact that nobody owns this—start wherever you are."
+          messageLabel="What's going on across your digital?"
+          messagePlaceholder="A channel that keeps asking for budget, numbers you don't trust, a backlog nobody owns—start wherever you are."
         />
       </main>
       <SiteFooter />

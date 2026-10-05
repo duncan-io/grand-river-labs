@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useId, useState } from "react";
 import { BOOK_CALL_HREF } from "@/lib/site";
-import { whatWeDoNav } from "./what-we-do-nav";
+import { fractionalDepartmentNav, fractionalDepartmentServices } from "./what-we-do-nav";
 
 const Arrow = () => (
   <svg
@@ -131,11 +131,24 @@ export function SiteHeader({
               <Chevron />
             </span>
             <div className="site-nav__dropdown" role="list">
-              {whatWeDoNav.map((item) => (
-                <a href={item.href} key={item.href} role="listitem">
-                  {item.label}
+              <div className="nav-group" role="listitem">
+                <a className="nav-group__parent" href={fractionalDepartmentNav.href}>
+                  <span className="nav-group__label">{fractionalDepartmentNav.label}</span>
+                  <span className="nav-group__desc">{fractionalDepartmentNav.description}</span>
                 </a>
-              ))}
+                <span className="nav-group__areas-label">What the work can touch</span>
+                <div
+                  className="nav-group__children"
+                  role="list"
+                  aria-label={`${fractionalDepartmentNav.label} areas of work`}
+                >
+                  {fractionalDepartmentServices.map((item) => (
+                    <a href={item.href} key={item.href} role="listitem">
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
           <a href="/white-label">White-label</a>
@@ -173,16 +186,28 @@ export function SiteHeader({
           <div className="site-nav-panel__group">
             <span className="site-nav-panel__label">What we do</span>
             <div className="site-nav-panel__industries" role="list">
-              {whatWeDoNav.map((item) => (
+              <div className="nav-group" role="listitem">
                 <a
-                  href={item.href}
-                  key={item.href}
-                  role="listitem"
+                  className="nav-group__parent"
+                  href={fractionalDepartmentNav.href}
                   onClick={closeMenu}
                 >
-                  {item.label}
+                  <span className="nav-group__label">{fractionalDepartmentNav.label}</span>
+                  <span className="nav-group__desc">{fractionalDepartmentNav.description}</span>
                 </a>
-              ))}
+                <span className="nav-group__areas-label">What the work can touch</span>
+                <div
+                  className="nav-group__children"
+                  role="list"
+                  aria-label={`${fractionalDepartmentNav.label} areas of work`}
+                >
+                  {fractionalDepartmentServices.map((item) => (
+                    <a href={item.href} key={item.href} role="listitem" onClick={closeMenu}>
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
           <a href="/white-label" onClick={closeMenu}>

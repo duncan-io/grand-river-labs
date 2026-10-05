@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { renderInline } from "@/components/inline-links";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 import { WhiteGloveEngagement } from "./white-glove-engagement";
@@ -13,7 +15,7 @@ const friction = [
   },
   {
     title: "Status chasing",
-    copy: "Someone asks “where is this?” and the answer takes a hunt across email, tickets, and the system of record.",
+    copy: "Someone asks “where is this?” and the answer takes [a hunt across email, tickets, and the system of record](/ai-automation).",
   },
   {
     title: "Tool-to-tool gaps",
@@ -34,12 +36,12 @@ const featured = {
 };
 
 const morePaths = [
-  "Approvals",
-  "Lead intake",
-  "Reporting",
-  "Onboarding",
-  "Invoicing",
-  "…and yours",
+  { label: "Approvals" },
+  { label: "Lead intake", href: "/marketing-automation" },
+  { label: "Reporting", href: "/analytics" },
+  { label: "Onboarding" },
+  { label: "Invoicing" },
+  { label: "…and yours" },
 ];
 
 function BpaScene() {
@@ -295,9 +297,11 @@ export function BpaSections() {
               Turn handoffs into flow—across the tools you already run.
             </h1>
             <p className="bpa-hero__copy">
-              We map the busywork between systems, automate the path, and stay
-              with it—so your team spends less time chasing status and more time
-              on work that matters.
+              <Link className="inline-link" href="/automation-consulting">
+                We map the busywork between systems
+              </Link>
+              , automate the path, and stay with it—so your team spends less
+              time chasing status and more time on work that matters.
             </p>
             <div className="bpa-hero__actions">
               <a
@@ -331,8 +335,11 @@ export function BpaSections() {
               </h2>
             </div>
             <p className="section-copy">
-              Most teams don’t need another platform. They need the gaps between
-              the ones they already trust to stop eating the week.
+              Most teams don’t need another platform. They need the gaps between{" "}
+              <Link className="inline-link" href="/automation">
+                the ones they already trust
+              </Link>{" "}
+              to stop eating the week.
             </p>
           </div>
           <div className="bpa-list reveal">
@@ -342,7 +349,7 @@ export function BpaSections() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>
@@ -377,15 +384,21 @@ export function BpaSections() {
               Same pattern for whatever handoff eats the week.
             </p>
             <p className="bpa-examples__names">
-              {morePaths.map((name, index) => (
-                <span key={name}>
+              {morePaths.map((item, index) => (
+                <span key={item.label}>
                   {index > 0 ? (
                     <span className="bpa-examples__dot" aria-hidden="true">
                       {" "}
                       ·{" "}
                     </span>
                   ) : null}
-                  {name}
+                  {item.href ? (
+                    <Link className="inline-link" href={item.href}>
+                      {item.label}
+                    </Link>
+                  ) : (
+                    item.label
+                  )}
                 </span>
               ))}
             </p>

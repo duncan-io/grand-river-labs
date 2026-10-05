@@ -24,7 +24,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="shell site-footer__row">
-        <span className="site-footer__row-label">Services</span>
+        <span className="site-footer__row-label">What we do</span>
         {whatWeDoNav.map((item) => (
           <a href={item.href} key={item.href}>
             {item.label}

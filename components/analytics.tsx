@@ -1,14 +1,16 @@
+import Link from "next/link";
+import { renderInline } from "@/components/inline-links";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 const friction = [
   {
     title: "Numbers nobody trusts",
-    copy: "Dashboards disagree. Marketing counts one story, sales another, and the weekly report takes half a day to reconcile by hand.",
+    copy: "Dashboards disagree. Marketing counts one story, sales another, and the weekly report takes half a day to [reconcile by hand](/automation/business-process-automation).",
   },
   {
     title: "Tags without a system",
-    copy: "Pixels and scripts pile up. GTM becomes a junk drawer. Nobody knows what’s firing—or what breaks when a page ships.",
+    copy: "Pixels and scripts pile up. GTM becomes a junk drawer. Nobody knows what’s firing—or [what breaks when a page ships](/website-strategy).",
   },
   {
     title: "Events that don’t mean anything",
@@ -16,7 +18,7 @@ const friction = [
   },
   {
     title: "Attribution guesswork",
-    copy: "UTMs are inconsistent. Source paths break across tools. Spend and pipeline decisions rest on gut feel dressed up as data.",
+    copy: "UTMs are inconsistent. Source paths break across tools. [Spend and pipeline decisions](/fractional-digital-department) rest on gut feel dressed up as data.",
   },
 ];
 
@@ -48,7 +50,7 @@ const ways = [
     title: "Attribution",
     lead: "Know what earned the conversation—not archaeology every Monday.",
     setup:
-      "Consistent UTMs, cleaner handoffs, and source paths across channels and CRM.",
+      "Consistent UTMs, cleaner handoffs, and [source paths across channels and CRM](/marketing-automation).",
     outcome:
       "Reporting that supports spend and pipeline decisions with confidence.",
   },
@@ -269,7 +271,7 @@ export function AnalyticsSections() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>
@@ -298,7 +300,7 @@ export function AnalyticsSections() {
                 <p className="analytics-way__lead">{item.lead}</p>
                 <p className="analytics-way__setup">
                   <span className="analytics-way__label">What we set up</span>
-                  {item.setup}
+                  {renderInline(item.setup)}
                 </p>
                 <p className="analytics-way__outcome">
                   <span className="analytics-way__label">You get</span>
@@ -321,7 +323,13 @@ export function AnalyticsSections() {
             </div>
             <p className="section-copy">
               We start from the questions you need answered, wire the stack
-              cleanly, and validate until the numbers match reality.
+              cleanly, and validate until the numbers match reality. Analytics
+              is one lever. Whether measurement is the right place to start
+              depends on everything else—that&apos;s what the{" "}
+              <Link className="inline-link" href="/fractional-digital-department">
+                Fractional Digital Department
+              </Link>{" "}
+              figures out.
             </p>
           </div>
           <ol className="analytics-flow__steps reveal">
@@ -387,10 +395,10 @@ export function AnalyticsCta() {
               Book a call
               <Arrow />
             </a>
-            <a className="button button-secondary" href="/website-strategy">
-              See fractional website partner
+            <Link className="button button-secondary" href="/fractional-digital-department">
+              See the whole picture
               <Arrow />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { renderInline } from "@/components/inline-links";
 import { Arrow } from "./site-header";
 
 const audience = [
@@ -8,7 +10,7 @@ const audience = [
   },
   {
     title: "Consultants",
-    copy: "You see the bottlenecks. We turn those recommendations into working automations—under your name.",
+    copy: "You see the bottlenecks. We [turn those recommendations into working automations](/automation-consulting)—under your name.",
     motif: "consultants" as const,
   },
   {
@@ -55,7 +57,7 @@ const benefits = [
   },
   {
     title: "Fits how they already work",
-    copy: "Practical automations around their current tools and workflows. No rip-and-replace. No jargon theater.",
+    copy: "[Practical automations around their current tools and workflows](/use-cases). No rip-and-replace. No jargon theater.",
     motif: "fits" as const,
   },
 ];
@@ -1049,10 +1051,17 @@ export function WhitelabelSections() {
               Offer automation. Keep the client. Skip the stack.
             </h1>
             <p className="whitelabel-hero__copy">
-              Clients want workflows that save time and money. You keep the
-              relationship and the margin. We design, build, and support under
-              your brand—so you expand the offer without the stack, the hire, or
-              the delivery risk.
+              Clients want{" "}
+              <Link
+                className="inline-link"
+                href="/automation/business-process-automation"
+              >
+                workflows
+              </Link>{" "}
+              that save time and money. You keep the relationship and the
+              margin. We design, build, and support under your brand—so you
+              expand the offer without the stack, the hire, or the delivery
+              risk.
             </p>
             <div className="whitelabel-hero__actions">
               <a
@@ -1084,8 +1093,11 @@ export function WhitelabelSections() {
               </h2>
             </div>
             <p className="section-copy">
-              Built for people who already serve clients—and want to add
-              automation without rebuilding their business around it.
+              Built for people who already serve clients—and want to{" "}
+              <Link className="inline-link" href="/automation">
+                add automation
+              </Link>{" "}
+              without rebuilding their business around it.
             </p>
           </div>
           <div className="whitelabel-personas reveal">
@@ -1095,7 +1107,7 @@ export function WhitelabelSections() {
                   <AudienceMotif variant={item.motif} />
                 </div>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>
@@ -1112,8 +1124,11 @@ export function WhitelabelSections() {
               </h2>
             </div>
             <p className="section-copy">
-              Clients ask for AI. The gap isn&apos;t demand—it&apos;s the cost of
-              becoming the team that can deliver it.
+              <Link className="inline-link" href="/ai-automation">
+                Clients ask for AI.
+              </Link>{" "}
+              The gap isn&apos;t demand—it&apos;s the cost of becoming the team
+              that can deliver it.
             </p>
           </div>
           <div className="whitelabel-friction__points reveal">
@@ -1151,7 +1166,7 @@ export function WhitelabelSections() {
                   <BenefitMotif variant={item.motif} />
                 </div>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>

@@ -60,6 +60,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/whitelabel", destination: "/white-label", permanent: true },
+      {
+        source: "/digital-strategy",
+        destination: "/fractional-digital-department",
+        permanent: true,
+      },
     ];
   },
   webpack: (webpackConfig) => {

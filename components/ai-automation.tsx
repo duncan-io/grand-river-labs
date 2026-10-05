@@ -1,3 +1,4 @@
+import { renderInline } from "@/components/inline-links";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
@@ -5,7 +6,7 @@ const contrast = [
   {
     number: "01",
     title: "Rules when the path is clear",
-    copy: "If the logic is if-this-then-that—status equals X, amount above Y, form field filled—we keep it as rules. Fast, predictable, easy to audit.",
+    copy: "If the logic is if-this-then-that—status equals X, amount above Y, form field filled—[we keep it as rules](/automation/business-process-automation). Fast, predictable, easy to audit.",
   },
   {
     number: "02",
@@ -15,7 +16,7 @@ const contrast = [
   {
     number: "03",
     title: "Both, wired into your stack",
-    copy: "The win isn’t a chat window. It’s AI and rules sitting inside the CRM, inbox, and ops tools your team already trusts—so work moves without a new island.",
+    copy: "The win isn’t a chat window. It’s AI and rules sitting inside [the CRM, inbox, and ops tools your team already trusts](/automation)—so work moves without a new island.",
   },
 ];
 
@@ -51,14 +52,14 @@ const examples = [
   {
     title: "CRM cleaning and enrichment",
     scenario:
-      "Duplicates, missing industries, stale titles, and half-filled accounts slow every campaign and forecast. Cleanup is always “next quarter.”",
+      "Duplicates, missing industries, stale titles, and half-filled accounts [slow every campaign and forecast](/marketing-automation). Cleanup is always “next quarter.”",
     does: "AI spots duplicates, standardizes fields, and enriches records from approved sources. Changes land as suggested updates or auto-apply under your rules.",
     outcome: "A cleaner CRM without a multi-week spreadsheet project.",
   },
   {
     title: "Reporting and insight summaries",
     scenario:
-      "Dashboards exist, but executives still ask for the story: what moved, what stalled, what needs a decision. Analysts spend Mondays assembling the narrative by hand.",
+      "[Dashboards exist](/analytics), but executives still ask for the story: what moved, what stalled, what needs a decision. Analysts spend Mondays assembling the narrative by hand.",
     does: "AI reads the numbers and open items, then drafts a weekly brief—patterns, exceptions, and suggested follow-ups—ready for a human to tighten.",
     outcome: "Less scrolling, more decisions. Like adding an analyst for the first pass.",
   },
@@ -81,7 +82,7 @@ const examples = [
 const engagement = [
   {
     title: "Discover",
-    copy: "We sit with the people who live the process, map where judgment and rework hide, and pick the AI use cases that save real time—not the ones that look flashy in a demo.",
+    copy: "We sit with the people who live the process, [map where judgment and rework hide](/automation-consulting), and pick the AI use cases that save real time—not the ones that look flashy in a demo.",
   },
   {
     title: "Design into your stack",
@@ -386,7 +387,7 @@ export function AiAutomationSections() {
                   {item.number}
                 </span>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>
@@ -416,7 +417,7 @@ export function AiAutomationSections() {
                 <div className="ai-automation-example__body">
                   <h3>{item.title}</h3>
                   <p className="ai-automation-example__scenario">
-                    {item.scenario}
+                    {renderInline(item.scenario)}
                   </p>
                   <p className="ai-automation-example__does">
                     <span className="ai-automation-example__label">
@@ -482,7 +483,7 @@ export function AiAutomationSections() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{step.title}</h3>
-                <p>{step.copy}</p>
+                <p>{renderInline(step.copy)}</p>
               </li>
             ))}
           </ol>

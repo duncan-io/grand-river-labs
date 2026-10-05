@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { renderInline } from "@/components/inline-links";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { IndustryStrip } from "./industry-use-case";
 import { Arrow } from "./site-header";
@@ -813,7 +815,7 @@ const integration = [
   {
     number: "03",
     title: "Savings compound",
-    copy: "Hours reclaimed. Effort reduced. Cost lowered. We measure what changed—then refine so the gains keep building.",
+    copy: "Hours reclaimed. Effort reduced. Cost lowered. [We measure what changed](/analytics)—then refine so the gains keep building.",
   },
 ];
 
@@ -1104,8 +1106,11 @@ export function WhatWeDoSections() {
             </h1>
             <p className="what-we-do-hero__copy">
               We integrate the systems you run today, speed up the handoffs in
-              between, and stay with you from discovery through support—so you
-              reclaim time and cost without a rip-and-replace.
+              between, and{" "}
+              <Link className="inline-link" href="/automation-consulting">
+                stay with you from discovery through support
+              </Link>
+              —so you reclaim time and cost without a rip-and-replace.
             </p>
             <div className="what-we-do-hero__actions">
               <a
@@ -1133,14 +1138,18 @@ export function WhatWeDoSections() {
         <div className="shell">
           <div className="what-we-do-services__top reveal">
             <div>
-              <p className="eyebrow">Services</p>
+              <p className="eyebrow">The work</p>
               <h2 className="section-heading">
                 Four ways we help you move faster.
               </h2>
             </div>
             <p className="section-copy">
-              From mapping the bottleneck to shipping the automation, we stay
-              close to your business—so the work fits how you already operate.
+              Automation is one lever. Whether it&apos;s the right one right
+              now depends on everything else—that&apos;s what the{" "}
+              <Link className="inline-link" href="/fractional-digital-department">
+                Fractional Digital Department
+              </Link>{" "}
+              figures out.
             </p>
           </div>
           <div className="what-we-do-services__grid reveal">
@@ -1181,7 +1190,16 @@ export function WhatWeDoSections() {
               <p className="section-copy">
                 Automation should fit into your business—not force your business
                 to fit into automation. We plug into the tools your team already
-                relies on and turn friction into flow.
+                relies on and turn friction into flow. See how this plays out
+                for{" "}
+                <Link className="inline-link" href="/use-cases/accounting">
+                  accounting firms
+                </Link>{" "}
+                and{" "}
+                <Link className="inline-link" href="/use-cases/home-services">
+                  home services
+                </Link>
+                .
               </p>
             </div>
           </div>
@@ -1190,7 +1208,7 @@ export function WhatWeDoSections() {
               <article className="what-we-do-point" key={item.number}>
                 <span className="what-we-do-point__number">{item.number}</span>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>
@@ -1229,10 +1247,10 @@ export function WhatWeDoCta() {
               Book a call
               <Arrow />
             </a>
-            <a className="button button-secondary" href="/use-cases">
-              Browse use cases
+            <Link className="button button-secondary" href="/fractional-digital-department">
+              See the whole picture
               <Arrow />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

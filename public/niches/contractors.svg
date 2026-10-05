@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="gc-bg" x1="0" y1="0" x2="800" y2="600">
+      <stop stop-color="#D8F2F4"/>
+      <stop offset=".5" stop-color="#EDF8F5"/>
+      <stop offset="1" stop-color="#CCEBE5"/>
+    </linearGradient>
+    <linearGradient id="gc-card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F7FFFE"/>
+      <stop offset="1" stop-color="#D7F0EC"/>
+    </linearGradient>
+    <linearGradient id="gc-hub" x1="280" y1="160" x2="520" y2="460">
+      <stop stop-color="#6FB8B0"/>
+      <stop offset="1" stop-color="#057A72"/>
+    </linearGradient>
+    <radialGradient id="gc-glow" cx="50%" cy="38%" r="46%">
+      <stop stop-color="#FFFDF4" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#B0E4DC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#gc-bg)"/>
+  <circle cx="400" cy="280" r="210" fill="url(#gc-glow)"/>
+  <path d="M0 530c200-34 380-22 560 8 120 18 170 10 240-16v78H0V530Z" fill="#EAF7F4" opacity=".85"/>
+
+  <circle cx="400" cy="300" r="214" stroke="#6FB8B0" stroke-width="1.5" opacity=".4"/>
+  <circle cx="400" cy="300" r="214" stroke="#057A72" stroke-width="1" stroke-dasharray="6 10" opacity=".25"/>
+
+  <g>
+    <circle cx="400" cy="318" r="118" fill="url(#gc-hub)"/>
+    <circle cx="400" cy="318" r="118" fill="#FFFDF4" opacity=".1"/>
+    <path d="M318 250 L400 196 L482 250 V400 H318 Z" fill="url(#gc-card)" stroke="#057A72" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M308 250 H492" stroke="#057A72" stroke-width="4" stroke-linecap="round"/>
+    <path d="M348 250 V400 M400 214 V400 M452 250 V400" stroke="#057A72" stroke-width="2" opacity=".45"/>
+    <path d="M318 310 H482 M318 355 H482" stroke="#057A72" stroke-width="2" opacity=".35"/>
+    <rect x="376" y="348" width="48" height="52" rx="2" fill="#057A72"/>
+  </g>
+
+  <g transform="translate(168 168)">
+    <circle cx="0" cy="0" r="48" fill="url(#gc-card)" stroke="#057A72" stroke-width="2"/>
+    <path d="M-22 6c2-18 10-28 22-32 12 4 20 14 22 32" fill="#057A72"/>
+    <path d="M-26 6h52" stroke="#057A72" stroke-width="6" stroke-linecap="round"/>
+    <path d="M-16 6c1-10 6-16 16-19 10 3 15 9 16 19" fill="#6FB8B0" stroke="#F7FFFE" stroke-width="1.5"/>
+    <rect x="-6" y="8" width="12" height="8" rx="2" fill="#F7FFFE"/>
+  </g>
+
+  <g transform="translate(632 188)">
+    <circle cx="0" cy="0" r="48" fill="url(#gc-card)" stroke="#057A72" stroke-width="2"/>
+    <rect x="-16" y="-22" width="32" height="42" rx="3" fill="#F7FFFE" stroke="#057A72" stroke-width="2"/>
+    <path d="M-8 -10h16M-8 -2h16M-8 6h10" stroke="#057A72" stroke-width="2" stroke-linecap="round"/>
+    <path d="M8 -22 v-6 a6 6 0 0 0-12 0" fill="none" stroke="#057A72" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(400 508)">
+    <circle cx="0" cy="0" r="36" fill="url(#gc-card)" stroke="#057A72" stroke-width="2"/>
+    <rect x="-20" y="-4" width="40" height="8" rx="2" fill="#057A72"/>
+    <path d="M-16 -4 v-6 M16 -4 v-6 M0 -4 v-8" stroke="#057A72" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="0" cy="6" r="3" fill="#6FB8B0" stroke="#057A72" stroke-width="1.5"/>
+  </g>
+</svg>

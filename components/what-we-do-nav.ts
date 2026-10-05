@@ -1,6 +1,16 @@
-export const whatWeDoNav = [
-  { label: "Fractional Digital Department", href: "/fractional-digital-department" },
-  { label: "Fractional Website Partner", href: "/website-strategy" },
+export const fractionalDepartmentNav = {
+  label: "Fractional Digital Department",
+  href: "/fractional-digital-department",
+  description: "Holistic digital strategy—find what's working and step on the gas.",
+} as const;
+
+export const fractionalDepartmentServices = [
+  { label: "Website Partner", href: "/website-strategy" },
+  { label: "CRO", href: "/conversion-rate-optimization" },
+  { label: "SEO", href: "/search-engine-optimization" },
+  { label: "Local ads", href: "/local-ads" },
   { label: "Analytics", href: "/analytics" },
   { label: "Automation and AI", href: "/automation" },
 ] as const;
+
+export const whatWeDoNav = [fractionalDepartmentNav, ...fractionalDepartmentServices] as const;
