@@ -240,7 +240,7 @@ function SeoHeroScene() {
             <ResultBody
               url="yoursite.com"
               title="Your service, named clearly"
-              titleWidth="228"
+              titleWidth={228}
               snippet="What you do, where you do it, and why someone should call."
               grow
             />
@@ -286,7 +286,7 @@ function SeoHeroScene() {
             <ResultBody
               url="another-listing.com"
               title="A competitor"
-              titleWidth="120"
+              titleWidth={120}
               snippet="A page that already matches the search."
               muted
             />
@@ -305,7 +305,7 @@ function SeoHeroScene() {
           <ResultBody
             url="directory.example"
             title="A directory"
-            titleWidth="110"
+            titleWidth={110}
             snippet="A list of names, not a page about the work."
             muted
           />
