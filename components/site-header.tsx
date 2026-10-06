@@ -67,7 +67,12 @@ export function BrandMark() {
   return (
     <span className="wordmark">
       <span className="wordmark__mark" aria-hidden="true">
-        <Image src="/brand-mark.png" alt="" width={76} height={76} />
+        <Image
+          src="/brand-mark.png"
+          alt="Grand River Labs logo"
+          width={76}
+          height={76}
+        />
       </span>
       Grand River Labs
     </span>

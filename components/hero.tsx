@@ -1,4 +1,3 @@
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 function RiverScene() {
@@ -157,31 +156,31 @@ export function Hero() {
       <div className="shell">
         <div className="hero__content">
           <h1 className="hero__headline">
-            Digital Strategy And Automation To Drive More Revenue
+            <span>Digital Strategy Expertise.</span>
+            <span>Fractional Cost.</span>
+            <span>Real Revenue Outcomes.</span>
           </h1>
           <p className="hero__copy">
-            Senior digital leadership and hands-on execution—without hiring a
-            full-time team. One partner owns the digital side, sets priorities
-            from business impact, and ships the work.
+            A fractional digital marketing team that owns your SEO, analytics,
+            ads, and website — and turns them into more qualified leads and
+            revenue, without the full-time hire.
           </p>
           <div className="hero__actions">
-            <a
-              className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a call
+            <a className="button button-primary" href="#contact">
+              Start a conversation
               <Arrow />
             </a>
-            <a className="button button-secondary" href="#contact">
-              Tell us what&apos;s getting in the way
+            <a
+              className="button button-secondary"
+              href="/fractional-digital-department"
+            >
+              See how we work
             </a>
           </div>
         </div>
       </div>
-      <a className="hero__cue" href="#digital-strategy">
-        See our approach
+      <a className="hero__cue" href="#results">
+        See the outcomes
       </a>
     </section>
   );
