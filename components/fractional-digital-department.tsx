@@ -66,6 +66,8 @@ const leverNotes: Record<
     "Being found for the searches that win the work, when search is where the opportunity is.",
   "/local-ads":
     "What to fund, pause, or dispute. Strategy for local spend—not day-to-day campaign management.",
+  "/google-business-profile":
+    "The map result that matches the work you want—categories, photos, hours, and a link to a page that can win the job.",
   "/analytics":
     "Measurement you can trust, so the next decision isn't a guess.",
   "/automation":
@@ -106,7 +108,7 @@ const faqs = [
   {
     question: "Can I just hire you for SEO or ads?",
     answer:
-      "The pages for [SEO](/search-engine-optimization), [local ads](/local-ads), [CRO](/conversion-rate-optimization), and the rest explain each lever. The engagement is the whole picture: we figure out whether that lever is the right one before we step on it.",
+      "The pages for [SEO](/search-engine-optimization), [local ads](/local-ads), [Google Business Profile](/google-business-profile), [CRO](/conversion-rate-optimization), and the rest explain each lever. The engagement is the whole picture: we figure out whether that lever is the right one before we step on it.",
   },
   {
     question: "Can you work with our existing team and vendors?",

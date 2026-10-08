@@ -156,7 +156,7 @@ export function Hero() {
       <div className="shell">
         <div className="hero__content">
           <h1 className="hero__headline">
-            <span>Digital Strategy Expertise.</span>
+            <span>Local Growth Expertise.</span>
             <span>Fractional Cost.</span>
             <span>Real Revenue Outcomes.</span>
           </h1>

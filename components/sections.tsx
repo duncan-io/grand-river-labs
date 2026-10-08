@@ -39,6 +39,11 @@ const services = [
     copy: "Clear advice on what to fund, pause, or dispute, so ad spend turns into leads instead of a bigger bill.",
   },
   {
+    title: "Google Business Profile",
+    href: "/google-business-profile",
+    copy: "A map result that matches the work you want, with photos, hours, and a link to a page that can win the job.",
+  },
+  {
     title: "Conversion rate optimization",
     href: "/conversion-rate-optimization",
     copy: "More of the visitors you already have become qualified leads, without buying more traffic.",

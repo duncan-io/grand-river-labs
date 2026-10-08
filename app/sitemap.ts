@@ -16,6 +16,7 @@ const staticPaths = [
   "/conversion-rate-optimization",
   "/search-engine-optimization",
   "/local-ads",
+  "/google-business-profile",
   "/fractional-digital-department",
   "/fractional-digital-department/roofing",
   "/fractional-digital-department/contractors",

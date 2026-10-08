@@ -9,6 +9,7 @@ export const fractionalDepartmentServices = [
   { label: "CRO", href: "/conversion-rate-optimization" },
   { label: "SEO", href: "/search-engine-optimization" },
   { label: "Local ads", href: "/local-ads" },
+  { label: "Business profile", href: "/google-business-profile" },
   { label: "Analytics", href: "/analytics" },
   { label: "Automation and AI", href: "/automation" },
 ] as const;
