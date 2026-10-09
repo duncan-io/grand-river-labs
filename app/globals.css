@@ -788,6 +788,14 @@ span.site-nav__trigger:focus-visible {
   color: var(--accent);
 }
 
+.engagement {
+  background: var(--mist);
+}
+
+.engagement .services__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .execution {
   position: relative;
   overflow: hidden;
@@ -10007,6 +10015,7 @@ span.site-nav__trigger:focus-visible {
   .what-we-do-integrate__points,
   .offerings__grid,
   .services__grid,
+  .engagement .services__grid,
   .use-cases-strip__list {
     grid-template-columns: 1fr;
   }

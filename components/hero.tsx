@@ -155,10 +155,10 @@ export function Hero() {
       <RiverScene />
       <div className="shell">
         <div className="hero__content">
+          <p className="eyebrow">Fractional digital department</p>
           <h1 className="hero__headline">
-            <span>Local Growth Expertise.</span>
-            <span>Fractional Cost.</span>
-            <span>Real Revenue Outcomes.</span>
+            <span>Your digital department,</span>
+            <span>without hiring one.</span>
           </h1>
           <p className="hero__copy">
             A fractional digital marketing team that owns your SEO, analytics,

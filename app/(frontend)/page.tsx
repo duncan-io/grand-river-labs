@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactSection } from "@/components/contact";
+import { EngagementBlock } from "@/components/engagement-block";
 import { Hero } from "@/components/hero";
 import {
   ExecutionSection,
@@ -46,6 +47,7 @@ export default function Home() {
         <Hero />
         <ResultsBar />
         <ServicesSection />
+        <EngagementBlock />
         <ProcessSection />
         <ExecutionSection />
         <TestimonialsSection />

@@ -124,14 +124,16 @@ export function ServicesSection() {
       <div className="shell">
         <div className="services__top reveal">
           <div>
-            <p className="eyebrow">What we own</p>
+            <p className="eyebrow">What a department covers</p>
             <h2 className="section-heading">
-              One partner across your highest-priority digital work
+              Everything a digital hire would touch.
             </h2>
           </div>
           <p className="section-copy">
-            SEO, the site, ads, analytics, and the routing between them — aimed
-            at qualified leads and revenue, not a predetermined monthly menu.
+            One owner across SEO, the site, ads, analytics, and the routing
+            between them — aimed at qualified leads and revenue, not a
+            predetermined monthly menu. You work directly with the senior
+            operator who sets the priorities.
           </p>
         </div>
 

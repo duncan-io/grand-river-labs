@@ -1,7 +1,8 @@
 export const fractionalDepartmentNav = {
   label: "Fractional Digital Department",
   href: "/fractional-digital-department",
-  description: "Holistic digital strategy—find what's working and step on the gas.",
+  description:
+    "Your digital department: strategy, web, SEO, ads, and analytics for one flat monthly rate.",
 } as const;
 
 export const fractionalDepartmentServices = [
