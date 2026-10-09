@@ -25,11 +25,6 @@ export function EngagementBlock() {
             </p>
           </li>
           <li className="services__item">
-            <h3>Month to month.</h3>
-            <p>The work earns its place every month. No annual lock-in.</p>
-            {/* TODO(duncan): confirm contract terms before shipping */}
-          </li>
-          <li className="services__item">
             <h3>You work with the owner.</h3>
             <p>
               No account managers or handoffs. The person who sets the
