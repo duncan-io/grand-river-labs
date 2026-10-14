@@ -1,5 +1,5 @@
 import { BrandMark } from "./site-header";
-import { whatWeDoNav } from "./what-we-do-nav";
+import { customSoftwareNav, whatWeDoNav } from "./what-we-do-nav";
 
 export function SiteFooter() {
   return (
@@ -30,6 +30,7 @@ export function SiteFooter() {
             {item.label}
           </a>
         ))}
+        <a href={customSoftwareNav.href}>{customSoftwareNav.label}</a>
         <a href="/white-label">White-label</a>
       </div>
     </footer>

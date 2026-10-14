@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { renderInline } from "@/components/inline-links";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
@@ -40,7 +41,7 @@ const ways = [
     title: "Description and the website link",
     lead: "The listing should send people to a page that can win the job.",
     setup:
-      "A short description in plain language, and a link to the service page—not the homepage by default.",
+      "A short description in plain language, and a link to the service page—not the homepage by default. The listing’s call button gets its own number, so map calls aren’t mixed with the website. That’s [call tracking](/analytics).",
     outcome: "The tap lands on a page that names the work and how to start.",
   },
   {
@@ -356,8 +357,8 @@ export function GbpSections() {
                 Book a call
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="#ways">
-                See what&apos;s covered
+              <a className="button button-secondary" href="#contact">
+                Contact us
                 <Arrow />
               </a>
             </div>
@@ -420,7 +421,7 @@ export function GbpSections() {
                 <p className="gbp-way__lead">{item.lead}</p>
                 <p className="gbp-way__setup">
                   <span className="gbp-way__label">What we do</span>
-                  {item.setup}
+                  {renderInline(item.setup)}
                 </p>
                 <p className="gbp-way__outcome">
                   <span className="gbp-way__label">You get</span>
@@ -494,41 +495,5 @@ export function GbpSections() {
         </div>
       </section>
     </>
-  );
-}
-
-export function GbpCta() {
-  return (
-    <section className="section use-cases-cta">
-      <div className="shell use-cases-cta__content reveal">
-        <div>
-          <p className="eyebrow">Ready when you are</p>
-          <h2 className="section-heading">
-            Let&apos;s see what the map result says.
-          </h2>
-        </div>
-        <div className="use-cases-cta__actions">
-          <p className="section-copy">
-            Tell us how people find you nearby. We&apos;ll look at the profile
-            Google shows, and which fixes are worth making first.
-          </p>
-          <div className="use-cases-cta__buttons">
-            <a
-              className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a call
-              <Arrow />
-            </a>
-            <Link className="button button-secondary" href="/fractional-digital-department">
-              See the whole picture
-              <Arrow />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }

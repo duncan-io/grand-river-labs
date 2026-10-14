@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { renderInline } from "@/components/inline-links";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
@@ -50,7 +51,7 @@ const ways = [
     title: "The page and the phone path",
     lead: "A good click still dies if nobody can answer it.",
     setup:
-      "The landing page, the call button, and where the lead goes after the tap—checked against the ad that bought the visit.",
+      "The landing page, the call button, and where the lead goes after the tap—checked against the ad that bought the visit. [Call tracking](/analytics) ties the call back to the ad, so what a lead is worth and which leads to dispute use real calls, not clicks.",
     outcome:
       "The ad and the site tell the same story, and a new lead still gets a next step.",
   },
@@ -307,8 +308,8 @@ export function LocalAdsSections() {
                 Book a call
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="#ways">
-                See what&apos;s covered
+              <a className="button button-secondary" href="#contact">
+                Contact us
                 <Arrow />
               </a>
             </div>
@@ -370,7 +371,7 @@ export function LocalAdsSections() {
                 <p className="local-ads-way__lead">{item.lead}</p>
                 <p className="local-ads-way__setup">
                   <span className="local-ads-way__label">What we do</span>
-                  {item.setup}
+                  {renderInline(item.setup)}
                 </p>
                 <p className="local-ads-way__outcome">
                   <span className="local-ads-way__label">You get</span>
@@ -444,41 +445,5 @@ export function LocalAdsSections() {
         </div>
       </section>
     </>
-  );
-}
-
-export function LocalAdsCta() {
-  return (
-    <section className="section use-cases-cta">
-      <div className="shell use-cases-cta__content reveal">
-        <div>
-          <p className="eyebrow">Ready when you are</p>
-          <h2 className="section-heading">
-            Let&apos;s look at what the spend is buying.
-          </h2>
-        </div>
-        <div className="use-cases-cta__actions">
-          <p className="section-copy">
-            Tell us how leads find you today. We&apos;ll map LSA, local search,
-            and what&apos;s worth cutting before anyone adds budget.
-          </p>
-          <div className="use-cases-cta__buttons">
-            <a
-              className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a call
-              <Arrow />
-            </a>
-            <Link className="button button-secondary" href="/fractional-digital-department">
-              See the whole picture
-              <Arrow />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }

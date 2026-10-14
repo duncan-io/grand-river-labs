@@ -349,8 +349,8 @@ export function SeoSections() {
                 Book a call
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="#ways">
-                See what&apos;s covered
+              <a className="button button-secondary" href="#contact">
+                Contact us
                 <Arrow />
               </a>
             </div>
@@ -485,41 +485,5 @@ export function SeoSections() {
         </div>
       </section>
     </>
-  );
-}
-
-export function SeoCta() {
-  return (
-    <section className="section use-cases-cta">
-      <div className="shell use-cases-cta__content reveal">
-        <div>
-          <p className="eyebrow">Ready when you are</p>
-          <h2 className="section-heading">
-            Let&apos;s see which searches you&apos;re missing.
-          </h2>
-        </div>
-        <div className="use-cases-cta__actions">
-          <p className="section-copy">
-            Tell us how people find you today. We&apos;ll map what the site can
-            be found for, and which on-site fixes are worth making first.
-          </p>
-          <div className="use-cases-cta__buttons">
-            <a
-              className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a call
-              <Arrow />
-            </a>
-            <Link className="button button-secondary" href="/fractional-digital-department">
-              See the whole picture
-              <Arrow />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }

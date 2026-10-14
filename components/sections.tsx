@@ -31,7 +31,7 @@ const services = [
   {
     title: "Analytics & attribution",
     href: "/analytics",
-    copy: "Measurement you can trust, so you know which channels actually produce leads and revenue.",
+    copy: "Measurement you can trust, so you know which channels actually produce leads and revenue—including which calls came from the site, the map listing, and other profiles.",
   },
   {
     title: "Google, Meta & Local Services Ads",

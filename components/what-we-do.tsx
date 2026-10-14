@@ -1122,8 +1122,8 @@ export function WhatWeDoSections() {
                 Book a call
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="#services">
-                See our services
+              <a className="button button-secondary" href="#contact">
+                Contact us
                 <Arrow />
               </a>
             </div>
@@ -1219,41 +1219,5 @@ export function WhatWeDoSections() {
 
       <IndustryStrip headingAs="h2" />
     </>
-  );
-}
-
-export function WhatWeDoCta() {
-  return (
-    <section className="section use-cases-cta">
-      <div className="shell use-cases-cta__content reveal">
-        <div>
-          <p className="eyebrow">Ready when you are</p>
-          <h2 className="section-heading">
-            Let&apos;s find where automation pays for itself.
-          </h2>
-        </div>
-        <div className="use-cases-cta__actions">
-          <p className="section-copy">
-            Tell us how work moves today. We&apos;ll map a practical path from
-            your existing systems to measurable time and cost savings.
-          </p>
-          <div className="use-cases-cta__buttons">
-            <a
-              className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a call
-              <Arrow />
-            </a>
-            <Link className="button button-secondary" href="/fractional-digital-department">
-              See the whole picture
-              <Arrow />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }

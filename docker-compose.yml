@@ -1,3 +1,4 @@
+name: ai-automation-agency
 services:
   postgres:
     image: postgres:16-alpine

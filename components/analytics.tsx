@@ -14,11 +14,11 @@ const friction = [
   },
   {
     title: "Events that don’t mean anything",
-    copy: "Clicks and page views fill the charts. The outcomes that matter—quotes, bookings, qualified leads—aren’t tracked cleanly.",
+    copy: "Clicks and page views fill the charts. Quotes and bookings aren’t tracked cleanly—and the phone call that actually wins the job isn’t tracked at all.",
   },
   {
     title: "Attribution guesswork",
-    copy: "UTMs are inconsistent. Source paths break across tools. [Spend and pipeline decisions](/fractional-digital-department) rest on gut feel dressed up as data.",
+    copy: "UTMs are inconsistent. One published number, so a map call, a Yelp call, and a website call look the same. [Spend and pipeline decisions](/fractional-digital-department) rest on gut feel dressed up as data.",
   },
 ];
 
@@ -54,6 +54,14 @@ const ways = [
     outcome:
       "Reporting that supports spend and pipeline decisions with confidence.",
   },
+  {
+    title: "Call tracking",
+    lead: "A ring should say where it came from.",
+    setup:
+      "Tracking on the website, the [Google Business Profile](/google-business-profile), Yelp, and other profiles—set up and monitored so each source stays separate.",
+    outcome:
+      "Calls you can attribute, ready to [score](/marketing-automation) while the lead is still warm.",
+  },
 ];
 
 const steps = [
@@ -63,7 +71,7 @@ const steps = [
   },
   {
     title: "Instrument",
-    copy: "We configure GA4, GTM, and the events that matter, with documentation your team can follow when something changes.",
+    copy: "We configure GA4, GTM, the events that matter, and call tracking for the website and profiles, with documentation your team can follow when something changes.",
   },
   {
     title: "Validate & refine",
@@ -223,9 +231,9 @@ export function AnalyticsSections() {
               Measurement you can make decisions on.
             </h1>
             <p className="analytics-hero__copy">
-              GA4, Tag Manager, event tracking, and attribution—set up so
-              marketing, sales, and leadership share one trustworthy story of
-              what&apos;s working.
+              GA4, Tag Manager, event tracking, call tracking, and
+              attribution—set up so marketing, sales, and leadership share one
+              trustworthy story of what&apos;s working.
             </p>
             <div className="analytics-hero__actions">
               <a
@@ -237,8 +245,8 @@ export function AnalyticsSections() {
                 Book a call
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="#ways">
-                See what&apos;s covered
+              <a className="button button-secondary" href="#contact">
+                Contact us
                 <Arrow />
               </a>
             </div>
@@ -304,7 +312,7 @@ export function AnalyticsSections() {
                 </p>
                 <p className="analytics-way__outcome">
                   <span className="analytics-way__label">You get</span>
-                  {item.outcome}
+                  {renderInline(item.outcome)}
                 </p>
               </article>
             ))}
@@ -367,41 +375,5 @@ export function AnalyticsSections() {
         </div>
       </section>
     </>
-  );
-}
-
-export function AnalyticsCta() {
-  return (
-    <section className="section use-cases-cta">
-      <div className="shell use-cases-cta__content reveal">
-        <div>
-          <p className="eyebrow">Ready when you are</p>
-          <h2 className="section-heading">
-            Let&apos;s get measurement you can trust.
-          </h2>
-        </div>
-        <div className="use-cases-cta__actions">
-          <p className="section-copy">
-            Tell us what you need to see. We&apos;ll map a practical path across
-            GA4, Tag Manager, events, and attribution.
-          </p>
-          <div className="use-cases-cta__buttons">
-            <a
-              className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a call
-              <Arrow />
-            </a>
-            <Link className="button button-secondary" href="/fractional-digital-department">
-              See the whole picture
-              <Arrow />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }

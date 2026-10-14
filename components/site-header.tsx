@@ -3,7 +3,11 @@
 import Image from "next/image";
 import { useEffect, useId, useState } from "react";
 import { BOOK_CALL_HREF } from "@/lib/site";
-import { fractionalDepartmentNav, fractionalDepartmentServices } from "./what-we-do-nav";
+import {
+  customSoftwareNav,
+  fractionalDepartmentNav,
+  fractionalDepartmentServices,
+} from "./what-we-do-nav";
 
 const Arrow = () => (
   <svg
@@ -154,6 +158,12 @@ export function SiteHeader({
                   ))}
                 </div>
               </div>
+              <div className="nav-group" role="listitem">
+                <a className="nav-group__parent" href={customSoftwareNav.href}>
+                  <span className="nav-group__label">{customSoftwareNav.label}</span>
+                  <span className="nav-group__desc">{customSoftwareNav.description}</span>
+                </a>
+              </div>
             </div>
           </div>
           <a href="/white-label">White-label</a>
@@ -212,6 +222,16 @@ export function SiteHeader({
                     </a>
                   ))}
                 </div>
+              </div>
+              <div className="nav-group" role="listitem">
+                <a
+                  className="nav-group__parent"
+                  href={customSoftwareNav.href}
+                  onClick={closeMenu}
+                >
+                  <span className="nav-group__label">{customSoftwareNav.label}</span>
+                  <span className="nav-group__desc">{customSoftwareNav.description}</span>
+                </a>
               </div>
             </div>
           </div>

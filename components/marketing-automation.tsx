@@ -27,6 +27,10 @@ const examples = [
     copy: "A prospect fills out a form or lands from a paid click. Instead of landing in a shared inbox, the lead is [enriched with company and role data](/ai-automation), scored against your ICP, and assigned to the right owner—with a short brief already in the CRM. Sales opens a ready record, not a blank name.",
   },
   {
+    title: "Incoming call → score → route",
+    copy: "A call comes in from the website, the Google Business Profile, Yelp, or another profile. The [source is already on the record](/analytics). The lead is scored and assigned to the right owner—with a short brief—so sales gets a qualified call, not a raw ring.",
+  },
+  {
     title: "Behavior-triggered nurture that respects the CRM",
     copy: "Someone downloads a guide, then visits pricing twice. The sequence advances, pauses when a meeting is booked, and resumes only if they go quiet again. Stage changes in the CRM drive the emails—so nurture never argues with the salesperson.",
   },

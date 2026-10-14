@@ -69,7 +69,7 @@ const leverNotes: Record<
   "/google-business-profile":
     "The map result that matches the work you want—categories, photos, hours, and a link to a page that can win the job.",
   "/analytics":
-    "Measurement you can trust, so the next decision isn't a guess.",
+    "Measurement you can trust—including which calls came from the site, the profile, or somewhere else—so the next decision isn't a guess.",
   "/automation":
     "The busywork between tools, when the bottleneck is the process rather than another channel.",
 };
@@ -185,8 +185,8 @@ export function FractionalDigitalDepartmentSections() {
                 Book a 30-minute fit call
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="#how-it-works">
-                See how it works
+              <a className="button button-secondary" href="#contact">
+                Contact us
                 <Arrow />
               </a>
             </div>

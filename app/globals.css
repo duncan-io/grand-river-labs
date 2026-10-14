@@ -300,6 +300,12 @@ span.site-nav__trigger:focus-visible {
   transition: background-color 160ms ease;
 }
 
+.site-nav__dropdown .nav-group + .nav-group {
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--line);
+}
+
 .site-nav__dropdown .nav-group__parent {
   display: grid;
   gap: 0.2rem;
@@ -6106,6 +6112,39 @@ span.site-nav__trigger:focus-visible {
   text-transform: uppercase;
 }
 
+.analytics-way:last-child {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 901px) {
+  .analytics-way:last-child {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 1.75rem;
+    align-items: start;
+  }
+
+  .analytics-way:last-child .analytics-way__number {
+    grid-row: 1 / span 2;
+  }
+
+  .analytics-way:last-child h3,
+  .analytics-way:last-child .analytics-way__lead {
+    grid-column: 2;
+  }
+
+  .analytics-way:last-child .analytics-way__setup {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+
+  .analytics-way:last-child .analytics-way__outcome {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+  }
+}
+
 .analytics-flow {
   background:
     radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.75), transparent 38%),
@@ -9515,6 +9554,12 @@ span.site-nav__trigger:focus-visible {
     color: var(--muted);
     font-size: 0.92rem;
     font-weight: 550;
+  }
+
+  .site-nav-panel__industries .nav-group + .nav-group {
+    margin-top: 0.55rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--line);
   }
 
   .site-nav-panel__industries .nav-group__parent {

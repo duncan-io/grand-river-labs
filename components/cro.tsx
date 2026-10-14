@@ -332,8 +332,8 @@ export function CroSections() {
                 Book a call
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="#ways">
-                See what&apos;s covered
+              <a className="button button-secondary" href="#contact">
+                Contact us
                 <Arrow />
               </a>
             </div>
@@ -468,39 +468,5 @@ export function CroSections() {
         </div>
       </section>
     </>
-  );
-}
-
-export function CroCta() {
-  return (
-    <section className="section use-cases-cta">
-      <div className="shell use-cases-cta__content reveal">
-        <div>
-          <p className="eyebrow">Ready when you are</p>
-          <h2 className="section-heading">Let&apos;s look at where the visits go.</h2>
-        </div>
-        <div className="use-cases-cta__actions">
-          <p className="section-copy">
-            Tell us what the site is supposed to do. We&apos;ll map where people
-            drop off and which changes are worth making first.
-          </p>
-          <div className="use-cases-cta__buttons">
-            <a
-              className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a call
-              <Arrow />
-            </a>
-            <Link className="button button-secondary" href="/fractional-digital-department">
-              See the whole picture
-              <Arrow />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }

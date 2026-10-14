@@ -16,3 +16,10 @@ export const fractionalDepartmentServices = [
 ] as const;
 
 export const whatWeDoNav = [fractionalDepartmentNav, ...fractionalDepartmentServices] as const;
+
+export const customSoftwareNav = {
+  label: "Custom software",
+  href: "/custom-software",
+  description:
+    "From a working prototype—or a clear need—to software the business can rely on.",
+} as const;
