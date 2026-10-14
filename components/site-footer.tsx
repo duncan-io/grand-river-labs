@@ -1,5 +1,5 @@
 import { BrandMark } from "./site-header";
-import { customSoftwareNav, whatWeDoNav } from "./what-we-do-nav";
+import { customSoftwareNav, homeImprovementNav, whatWeDoNav } from "./what-we-do-nav";
 
 export function SiteFooter() {
   return (
@@ -15,6 +15,7 @@ export function SiteFooter() {
           <a href="/chat">Ask us</a>
           <a href="/blog">Blog</a>
           <a href="/fractional-digital-team-calculator">Cost calculator</a>
+          <a href="/about">About</a>
           <a href="/testimonials">Testimonials</a>
           <a href="/#contact">Contact</a>
           <a href="mailto:hello@grandriverlabs.com">
@@ -30,6 +31,7 @@ export function SiteFooter() {
             {item.label}
           </a>
         ))}
+        <a href={homeImprovementNav.href}>{homeImprovementNav.label}</a>
         <a href={customSoftwareNav.href}>{customSoftwareNav.label}</a>
         <a href="/white-label">White-label</a>
       </div>

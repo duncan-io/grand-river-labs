@@ -167,7 +167,7 @@ export const niches: NicheContent[] = [
     peace: {
       eyebrow: "Why fractional",
       heading: "One experienced owner for your whole lead engine.",
-      copy: "A typical roofing marketing agency hands you to a junior account manager, locks you into a long contract, and sends a monthly report full of impressions. [You need one person who owns the whole thing](/fractional-digital-department) and answers for the calls.",
+      copy: "A typical roofing marketing agency hands you to a junior account manager, locks you into a long contract, and sends a monthly report full of impressions. [You need one person who owns the whole thing](/fractional-digital-department) and answers for the calls. Roofing is one of the trades under [home improvement marketing](/home-improvement-marketing).",
       paths: [
         {
           title: "Living on referrals?",
@@ -310,7 +310,7 @@ export const niches: NicheContent[] = [
     peace: {
       eyebrow: "Why fractional",
       heading: "One experienced owner for your whole lead engine.",
-      copy: "A typical agency hands you to a junior account manager, locks you into a long contract, and sends a report full of impressions. Up to 40% of the marketing budget can disappear into that overhead.",
+      copy: "A typical agency hands you to a junior account manager, locks you into a long contract, and sends a report full of impressions. Up to 40% of the marketing budget can disappear into that overhead. General contracting is one of the trades under [home improvement marketing](/home-improvement-marketing).",
       paths: [
         {
           title: "Living on referrals?",
@@ -358,6 +358,151 @@ export const niches: NicheContent[] = [
       messageLabel: "Where do your leads come from today?",
       messagePlaceholder:
         "Referrals, Google Ads, a lead service, LSA, or the calls you miss on the jobsite. Start wherever you are.",
+    },
+  },
+  {
+    slug: "home-services",
+    tileName: "Home services",
+    tileBlurb:
+      "Fractional digital marketing for HVAC, plumbing, and electrical: a lead engine you own.",
+    image: "/niches/home-services.svg",
+    metaTitle:
+      "Home Services Marketing for HVAC, Plumbing & Electrical | Grand River Labs",
+    metaDescription:
+      "Fractional home services marketing: one experienced owner for your whole lead engine, covering lead routing, LSA, ads, website, and SEO. HVAC, plumbing, and electrical leads you own.",
+    hero: {
+      eyebrow: "Fractional digital marketing for home services",
+      headline: "Home services marketing that answers the call, not just buys it.",
+      copy: "No heat, a burst pipe, a dead panel—the homeowner calls whoever picks up first. Shared leads from aggregators get sold to several shops at once, and a lot of them are never a real job. A lead engine you own—your site, your Local Services Ads, your ad accounts, your routing—is run by one experienced person, not a junior account manager.",
+      primaryLabel: "Talk through your lead flow",
+      secondaryLabel: "See how it works",
+      secondaryHref: "#lead-flow",
+      cueLabel: "Where leads leak",
+    },
+    gap: {
+      eyebrow: "The lead gap",
+      heading: "More leads don't help if nobody answers.",
+      copy: "HVAC, plumbing, and electrical work is often urgent. The shop that gets back while the homeowner is still on the phone usually gets the job. Before we chase more leads, the ones you already get have to land somewhere.",
+      sceneLabels: ["Shared leads", "After-hours calls", "Missed calls", "Seasonal swings"],
+      items: [
+        {
+          title: "Sold to several shops at once",
+          copy: "Aggregator leads get sold to a pile of HVAC, plumbing, and electrical companies. You pay, then race to call a homeowner who's already had three conversations.",
+        },
+        {
+          title: "Emergencies don't wait for Monday",
+          copy: "No heat, a leak, a tripped panel—those calls come in after hours and on weekends. If nobody picks up, the next company on the list does.",
+        },
+        {
+          title: "Missed while you're in the attic",
+          copy: "The tech is in a crawlspace. The office line rolls to voicemail. By the time someone listens, the homeowner has already booked the company that answered.",
+        },
+        {
+          title: "Feast, then famine",
+          copy: "HVAC peaks in heat waves and cold snaps. Plumbing spikes when pipes freeze. The shoulder months go quiet if the only plan is buying leads when the phone is already ringing.",
+        },
+      ],
+      callout: "More leads don't fix a missed call. We fix the answer first.",
+    },
+    engine: {
+      eyebrow: "The lead engine",
+      heading: "One owner for every channel that brings work in.",
+      copy: "Your site, Local Services Ads, the ad spend you already make, and the routing between them—for HVAC, plumbing, electrical, or all three. Not five vendors, and not a monthly report full of impressions.",
+      sceneNodes: ["LSA", "Google", "Meta", "Website"],
+      cards: [
+        {
+          icon: "Route",
+          label: "Route",
+          title: "Lead routing",
+          copy: "Calls, forms, and LSA messages go to the on-call tech or the office, including after hours. [A missed call gets an automatic text back](/marketing-automation), so every lead still gets a next step.",
+        },
+        {
+          icon: "Rank",
+          label: "Rank",
+          title: "Local Services Ads",
+          copy: "They sit at the top of Google, and Google Guaranteed matters most for HVAC, plumbing, and electrical. You pay only for leads that contact you, not for clicks, and the lead is yours—not shared. Leads that don't fit can be disputed.",
+        },
+        {
+          icon: "Advise",
+          label: "Advise",
+          title: "Google Ads",
+          copy: "Emergency searches—no heat, burst pipe, no power—are expensive clicks. We audit the spend you already make: search terms, wasted clicks, and the service area you actually cover. We advise. We don't sell you a bigger budget.",
+        },
+        {
+          icon: "Target",
+          label: "Target",
+          title: "Meta Ads",
+          copy: "Tune-up pushes before summer, furnace checks before winter, and maintenance-plan offers in the quiet months. Spend follows the season, so you're not paying peak prices when the trucks are already full.",
+        },
+        {
+          icon: "Site",
+          label: "Convert",
+          title: "Website",
+          copy: "The call comes in on a phone. [The site stays fast](/website-strategy), tap-to-call stays one tap away, and HVAC, plumbing, and electrical each get their own service page. Every request routes to a person.",
+        },
+        {
+          icon: "Compound",
+          label: "Compound",
+          title: "Home services SEO",
+          copy: "Ads stop when you stop paying. Service pages, city pages, reviews, and your Google Business Profile keep bringing leads for years. SEO is slow—months, not weeks—so it's one part of the plan, not the whole plan.",
+        },
+      ],
+      also: {
+        label: "Memberships",
+        copy: "Maintenance plans and word-of-mouth are often the steadiest work you have. We don't replace them. [Tune-up reminders and review requests go out automatically](/automation) after a job closes. We've built that kind of follow-up for [home services companies](/use-cases/home-services). LSA, ads, and SEO cover the weeks memberships don't.",
+      },
+    },
+    peace: {
+      eyebrow: "Why fractional",
+      heading: "One experienced owner for your whole lead engine.",
+      copy: "A typical home services marketing agency hands you to a junior account manager, locks you into a long contract, and sends a monthly report full of impressions. [You need one person who owns the whole thing](/fractional-digital-department) and answers for the calls.",
+      paths: [
+        {
+          title: "Living on referrals?",
+          copy: "A neighbor hears your name, then Googles you. Your profile, reviews, and site finish the job—and owned channels fill the weeks referrals and memberships don't.",
+        },
+        {
+          title: "Buying shared leads?",
+          copy: "Shared leads look cheaper until you're racing several other shops for the same homeowner. With LSA you set the budget, you only pay for contacted leads, and the lead is yours.",
+        },
+      ],
+      promisesLead: "What stays true either way.",
+      promises,
+    },
+    faq: {
+      eyebrow: "Questions",
+      heading: "What home service companies usually ask.",
+      items: [
+        {
+          question: "How much should I pay for HVAC, plumbing, or electrical leads?",
+          answer:
+            "It depends on your market, the trade, and the season, so be wary of anyone quoting a flat number. Emergency work is worth more than a tune-up. Shared leads look cheaper, but you're competing with several other shops for the same homeowner. With LSA you pay only for leads that contact you, and they're yours alone. We'll compare what you pay now against what actually turns into jobs.",
+        },
+        {
+          question: "Is Google Local Services Ads worth it for home services?",
+          answer:
+            "For most HVAC, plumbing, and electrical companies, yes. LSA sits at the top of Google, you pay only when someone contacts you, and the lead isn't shared. Google Guaranteed is the badge homeowners look for on urgent jobs. Leads that don't fit can be disputed. It works best alongside your site and the spend you already make, not as the only channel.",
+        },
+        {
+          question: "Do you run our ads, or just advise?",
+          answer:
+            "We advise on the Google and Meta spend you already make: auditing it, setting direction, and telling you what to cut. If you need hands-on campaign management, we'll work with your current person or help you find the right one. We're not here to sell you a bigger ad budget.",
+        },
+        {
+          question: "How is this different from a home services marketing agency?",
+          answer:
+            "An agency sells you services. We own the outcome: one experienced person responsible for your site, LSA, ad advisory, routing, and SEO working together. No long contracts, no junior account managers, and [reporting on leads and calls instead of vanity metrics](/analytics).",
+        },
+      ],
+    },
+    cta: {
+      eyebrow: "Talk lead flow",
+      heading: "Let's look at where your leads go.",
+      copy: "Tell us where your leads come from today and what happens after they come in. In 30 minutes, we'll show you where leads are leaking and whether we're the right fit. No pitch deck, no pressure.",
+      directLabel: "Prefer to talk? Book a 30-minute call →",
+      messageLabel: "Where do your leads come from today?",
+      messagePlaceholder:
+        "Referrals, Angi or HomeAdvisor, LSA, Google Ads, or the after-hours calls you miss. Start wherever you are.",
     },
   },
 ];

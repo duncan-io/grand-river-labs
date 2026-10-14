@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 
 const staticPaths = [
   "/",
+  "/about",
   "/ai-automation",
   "/analytics",
   "/automation",
@@ -18,9 +19,11 @@ const staticPaths = [
   "/search-engine-optimization",
   "/local-ads",
   "/google-business-profile",
+  "/home-improvement-marketing",
   "/fractional-digital-department",
   "/fractional-digital-department/roofing",
   "/fractional-digital-department/contractors",
+  "/fractional-digital-department/home-services",
   "/fractional-digital-team-calculator",
   "/marketing-automation",
   "/testimonials",

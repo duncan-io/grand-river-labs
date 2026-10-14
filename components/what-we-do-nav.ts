@@ -17,6 +17,13 @@ export const fractionalDepartmentServices = [
 
 export const whatWeDoNav = [fractionalDepartmentNav, ...fractionalDepartmentServices] as const;
 
+export const homeImprovementNav = {
+  label: "Home improvement",
+  href: "/home-improvement-marketing",
+  description:
+    "One owner for lead generation and response at established home improvement companies.",
+} as const;
+
 export const customSoftwareNav = {
   label: "Custom software",
   href: "/custom-software",

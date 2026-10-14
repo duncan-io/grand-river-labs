@@ -7,6 +7,7 @@ import {
   customSoftwareNav,
   fractionalDepartmentNav,
   fractionalDepartmentServices,
+  homeImprovementNav,
 } from "./what-we-do-nav";
 
 const Arrow = () => (
@@ -157,6 +158,16 @@ export function SiteHeader({
                     </a>
                   ))}
                 </div>
+                <span className="nav-group__areas-label">Industries</span>
+                <div
+                  className="nav-group__children"
+                  role="list"
+                  aria-label="Industries"
+                >
+                  <a href={homeImprovementNav.href} role="listitem">
+                    {homeImprovementNav.label}
+                  </a>
+                </div>
               </div>
               <div className="nav-group" role="listitem">
                 <a className="nav-group__parent" href={customSoftwareNav.href}>
@@ -168,6 +179,7 @@ export function SiteHeader({
           </div>
           <a href="/white-label">White-label</a>
           <a href="/testimonials">Testimonials</a>
+          <a href="/about">About</a>
           <a
             className="button button-primary"
             href={BOOK_CALL_HREF}
@@ -222,6 +234,16 @@ export function SiteHeader({
                     </a>
                   ))}
                 </div>
+                <span className="nav-group__areas-label">Industries</span>
+                <div
+                  className="nav-group__children"
+                  role="list"
+                  aria-label="Industries"
+                >
+                  <a href={homeImprovementNav.href} role="listitem" onClick={closeMenu}>
+                    {homeImprovementNav.label}
+                  </a>
+                </div>
               </div>
               <div className="nav-group" role="listitem">
                 <a
@@ -240,6 +262,9 @@ export function SiteHeader({
           </a>
           <a href="/testimonials" onClick={closeMenu}>
             Testimonials
+          </a>
+          <a href="/about" onClick={closeMenu}>
+            About
           </a>
           <a
             className="button button-primary site-nav-panel__cta"
