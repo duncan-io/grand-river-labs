@@ -23,7 +23,6 @@ const staticPaths = [
   "/fractional-digital-department",
   "/fractional-digital-department/roofing",
   "/fractional-digital-department/contractors",
-  "/fractional-digital-department/home-services",
   "/fractional-digital-team-calculator",
   "/marketing-automation",
   "/testimonials",

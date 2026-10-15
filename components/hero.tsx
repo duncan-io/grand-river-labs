@@ -155,15 +155,18 @@ export function Hero() {
       <RiverScene />
       <div className="shell">
         <div className="hero__content">
-          <p className="eyebrow">Fractional digital department</p>
+          <p className="eyebrow">Senior digital marketing leadership</p>
           <h1 className="hero__headline">
-            <span>Your digital department,</span>
-            <span>without hiring one.</span>
+            <span>Senior marketing leadership.</span>
+            <span>
+              Without the <span className="hero__keep">full-time hire.</span>
+            </span>
           </h1>
           <p className="hero__copy">
-            A fractional digital marketing team that owns your SEO, analytics,
-            ads, and website — and turns them into more qualified leads and
-            revenue, without the full-time hire.
+            An experienced digital marketing leader who sets the strategy,
+            makes the budget and channel calls, and is accountable for leads
+            and revenue. Execution is included, so those decisions don&apos;t
+            stall.
           </p>
           <div className="hero__actions">
             <a className="button button-primary" href="#contact">
@@ -174,13 +177,13 @@ export function Hero() {
               className="button button-secondary"
               href="/fractional-digital-department"
             >
-              See how we work
+              How the leadership works
             </a>
           </div>
         </div>
       </div>
-      <a className="hero__cue" href="#results">
-        See the outcomes
+      <a className="hero__cue" href="#leadership">
+        What you get
       </a>
     </section>
   );

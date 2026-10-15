@@ -423,6 +423,11 @@ span.site-nav__trigger:focus-visible {
   display: block;
 }
 
+.hero__headline .hero__keep {
+  display: inline;
+  white-space: nowrap;
+}
+
 .hero__copy {
   max-width: 34rem;
   margin: 1.65rem 0 0;

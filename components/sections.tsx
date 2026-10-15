@@ -4,16 +4,43 @@ import { Arrow } from "./site-header";
 
 const results = [
   {
-    label: "More qualified leads",
+    label: "Clear priorities every month",
     href: "/search-engine-optimization",
   },
   {
-    label: "A website that earns its keep",
+    label: "Budget going where it works",
     href: "/website-strategy",
   },
   {
-    label: "Attribution you can actually trust",
+    label: "Numbers you can trust",
     href: "/analytics",
+  },
+];
+
+const decisions = [
+  {
+    title: "Where the budget goes",
+    copy: "What to fund, pause, or cut — so spend follows what produces leads and revenue, not last quarter's habit.",
+  },
+  {
+    title: "Which channels earn a place",
+    copy: "Search, ads, the map listing, or something else. Each channel has to justify its seat.",
+  },
+  {
+    title: "What the website's job is",
+    copy: "A clear call on what the site is for, and which pages are supposed to win the work.",
+  },
+  {
+    title: "What gets measured",
+    copy: "What counts as a lead, what counts as success, and which numbers are safe to decide on.",
+  },
+  {
+    title: "Who else is in the room",
+    copy: "Oversight of agencies, vendors, and tools, so outside work serves the plan instead of drifting.",
+  },
+  {
+    title: "What to say no to",
+    copy: "The loud request that won't move revenue gets declined, so attention stays on the work that will.",
   },
 ];
 
@@ -57,22 +84,22 @@ const services = [
 
 const processSteps = [
   {
-    title: "Discover",
+    title: "Diagnose",
     copy: "We map channels, the site, and measurement together, then show you where leads and revenue leak.",
     artifact: "A map of where leads and revenue leak.",
-    roles: "You bring context; we bring the map.",
+    roles: "You bring the context; we own the diagnosis.",
   },
   {
-    title: "Prioritize",
-    copy: "Attention goes to what will move revenue now, not to whichever request is loudest.",
-    artifact: "A now / next / later list ranked by revenue impact.",
-    roles: "You decide; we frame the tradeoffs.",
+    title: "Decide",
+    copy: "We make the call on what gets funded, paused, or done next — ranked by what will move revenue, not by whichever request is loudest.",
+    artifact: "A now / next / later list, with the call already made.",
+    roles: "We own the recommendation; you have the final say.",
   },
   {
-    title: "Ship & refine",
-    copy: "The change goes live — a page, the tracking, or a workflow — then we measure what moved and adjust.",
-    artifact: "Work live in production, measured and adjusted.",
-    roles: "We ship; you keep using it.",
+    title: "Ship & review",
+    copy: "The change goes live — a page, the tracking, or a workflow — then we measure what moved and adjust the next decision.",
+    artifact: "Work live in production, measured against the decision.",
+    roles: "We ship and review; you keep the result.",
   },
 ];
 
@@ -118,22 +145,48 @@ export function ResultsBar() {
   );
 }
 
+export function LeadershipSection() {
+  return (
+    <section className="section services" id="leadership">
+      <div className="shell">
+        <div className="services__top reveal">
+          <div>
+            <p className="eyebrow">What senior leadership looks like</p>
+            <h2 className="section-heading">The decisions, owned.</h2>
+          </div>
+          <p className="section-copy">
+            A senior leader accountable for the calls that move the business,
+            not a stack of channel reports. You keep the final say.
+          </p>
+        </div>
+
+        <ul className="services__grid reveal">
+          {decisions.map((item) => (
+            <li className="services__item" key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.copy}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 export function ServicesSection() {
   return (
     <section className="section services" id="services">
       <div className="shell">
         <div className="services__top reveal">
           <div>
-            <p className="eyebrow">What a department covers</p>
-            <h2 className="section-heading">
-              Everything a digital hire would touch.
-            </h2>
+            <p className="eyebrow">Execution included</p>
+            <h2 className="section-heading">And the work gets done.</h2>
           </div>
           <p className="section-copy">
-            One owner across SEO, the site, ads, analytics, and the routing
-            between them — aimed at qualified leads and revenue, not a
-            predetermined monthly menu. You work directly with the senior
-            operator who sets the priorities.
+            Decisions don&apos;t stall here. The same engagement covers SEO,
+            the site, ads, analytics, and the routing between them. Automation
+            keeps tracking honest and leads moving while they&apos;re warm, so
+            the work compounds instead of sitting in a deck.
           </p>
         </div>
 
@@ -200,79 +253,6 @@ export function TestimonialsSection() {
   );
 }
 
-function CompoundRiver() {
-  return (
-    <svg
-      className="execution__river"
-      aria-hidden="true"
-      viewBox="0 0 1600 600"
-      preserveAspectRatio="xMidYMid slice"
-      fill="none"
-    >
-      <ellipse
-        cx="1280"
-        cy="420"
-        rx="420"
-        ry="220"
-        stroke="rgba(5,122,114,0.28)"
-        strokeWidth="1.5"
-        transform="rotate(-12 1280 420)"
-      />
-      <ellipse
-        cx="1320"
-        cy="400"
-        rx="280"
-        ry="140"
-        stroke="rgba(5,122,114,0.2)"
-        strokeWidth="1"
-        transform="rotate(-18 1320 400)"
-      />
-      <path
-        d="M720 520c180-40 320-28 480 20 140 42 260 48 400 18"
-        stroke="rgba(5,122,114,0.34)"
-        strokeWidth="36"
-        strokeLinecap="round"
-      />
-      <path
-        d="M780 560c160-28 290-18 430 14 110 26 210 30 340 8"
-        stroke="rgba(255,255,255,0.72)"
-        strokeWidth="18"
-        strokeLinecap="round"
-      />
-      <path
-        d="M960 500
-          C1040 360, 1100 140, 1220 150
-          C1360 162, 1460 380, 1580 530"
-        stroke="#057A72"
-        strokeWidth="18"
-        strokeLinecap="round"
-        opacity=".28"
-      />
-    </svg>
-  );
-}
-
-export function ExecutionSection() {
-  return (
-    <section className="section execution" id="execution">
-      <CompoundRiver />
-      <div className="shell">
-        <div className="execution__intro reveal">
-          <p className="eyebrow">How the work ships</p>
-          <h2 className="section-heading">Execution that compounds.</h2>
-          <p className="section-copy">
-            Automation is how we deliver speed and accuracy, not what we sell.
-            It keeps tracking honest, routes leads while they are still warm,
-            and lets the same team ship more of the work that moves revenue.
-            The result is a marketing system that compounds, not a stack of
-            tools.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function ProcessSection() {
   return (
     <section className="section process" id="how-we-work">
@@ -280,13 +260,12 @@ export function ProcessSection() {
         <div className="process__top reveal">
           <div>
             <p className="eyebrow">How we work</p>
-            <h2 className="section-heading">
-              Strategy that moves.
-            </h2>
+            <h2 className="section-heading">Decisions, then the work.</h2>
           </div>
           <p className="section-copy">
-            You bring the business context. We map, prioritize, ship, and
-            stay—so the plan compounds instead of becoming another slide deck.
+            You bring the business context. We diagnose, decide, and ship — so
+            the plan is a set of calls that get carried out, not another slide
+            deck.
           </p>
         </div>
 

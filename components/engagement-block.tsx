@@ -6,12 +6,13 @@ export function EngagementBlock() {
           <div>
             <p className="eyebrow">The engagement</p>
             <h2 className="section-heading">
-              One rate. The whole digital picture.
+              Senior judgment at a fraction of a senior salary.
             </h2>
           </div>
           <p className="section-copy">
-            GR Labs works like a department you already employ, billed monthly
-            instead of hired. Senior digital leadership and hands-on execution,
+            A full-time marketing director or VP means salary, benefits, months
+            of ramp-up, and the risk of a bad hire. This is senior digital
+            marketing leadership and the execution behind it, billed monthly,
             for less than the cost of one mid-level hire.
           </p>
         </div>
@@ -20,22 +21,23 @@ export function EngagementBlock() {
           <li className="services__item">
             <h3>One flat monthly rate.</h3>
             <p>
-              Starting at $2,000/month, priced against the work that matters —
-              not a menu of channel packages.
+              Starting at $2,000/month, priced against the decisions and the
+              work that matter — not a menu of channel packages.
             </p>
           </li>
           <li className="services__item">
-            <h3>You work with the owner.</h3>
+            <h3>You work with the senior leader.</h3>
             <p>
-              No account managers or handoffs. The person who sets the
-              priorities is the person doing the work.
+              The person who makes the calls is the person accountable for
+              them. No account managers in between.
             </p>
           </li>
           <li className="services__item">
-            <h3>The mix flexes.</h3>
+            <h3>Execution is included.</h3>
             <p>
-              One month it's the website, the next it's tracking or ads. The
-              plan follows impact, not a predetermined menu.
+              The plan follows impact. One month it&apos;s the website, the
+              next it&apos;s tracking or ads — and the work gets done, not just
+              recommended.
             </p>
           </li>
         </ul>

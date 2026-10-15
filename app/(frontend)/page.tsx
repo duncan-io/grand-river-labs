@@ -3,7 +3,7 @@ import { ContactSection } from "@/components/contact";
 import { EngagementBlock } from "@/components/engagement-block";
 import { Hero } from "@/components/hero";
 import {
-  ExecutionSection,
+  LeadershipSection,
   ProcessSection,
   ResultsBar,
   ServicesSection,
@@ -15,10 +15,11 @@ import { SiteHeader } from "@/components/site-header";
 import { getSiteUrl } from "@/lib/site";
 
 const description =
-  "A fractional digital marketing team that ships results: SEO, analytics, ads, and website management that drive more qualified leads and revenue — without the full-time hire.";
+  "Senior digital marketing leadership that makes the strategy, budget, and channel decisions — with hands-on execution included, and without the full-time hire.";
 
 export const metadata: Metadata = {
-  title: "Fractional Digital Marketing Team | Grand River Labs",
+  title:
+    "Senior Digital Marketing Leadership, Without the Full-Time Hire | Grand River Labs",
   description,
 };
 
@@ -46,17 +47,17 @@ export default function Home() {
       <main>
         <Hero />
         <ResultsBar />
-        <ServicesSection />
+        <LeadershipSection />
         <EngagementBlock />
         <ProcessSection />
-        <ExecutionSection />
+        <ServicesSection />
         <TestimonialsSection />
         <UseCaseStrip />
         <ContactSection
           turnstileSiteKey={turnstileSiteKey}
           variant="cta"
           atmosphere
-          copy="Tell us the goal that isn't getting a clear plan—channel mix, the site's job, measurement, or work that still eats the team. We'll help you see what deserves attention now, and we'll get back within two business days."
+          copy="Tell us the marketing decision that's been stuck—where the budget goes, which channel earns a place, what the site is for, or which numbers to trust. We'll help you see what deserves a call now, and we'll get back within two business days."
         />
       </main>
       <SiteFooter />
