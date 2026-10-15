@@ -18,8 +18,7 @@ const description =
   "Senior digital marketing leadership that makes the strategy, budget, and channel decisions — with hands-on execution included, and without the full-time hire.";
 
 export const metadata: Metadata = {
-  title:
-    "Senior Digital Marketing Leadership, Without the Full-Time Hire | Grand River Labs",
+  title: "Fractional Digital Marketing Team | Grand River Labs",
   description,
 };
 

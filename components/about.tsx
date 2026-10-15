@@ -28,7 +28,7 @@ const comparisons = [
   {
     dimension: "How you're billed",
     agency: "A quote per channel.",
-    fractional: "One monthly rate, starting at $2,000.",
+    fractional: "One monthly rate, starting at $2,500.",
   },
   {
     dimension: "Specialists",
@@ -49,7 +49,7 @@ const changes = [
   },
   {
     title: "One rate for the mix",
-    copy: "Starting at $2,000 a month, priced against the work that matters. One engagement, not a quote for each channel. [Compare that with the team you would hire](/fractional-digital-team-calculator).",
+    copy: "Starting at $2,500 a month, priced against the work that matters. One engagement, not a quote for each channel. [Compare that with the team you would hire](/fractional-digital-team-calculator).",
   },
 ] as const;
 

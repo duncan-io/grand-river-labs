@@ -1,4 +1,4 @@
-const RANGE_MIN = 2_000;
+const RANGE_MIN = 2_500;
 const RANGE_MAX = 10_000;
 const TYPICAL_MIN = 2_500;
 const TYPICAL_MAX = 5_000;
@@ -82,7 +82,7 @@ export function FractionalRangeCurve({ monthly }: FractionalRangeCurveProps) {
   const markerX = markerValue === undefined ? undefined : xOf(markerValue);
   const markerY =
     markerValue === undefined ? undefined : yOf(markerValue, peak);
-  const ticks = [RANGE_MIN, TYPICAL_MIN, TYPICAL_MAX, RANGE_MAX];
+  const ticks = [...new Set([RANGE_MIN, TYPICAL_MIN, TYPICAL_MAX, RANGE_MAX])];
 
   return (
     <figure className="calc-curve reveal">

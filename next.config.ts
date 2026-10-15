@@ -68,6 +68,11 @@ const nextConfig: NextConfig = {
         destination: "/fractional-digital-department",
         permanent: true,
       },
+      {
+        source: "/custom-software",
+        destination: "/automation",
+        permanent: true,
+      },
     ];
   },
   webpack: (webpackConfig) => {

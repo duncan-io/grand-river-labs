@@ -4,10 +4,9 @@ import Image from "next/image";
 import { useEffect, useId, useState } from "react";
 import { BOOK_CALL_HREF } from "@/lib/site";
 import {
-  customSoftwareNav,
   fractionalDepartmentNav,
   fractionalDepartmentServices,
-  homeImprovementNav,
+  industriesNav,
 } from "./what-we-do-nav";
 
 const Arrow = () => (
@@ -33,6 +32,25 @@ const Chevron = () => (
   >
     <path
       d="M2.5 4.25 6 7.75l3.5-3.5"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const ChevronRight = () => (
+  <svg
+    aria-hidden="true"
+    className="nav-flyout__chevron"
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+  >
+    <path
+      d="M4.25 2.5 7.75 6l-3.5 3.5"
       stroke="currentColor"
       strokeWidth="1.4"
       strokeLinecap="round"
@@ -158,22 +176,25 @@ export function SiteHeader({
                     </a>
                   ))}
                 </div>
-                <span className="nav-group__areas-label">Industries</span>
-                <div
-                  className="nav-group__children"
-                  role="list"
-                  aria-label="Industries"
-                >
-                  <a href={homeImprovementNav.href} role="listitem">
-                    {homeImprovementNav.label}
-                  </a>
-                </div>
               </div>
-              <div className="nav-group" role="listitem">
-                <a className="nav-group__parent" href={customSoftwareNav.href}>
-                  <span className="nav-group__label">{customSoftwareNav.label}</span>
-                  <span className="nav-group__desc">{customSoftwareNav.description}</span>
-                </a>
+              <div className="nav-group nav-flyout" role="listitem">
+                <button type="button" className="nav-flyout__trigger" aria-haspopup="true">
+                  Industries
+                  <ChevronRight />
+                </button>
+                <div className="nav-flyout__panel" role="list" aria-label="Industries">
+                  {industriesNav.map((item) => (
+                    <a
+                      className="nav-group__parent"
+                      href={item.href}
+                      key={item.href}
+                      role="listitem"
+                    >
+                      <span className="nav-group__label">{item.label}</span>
+                      <span className="nav-group__desc">{item.description}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -240,20 +261,12 @@ export function SiteHeader({
                   role="list"
                   aria-label="Industries"
                 >
-                  <a href={homeImprovementNav.href} role="listitem" onClick={closeMenu}>
-                    {homeImprovementNav.label}
-                  </a>
+                  {industriesNav.map((item) => (
+                    <a href={item.href} key={item.href} role="listitem" onClick={closeMenu}>
+                      {item.label}
+                    </a>
+                  ))}
                 </div>
-              </div>
-              <div className="nav-group" role="listitem">
-                <a
-                  className="nav-group__parent"
-                  href={customSoftwareNav.href}
-                  onClick={closeMenu}
-                >
-                  <span className="nav-group__label">{customSoftwareNav.label}</span>
-                  <span className="nav-group__desc">{customSoftwareNav.description}</span>
-                </a>
               </div>
             </div>
           </div>

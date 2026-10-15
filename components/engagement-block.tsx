@@ -21,7 +21,7 @@ export function EngagementBlock() {
           <li className="services__item">
             <h3>One flat monthly rate.</h3>
             <p>
-              Starting at $2,000/month, priced against the decisions and the
+              Starting at $2,500/month, priced against the decisions and the
               work that matter — not a menu of channel packages.
             </p>
           </li>

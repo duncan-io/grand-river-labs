@@ -9,19 +9,38 @@ import { fractionalDepartmentServices } from "./what-we-do-nav";
 const problems = [
   {
     title: "Every channel wants the budget",
-    copy: "Paid search, SEO, email, social, and the website all make a reasonable case. Without someone looking at the whole picture, the loudest request wins.",
+    copy: "Paid search, SEO, email, social, and the website all make a reasonable case. Without a senior leader looking at the whole picture, the loudest request wins.",
   },
   {
     title: "Activity is mistaken for progress",
-    copy: "Campaigns keep shipping and calendars stay full, but nobody can clearly connect the work to the business goal it is meant to move.",
+    copy: "Campaigns keep shipping and calendars stay full, but no senior leader is connecting the work to the business goal it is meant to move.",
   },
   {
     title: "Measurement tells different stories",
-    copy: "Platform dashboards claim credit in isolation. The team sees clicks and impressions, while leadership still cannot see what created demand or revenue.",
+    copy: "Platform dashboards claim credit in isolation. Without a senior leader deciding which numbers count, the team sees clicks while the business still cannot see what created demand or revenue.",
   },
   {
     title: "Priorities change with the week",
-    copy: "A competitor launches, a trend spikes, or a tactic underperforms. The plan resets before useful work has enough time to compound.",
+    copy: "A competitor launches, a trend spikes, or a tactic underperforms. Without a senior leader holding the plan, it resets before useful work has enough time to compound.",
+  },
+];
+
+const judgments = [
+  {
+    title: "What to stop funding",
+    copy: "Every channel can make a case. Senior judgment is deciding which ones earn the next dollar, and which ones stop.",
+  },
+  {
+    title: "Which numbers to trust",
+    copy: "Dashboards disagree on purpose. A senior leader picks the measurement that shows demand and revenue, and sets the rest aside.",
+  },
+  {
+    title: "What comes first",
+    copy: "The backlog is longer than the month. Sequencing is the job: the next move that compounds, and a no to the loudest request.",
+  },
+  {
+    title: "How vendors are held to it",
+    copy: "Agencies and specialists stay. Senior leadership sets what they work on, what good looks like, and when to pause them.",
   },
 ];
 
@@ -76,24 +95,34 @@ const leverNotes: Record<
 
 const faqs = [
   {
-    question: "Is this right for my business?",
+    question: "How senior is the leadership?",
     answer:
-      "It's built for owner-led growing businesses that rely on a website, tools, and digital channels—but don't have an experienced person owning the whole picture. If you already have a marketing team, GR Labs can fill the gap of someone who decides where effort goes, rather than replace people.",
-  },
-  {
-    question: 'What does "fractional" mean?',
-    answer:
-      "You get ongoing access to experienced digital leadership without hiring a full-time digital employee. GR Labs works with your business on an ongoing basis and focuses on the highest-priority work.",
+      "This is senior digital marketing leadership: the judgment that comes from having owned the whole picture before—where spend goes, which numbers to trust, what to stop, and how to hold vendors to it. It is not a junior marketer learning on your budget, and it is not an account manager relaying a brief.",
   },
   {
     question: "Who will I work with?",
     answer:
-      "You work directly with experienced digital leadership—not a rotating account team. When a specialist or an existing vendor is the better fit for a piece of work, GR Labs helps coordinate rather than treating every task as something to keep in-house.",
+      "You work directly with senior digital marketing leadership—not a rotating account team, and not a junior who needs to be managed. When a specialist or an existing vendor is the better fit for a piece of work, GR Labs directs and coordinates rather than treating every task as something to keep in-house.",
+  },
+  {
+    question: 'What does "fractional" mean?',
+    answer:
+      "You get ongoing access to senior digital marketing leadership without hiring a full-time digital leader. GR Labs works with your business on an ongoing basis and focuses on the highest-priority work.",
+  },
+  {
+    question: "Do you replace our marketing hire or agency?",
+    answer:
+      "No. If a marketing person or an agency is already in place, GR Labs is the leadership layer above them: deciding where effort goes, what good looks like, and when to pause. The people doing the channel work stay.",
+  },
+  {
+    question: "Is this right for my business?",
+    answer:
+      "It's built for owner-led growing businesses that rely on a website, tools, and digital channels—but don't have a senior person owning the whole picture. If you already have a marketing team, GR Labs fills the gap of someone who decides where effort goes, rather than replace people.",
   },
   {
     question: "How much does it cost?",
     answer:
-      "One engagement, starting at $2,000/month—not a quote per channel. The monthly investment depends on the scope of work and the priorities we take on. We'll confirm fit and scope on a 30-minute call.",
+      "One engagement, starting at $2,500/month—not a quote per channel. The monthly investment depends on the scope of work and the priorities we take on. We'll confirm fit and scope on a 30-minute call.",
   },
   {
     question: "What will you actually work on?",
@@ -103,7 +132,7 @@ const faqs = [
   {
     question: "How is this different from an agency or a consultant?",
     answer:
-      "An agency does what you ask, usually inside one channel. A consultant tells you what to do, then leaves you to staff it. GR Labs looks at the whole picture, decides where effort should go, and does the work.",
+      "An agency does what you ask, usually inside one channel. A consultant tells you what to do, then leaves you to staff it. A junior hire waits to be directed. GR Labs brings senior leadership: looks at the whole picture, decides where effort should go, and does the work.",
   },
   {
     question: "Can I just hire you for SEO or ads?",
@@ -161,19 +190,20 @@ export function FractionalDigitalDepartmentSections() {
         <DepartmentHeroScene />
         <div className="shell">
           <div className="mkt-hero__content fdd-hero__content">
-            <p className="eyebrow">Holistic digital strategy</p>
+            <p className="eyebrow">Senior digital marketing leadership</p>
             <h1 className="mkt-hero__headline">
-              Find what&apos;s working. Step on the gas.
+              Senior digital marketing leadership, without the full-time hire.
             </h1>
             <p className="fdd-hero__support">
-              Your fractional digital department: not an agency, not a
-              consultant.
+              Your fractional digital department, led by experience that has
+              done this before, and that does the work.
             </p>
             <p className="mkt-hero__copy">
               For owner-led growing businesses that rely on digital tools but
-              don&apos;t have an experienced person owning the whole picture. GR
-              Labs looks across the website, channels, tools, and measurement,
-              finds where the opportunity is, and puts effort behind it.
+              don&apos;t have a senior person deciding where the effort goes. GR
+              Labs fills that seat: leadership that looks across the website,
+              channels, tools, and measurement, chooses what matters, and does
+              the work.
             </p>
             <div className="mkt-hero__actions">
               <a
@@ -203,13 +233,14 @@ export function FractionalDigitalDepartmentSections() {
             <div>
               <p className="eyebrow">The gap</p>
               <h2 className="section-heading">
-                Every channel has a vendor. Nobody owns the picture.
+                You have vendors. You don&apos;t have a digital marketing leader.
               </h2>
             </div>
             <p className="section-copy">
-              Agencies and specialists each optimize their own part. Consultants
-              advise and leave. The gap is a partner who sees how it all fits,
-              decides where effort goes, and stays to do the work.
+              Agencies and specialists each optimize their own part. A junior
+              hire waits to be told. The gap is senior judgment: a partner who
+              sees how it all fits, decides where effort goes, and stays to do
+              the work.
             </p>
           </div>
           <div className="fdd-problem__grid fdd-problem__grid--quad reveal">
@@ -224,9 +255,35 @@ export function FractionalDigitalDepartmentSections() {
             ))}
           </div>
           <p className="fdd-problem__insight reveal">
-            More marketing is not always the answer. The right next move
-            depends on the whole picture.
+            More marketing is not the fix. Senior judgment about which marketing
+            is.
           </p>
+        </div>
+      </section>
+
+      <section className="section" id="senior-leadership">
+        <div className="shell">
+          <div className="fdd-areas__top reveal">
+            <div>
+              <p className="eyebrow">Senior leadership</p>
+              <h2 className="section-heading">
+                What senior leadership looks like.
+              </h2>
+            </div>
+            <p className="section-copy">
+              The seat is judgment, not another pair of hands. These are the
+              calls a senior digital marketing leader makes, and the ones GR
+              Labs makes with you.
+            </p>
+          </div>
+          <div className="fdd-areas__grid reveal">
+            {judgments.map((item) => (
+              <article className="fdd-areas__card" key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -235,11 +292,14 @@ export function FractionalDigitalDepartmentSections() {
           <div className="fdd-areas__top reveal">
             <div>
               <p className="eyebrow">How we work</p>
-              <h2 className="section-heading">Look. Find. Step on the gas.</h2>
+              <h2 className="section-heading">
+                The monthly cadence of a senior leader.
+              </h2>
             </div>
             <p className="section-copy">
-              Then we do it again next month. The mix follows what will move
-              the business—not a predetermined menu of channels.
+              Find what&apos;s working. Step on the gas. Then do it again next
+              month. The mix follows what will move the business—not a
+              predetermined menu of channels.
             </p>
           </div>
           <div className="fdd-areas__grid fdd-areas__grid--steps reveal">
@@ -255,8 +315,8 @@ export function FractionalDigitalDepartmentSections() {
             ))}
           </div>
           <p className="fdd-problem__insight reveal">
-            You don&apos;t have to figure out what to ask us to do. We look,
-            decide, and do what needs doing.
+            You don&apos;t have to brief a senior leader. We look, decide, and
+            do what needs doing.
           </p>
         </div>
       </section>
@@ -267,20 +327,20 @@ export function FractionalDigitalDepartmentSections() {
             <div>
               <p className="eyebrow">The difference</p>
               <h2 className="section-heading fdd-flow__heading">
-                <span>A consultant tells you what to do.</span>
-                <span>An agency does what you tell them.</span>
-                <span>A fractional digital department does what needs doing.</span>
+                <span>A junior hire waits to be told.</span>
+                <span>An agency executes the brief.</span>
+                <span>A senior leader decides what&apos;s worth doing, and we do it.</span>
               </h2>
             </div>
             <p className="section-copy">
-              Consultants leave a recommendation for you to staff. Agencies
-              wait for a brief, so unnamed work never starts. GR Labs looks at
-              the business, finds the digital work worth doing, and takes it
+              A junior hire needs direction before anything starts. An agency
+              waits for a brief, so unnamed work never starts. GR Labs brings
+              senior judgment, finds the digital work worth doing, and takes it
               on.
             </p>
           </div>
           <p className="fdd-flow__promise reveal">
-            Not an agency. Not a consultant. One partner for the whole picture.
+            Senior leadership. Hands-on execution. One partner.
           </p>
         </div>
       </section>
@@ -296,7 +356,9 @@ export function FractionalDigitalDepartmentSections() {
             </div>
             <p className="section-copy">
               Either way, the job is the same: see what&apos;s working, find
-              the opportunity, and put effort there.
+              the opportunity, and put effort there. If a marketing person or
+              an agency is already in place, GR Labs adds the leadership layer
+              above them.
             </p>
           </div>
           <div className="fdd-areas__grid fdd-areas__grid--pair reveal">
@@ -320,8 +382,8 @@ export function FractionalDigitalDepartmentSections() {
               </h2>
             </div>
             <p className="section-copy">
-              None of these is the product. They&apos;re levers we pull when
-              the numbers say so.
+              A senior leader decides which levers matter. These are the ones
+              we pull when the numbers say so.
             </p>
           </div>
           <div className="fdd-areas__grid fdd-areas__grid--levers reveal">
@@ -341,12 +403,14 @@ export function FractionalDigitalDepartmentSections() {
         <div className="shell">
           <div className="fdd-offer reveal">
             <div>
-              <p className="fdd-offer__price">Starting at $2,000/month</p>
+              <p className="fdd-offer__price">
+                Senior digital marketing leadership, starting at $2,500/month
+              </p>
               <p className="fdd-offer__copy">
                 One engagement for the whole picture—not a quote per channel.
-                Ongoing monthly support with direct access to experienced senior
-                digital leadership. Scope follows the opportunity. Hands-on
-                execution, plus coordination with specialists or existing
+                Ongoing monthly support: senior judgment on where effort goes,
+                and hands-on execution of the work that follows. Scope follows
+                the opportunity, with coordination of specialists or existing
                 vendors when that is the right move.
               </p>
             </div>
@@ -364,7 +428,7 @@ export function FractionalDigitalDepartmentSections() {
                 className="button button-secondary"
                 href="/fractional-digital-team-calculator"
               >
-                Compare the cost
+                Compare with a senior hire
                 <Arrow />
               </a>
             </div>
@@ -382,9 +446,9 @@ export function FractionalDigitalDepartmentSections() {
               </h2>
             </div>
             <p className="section-copy">
-              Clients work with GR Labs to cut through digital noise and focus
-              on what actually moves the business—with recommendations that fit
-              how the business operates.
+              Clients describe what senior judgment is for: cutting through the
+              noise, and recommendations realistic enough to fit how the
+              business actually operates.
             </p>
           </div>
           <div className="fdd-proof__quotes reveal">
@@ -412,9 +476,8 @@ export function FractionalDigitalDepartmentSections() {
               <h2 className="section-heading">What people usually ask.</h2>
             </div>
             <p className="section-copy">
-              One partner for the whole digital picture—not a full-time hire,
-              and not a channel you buy off a menu. Engagements start at
-              $2,000/month.
+              Senior digital marketing leadership—not a full-time hire, and not
+              a channel you buy off a menu. Engagements start at $2,500/month.
             </p>
           </div>
           <div className="fdd-faq__list reveal">

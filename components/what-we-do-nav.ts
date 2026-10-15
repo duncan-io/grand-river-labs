@@ -24,9 +24,18 @@ export const homeImprovementNav = {
     "One owner for lead generation and response at established home improvement companies.",
 } as const;
 
-export const customSoftwareNav = {
-  label: "Custom software",
-  href: "/custom-software",
-  description:
-    "From a working prototype—or a clear need—to software the business can rely on.",
-} as const;
+export const industriesNav = [
+  homeImprovementNav,
+  {
+    label: "Roofing",
+    href: "/fractional-digital-department/roofing",
+    description:
+      "A roofing lead engine you own: routing, Local Services Ads, paid ads, website, and SEO.",
+  },
+  {
+    label: "Contractors",
+    href: "/fractional-digital-department/contractors",
+    description:
+      "Fix the leaks in contractor lead flow, from routing and Local Services Ads to the site you already have.",
+  },
+] as const;

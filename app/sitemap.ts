@@ -15,7 +15,6 @@ const staticPaths = [
   "/blog",
   "/chat",
   "/conversion-rate-optimization",
-  "/custom-software",
   "/search-engine-optimization",
   "/local-ads",
   "/google-business-profile",
