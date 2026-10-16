@@ -155,16 +155,15 @@ export function Hero() {
       <RiverScene />
       <div className="shell">
         <div className="hero__content">
-          <p className="eyebrow">Senior digital marketing leadership</p>
           <h1 className="hero__headline">
-            <span>Senior marketing leadership.</span>
+            <span>Digital marketing leadership.</span>
             <span>
               Without the <span className="hero__keep">full-time hire.</span>
             </span>
           </h1>
           <p className="hero__copy">
-            An experienced digital marketing leader who sets the strategy,
-            makes the budget and channel calls, and is accountable for leads
+            An experienced digital marketing leader who integrates into your team and helps set the strategy,
+            makes the budget recommendations, and is accountable for leads
             and revenue. Execution is included, so those decisions don&apos;t
             stall.
           </p>
