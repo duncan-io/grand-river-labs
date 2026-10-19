@@ -327,16 +327,15 @@ export function FractionalDigitalDepartmentSections() {
             <div>
               <p className="eyebrow">The difference</p>
               <h2 className="section-heading fdd-flow__heading">
-                <span>A junior hire waits to be told.</span>
+                <span>A consultant tells you what to do, then leaves.</span>
                 <span>An agency executes the brief.</span>
-                <span>A senior leader decides what&apos;s worth doing, and we do it.</span>
+                <span>A fractional department decides what&apos;s worth doing, and does it.</span>
               </h2>
             </div>
             <p className="section-copy">
-              A junior hire needs direction before anything starts. An agency
-              waits for a brief, so unnamed work never starts. GR Labs brings
-              senior judgment, finds the digital work worth doing, and takes it
-              on.
+              A consultant advises, then leaves you to staff it. An agency
+              waits for a brief, so unnamed work never starts. A fractional
+              department finds the digital work worth doing, and takes it on.
             </p>
           </div>
           <p className="fdd-flow__promise reveal">

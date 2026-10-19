@@ -59,6 +59,17 @@ const ChevronRight = () => (
   </svg>
 );
 
+function IndustriesMoreNote() {
+  return (
+    <p className="nav-industries-more">
+      <span className="nav-group__label">And more</span>
+      <span className="nav-group__desc">
+        We work with any business. We specialize in lead-based companies.
+      </span>
+    </p>
+  );
+}
+
 const MenuIcon = ({ open }: { open: boolean }) => (
   <svg
     aria-hidden="true"
@@ -182,18 +193,21 @@ export function SiteHeader({
                   Industries
                   <ChevronRight />
                 </button>
-                <div className="nav-flyout__panel" role="list" aria-label="Industries">
-                  {industriesNav.map((item) => (
-                    <a
-                      className="nav-group__parent"
-                      href={item.href}
-                      key={item.href}
-                      role="listitem"
-                    >
-                      <span className="nav-group__label">{item.label}</span>
-                      <span className="nav-group__desc">{item.description}</span>
-                    </a>
-                  ))}
+                <div className="nav-flyout__panel">
+                  <div role="list" aria-label="Industries">
+                    {industriesNav.map((item) => (
+                      <a
+                        className="nav-group__parent"
+                        href={item.href}
+                        key={item.href}
+                        role="listitem"
+                      >
+                        <span className="nav-group__label">{item.label}</span>
+                        <span className="nav-group__desc">{item.description}</span>
+                      </a>
+                    ))}
+                  </div>
+                  <IndustriesMoreNote />
                 </div>
               </div>
             </div>
@@ -267,6 +281,7 @@ export function SiteHeader({
                     </a>
                   ))}
                 </div>
+                <IndustriesMoreNote />
               </div>
             </div>
           </div>

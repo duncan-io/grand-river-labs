@@ -431,6 +431,15 @@ span.site-nav__trigger:focus-visible {
   transform: translateX(0);
 }
 
+.nav-industries-more {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.35rem 0 0;
+  padding: 0.7rem 0.85rem 0.45rem;
+  border-top: 1px solid var(--line);
+  cursor: default;
+}
+
 .site-nav-toggle {
   display: none;
   width: 2.75rem;
@@ -9665,6 +9674,11 @@ span.site-nav__trigger:focus-visible {
   .site-nav-panel__nav > a:not(.button):hover,
   .site-nav-panel__group > a:hover {
     color: var(--accent-dark);
+  }
+
+  .site-nav-panel .nav-industries-more {
+    margin: 0.15rem 0 0 0.2rem;
+    padding: 0.55rem 0.15rem 0.35rem 0.85rem;
   }
 
   .site-nav-panel__cta {
