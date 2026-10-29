@@ -1,5 +1,5 @@
+import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 const contrast = [
@@ -344,15 +344,12 @@ export function AiAutomationSections() {
               day to day.
             </p>
             <div className="ai-automation-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a className="button button-secondary" href="#examples">
                 See examples
                 <Arrow />
@@ -510,15 +507,12 @@ export function AiAutomationCta() {
             automation.
           </p>
           <div className="use-cases-cta__buttons">
-            <a
+            <BookCallLink
               className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />
-            </a>
+            </BookCallLink>
             <a className="button button-secondary" href="/use-cases">
               Browse use cases
               <Arrow />

@@ -1,5 +1,5 @@
+import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 const whenHelps = [
@@ -314,15 +314,12 @@ export function ConsultingSections() {
               measure.
             </p>
             <div className="consulting-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a className="button button-secondary" href="#examples">
                 See examples
                 <Arrow />
@@ -524,15 +521,12 @@ export function ConsultingCta() {
             into build.
           </p>
           <div className="use-cases-cta__buttons">
-            <a
+            <BookCallLink
               className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />
-            </a>
+            </BookCallLink>
             <a className="button button-secondary" href="/use-cases">
               Browse use cases
               <Arrow />

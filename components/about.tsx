@@ -1,5 +1,5 @@
+import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 const comparisons = [
@@ -82,15 +82,12 @@ export function AboutSections() {
             and measurement, then do the work—without a full-time hire.
           </p>
           <div className="about-hero__actions">
-            <a
+            <BookCallLink
               className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a 30-minute fit call
               <Arrow />
-            </a>
+            </BookCallLink>
             <a className="about-hero__link" href="/fractional-digital-department">
               See how the department works →
             </a>

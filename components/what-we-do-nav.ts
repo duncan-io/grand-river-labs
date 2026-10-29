@@ -27,6 +27,12 @@ export const homeImprovementNav = {
 export const industriesNav = [
   homeImprovementNav,
   {
+    label: "Remodeling",
+    href: "/remodeling-marketing",
+    description:
+      "Remodeling marketing for design-build remodelers: generation and response, owned by one person.",
+  },
+  {
     label: "Roofing",
     href: "/fractional-digital-department/roofing",
     description:

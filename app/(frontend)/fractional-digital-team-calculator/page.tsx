@@ -61,7 +61,7 @@ export default function FractionalDigitalTeamCalculatorPage() {
           eyebrow="Talk through a scenario"
           heading="Want a number that matches your business?"
           copy="Bring the hire you were about to make—junior, senior, or a small team. A 30-minute fit call is enough to see whether a fractional digital department covers the work at a better cost."
-          directLabel="Prefer to talk? Book a 30-minute fit call →"
+          directLabel="Book a 30-minute fit call"
           messageLabel="What hiring scenario are you weighing?"
           messagePlaceholder="A junior coordinator, a senior digital lead, a two-person team, or the fact that nobody owns this—start wherever you are."
         />

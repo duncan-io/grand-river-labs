@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useState } from "react";
-import { BOOK_CALL_HREF } from "@/lib/site";
+import { useEffect, useId, useRef, useState } from "react";
+import { BookCallLink } from "./book-call-link";
 import {
   fractionalDepartmentNav,
   fractionalDepartmentServices,
@@ -119,7 +119,13 @@ export function SiteHeader({
   embedded?: boolean;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [whatWeDoOpen, setWhatWeDoOpen] = useState(false);
+  const [whatWeDoDismissed, setWhatWeDoDismissed] = useState(false);
   const panelId = useId();
+  const whatWeDoId = useId();
+  const whatWeDoRef = useRef<HTMLDivElement>(null);
+  const whatWeDoOpenedAt = useRef(0);
+  const whatWeDoExpanded = whatWeDoOpen && !whatWeDoDismissed;
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -146,6 +152,31 @@ export function SiteHeader({
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!whatWeDoExpanded) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setWhatWeDoOpen(false);
+        setWhatWeDoDismissed(true);
+      }
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!whatWeDoRef.current?.contains(event.target as Node)) {
+        setWhatWeDoOpen(false);
+        setWhatWeDoDismissed(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [whatWeDoExpanded]);
+
   const closeMenu = () => setMenuOpen(false);
 
   const headerClass = [
@@ -164,13 +195,54 @@ export function SiteHeader({
         </a>
 
         <nav className="site-nav" aria-label="Main navigation">
-          <div className="site-nav__item">
-            <span className="site-nav__trigger" tabIndex={0}>
+          <div
+            className={[
+              "site-nav__item",
+              whatWeDoExpanded ? "site-nav__item--open" : "",
+              whatWeDoDismissed ? "site-nav__item--dismissed" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            ref={whatWeDoRef}
+            onMouseEnter={() => {
+              whatWeDoOpenedAt.current = Date.now();
+              setWhatWeDoDismissed(false);
+              setWhatWeDoOpen(true);
+            }}
+            onMouseLeave={() => {
+              setWhatWeDoOpen(false);
+              setWhatWeDoDismissed(false);
+            }}
+            onBlur={(event) => {
+              if (!whatWeDoRef.current?.contains(event.relatedTarget as Node)) {
+                setWhatWeDoOpen(false);
+                setWhatWeDoDismissed(false);
+              }
+            }}
+          >
+            <button
+              type="button"
+              className="site-nav__trigger"
+              aria-expanded={whatWeDoExpanded}
+              aria-controls={whatWeDoId}
+              onClick={() => {
+                if (Date.now() - whatWeDoOpenedAt.current < 400) return;
+
+                if (whatWeDoExpanded) {
+                  setWhatWeDoOpen(false);
+                  setWhatWeDoDismissed(true);
+                  return;
+                }
+
+                setWhatWeDoDismissed(false);
+                setWhatWeDoOpen(true);
+              }}
+            >
               What we do
               <Chevron />
-            </span>
-            <div className="site-nav__dropdown" role="list">
-              <div className="nav-group" role="listitem">
+            </button>
+            <div className="site-nav__dropdown" id={whatWeDoId}>
+              <div className="nav-group">
                 <a className="nav-group__parent" href={fractionalDepartmentNav.href}>
                   <span className="nav-group__label">{fractionalDepartmentNav.label}</span>
                   <span className="nav-group__desc">{fractionalDepartmentNav.description}</span>
@@ -178,29 +250,27 @@ export function SiteHeader({
                 <span className="nav-group__areas-label">What the work can touch</span>
                 <div
                   className="nav-group__children"
-                  role="list"
                   aria-label={`${fractionalDepartmentNav.label} areas of work`}
                 >
                   {fractionalDepartmentServices.map((item) => (
-                    <a href={item.href} key={item.href} role="listitem">
+                    <a href={item.href} key={item.href}>
                       {item.label}
                     </a>
                   ))}
                 </div>
               </div>
-              <div className="nav-group nav-flyout" role="listitem">
+              <div className="nav-group nav-flyout">
                 <button type="button" className="nav-flyout__trigger" aria-haspopup="true">
                   Industries
                   <ChevronRight />
                 </button>
                 <div className="nav-flyout__panel">
-                  <div role="list" aria-label="Industries">
+                  <div aria-label="Industries">
                     {industriesNav.map((item) => (
                       <a
                         className="nav-group__parent"
                         href={item.href}
                         key={item.href}
-                        role="listitem"
                       >
                         <span className="nav-group__label">{item.label}</span>
                         <span className="nav-group__desc">{item.description}</span>
@@ -212,18 +282,12 @@ export function SiteHeader({
               </div>
             </div>
           </div>
-          <a href="/white-label">White-label</a>
-          <a href="/testimonials">Testimonials</a>
+          <a href="/work">Work</a>
           <a href="/about">About</a>
-          <a
-            className="button button-primary"
-            href={BOOK_CALL_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <BookCallLink className="button button-primary">
             Book a call
             <Arrow />
-          </a>
+          </BookCallLink>
         </nav>
 
         <button
@@ -247,8 +311,8 @@ export function SiteHeader({
         <nav className="site-nav-panel__nav" aria-label="Mobile navigation">
           <div className="site-nav-panel__group">
             <span className="site-nav-panel__label">What we do</span>
-            <div className="site-nav-panel__industries" role="list">
-              <div className="nav-group" role="listitem">
+            <div className="site-nav-panel__industries">
+              <div className="nav-group">
                 <a
                   className="nav-group__parent"
                   href={fractionalDepartmentNav.href}
@@ -260,23 +324,18 @@ export function SiteHeader({
                 <span className="nav-group__areas-label">What the work can touch</span>
                 <div
                   className="nav-group__children"
-                  role="list"
                   aria-label={`${fractionalDepartmentNav.label} areas of work`}
                 >
                   {fractionalDepartmentServices.map((item) => (
-                    <a href={item.href} key={item.href} role="listitem" onClick={closeMenu}>
+                    <a href={item.href} key={item.href} onClick={closeMenu}>
                       {item.label}
                     </a>
                   ))}
                 </div>
                 <span className="nav-group__areas-label">Industries</span>
-                <div
-                  className="nav-group__children"
-                  role="list"
-                  aria-label="Industries"
-                >
+                <div className="nav-group__children" aria-label="Industries">
                   {industriesNav.map((item) => (
-                    <a href={item.href} key={item.href} role="listitem" onClick={closeMenu}>
+                    <a href={item.href} key={item.href} onClick={closeMenu}>
                       {item.label}
                     </a>
                   ))}
@@ -285,25 +344,19 @@ export function SiteHeader({
               </div>
             </div>
           </div>
-          <a href="/white-label" onClick={closeMenu}>
-            White-label
-          </a>
-          <a href="/testimonials" onClick={closeMenu}>
-            Testimonials
+          <a href="/work" onClick={closeMenu}>
+            Work
           </a>
           <a href="/about" onClick={closeMenu}>
             About
           </a>
-          <a
+          <BookCallLink
             className="button button-primary site-nav-panel__cta"
-            href={BOOK_CALL_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
             onClick={closeMenu}
           >
             Book a call
             <Arrow />
-          </a>
+          </BookCallLink>
         </nav>
       </div>
     </header>

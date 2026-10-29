@@ -5,6 +5,9 @@ export type FormSubmission = {
   message?: string;
   sessionId?: string;
   submittedAt: string;
+  sourcePage?: string;
+  summary?: string;
+  transcript?: string;
 };
 
 /**

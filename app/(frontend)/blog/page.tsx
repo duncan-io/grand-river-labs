@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { ContactSection } from "@/components/contact";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { isAuthor } from "@/lib/author";
@@ -25,6 +26,7 @@ function formatDate(value: string | null | undefined) {
 }
 
 export default async function BlogIndexPage() {
+  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
   const payload = await getPayloadClient();
   const { docs: posts } = await payload.find({
     collection: "posts",
@@ -121,6 +123,15 @@ export default async function BlogIndexPage() {
             )}
           </div>
         </section>
+        <ContactSection
+          turnstileSiteKey={turnstileSiteKey}
+          variant="cta"
+          eyebrow="From the article"
+          heading="Want to talk about this?"
+          copy="If this raised a question about your site, your channels, or work still sitting with the team, send a note. We'll get back within two business days."
+          messageLabel="What should we look at?"
+          messagePlaceholder="The part of this that matches a problem you're in—or the decision you're trying to make."
+        />
       </main>
       <SiteFooter />
     </div>

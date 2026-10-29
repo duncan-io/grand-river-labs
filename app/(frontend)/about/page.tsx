@@ -48,7 +48,7 @@ export default function AboutPage() {
           eyebrow="Start a conversation"
           heading="Who owns the picture today?"
           copy="Tell us who currently owns digital, and where the picture breaks—a channel that keeps asking for budget, numbers you don't trust, or work nobody named. We'll get back within two business days."
-          directLabel="Prefer to talk? Book a 30-minute fit call →"
+          directLabel="Book a 30-minute fit call"
           messageLabel="Who owns digital today?"
           messagePlaceholder="An agency on one channel, a hire you haven't made, a pile of vendors—start wherever you are."
         />

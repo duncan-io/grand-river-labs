@@ -4,15 +4,6 @@ export type Testimonial = {
   role: string;
 };
 
-export function formatTestimonialName(name: string): string {
-  const parts = name.trim().split(/\s+/);
-  if (parts.length <= 1) return name;
-
-  const firstName = parts[0];
-  const lastInitial = parts[parts.length - 1][0];
-  return `${firstName} ${lastInitial}.`;
-}
-
 export const testimonials: Testimonial[] = [
   {
     quote:

@@ -19,12 +19,12 @@ const staticPaths = [
   "/local-ads",
   "/google-business-profile",
   "/home-improvement-marketing",
+  "/remodeling-marketing",
   "/fractional-digital-department",
   "/fractional-digital-department/roofing",
   "/fractional-digital-department/contractors",
   "/fractional-digital-team-calculator",
   "/marketing-automation",
-  "/testimonials",
   "/use-cases",
   "/use-cases/accounting",
   "/use-cases/home-services",
@@ -32,6 +32,7 @@ const staticPaths = [
   "/use-cases/property-management",
   "/website-strategy",
   "/white-label",
+  "/work",
 ] as const;
 
 function absoluteUrl(origin: string, path: string) {
@@ -66,6 +67,42 @@ async function getPublishedPostEntries(
         {
           url: absoluteUrl(origin, `/blog/${post.slug}`),
           lastModified: post.updatedAt || post.publishedAt || undefined,
+        },
+      ];
+    });
+  } catch {
+    return [];
+  }
+}
+
+async function getPublishedCaseStudyEntries(
+  origin: string,
+): Promise<MetadataRoute.Sitemap> {
+  try {
+    const payload = await getPayloadClient();
+    const { docs: studies } = await payload.find({
+      collection: "case-studies",
+      depth: 0,
+      limit: 1000,
+      pagination: false,
+      select: {
+        slug: true,
+        publishedAt: true,
+        updatedAt: true,
+      },
+      where: {
+        _status: {
+          equals: "published",
+        },
+      },
+    });
+
+    return studies.flatMap((study) => {
+      if (!study.slug) return [];
+      return [
+        {
+          url: absoluteUrl(origin, `/case-studies/${study.slug}`),
+          lastModified: study.updatedAt || study.publishedAt || undefined,
         },
       ];
     });
@@ -109,10 +146,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: absoluteUrl(origin, path),
   }));
-  const [postEntries, authorEntries] = await Promise.all([
+  const [postEntries, caseStudyEntries, authorEntries] = await Promise.all([
     getPublishedPostEntries(origin),
+    getPublishedCaseStudyEntries(origin),
     getAuthorEntries(origin),
   ]);
 
-  return [...staticEntries, ...postEntries, ...authorEntries];
+  return [...staticEntries, ...postEntries, ...caseStudyEntries, ...authorEntries];
 }

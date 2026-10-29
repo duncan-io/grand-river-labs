@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import { ContactSection } from "@/components/contact";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { isAuthor, truncateBio } from "@/lib/author";
@@ -63,6 +64,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Args) {
   const { slug } = await params;
+  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
   const post = await getPublishedPost(slug);
 
   if (!post) notFound();
@@ -160,6 +162,15 @@ export default async function BlogPostPage({ params }: Args) {
             ) : null}
           </div>
         </article>
+        <ContactSection
+          turnstileSiteKey={turnstileSiteKey}
+          variant="cta"
+          eyebrow="From the article"
+          heading="Want to talk about this?"
+          copy="If this raised a question about your site, your channels, or work still sitting with the team, send a note. We'll get back within two business days."
+          messageLabel="What should we look at?"
+          messagePlaceholder="The part of this that matches a problem you're in—or the decision you're trying to make."
+        />
       </main>
       <SiteFooter />
     </div>

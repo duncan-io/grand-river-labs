@@ -9,6 +9,7 @@ const dirname = path.dirname(filename);
 const nextConfig: NextConfig = {
   experimental: {
     inlineCss: true,
+    globalNotFound: true,
   },
   images: {
     localPatterns: [
@@ -71,6 +72,16 @@ const nextConfig: NextConfig = {
       {
         source: "/custom-software",
         destination: "/automation",
+        permanent: true,
+      },
+      {
+        source: "/case-studies",
+        destination: "/work",
+        permanent: true,
+      },
+      {
+        source: "/testimonials",
+        destination: "/work",
         permanent: true,
       },
     ];

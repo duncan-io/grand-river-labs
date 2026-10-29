@@ -1,19 +1,37 @@
 import { chatConfig, getChatModel } from "@/lib/chat/config";
 import { getFireworksClient } from "@/lib/chat/client";
 import { normalizeEmail } from "@/lib/chat/email";
-import { SYSTEM_PROMPT } from "@/lib/chat/prompts";
+import {
+  buildTurnNote,
+  resolveChatSourcePage,
+  SYSTEM_PROMPT,
+} from "@/lib/chat/prompts";
 import {
   appendTurn,
+  canSendWithoutEmail,
   getMessages,
+  getSourcePage,
+  getUserTurns,
+  hasCapturedEmail,
+  isHumanVerified,
   isVerifiedChatSession,
+  markHumanVerified,
+  setSourcePage,
 } from "@/lib/chat/session-store";
 import type { SseEvent } from "@/lib/chat/types";
+import {
+  getClientIp,
+  readTurnstileToken,
+  verifyTurnstileToken,
+} from "@/lib/turnstile";
 import type OpenAI from "openai";
 
 type ChatRequest = {
   message?: unknown;
   sessionId?: unknown;
   email?: unknown;
+  from?: unknown;
+  "cf-turnstile-response"?: unknown;
 };
 
 type ChatDelta = {
@@ -139,21 +157,49 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!email) {
-    return Response.json(
-      { error: "Please enter a valid email to chat.", code: "email_required" },
-      { status: 403 },
-    );
-  }
-
-  if (!isVerifiedChatSession(sessionId, email)) {
+  if (email && !isVerifiedChatSession(sessionId, email)) {
     return Response.json(
       {
-        error: "Please verify your email to start chatting.",
+        error: "Please leave your email to keep chatting.",
         code: "email_required",
       },
       { status: 403 },
     );
+  }
+
+  if (!isHumanVerified(sessionId)) {
+    const turnstileToken = readTurnstileToken(body);
+    const verified = await verifyTurnstileToken(
+      turnstileToken,
+      getClientIp(request),
+    );
+
+    if (!verified) {
+      return Response.json(
+        {
+          error: "Please complete the verification challenge.",
+          code: "verification_required",
+        },
+        { status: 403 },
+      );
+    }
+
+    markHumanVerified(sessionId);
+  }
+
+  if (!canSendWithoutEmail(sessionId)) {
+    return Response.json(
+      {
+        error: "Leave your email to keep chatting.",
+        code: "email_required",
+      },
+      { status: 403 },
+    );
+  }
+
+  const sourcePage = resolveChatSourcePage(body.from);
+  if (sourcePage) {
+    setSourcePage(sessionId, sourcePage.label);
   }
 
   if (!process.env.FIREWORKS_API_KEY?.trim()) {
@@ -174,8 +220,15 @@ export async function POST(request: Request) {
   }
 
   const history = getMessages(sessionId);
+  const turnNote = buildTurnNote(
+    getUserTurns(sessionId) + 1,
+    chatConfig.freeMessages,
+    hasCapturedEmail(sessionId),
+    getSourcePage(sessionId),
+  );
   const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
     { role: "system", content: SYSTEM_PROMPT },
+    { role: "system", content: turnNote },
     ...history.map((entry) => ({
       role: entry.role,
       content: entry.content,

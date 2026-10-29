@@ -14,5 +14,7 @@ export const chatConfig = {
   maxHistoryMessages: 40,
   /** Drop idle sessions after this many ms */
   sessionTtlMs: 60 * 60 * 1000,
+  /** User messages allowed after a human check, before an email is required */
+  freeMessages: 3,
   fireworksBaseUrl: "https://api.fireworks.ai/inference/v1",
 } as const;

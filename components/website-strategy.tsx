@@ -1,6 +1,6 @@
+import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import {
   DepartmentOwnershipScene,
   OwnershipGapScene,
@@ -571,15 +571,12 @@ export function WebsiteStrategySections() {
               have to worry about the site day to day.
             </p>
             <div className="mkt-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a className="button button-secondary" href="#contact">
                 Contact us
                 <Arrow />

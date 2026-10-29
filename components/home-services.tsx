@@ -1,4 +1,4 @@
-import { BOOK_CALL_HREF } from "@/lib/site";
+import { BookCallLink } from "./book-call-link";
 import { getIndustry } from "./industries";
 import { Arrow } from "./site-header";
 
@@ -259,15 +259,12 @@ export function HomeServicesSections() {
             <h1 className="hs-hero__headline">{content.headline}</h1>
             <p className="hs-hero__copy">{content.copy}</p>
             <div className="hs-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a className="button button-secondary" href="#drains">
                 See where time goes
                 <Arrow />
@@ -394,15 +391,12 @@ export function HomeServicesCta() {
             from estimates and CRM busywork to hours back every week.
           </p>
           <div className="use-cases-cta__buttons">
-            <a
+            <BookCallLink
               className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />
-            </a>
+            </BookCallLink>
             <a className="button button-secondary" href="/use-cases">
               Back to use cases
               <Arrow />

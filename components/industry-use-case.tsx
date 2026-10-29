@@ -1,4 +1,4 @@
-import { BOOK_CALL_HREF } from "@/lib/site";
+import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./site-header";
 import type { IndustryContent } from "./industries";
 import { industries } from "./industries";
@@ -18,15 +18,12 @@ export function IndustryUseCase({ content }: { content: IndustryContent }) {
               Tell us what&apos;s slowing you down
               <Arrow />
             </a>
-            <a
+            <BookCallLink
               className="button button-secondary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />
-            </a>
+            </BookCallLink>
           </div>
         </div>
       </section>

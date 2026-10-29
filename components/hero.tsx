@@ -1,3 +1,4 @@
+import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./site-header";
 
 function RiverScene() {
@@ -162,23 +163,22 @@ export function Hero() {
             </span>
           </h1>
           <p className="hero__copy">
-            An experienced digital marketing leader who integrates into your team and helps set the strategy,
-            makes the budget recommendations, and is accountable for leads
-            and revenue. Execution is included, so those decisions don&apos;t
-            stall.
+            Someone who sets the strategy, recommends where the budget goes,
+            and stays accountable for leads and revenue. Execution is
+            included, so those decisions don&apos;t stall.
           </p>
           <div className="hero__actions">
-            <a className="button button-primary" href="#contact">
-              Start a conversation
+            <BookCallLink className="button button-primary">
+              Book a call
               <Arrow />
-            </a>
-            <a
-              className="button button-secondary"
-              href="/fractional-digital-department"
-            >
-              How the leadership works
+            </BookCallLink>
+            <a className="button button-secondary" href="#contact">
+              Or send a note
             </a>
           </div>
+          <p className="hero__aside">
+            <a href="/fractional-digital-department">How the leadership works</a>
+          </p>
         </div>
       </div>
       <a className="hero__cue" href="#leadership">

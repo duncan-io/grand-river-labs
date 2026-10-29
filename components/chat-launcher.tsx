@@ -34,6 +34,7 @@ function ChatIcon() {
 export function ChatLauncher() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     if (pathname === "/chat" || pathname.startsWith("/chat/")) {
@@ -42,6 +43,14 @@ export function ChatLauncher() {
     }
 
     setVisible(sessionStorage.getItem(DISMISS_KEY) !== "1");
+
+    const onScroll = () => {
+      setScrolled(window.scrollY > window.innerHeight * 0.9);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
   function dismiss() {
@@ -49,13 +58,16 @@ export function ChatLauncher() {
     setVisible(false);
   }
 
-  if (!visible) {
+  if (!visible || !scrolled) {
     return null;
   }
 
   return (
     <div className="chat-launcher">
-      <a className="chat-launcher__link" href="/chat">
+      <a
+        className="chat-launcher__link"
+        href={`/chat?from=${encodeURIComponent(pathname)}`}
+      >
         <ChatIcon />
         <span className="chat-launcher__copy">
           <span className="chat-launcher__eyebrow">Ask AI</span>

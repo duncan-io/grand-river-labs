@@ -1,5 +1,5 @@
+import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { DepartmentHeroScene } from "./department-hero-scene";
 import {
   DepartmentOwnershipScene,
@@ -57,6 +57,11 @@ const jobValues = [
 ];
 
 const trades: { name: string; copy: string; href?: string }[] = [
+  {
+    name: "Kitchen and bath",
+    href: "/remodeling-marketing",
+    copy: "Design-build remodelers. The project photos already in the showroom are the content that ranks.",
+  },
   {
     name: "Roofing",
     href: "/fractional-digital-department/roofing",
@@ -179,15 +184,12 @@ export function HomeImprovementMarketingSections() {
               office manager running ads between estimates.
             </p>
             <div className="mkt-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Talk through your lead flow
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a className="button button-secondary" href="#engine">
                 See the engine
                 <Arrow />
@@ -304,9 +306,9 @@ export function HomeImprovementMarketingSections() {
               </h2>
             </div>
             <p className="section-copy">
-              Roofing and general contracting each have their own page. The
-              other trades are why this page exists—the same engine, without a
-              separate pitch for every crew.
+              Kitchen and bath remodeling has its own page, and so do roofing
+              and general contracting. The other trades are why this page
+              exists—the same engine, without a separate pitch for every crew.
             </p>
           </div>
           <div className="fdd-areas__grid fdd-areas__grid--levers reveal">

@@ -14,9 +14,9 @@ export function SiteFooter() {
         <div className="site-footer__links">
           <a href="/chat">Ask us</a>
           <a href="/blog">Blog</a>
+          <a href="/work">Work</a>
           <a href="/fractional-digital-team-calculator">Cost calculator</a>
           <a href="/about">About</a>
-          <a href="/testimonials">Testimonials</a>
           <a href="/#contact">Contact</a>
           <a href="mailto:hello@grandriverlabs.com">
             hello@grandriverlabs.com
@@ -24,19 +24,28 @@ export function SiteFooter() {
           <a href="#top">Back to top</a>
         </div>
       </div>
-      <div className="shell site-footer__row">
-        <span className="site-footer__row-label">What we do</span>
-        {whatWeDoNav.map((item) => (
-          <a href={item.href} key={item.href}>
-            {item.label}
-          </a>
-        ))}
-        {industriesNav.map((item) => (
-          <a href={item.href} key={item.href}>
-            {item.label}
-          </a>
-        ))}
-        <a href="/white-label">White-label</a>
+      <div className="shell site-footer__groups">
+        <div className="site-footer__group">
+          <span className="site-footer__row-label">Services</span>
+          <div className="site-footer__group-links">
+            {whatWeDoNav.map((item) => (
+              <a href={item.href} key={item.href}>
+                {item.label}
+              </a>
+            ))}
+            <a href="/white-label">White-label</a>
+          </div>
+        </div>
+        <div className="site-footer__group">
+          <span className="site-footer__row-label">Industries</span>
+          <div className="site-footer__group-links">
+            {industriesNav.map((item) => (
+              <a href={item.href} key={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </footer>
   );

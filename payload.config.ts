@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import sharp from "sharp";
 
 import { Authors } from "./collections/Authors";
+import { CaseStudies } from "./collections/CaseStudies";
 import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Posts } from "./collections/Posts";
@@ -81,7 +82,7 @@ export default buildConfig({
       titleSuffix: " | Grand River Labs",
     },
   },
-  collections: [Users, Media, Categories, Authors, Posts],
+  collections: [Users, Media, Categories, Authors, Posts, CaseStudies],
   cors: trustedOrigins,
   csrf: trustedOrigins,
   editor: lexicalEditor(),

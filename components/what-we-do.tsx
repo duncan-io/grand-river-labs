@@ -1,6 +1,6 @@
+import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { IndustryStrip } from "./industry-use-case";
 import { Arrow } from "./site-header";
 import { WhiteGloveEngagement } from "./white-glove-engagement";
@@ -1113,15 +1113,12 @@ export function WhatWeDoSections() {
               —so you reclaim time and cost without a rip-and-replace.
             </p>
             <div className="what-we-do-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a className="button button-secondary" href="#contact">
                 Contact us
                 <Arrow />

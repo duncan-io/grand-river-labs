@@ -22,9 +22,9 @@ export default function FractionalDigitalDepartmentPage() {
           turnstileSiteKey={turnstileSiteKey}
           variant="cta"
           eyebrow="Start a conversation"
-          heading="Get senior eyes on your digital."
-          copy="Tell us what's already running—the site, the spend, the tools—and where you're unsure. A 30-minute fit call is enough to see whether senior digital marketing leadership from GR Labs is the seat you're missing."
-          directLabel="Prefer to talk? Book a 30-minute fit call →"
+          heading="Get experienced eyes on your digital."
+          copy="Tell us what's already running—the site, the spend, the tools—and where you're unsure. A 30-minute fit call is enough to see whether this is the seat you're missing."
+          directLabel="Book a 30-minute fit call"
           messageLabel="What's going on across your digital?"
           messagePlaceholder="A channel that keeps asking for budget, numbers you don't trust, a backlog nobody owns—start wherever you are."
         />

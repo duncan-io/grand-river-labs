@@ -1,5 +1,5 @@
+import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { DepartmentHeroScene } from "./department-hero-scene";
 import { niches } from "./niches";
 import {
@@ -24,15 +24,12 @@ export function NichePage({
             <h1 className="mkt-hero__headline">{content.hero.headline}</h1>
             <p className="mkt-hero__copy">{content.hero.copy}</p>
             <div className="mkt-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 {content.hero.primaryLabel}
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a
                 className="button button-secondary"
                 href={content.hero.secondaryHref}

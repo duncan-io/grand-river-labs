@@ -1,6 +1,30 @@
 export const BOOK_CALL_HREF =
   "https://calendly.com/duncan-grandriverlabs/30min";
 
+const BOOKING_SUMMARY_MAX_CHARS = 500;
+
+/** Calendly reads `email` and `a1` (first custom answer) from the query string. */
+export function buildBookingHref(options?: {
+  email?: string;
+  summary?: string;
+}) {
+  const email = options?.email?.trim();
+  const summary = options?.summary?.trim().slice(0, BOOKING_SUMMARY_MAX_CHARS);
+
+  if (!email && !summary) {
+    return BOOK_CALL_HREF;
+  }
+
+  const url = new URL(BOOK_CALL_HREF);
+  if (email) {
+    url.searchParams.set("email", email);
+  }
+  if (summary) {
+    url.searchParams.set("a1", summary);
+  }
+  return url.toString();
+}
+
 const DEFAULT_SITE_URL = "https://grandriverlabs.com";
 
 export function getSiteUrl() {

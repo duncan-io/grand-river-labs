@@ -167,7 +167,7 @@ export const niches: NicheContent[] = [
     peace: {
       eyebrow: "Why fractional",
       heading: "One experienced owner for your whole lead engine.",
-      copy: "A typical roofing marketing agency hands you to a junior account manager, locks you into a long contract, and sends a monthly report full of impressions. [You need one person who owns the whole thing](/fractional-digital-department) and answers for the calls. Roofing is one of the trades under [home improvement marketing](/home-improvement-marketing).",
+      copy: "A typical roofing marketing agency hands you to a junior account manager, locks you into a long contract, and sends a monthly report full of impressions. [You need one person who owns the whole thing](/fractional-digital-department) and answers for the calls. Roofing sits alongside [remodeling marketing](/remodeling-marketing) under [home improvement marketing](/home-improvement-marketing).",
       paths: [
         {
           title: "Living on referrals?",
@@ -211,7 +211,7 @@ export const niches: NicheContent[] = [
       eyebrow: "Talk lead flow",
       heading: "Let's look at where your leads go.",
       copy: "Tell us where your leads come from today and what happens after they come in. In 30 minutes, we'll show you where leads are leaking and whether we're the right fit. No pitch deck, no pressure.",
-      directLabel: "Prefer to talk? Book a 30-minute call →",
+      directLabel: "Book a 30-minute call",
       messageLabel: "Where do your leads come from today?",
       messagePlaceholder:
         "Referrals, a lead vendor, LSA, door knocking, storm season only. Start wherever you are.",
@@ -310,7 +310,7 @@ export const niches: NicheContent[] = [
     peace: {
       eyebrow: "Why fractional",
       heading: "One experienced owner for your whole lead engine.",
-      copy: "A typical agency hands you to a junior account manager, locks you into a long contract, and sends a report full of impressions. Up to 40% of the marketing budget can disappear into that overhead. General contracting is one of the trades under [home improvement marketing](/home-improvement-marketing).",
+      copy: "A typical agency hands you to a junior account manager, locks you into a long contract, and sends a report full of impressions. Up to 40% of the marketing budget can disappear into that overhead. General contracting sits alongside [remodeling marketing](/remodeling-marketing) under [home improvement marketing](/home-improvement-marketing).",
       paths: [
         {
           title: "Living on referrals?",
@@ -354,7 +354,7 @@ export const niches: NicheContent[] = [
       eyebrow: "Talk lead flow",
       heading: "Let's look at where your leads go.",
       copy: "Tell us where your leads come from today and what happens after they come in. In 30 minutes, we'll show you where leads are leaking and whether we're the right fit. No pitch deck, no pressure.",
-      directLabel: "Prefer to talk? Book a 30-minute call →",
+      directLabel: "Book a 30-minute call",
       messageLabel: "Where do your leads come from today?",
       messagePlaceholder:
         "Referrals, Google Ads, a lead service, LSA, or the calls you miss on the jobsite. Start wherever you are.",

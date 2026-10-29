@@ -1,14 +1,22 @@
-import { testimonials, formatTestimonialName } from "@/lib/testimonials";
+import { testimonials } from "@/lib/testimonials";
 
-export function TestimonialsPageContent() {
+export function TestimonialsPageContent({
+  showHero = true,
+}: {
+  showHero?: boolean;
+}) {
+  const HeadingTag = showHero ? "h1" : "h2";
+
   return (
     <>
-      <section className="section tp-hero">
+      <section
+        className={showHero ? "section tp-hero" : "section tp-hero tp-hero--embedded"}
+      >
         <div className="shell tp-hero__content reveal">
           <p className="eyebrow">From clients</p>
-          <h1 className="section-heading tp-hero__headline">
+          <HeadingTag className="section-heading tp-hero__headline">
             Results that feel personal.
-          </h1>
+          </HeadingTag>
           <p className="section-copy tp-hero__copy">
             Clarity and focus from people we&apos;ve worked with—local
             businesses and established brands alike.
@@ -26,9 +34,7 @@ export function TestimonialsPageContent() {
                 </span>
                 <p className="tp-quote__body">{item.quote}</p>
                 <footer className="tp-quote__attribution">
-                  <cite className="tp-quote__name">
-                    {formatTestimonialName(item.name)}
-                  </cite>
+                  <cite className="tp-quote__name">{item.name}</cite>
                   <span className="tp-quote__role">{item.role}</span>
                 </footer>
               </blockquote>

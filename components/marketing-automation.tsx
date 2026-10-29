@@ -1,5 +1,5 @@
+import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 
 const friction = [
@@ -341,15 +341,12 @@ export function MarketingAutomationSections() {
               channels—so marketing and sales stop chasing handoffs by hand.
             </p>
             <div className="mkt-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a className="button button-secondary" href="#examples">
                 See examples
                 <Arrow />
@@ -494,15 +491,12 @@ export function MarketingAutomationCta() {
             ops.
           </p>
           <div className="use-cases-cta__buttons">
-            <a
+            <BookCallLink
               className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />
-            </a>
+            </BookCallLink>
             <a className="button button-secondary" href="/automation">
               Back to Automation and AI
               <Arrow />

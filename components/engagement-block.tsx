@@ -1,3 +1,16 @@
+import {
+  DEFAULT_ASSUMPTIONS,
+  DEFAULT_FRACTIONAL_MONTHLY,
+  calculateFullTimeCost,
+  defaultTeamRoles,
+  formatUsd,
+} from "@/lib/fractional-team-calculator";
+
+const fullTime = calculateFullTimeCost(
+  defaultTeamRoles(),
+  DEFAULT_ASSUMPTIONS,
+);
+
 export function EngagementBlock() {
   return (
     <section className="section engagement" id="engagement">
@@ -5,42 +18,45 @@ export function EngagementBlock() {
         <div className="services__top reveal">
           <div>
             <p className="eyebrow">The engagement</p>
-            <h2 className="section-heading">
-              Senior judgment at a fraction of a senior salary.
-            </h2>
+            <h2 className="section-heading">One rate, instead of a hire.</h2>
           </div>
           <p className="section-copy">
-            A full-time marketing director or VP means salary, benefits, months
-            of ramp-up, and the risk of a bad hire. This is senior digital
-            marketing leadership and the execution behind it, billed monthly,
-            for less than the cost of one mid-level hire.
+            A full-time hire means salary, benefits, months of ramp-up, and
+            the risk of a bad fit. This is the same judgment and the work
+            behind it, billed monthly.
           </p>
         </div>
 
-        <ul className="services__grid reveal">
-          <li className="services__item">
-            <h3>One flat monthly rate.</h3>
-            <p>
-              Starting at $2,500/month, priced against the decisions and the
-              work that matter — not a menu of channel packages.
+        <div className="engagement-compare reveal">
+          <article className="engagement-compare__card">
+            <p className="engagement-compare__label">In-house, year one</p>
+            <p className="engagement-compare__value">
+              {formatUsd(fullTime.year1)}
             </p>
-          </li>
-          <li className="services__item">
-            <h3>You work with the senior leader.</h3>
-            <p>
-              The person who makes the calls is the person accountable for
-              them. No account managers in between.
+            <p className="engagement-compare__note">
+              A senior digital leader and a coordinator, with benefits, tools,
+              and the cost of hiring. About{" "}
+              {formatUsd(fullTime.monthlyOngoing)} a month after that.
             </p>
-          </li>
-          <li className="services__item">
-            <h3>Execution is included.</h3>
-            <p>
-              The plan follows impact. One month it&apos;s the website, the
-              next it&apos;s tracking or ads — and the work gets done, not just
-              recommended.
+          </article>
+          <article className="engagement-compare__card engagement-compare__card--us">
+            <p className="engagement-compare__label">With us</p>
+            <p className="engagement-compare__value">
+              From {formatUsd(DEFAULT_FRACTIONAL_MONTHLY)}
+              <span className="engagement-compare__period">/month</span>
             </p>
-          </li>
-        </ul>
+            <p className="engagement-compare__note">
+              You work with the person who makes the calls. The plan follows
+              what matters, and the work gets done — not just recommended.
+            </p>
+          </article>
+        </div>
+
+        <p className="engagement-compare__more reveal">
+          <a href="/fractional-digital-team-calculator">
+            Compare that with the team you would hire →
+          </a>
+        </p>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useRef, useState } from "react";
-import { BOOK_CALL_HREF } from "@/lib/site";
+import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./site-header";
 import {
   TurnstileField,
@@ -82,7 +82,7 @@ export function ContactSection({
   eyebrow = "Start a conversation",
   heading = "What's getting in the way of more revenue?",
   copy = "Tell us the goal that isn't getting a clear plan—channel mix, the site's job, measurement, or work that still eats the team. We'll help you see what deserves attention now.",
-  directLabel = "Prefer to talk? Book a call →",
+  directLabel = "Book a call",
   messageLabel = "What should we look at first?",
   messagePlaceholder = "A growth target, a channel that isn't earning its keep, a site that isn't converting, or work that's still too manual—start wherever you are.",
 }: ContactSectionProps) {
@@ -166,17 +166,14 @@ export function ContactSection({
           <p className="eyebrow">{eyebrow}</p>
           <h2 className="section-heading">{heading}</h2>
           <p className="section-copy">{copy}</p>
-          <a
-            className="contact__direct"
-            href={BOOK_CALL_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <BookCallLink className="button button-primary contact__book">
             {directLabel}
-          </a>
+            <Arrow />
+          </BookCallLink>
         </div>
 
         <form className="contact-form reveal" onSubmit={handleSubmit}>
+          <p className="contact-form__alt">Or send a note</p>
           <div className="contact-form__row">
             <div className="field">
               <label htmlFor="name">Your name</label>
@@ -193,7 +190,7 @@ export function ContactSection({
               />
             </div>
             <div className="field">
-              <label htmlFor="email">Work email</label>
+              <label htmlFor="email">Email</label>
               <input
                 id="email"
                 name="email"
@@ -232,12 +229,22 @@ export function ContactSection({
               data-state={status.state}
               aria-live="polite"
             >
-              {status.message}
+              {status.state === "idle" && turnstileSiteKey && !turnstileToken
+                ? "Verifying you're human…"
+                : status.message}
+              {status.state === "success" ? (
+                <>
+                  {" "}
+                  <BookCallLink className="form-status__next">
+                    Want to skip the wait? Book a time →
+                  </BookCallLink>
+                </>
+              ) : null}
             </p>
             <button
-              className="button button-primary"
+              className="button button-secondary"
               type="submit"
-              disabled={isSubmitting || !turnstileToken}
+              disabled={isSubmitting}
             >
               {isSubmitting ? "Sending…" : "Send your note"}
               {!isSubmitting && <Arrow />}

@@ -24,7 +24,7 @@ export default function HomeImprovementMarketingPage() {
           eyebrow="Talk lead flow"
           heading="Let's look at where your leads go."
           copy="Tell us where your leads come from today and what happens after they come in. In 30 minutes, we'll show you where they leak and whether we're the right fit. No pitch deck, no pressure."
-          directLabel="Prefer to talk? Book a 30-minute call →"
+          directLabel="Book a 30-minute call"
           messageLabel="Where do your leads come from today?"
           messagePlaceholder="Referrals, a lead vendor, Google Ads, LSA, or the calls the office misses. Start wherever you are."
         />

@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { normalizeEmail } from "@/lib/chat/email";
-import { captureChatLead } from "@/lib/chat/session-store";
+import {
+  captureChatLead,
+  isHumanVerified,
+  markHumanVerified,
+} from "@/lib/chat/session-store";
 import {
   getClientIp,
   readTurnstileToken,
@@ -25,29 +29,9 @@ export async function POST(request: Request) {
     );
   }
 
-  const turnstileToken = readTurnstileToken(body);
-  const verified = await verifyTurnstileToken(
-    turnstileToken,
-    getClientIp(request),
-  );
-
-  if (!verified) {
-    return NextResponse.json(
-      { error: "Verification failed. Please try again." },
-      { status: 403 },
-    );
-  }
-
   const email = normalizeEmail(body.email);
   const sessionId =
     typeof body.sessionId === "string" ? body.sessionId.trim() : "";
-
-  if (!email) {
-    return NextResponse.json(
-      { error: "Please enter a valid work email." },
-      { status: 400 },
-    );
-  }
 
   if (!sessionId || sessionId.length > 128) {
     return NextResponse.json(
@@ -56,8 +40,34 @@ export async function POST(request: Request) {
     );
   }
 
+  if (!isHumanVerified(sessionId)) {
+    const turnstileToken = readTurnstileToken(body);
+    const verified = await verifyTurnstileToken(
+      turnstileToken,
+      getClientIp(request),
+    );
+
+    if (!verified) {
+      return NextResponse.json(
+        { error: "Verification failed. Please try again." },
+        { status: 403 },
+      );
+    }
+
+    markHumanVerified(sessionId);
+  }
+
+  if (!email) {
+    return NextResponse.json(
+      { error: "Please enter a valid email." },
+      { status: 400 },
+    );
+  }
+
+  let summary: string | null = null;
+
   try {
-    await captureChatLead(sessionId, email);
+    summary = await captureChatLead(sessionId, email);
   } catch {
     return NextResponse.json(
       { error: "We couldn’t save your email. Please try again." },
@@ -65,5 +75,5 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, summary });
 }

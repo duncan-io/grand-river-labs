@@ -1,7 +1,8 @@
 "use client";
 
+import { BookCallLink } from "./book-call-link";
+
 import { useMemo, useState } from "react";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import {
   DEFAULT_ASSUMPTIONS,
   DEFAULT_FRACTIONAL_MONTHLY,
@@ -419,15 +420,12 @@ export function FractionalTeamCalculator() {
                 </div>
               </div>
 
-              <a
+              <BookCallLink
                 className="button button-primary calc-results__cta"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Book a 30-minute fit call
                 <Arrow />
-              </a>
+              </BookCallLink>
             </div>
           </aside>
         </div>

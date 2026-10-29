@@ -72,6 +72,7 @@ export interface Config {
     categories: Category;
     authors: Author;
     posts: Post;
+    'case-studies': CaseStudy;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -246,6 +248,60 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  title: string;
+  /**
+   * Shown at the top of the study and on the index cards.
+   */
+  featuredImage?: (number | null) | Media;
+  slug: string;
+  excerpt?: string | null;
+  /**
+   * Anonymous descriptor shown on the card, e.g. Midwest HVAC consolidator · 38 brands.
+   */
+  clientLabel?: string | null;
+  /**
+   * The headline number, e.g. +78%.
+   */
+  resultStat?: string | null;
+  /**
+   * What the number measures, e.g. Organic leads, year over year.
+   */
+  resultLabel?: string | null;
+  /**
+   * Supporting context, e.g. FY2024 to FY2025.
+   */
+  resultDetail?: string | null;
+  publishedAt?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Overrides the title in search results and the browser tab.
+   */
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -287,6 +343,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -408,6 +468,27 @@ export interface PostsSelect<T extends boolean = true> {
   publishedAt?: T;
   author?: T;
   categories?: T;
+  content?: T;
+  metaTitle?: T;
+  metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  title?: T;
+  featuredImage?: T;
+  slug?: T;
+  excerpt?: T;
+  clientLabel?: T;
+  resultStat?: T;
+  resultLabel?: T;
+  resultDetail?: T;
+  publishedAt?: T;
   content?: T;
   metaTitle?: T;
   metaDescription?: T;

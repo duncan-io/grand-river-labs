@@ -1,6 +1,6 @@
+import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
-import { BOOK_CALL_HREF } from "@/lib/site";
 import { Arrow } from "./site-header";
 import { WhiteGloveEngagement } from "./white-glove-engagement";
 
@@ -304,15 +304,12 @@ export function BpaSections() {
               time chasing status and more time on work that matters.
             </p>
             <div className="bpa-hero__actions">
-              <a
+              <BookCallLink
                 className="button button-primary"
-                href={BOOK_CALL_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Book a call
                 <Arrow />
-              </a>
+              </BookCallLink>
               <a className="button button-secondary" href="#examples">
                 See examples
                 <Arrow />
@@ -427,15 +424,12 @@ export function BpaCta() {
             for themselves—and automate them across the tools you already trust.
           </p>
           <div className="use-cases-cta__buttons">
-            <a
+            <BookCallLink
               className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />
-            </a>
+            </BookCallLink>
             <a className="button button-secondary" href="/use-cases">
               Browse use cases
               <Arrow />

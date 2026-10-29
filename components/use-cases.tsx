@@ -1,4 +1,4 @@
-import { BOOK_CALL_HREF } from "@/lib/site";
+import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./site-header";
 
 const useCases = [
@@ -96,15 +96,12 @@ export function UseCasesCta() {
               Get in touch
               <Arrow />
             </a>
-            <a
+            <BookCallLink
               className="button button-secondary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />
-            </a>
+            </BookCallLink>
           </div>
         </div>
       </div>

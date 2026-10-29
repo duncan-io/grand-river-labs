@@ -1,15 +1,24 @@
-import { BOOK_CALL_HREF } from "@/lib/site";
-import { testimonials, formatTestimonialName } from "@/lib/testimonials";
+import { BookCallLink } from "./book-call-link";
+import { testimonials } from "@/lib/testimonials";
 import { Arrow } from "./site-header";
+
+const featuredCaseStudy = {
+  href: "/case-studies/38-hvac-brand-sites",
+  stat: "+78%",
+  label: "Organic leads, year over year",
+  client: "Midwest HVAC consolidator · 38 brands",
+  summary:
+    "Ownership, one content strategy run across every brand, and conversion work on the pages that already had traffic.",
+};
 
 const results = [
   {
     label: "Clear priorities every month",
-    href: "/search-engine-optimization",
+    href: "#how-we-work",
   },
   {
     label: "Budget going where it works",
-    href: "/website-strategy",
+    href: "#leadership",
   },
   {
     label: "Numbers you can trust",
@@ -126,6 +135,27 @@ const useCases = [
   },
 ];
 
+export function FeaturedCaseStudy() {
+  return (
+    <section className="featured-study" aria-label="Featured case study">
+      <div className="shell featured-study__layout">
+        <p className="case-study-stat">
+          <span className="case-study-stat__value">{featuredCaseStudy.stat}</span>
+          <span className="case-study-stat__label">{featuredCaseStudy.label}</span>
+        </p>
+        <div>
+          <p className="featured-study__client">{featuredCaseStudy.client}</p>
+          <p className="featured-study__summary">{featuredCaseStudy.summary}</p>
+          <a className="featured-study__more" href={featuredCaseStudy.href}>
+            Read the case study
+            <Arrow />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function ResultsBar() {
   return (
     <section className="results-bar" id="results" aria-label="Outcomes">
@@ -151,12 +181,12 @@ export function LeadershipSection() {
       <div className="shell">
         <div className="services__top reveal">
           <div>
-            <p className="eyebrow">What senior leadership looks like</p>
+            <p className="eyebrow">What you get</p>
             <h2 className="section-heading">The decisions, owned.</h2>
           </div>
           <p className="section-copy">
-            A senior leader accountable for the calls that move the business,
-            not a stack of channel reports. You keep the final say.
+            The calls that move the business, made and carried out — not a
+            stack of channel reports. You keep the final say.
           </p>
         </div>
 
@@ -183,10 +213,10 @@ export function ServicesSection() {
             <h2 className="section-heading">And the work gets done.</h2>
           </div>
           <p className="section-copy">
-            Decisions don&apos;t stall here. The same engagement covers SEO,
-            the site, ads, analytics, and the routing between them. Automation
-            keeps tracking honest and leads moving while they&apos;re warm, so
-            the work compounds instead of sitting in a deck.
+            The same engagement covers SEO, the site, ads, analytics, and the
+            routing between them. Tracking stays honest and leads keep moving
+            while they&apos;re warm, so the work compounds instead of sitting
+            in a deck.
           </p>
         </div>
 
@@ -221,33 +251,28 @@ export function TestimonialsSection() {
             Results that feel personal.
           </h2>
           <p className="testimonials__more">
-            <a href="/testimonials">All testimonials →</a>
+            <a href="/work">See the work →</a>
           </p>
         </div>
       </div>
 
-      <div
-        className="testimonials__scroller reveal"
-        role="region"
-        aria-label="Client testimonials"
-        tabIndex={0}
-      >
-        <div className="testimonials__track">
+      <div className="shell">
+        <ul className="testimonials__grid reveal">
           {testimonials.map((item) => (
-            <blockquote className="testimonial" key={item.name}>
-              <span className="testimonial__mark" aria-hidden="true">
-                “
-              </span>
-              <p className="testimonial__quote">{item.quote}</p>
-              <footer className="testimonial__attribution">
-                <cite className="testimonial__name">
-                  {formatTestimonialName(item.name)}
-                </cite>
-                <span className="testimonial__role">{item.role}</span>
-              </footer>
-            </blockquote>
+            <li key={item.name}>
+              <blockquote className="testimonial">
+                <span className="testimonial__mark" aria-hidden="true">
+                  “
+                </span>
+                <p className="testimonial__quote">{item.quote}</p>
+                <footer className="testimonial__attribution">
+                  <cite className="testimonial__name">{item.name}</cite>
+                  <span className="testimonial__role">{item.role}</span>
+                </footer>
+              </blockquote>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
@@ -298,15 +323,12 @@ export function ProcessSection() {
             Then we do it again—same partner, tighter plan.
           </p>
           <div className="process__cta">
-            <a
+            <BookCallLink
               className="button button-primary"
-              href={BOOK_CALL_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Book a call
               <Arrow />
-            </a>
+            </BookCallLink>
             <a className="process__contact-link" href="#contact">
               Or tell us what&apos;s getting in the way →
             </a>
