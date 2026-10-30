@@ -1056,6 +1056,68 @@ button.site-nav__trigger {
   color: var(--accent);
 }
 
+.fix-value__compare {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fix-value__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 0;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--surface);
+}
+
+.fix-value__card--difference {
+  border-color: transparent;
+  background: var(--accent-dark);
+  color: #f4fbf9;
+}
+
+.fix-value__label {
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fix-value__card--difference .fix-value__label {
+  color: #8bd0ca;
+}
+
+.fix-value__value {
+  margin: 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  font-weight: 560;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.fix-value__note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.fix-value__card--difference .fix-value__note {
+  color: rgba(244, 251, 249, 0.78);
+}
+
+.fix-value__note--disclaimer {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+}
+
 .execution {
   position: relative;
   overflow: hidden;
@@ -10358,6 +10420,7 @@ button.site-nav__trigger {
   .offerings__grid,
   .services__grid,
   .engagement-compare,
+  .fix-value__compare,
   .use-cases-strip__list {
     grid-template-columns: 1fr;
   }

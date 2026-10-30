@@ -3,6 +3,7 @@ import { renderInline } from "@/components/inline-links";
 import { testimonials } from "@/lib/testimonials";
 import { DepartmentHeroScene } from "./department-hero-scene";
 import { EngagementBlock } from "./engagement-block";
+import { FixValueSection } from "./fix-value";
 import { NicheStrip } from "./niche-page";
 import { FeaturedCaseStudy } from "./sections";
 import { Arrow } from "./site-header";
@@ -246,6 +247,8 @@ export function FractionalDigitalDepartmentSections() {
           </p>
         </div>
       </section>
+
+      <FixValueSection />
 
       <section className="section fdd-levers" id="what-the-work-can-touch">
         <div className="shell">

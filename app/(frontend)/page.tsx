@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ContactSection } from "@/components/contact";
 import { EngagementBlock } from "@/components/engagement-block";
+import { FixValueSection } from "@/components/fix-value";
 import { Hero } from "@/components/hero";
 import {
   FeaturedCaseStudy,
@@ -49,6 +50,7 @@ export default function Home() {
         <FeaturedCaseStudy />
         <ResultsBar />
         <LeadershipSection />
+        <FixValueSection />
         <EngagementBlock />
         <ProcessSection />
         <ServicesSection />
