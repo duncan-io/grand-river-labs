@@ -16,51 +16,51 @@ const friction = [
     copy: "The page exists. It doesn't answer the question someone typed. Search sends them to a page that does.",
   },
   {
-    title: "Findability rented from ads",
-    copy: "The only way in is a paid click. Turn the spend off and the inquiries stop, because nothing on the site compounds.",
+    title: "No way to know if it's working",
+    copy: "The SEO vendor reports rankings and traffic. Nobody checks whether either one produces leads, or whether the work is worth what it costs.",
   },
 ];
 
 const ways = [
   {
-    title: "Technical foundation",
+    title: "Technical foundation, audited",
     lead: "Search has to reach the page before it can understand it.",
     setup:
-      "Crawl, indexation, structure, and speed—fixed where they block the pages that should be found.",
+      "Crawl, indexation, structure, and speed reviewed—what blocks the pages that should be found, and what to tell whoever fixes it.",
     outcome:
-      "A site search engines can actually read, not a pile of pages that never get seen.",
+      "A clear picture of what's technically in the way, with priorities your team or vendor can act on.",
   },
   {
     title: "Titles, headings, and page structure",
     lead: "The page should say what it is, in the words people search.",
     setup:
-      "Titles, headings, and the order of the page rewritten around the service and the place you work.",
+      "What each important page says now, checked against the queries that should win the work.",
     outcome:
-      "Listings and pages that match the query, instead of a brand name and a slogan.",
+      "Specific direction on titles and structure, instead of a brand name and a slogan.",
   },
   {
-    title: "Search-intent content recommendations",
+    title: "Which pages are worth writing",
     lead: "Recommend the pages worth writing. Don't manufacture a blog for its own sake.",
     setup:
       "A short list of pages and changes aligned to how people look for the work you want.",
     outcome:
-      "Content that answers a real search—not a calendar of posts nobody asked for.",
+      "Content priorities that answer a real search—not a calendar of posts nobody asked for.",
   },
   {
-    title: "Internal paths between pages",
-    lead: "Important pages should be easy to reach, for people and for search.",
+    title: "Rankings checked against leads",
+    lead: "A ranking nobody searches for, and traffic that never calls, are not results.",
     setup:
-      "Links between services, locations, and the pages that should carry the business.",
+      "Positions and traffic read next to calls, forms, and booked jobs—not in isolation.",
     outcome:
-      "A site that points at the work you want, instead of a homepage that holds everything.",
+      "Whether SEO is actually producing work, and what that work costs to acquire.",
   },
   {
-    title: "The SEO backlog, owned",
-    lead: "Recommendations don't help if they sit in a doc.",
+    title: "The SEO vendor, held to it",
+    lead: "Most SEO reports are written by the people being paid.",
     setup:
-      "The fixes that matter get prioritized and shipped as part of looking after the site.",
+      "What the agency or freelancer actually delivered each month, checked against what was promised and what moved.",
     outcome:
-      "Findability that keeps moving, instead of an audit that expires on a shelf.",
+      "An honest verdict on the current provider: keep, redirect, or replace—and help choosing the next one.",
   },
 ];
 
@@ -70,16 +70,16 @@ const steps = [
     copy: "We look at how people search for the work you want—and which of those searches the site can honestly show up for.",
   },
   {
-    title: "Find the blockers",
-    copy: "We find what keeps those pages from being crawled, understood, or matched to the query.",
+    title: "Audit the site and the vendor",
+    copy: "We review what's technically in the way, what the current SEO provider is actually doing, and whether the results match the invoice.",
   },
   {
-    title: "Fix and recommend",
-    copy: "We fix the structure, titles, and pages that are in the way, and recommend the few new pages worth writing. This is on-site work, not a link-building program.",
+    title: "Set the priorities",
+    copy: "A short list of what's worth fixing or writing first, ranked by likely impact—not a link-building program and not a content mill.",
   },
   {
-    title: "Let it compound",
-    copy: "Search is slow. We keep the foundation healthy so findability builds, instead of renting every visit from ads.",
+    title: "Check the work",
+    copy: "Your team or the vendor ships the changes. We verify what moved—rankings, traffic, and the leads both turn into.",
   },
 ];
 
@@ -330,14 +330,14 @@ export function SeoSections() {
         </div>
         <div className="shell">
           <div className="seo-hero__content">
-            <p className="eyebrow">SEO</p>
+            <p className="eyebrow">SEO strategy &amp; advisory</p>
             <h1 className="seo-hero__headline">
-              Get found for the searches that win the work.
+              Know whether your SEO is actually working.
             </h1>
             <p className="seo-hero__copy">
-              Structure, titles, and pages aligned to how people actually
-              search—so findability compounds, and growth isn&apos;t rented from
-              ads.
+              Rankings and traffic checked against leads and booked jobs. What
+              to fix, what to write, and what to ask of whoever does the
+              work—strategy and oversight, not another content mill.
             </p>
             <div className="seo-hero__actions">
               <BookCallLink
@@ -369,8 +369,8 @@ export function SeoSections() {
             </div>
             <p className="section-copy">
               Most sites aren&apos;t missing a trick. They&apos;re missing pages
-              search can read, titles that match the query, and someone who
-              ships the fixes.
+              search can read, titles that match the query—and anyone checking
+              whether the SEO invoice is producing work.
             </p>
           </div>
           <div className="seo-friction__grid reveal">
@@ -392,11 +392,12 @@ export function SeoSections() {
           <div className="seo-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">What on-site SEO includes.</h2>
+              <h2 className="section-heading">What SEO advisory includes.</h2>
             </div>
             <p className="section-copy">
-              Structure, titles, crawlability, and content aligned to search
-              intent. Not links, and not a blog produced for its own sake.
+              Strategy, priorities, and oversight—not links, not a blog produced
+              for its own sake, and not reports written by the person being
+              paid.
             </p>
           </div>
           <div className="seo-ways__grid reveal">
@@ -426,10 +427,10 @@ export function SeoSections() {
           <div className="seo-flow__top reveal">
             <div>
               <p className="eyebrow">How it works</p>
-              <h2 className="section-heading">Fix the site. Then let it build.</h2>
+              <h2 className="section-heading">Strategy first. Someone else can ship it.</h2>
             </div>
             <p className="section-copy">
-              This is on-site work, not a link-building program. Once someone
+              This is advisory and oversight, not production. Once someone
               arrives,{" "}
               <Link href="/conversion-rate-optimization">CRO</Link> is how the
               visit becomes a conversation.
@@ -469,15 +470,12 @@ export function SeoSections() {
           </ol>
           <p className="fwd-services__also reveal">
             <span className="fwd-services__also-label">Part of the bigger picture</span>
-            SEO is one lever, and it sits inside our{" "}
-            <Link href="/website-strategy">Website Partner</Link>
-            —the same site, owned and kept converting. Whether search is the
-            right lever right now depends on everything else. That&apos;s what
-            the{" "}
-            <Link href="/fractional-digital-department">
-              Fractional Digital Department
-            </Link>{" "}
-            figures out.
+            SEO is one channel, and whether it deserves the next dollar depends
+            on everything else—tracking, leaks, the other vendors. That&apos;s
+            what{" "}
+            <Link href="/marketing-advisory">marketing advisory</Link>{" "}
+            figures out, starting with a{" "}
+            <Link href="/lead-leak-audit">lead leak audit</Link>.
           </p>
         </div>
       </section>

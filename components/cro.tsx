@@ -453,14 +453,13 @@ export function CroSections() {
           </ol>
           <p className="fwd-services__also reveal">
             <span className="fwd-services__also-label">Part of the bigger picture</span>
-            CRO is one lever, and it sits inside our{" "}
-            <Link href="/website-strategy">Website Partner</Link>
-            —the same site, owned end to end. Whether conversion is the right
-            lever right now depends on everything else. That&apos;s what the{" "}
-            <Link href="/fractional-digital-department">
-              Fractional Digital Department
-            </Link>{" "}
-            figures out.
+            CRO is one lever. Whether conversion is the right place to start
+            depends on whether the tracking is honest and where the leaks
+            actually are. That&apos;s what a{" "}
+            <Link href="/lead-leak-audit">lead leak audit</Link>{" "}
+            finds, and what{" "}
+            <Link href="/marketing-advisory">marketing advisory</Link>{" "}
+            keeps deciding month after month.
           </p>
         </div>
       </section>

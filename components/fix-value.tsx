@@ -63,7 +63,7 @@ export function FixValueSection() {
           <p className="fix-value__disclaimer">
             The numbers are an example, not a client result.
           </p>
-          <a className="fix-value__more" href="/conversion-rate-optimization">
+          <a className="fix-value__more" href="/lead-leak-audit">
             Find your leaks
             <Arrow />
           </a>

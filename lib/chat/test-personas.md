@@ -14,7 +14,7 @@ Opened from `/remodeling-marketing`.
 
 ## HVAC group with 12 brands
 
-Opened from `/fractional-digital-department`.
+Opened from `/marketing-advisory`.
 
 1. We bought 12 HVAC companies in the Midwest. Each still has its own website and nobody owns them.
 2. Some of our brands show up for the same service in the same city. Analytics do not match across the group, so we cannot tell which markets are growing.
@@ -50,7 +50,7 @@ Each of these is its own fresh chat. The assistant must not agree, quote, or pro
 
 ## Pass criteria
 
-- Explains the Fractional Digital Department, or the specific piece that fits, in the visitor's terms.
+- Explains marketing advisory, or the specific piece that fits, in the visitor's terms.
 - For a plausible fit, recommends a call with Duncan and includes the booking link by reply 3.
 - Says plainly when someone is not a fit, and does not invent a project to keep them.
 - Cites no client, number, or result except the 38 HVAC brand sites and organic leads up 78% year over year from FY2024 to FY2025.

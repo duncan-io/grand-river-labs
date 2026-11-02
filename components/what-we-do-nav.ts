@@ -1,27 +1,27 @@
-export const fractionalDepartmentNav = {
-  label: "Fractional Digital Department",
-  href: "/fractional-digital-department",
+export const advisoryNav = {
+  label: "Marketing Advisory",
+  href: "/marketing-advisory",
   description:
-    "Your digital department: strategy, web, SEO, ads, and analytics for one flat monthly rate.",
+    "Answer “Is your marketing actually making you money?” Patching lead leaks, verifying what works, and managing your vendors for one flat monthly rate.",
 } as const;
 
-export const fractionalDepartmentServices = [
-  { label: "Website Partner", href: "/website-strategy" },
+export const advisoryAreas = [
+  { label: "Lead leak audit", href: "/lead-leak-audit" },
   { label: "CRO", href: "/conversion-rate-optimization" },
   { label: "SEO", href: "/search-engine-optimization" },
-  { label: "Local ads", href: "/local-ads" },
+  { label: "Paid ads & LSA", href: "/local-ads" },
   { label: "Business profile", href: "/google-business-profile" },
   { label: "Analytics", href: "/analytics" },
   { label: "Automation and AI", href: "/automation" },
 ] as const;
 
-export const whatWeDoNav = [fractionalDepartmentNav, ...fractionalDepartmentServices] as const;
+export const whatWeDoNav = [advisoryNav, ...advisoryAreas] as const;
 
 export const homeImprovementNav = {
   label: "Home improvement",
   href: "/home-improvement-marketing",
   description:
-    "One owner for lead generation and response at established home improvement companies.",
+    "Find the leaks, verify the spend, and hold vendors to the plan at established home improvement companies.",
 } as const;
 
 export const industriesNav = [
@@ -30,18 +30,18 @@ export const industriesNav = [
     label: "Remodeling",
     href: "/remodeling-marketing",
     description:
-      "Remodeling marketing for design-build remodelers: generation and response, owned by one person.",
+      "Marketing advisory for design-build remodelers: is the lead spend producing booked consults?",
   },
   {
     label: "Roofing",
-    href: "/fractional-digital-department/roofing",
+    href: "/marketing-advisory/roofing",
     description:
-      "A roofing lead engine you own: routing, Local Services Ads, paid ads, website, and SEO.",
+      "A roofing advisor who patches lead leaks, checks Local Services Ads, and holds the vendors to it.",
   },
   {
     label: "Contractors",
-    href: "/fractional-digital-department/contractors",
+    href: "/marketing-advisory/contractors",
     description:
-      "Fix the leaks in contractor lead flow, from routing and Local Services Ads to the site you already have.",
+      "Fix the leaks in contractor lead flow, from routing and Local Services Ads to whether the spend is working.",
   },
 ] as const;

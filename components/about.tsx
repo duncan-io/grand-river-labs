@@ -6,24 +6,25 @@ const comparisons = [
   {
     dimension: "Who decides the work",
     agency: "You brief a channel. The agency executes what you asked for.",
-    fractional: "We look at the whole picture and do what needs doing.",
+    fractional:
+      "We look at the whole picture and make the call on what's next.",
   },
   {
     dimension: "What the engagement covers",
     agency: "Usually one channel, scoped as its own retainer.",
     fractional:
-      "The mix flexes across the site, search, ads, measurement, and automation.",
+      "Every channel, checked—plus the leaks where leads are lost.",
   },
   {
     dimension: "Who you talk to",
     agency: "An account team, with handoffs between planning and execution.",
     fractional:
-      "The owner. The person who sets the priorities is the person doing the work.",
+      "The owner. The person who makes the calls is the person on the call.",
   },
   {
-    dimension: "Work nobody named",
-    agency: "It waits until you ask. Unnamed work does not start.",
-    fractional: "We find it and take it on.",
+    dimension: "Who checks the work",
+    agency: "The agency reports on the agency. Nobody verifies it.",
+    fractional: "Vendor reports reconciled against your CRM, lead by lead.",
   },
   {
     dimension: "How you're billed",
@@ -33,15 +34,14 @@ const comparisons = [
   {
     dimension: "Specialists",
     agency: "The work stays inside the channel they were hired for.",
-    fractional:
-      "We coordinate existing vendors when they are the better fit.",
+    fractional: "We manage existing vendors when they are the better fit.",
   },
 ] as const;
 
 const changes = [
   {
     title: "Someone owns the picture",
-    copy: "Agencies and specialists each optimize their own part. GR Labs stays with the goals, the channel mix, and the measurement, and decides where effort goes. That working model is the [fractional digital department](/fractional-digital-department).",
+    copy: "Agencies and specialists each optimize their own part, and report on it themselves. GR Labs stays with the goals, the channel mix, and the measurement—and decides where effort goes. That working model is [marketing advisory](/marketing-advisory).",
   },
   {
     title: "You work with the owner",
@@ -49,7 +49,7 @@ const changes = [
   },
   {
     title: "One rate for the mix",
-    copy: "Starting at $2,500 a month, priced against the work that matters. One engagement, not a quote for each channel. [Compare that with the team you would hire](/fractional-digital-team-calculator).",
+    copy: "Starting at $2,500 a month, priced against the work that matters. One engagement, not a quote for each channel—and no long contracts.",
   },
 ] as const;
 
@@ -60,9 +60,9 @@ const fits = [
     copy: "You already have someone setting priorities, and you need one channel executed well. Agencies can also partner with us under a [white-label arrangement](/white-label): we show up as the delivery bench.",
   },
   {
-    label: "Fractional team",
-    title: "When a fractional team is the right call",
-    copy: "The business relies on a website, tools, and digital channels, and nobody experienced owns the whole picture. If a marketing team is already in place, GR Labs fills the gap of someone who decides where effort goes.",
+    label: "Marketing advisor",
+    title: "When an advisor is the right call",
+    copy: "The business has marketing running—ads, SEO, vendors, a site—but nobody who can answer \"is it working?\" with evidence. GR Labs patches the leaks, verifies the spend, and holds the vendors to the plan.",
   },
 ] as const;
 
@@ -73,13 +73,13 @@ export function AboutSections() {
         <div className="shell about-hero__content">
           <p className="eyebrow">About GR Labs</p>
           <h1 className="about-hero__headline">
-            <span>An agency waits for the brief.</span>
-            <span>A fractional team finds the work.</span>
+            <span>An agency sells you more marketing.</span>
+            <span>An advisor tells you which marketing works.</span>
           </h1>
           <p className="about-hero__support">
-            Grand River Labs is a fractional digital marketing team for
-            owner-led growing businesses. We look across the website, channels,
-            and measurement, then do the work—without a full-time hire.
+            Grand River Labs is a marketing advisor for owner-led growing
+            businesses. We patch the leaks where leads are lost, verify which
+            spend is actually working, and manage the vendors who do the rest.
           </p>
           <div className="about-hero__actions">
             <BookCallLink
@@ -88,8 +88,8 @@ export function AboutSections() {
               Book a 30-minute fit call
               <Arrow />
             </BookCallLink>
-            <a className="about-hero__link" href="/fractional-digital-department">
-              See how the department works →
+            <a className="about-hero__link" href="/marketing-advisory">
+              See how the advisory works →
             </a>
           </div>
         </div>
@@ -103,9 +103,8 @@ export function AboutSections() {
               <h2 className="section-heading">Same words. A different job.</h2>
             </div>
             <p className="section-copy">
-              An agency is hired for a channel and waits for direction. A
-              fractional digital marketing team is hired to own the picture and
-              do what needs doing.
+              An agency is hired for a channel and reports on itself. An
+              advisor is hired to answer “is it working?”—with evidence.
             </p>
           </div>
 
@@ -116,7 +115,7 @@ export function AboutSections() {
                 An agency
               </span>
               <span className="about-compare__col about-compare__col--team">
-                A fractional team
+                An advisor
               </span>
             </div>
             {comparisons.map((row) => (
@@ -127,7 +126,7 @@ export function AboutSections() {
                   {row.agency}
                 </p>
                 <p className="about-compare__cell about-compare__cell--team">
-                  <span className="about-compare__side">A fractional team</span>
+                  <span className="about-compare__side">An advisor</span>
                   {row.fractional}
                 </p>
               </article>
@@ -135,8 +134,7 @@ export function AboutSections() {
           </div>
 
           <p className="about-compare__promise reveal">
-            Not an agency. A fractional digital marketing team for the whole
-            picture.
+            Not another vendor. An advisor for the whole picture.
           </p>
         </div>
       </section>
@@ -180,7 +178,7 @@ export function AboutSections() {
             </div>
             <p className="section-copy">
               A defined channel with someone already setting priorities is an
-              agency job. A picture nobody owns is a fractional team job.
+              agency job. A spend nobody verifies is an advisor job.
             </p>
           </div>
           <div className="about-fit__grid reveal">

@@ -39,9 +39,9 @@ const firstSteps = [
     copy: "Before we bring in a single new lead, the ones you already get have to reach someone. [Routing, a missed-call text](/marketing-automation), follow-up, and quote forms that work on a phone.",
   },
   {
-    label: "Build",
-    title: "Build what you own",
-    copy: "Then we build the channels you keep: the profile, Local Services Ads, project pages on [your site](/website-strategy), and [an audit of the ad spend you already make](/local-ads).",
+    label: "Verify",
+    title: "Check the spend",
+    copy: "Then we verify what each channel produces: the profile, Local Services Ads, [the ad spend you already make](/local-ads), and the vendors running them—judged on design appointments, not lead counts.",
   },
 ];
 
@@ -50,19 +50,19 @@ const engine = [
     icon: "Rank",
     label: "Bring leads in",
     title: "Local Services Ads and Google Ads",
-    copy: "We set up Local Services Ads so you pay for leads that contact you, not shared ones. On Google Ads, [we audit the spend you already make](/local-ads) and tell you what to cut. We advise. We don't sell you a bigger budget.",
+    copy: "We set the direction for Local Services Ads so you pay for leads that contact you, not shared ones. On Google Ads, [we audit the spend you already make](/local-ads), check the reported leads against your CRM, and tell you what to cut. We advise. We don't sell you a bigger budget.",
   },
   {
     icon: "Target",
     label: "Bring leads in",
     title: "Google Business Profile",
-    copy: "A lot of kitchen and bath searches start on the map. We keep your categories, project photos, and reviews matched to the work you want, and link the profile to a page that can book the appointment. [More on the profile](/google-business-profile).",
+    copy: "A lot of kitchen and bath searches start on the map. We check [your categories, project photos, and reviews](/google-business-profile) against the work you want, fix the small leaks, and confirm the profile links to a page that can book the appointment.",
   },
   {
     icon: "Site",
     label: "Bring leads in",
     title: "Website and project pages",
-    copy: "Before/after galleries, project walkthroughs, and cost breakdowns. They rank for the searches homeowners make before they call, and they're the same pieces your designers already use to sell. [The site stays fast](/website-strategy) and every form reaches a person.",
+    copy: "Before/after galleries, project walkthroughs, and cost breakdowns. They rank for the searches homeowners make before they call, and they're the same pieces your designers already use to sell. We check [the forms actually reach a person](/conversion-rate-optimization), and advise what's worth adding.",
   },
   {
     icon: "Route",
@@ -98,7 +98,7 @@ const monthly = [
   {
     label: "Ship",
     title: "Add finished projects",
-    copy: "New galleries and walkthroughs go up as jobs wrap. The portfolio keeps working for search and for the showroom.",
+    copy: "New galleries and walkthroughs are worth adding as jobs wrap—the portfolio keeps working for search and the showroom. We prioritize what goes up; your team or vendor publishes.",
   },
   {
     label: "Plan",
@@ -110,9 +110,9 @@ const monthly = [
 const faqs = [
   {
     question:
-      "Is a fractional digital department worth it for an established remodeling company?",
+      "Is marketing advisory worth it for an established remodeling company?",
     answer:
-      "If you're a design-build or kitchen and bath remodeler with crews or install partners and money already going out for ads or leads, the gap usually isn't more leads. It's that nobody owns the whole path from the first search to the signed contract. We take that seat: we trace where your leads come from, fix where they leak, build the channels you own, and report on signed jobs. [See how the fractional digital department works](/fractional-digital-department).",
+      "If you're a design-build or kitchen and bath remodeler with crews or install partners and money already going out for ads or leads, the gap usually isn't more leads. It's that nobody checks the whole path from the first search to the signed contract. We take that seat: we trace where your leads come from, patch where they leak, verify what the spend produces, and report on signed jobs. [See how marketing advisory works](/marketing-advisory).",
   },
   {
     question: "Why do remodeling leads go unanswered?",
@@ -122,7 +122,7 @@ const faqs = [
   {
     question: "How is this different from a kitchen and bath marketing agency?",
     answer:
-      "An agency usually sells you a channel, hands the account to a junior, and sends a report full of impressions. We own the whole path: the site, Local Services Ads, ad advisory, the Google Business Profile, routing, follow-up, and project content working together. No long contracts, and [reporting on leads and signed jobs](/analytics) instead of vanity metrics.",
+      "An agency usually sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the agency. We answer to your numbers: Local Services Ads, ad advisory, the Google Business Profile, routing, follow-up, and project content checked against signed jobs. No long contracts, and [reporting on leads and signed jobs](/analytics) instead of vanity metrics.",
   },
   {
     question: "Do you run our ads, or just advise?",
@@ -145,10 +145,10 @@ export function RemodelingMarketingSections() {
               Remodeling Marketing for Design-Build Remodelers
             </h1>
             <p className="mkt-hero__copy">
-              Grand River Labs becomes your digital department. Our remodeling
-              marketing covers both halves: we build what brings kitchen and
-              bath leads in, and we make sure each one gets to a design
-              appointment.
+              Grand River Labs becomes your marketing advisor. We patch the
+              leaks between a kitchen and bath lead and a design appointment,
+              verify what the spend actually produces, and hold your vendors to
+              the plan.
             </p>
             <div className="mkt-hero__actions">
               <BookCallLink
@@ -227,7 +227,7 @@ export function RemodelingMarketingSections() {
             ))}
           </div>
           <p className="fdd-problem__insight reveal">
-            We do the work. You don&apos;t get a deck and a to-do list.
+            The leaks get fixed, not documented. You don&apos;t get a deck and a to-do list.
           </p>
         </div>
       </section>
@@ -242,7 +242,7 @@ export function RemodelingMarketingSections() {
               </h2>
               <p className="section-copy">
                 {renderInline(
-                  "Most remodelers pay for the first half and leave the second to whoever answers the phone. [We own both](/fractional-digital-department), so a lead doesn't fall through the gap between them.",
+                  "Most remodelers pay for the first half and leave the second to whoever answers the phone. [We check both](/marketing-advisory) and patch the gap between them, starting with a [lead leak audit](/lead-leak-audit).",
                 )}
               </p>
             </div>
@@ -311,18 +311,18 @@ export function RemodelingMarketingSections() {
               <p className="eyebrow">The difference</p>
               <h2 className="section-heading fdd-flow__heading">
                 <span>A lead vendor sells you a lead.</span>
-                <span>An agency runs a channel.</span>
-                <span>We own the path from search to signed contract.</span>
+                <span>An agency runs a channel, and reports on itself.</span>
+                <span>We answer for the path from search to signed contract.</span>
               </h2>
             </div>
             <p className="section-copy">
-              One experienced person accountable for the site, the profile,
-              the ads, the routing, and the follow-up, and for whether any of
-              it turns into kitchens and baths.
+              One experienced advisor checking the profile, the ads, the
+              routing, and the follow-up—and for whether any of it turns into
+              kitchens and baths.
             </p>
           </div>
           <p className="fdd-flow__promise reveal">
-            One owner. Both halves. Reporting on signed jobs.
+            One advisor. Both halves. Reporting on signed jobs.
           </p>
         </div>
       </section>

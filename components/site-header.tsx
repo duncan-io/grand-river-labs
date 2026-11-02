@@ -3,11 +3,7 @@
 import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 import { BookCallLink } from "./book-call-link";
-import {
-  fractionalDepartmentNav,
-  fractionalDepartmentServices,
-  industriesNav,
-} from "./what-we-do-nav";
+import { advisoryAreas, advisoryNav, industriesNav } from "./what-we-do-nav";
 
 const Arrow = () => (
   <svg
@@ -243,16 +239,16 @@ export function SiteHeader({
             </button>
             <div className="site-nav__dropdown" id={whatWeDoId}>
               <div className="nav-group">
-                <a className="nav-group__parent" href={fractionalDepartmentNav.href}>
-                  <span className="nav-group__label">{fractionalDepartmentNav.label}</span>
-                  <span className="nav-group__desc">{fractionalDepartmentNav.description}</span>
+                <a className="nav-group__parent" href={advisoryNav.href}>
+                  <span className="nav-group__label">{advisoryNav.label}</span>
+                  <span className="nav-group__desc">{advisoryNav.description}</span>
                 </a>
-                <span className="nav-group__areas-label">What the work can touch</span>
+                <span className="nav-group__areas-label">Where we look</span>
                 <div
                   className="nav-group__children"
-                  aria-label={`${fractionalDepartmentNav.label} areas of work`}
+                  aria-label={`${advisoryNav.label} areas`}
                 >
-                  {fractionalDepartmentServices.map((item) => (
+                  {advisoryAreas.map((item) => (
                     <a href={item.href} key={item.href}>
                       {item.label}
                     </a>
@@ -315,18 +311,18 @@ export function SiteHeader({
               <div className="nav-group">
                 <a
                   className="nav-group__parent"
-                  href={fractionalDepartmentNav.href}
+                  href={advisoryNav.href}
                   onClick={closeMenu}
                 >
-                  <span className="nav-group__label">{fractionalDepartmentNav.label}</span>
-                  <span className="nav-group__desc">{fractionalDepartmentNav.description}</span>
+                  <span className="nav-group__label">{advisoryNav.label}</span>
+                  <span className="nav-group__desc">{advisoryNav.description}</span>
                 </a>
-                <span className="nav-group__areas-label">What the work can touch</span>
+                <span className="nav-group__areas-label">Where we look</span>
                 <div
                   className="nav-group__children"
-                  aria-label={`${fractionalDepartmentNav.label} areas of work`}
+                  aria-label={`${advisoryNav.label} areas`}
                 >
-                  {fractionalDepartmentServices.map((item) => (
+                  {advisoryAreas.map((item) => (
                     <a href={item.href} key={item.href} onClick={closeMenu}>
                       {item.label}
                     </a>

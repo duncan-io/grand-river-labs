@@ -6,9 +6,9 @@ import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/remodeling-marketing" },
-  title: "Remodeling Marketing for Design-Build Remodelers | Grand River Labs",
+  title: "Remodeling Marketing Advisory | Grand River Labs",
   description:
-    "A fractional digital department for design-build remodelers doing $1M–$10M. One owner for kitchen and bath leads and the reply that books the job.",
+    "Marketing advisory for design-build remodelers doing $1M–$10M. Patch the leaks between a kitchen and bath lead and a design appointment, and verify what the spend produces.",
 };
 
 export default function RemodelingMarketingPage() {

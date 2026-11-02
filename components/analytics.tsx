@@ -10,7 +10,7 @@ const friction = [
   },
   {
     title: "Tags without a system",
-    copy: "Pixels and scripts pile up. GTM becomes a junk drawer. Nobody knows what’s firing—or [what breaks when a page ships](/website-strategy).",
+    copy: "Pixels and scripts pile up. GTM becomes a junk drawer. Nobody knows what’s firing—or what breaks when a page ships.",
   },
   {
     title: "Events that don’t mean anything",
@@ -18,7 +18,7 @@ const friction = [
   },
   {
     title: "Attribution guesswork",
-    copy: "UTMs are inconsistent. One published number, so a map call, a Yelp call, and a website call look the same. [Spend and pipeline decisions](/fractional-digital-department) rest on gut feel dressed up as data.",
+    copy: "UTMs are inconsistent. One published number, so a map call, a Yelp call, and a website call look the same. [Spend and pipeline decisions](/marketing-advisory) rest on gut feel dressed up as data.",
   },
 ];
 
@@ -30,6 +30,14 @@ const ways = [
       "GA4 properties, conversions, and reporting shaped to how your business actually works.",
     outcome:
       "Reporting that answers real questions—shared by marketing, sales, and leadership.",
+  },
+  {
+    title: "Platform reports vs. the CRM",
+    lead: "Every vendor reports its own version of success.",
+    setup:
+      "Agency and platform numbers reconciled against the CRM and the booked jobs—lead by lead, not dashboard against dashboard.",
+    outcome:
+      "The real number behind each channel's invoice, ready for the next contract conversation.",
   },
   {
     title: "Google Tag Manager",
@@ -231,9 +239,9 @@ export function AnalyticsSections() {
               Measurement you can make decisions on.
             </h1>
             <p className="analytics-hero__copy">
-              GA4, Tag Manager, event tracking, call tracking, and
-              attribution—set up so marketing, sales, and leadership share one
-              trustworthy story of what&apos;s working.
+              Is it working? GA4, Tag Manager, event tracking, call
+              tracking, and attribution—audited and set up so the numbers answer
+              that question, and vendor reports get checked against reality.
             </p>
             <div className="analytics-hero__actions">
               <BookCallLink
@@ -288,11 +296,12 @@ export function AnalyticsSections() {
           <div className="analytics-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">Ways we help analytics.</h2>
+              <h2 className="section-heading">What we verify, and build.</h2>
             </div>
             <p className="section-copy">
-              We build the stack you need to see, trust, and act—without
-              drowning the team in tags and dashboards nobody believes.
+              First we audit what’s firing and whether it can be trusted.
+              Then we build only the stack you need—without drowning the team in
+              tags and dashboards nobody believes.
             </p>
           </div>
           <div className="analytics-ways__grid reveal">
@@ -331,8 +340,8 @@ export function AnalyticsSections() {
               cleanly, and validate until the numbers match reality. Analytics
               is one lever. Whether measurement is the right place to start
               depends on everything else—that&apos;s what the{" "}
-              <Link className="inline-link" href="/fractional-digital-department">
-                Fractional Digital Department
+              <Link className="inline-link" href="/marketing-advisory">
+                marketing advisory
               </Link>{" "}
               figures out.
             </p>

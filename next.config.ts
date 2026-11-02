@@ -66,12 +66,27 @@ const nextConfig: NextConfig = {
       { source: "/whitelabel", destination: "/white-label", permanent: true },
       {
         source: "/digital-strategy",
-        destination: "/fractional-digital-department",
+        destination: "/marketing-advisory",
         permanent: true,
       },
       {
         source: "/custom-software",
         destination: "/automation",
+        permanent: true,
+      },
+      {
+        source: "/fractional-digital-department/:slug*",
+        destination: "/marketing-advisory/:slug*",
+        permanent: true,
+      },
+      {
+        source: "/website-strategy",
+        destination: "/marketing-advisory",
+        permanent: true,
+      },
+      {
+        source: "/fractional-digital-team-calculator",
+        destination: "/marketing-advisory",
         permanent: true,
       },
       {

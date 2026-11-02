@@ -6,9 +6,9 @@ import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/local-ads" },
-  title: "Local Ads | Grand River Labs",
+  title: "Paid Ads & LSA Advisory | Grand River Labs",
   description:
-    "Google Local Services Ads and local PPC strategy—what to fund, pause, or dispute. Oversight and a specialist when someone else should run the account. Not campaign management.",
+    "Google Ads, Meta, and Local Services Ads strategy—what to fund, pause, or dispute, and verification that reported leads actually show up in the CRM. Oversight and a specialist when someone else should run the account. Not campaign management.",
 };
 
 export default function LocalAdsPage() {
@@ -24,7 +24,7 @@ export default function LocalAdsPage() {
           variant="cta"
           eyebrow="Ready when you are"
           heading="Let's look at what the spend is buying."
-          copy="Tell us how leads find you today. We'll map LSA, local search, and what's worth cutting before anyone adds budget."
+          copy="Tell us what you're spending on ads and what it's produced. We'll check the platforms' numbers against your CRM and say what's worth keeping, disputing, or cutting."
           messageLabel="How do leads find you today?"
           messagePlaceholder="An ads account nobody questions, spend that doesn't turn into calls, leads that don't match the work—start wherever you are."
         />

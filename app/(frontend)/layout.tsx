@@ -17,9 +17,9 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: "Fractional Digital Marketing Team | Grand River Labs",
+  title: "Marketing Advisory & Lead Leak Fixes | Grand River Labs",
   description:
-    "Get the expertise and execution of an in-house digital team without hiring one. GR Labs provides ongoing website management, digital strategy, technical execution, and more.",
+    "Is your marketing actually making you money? GR Labs patches lead leaks, verifies which spend is working, advises on where the budget goes, and manages your vendors.",
   openGraph: {
     siteName: "Grand River Labs",
     type: "website",

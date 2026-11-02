@@ -17,11 +17,11 @@ import { SiteHeader } from "@/components/site-header";
 import { getSiteUrl } from "@/lib/site";
 
 const description =
-  "Senior digital marketing leadership that makes the strategy, budget, and channel decisions — with hands-on execution included, and without the full-time hire.";
+  "Is your marketing actually making you money? Marketing advisory that patches lead leaks, verifies which spend is working, and manages your vendors — without another agency retainer.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  title: "Fractional Digital Marketing Team | Grand River Labs",
+  title: "Marketing Advisory & Lead Leak Fixes | Grand River Labs",
   description,
 };
 
@@ -61,7 +61,7 @@ export default function Home() {
           turnstileSiteKey={turnstileSiteKey}
           variant="cta"
           atmosphere
-          copy="Tell us the marketing decision that's been stuck—where the budget goes, which channel earns a place, what the site is for, or which numbers to trust. We'll help you see what deserves a call now, and we'll get back within two business days."
+          copy="Tell us what you're spending and what you're not sure is working—an agency that reports its own numbers, leads that don't get answered, spend you can't tie to jobs. We'll tell you where the leaks probably are, and we'll get back within two business days."
         />
       </main>
       <SiteFooter />

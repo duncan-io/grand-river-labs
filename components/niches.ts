@@ -77,15 +77,15 @@ export const niches: NicheContent[] = [
   {
     slug: "roofing",
     tileName: "Roofing companies",
-    tileBlurb: "Fractional digital marketing for roofers: a lead engine you own.",
+    tileBlurb: "Roofing marketing advisory: patch the leaks, verify the spend, hold the vendors to it.",
     image: "/niches/roofing.svg",
     metaTitle: "Roofing Marketing for Roofing Companies | Grand River Labs",
     metaDescription:
-      "Fractional roofing marketing: one experienced owner for your whole lead engine, covering lead routing, LSA, ads, website, and SEO. Roofing leads you own, not share.",
+      "Roofing marketing advisory: patch the leaks in your lead flow, verify what the ads actually produce, and hold vendors to the plan—routing, LSA, ads, and SEO. Roofing leads you own, not share.",
     hero: {
-      eyebrow: "Fractional digital marketing for roofing companies",
+      eyebrow: "Roofing marketing advisory",
       headline: "Roofing marketing that builds a lead engine you own.",
-      copy: "The leads you buy get sold to 3–5 other roofers at the same time, and a lot of them are spam. A lead engine you own—your site, your Local Services Ads, your ad accounts, your routing—is run by one experienced person, not a junior account manager.",
+      copy: "The leads you buy get sold to 3–5 other roofers at the same time, and a lot of them are spam. A roofing marketing advisor patches the leaks—missed calls, slow replies, bad routing—verifies what the ad spend actually produces, and holds your vendors to the plan. Not a junior account manager.",
       primaryLabel: "Talk through your lead flow",
       secondaryLabel: "See how it works",
       secondaryHref: "#lead-flow",
@@ -118,8 +118,8 @@ export const niches: NicheContent[] = [
     },
     engine: {
       eyebrow: "The lead engine",
-      heading: "One owner for every channel that brings work in.",
-      copy: "Your site, Local Services Ads, the ad spend you already make, and the routing between them. Not five vendors, and not a monthly report full of impressions.",
+      heading: "One advisor for every channel that brings work in.",
+      copy: "Your spend, Local Services Ads, the routing between them, and the vendors who run them—checked against the calls and jobs they claim. Not five vendors reporting on themselves, and not a monthly report full of impressions.",
       sceneNodes: ["LSA", "Google", "Meta", "Website"],
       cards: [
         {
@@ -138,7 +138,7 @@ export const niches: NicheContent[] = [
           icon: "Advise",
           label: "Advise",
           title: "Google Ads",
-          copy: "Roofers pay $150 or more for a single click. We audit the spend you already make—search terms, wasted clicks, geo targeting—and tell you what to cut. We advise. We don't sell you a bigger budget.",
+          copy: "Roofers pay $150 or more for a single click. We audit the spend you already make—search terms, wasted clicks, geo targeting—check the reported leads against your CRM, and tell you what to cut. We advise. We don't sell you a bigger budget.",
         },
         {
           icon: "Target",
@@ -150,13 +150,13 @@ export const niches: NicheContent[] = [
           icon: "Site",
           label: "Convert",
           title: "Website",
-          copy: "Storm traffic hits on a phone in the driveway. [The site stays fast](/website-strategy), the call button stays one tap away, and every quote form routes to a person. Real before-and-after photos do more than a headline.",
+          copy: "Storm traffic hits on a phone in the driveway. We check [the page the click opens](/conversion-rate-optimization): the call button one tap away, the quote form tested end to end, and the lead routed to a person. Real before-and-after photos do more than a headline.",
         },
         {
           icon: "Compound",
           label: "Compound",
           title: "Roofing SEO",
-          copy: "Ads stop when you stop paying. Service pages, reviews, and your Google Business Profile keep bringing leads for years. SEO is slow—months, not weeks—so it's one part of the plan, not the whole plan.",
+          copy: "Ads stop when you stop paying. Service pages, reviews, and your Google Business Profile keep bringing leads for years. We check whether your SEO vendor's work is producing any of that—and what to ask for. SEO is slow—months, not weeks—so it's one part of the plan, not the whole plan.",
         },
       ],
       also: {
@@ -165,9 +165,9 @@ export const niches: NicheContent[] = [
       },
     },
     peace: {
-      eyebrow: "Why fractional",
-      heading: "One experienced owner for your whole lead engine.",
-      copy: "A typical roofing marketing agency hands you to a junior account manager, locks you into a long contract, and sends a monthly report full of impressions. [You need one person who owns the whole thing](/fractional-digital-department) and answers for the calls. Roofing sits alongside [remodeling marketing](/remodeling-marketing) under [home improvement marketing](/home-improvement-marketing).",
+      eyebrow: "Why advisory",
+      heading: "One experienced advisor for the whole picture.",
+      copy: "A typical roofing marketing agency hands you to a junior account manager, locks you into a long contract, and sends a monthly report full of impressions—written by the agency. [You need someone who checks the whole thing](/marketing-advisory) and answers for the calls. Roofing sits alongside [remodeling marketing](/remodeling-marketing) under [home improvement marketing](/home-improvement-marketing).",
       paths: [
         {
           title: "Living on referrals?",
@@ -203,7 +203,7 @@ export const niches: NicheContent[] = [
         {
           question: "How is this different from a roofing marketing agency?",
           answer:
-            "An agency sells you services. We own the outcome: one experienced person responsible for your site, LSA, ad advisory, routing, and SEO working together. No long contracts, no junior account managers, and [reporting on leads and calls instead of vanity metrics](/analytics).",
+            "An agency sells you services and reports on itself. We answer to your numbers: one experienced advisor patching the leaks, checking LSA and ad spend against real calls, holding routing and SEO vendors to the plan. No long contracts, no junior account managers, and [reporting on leads and calls instead of vanity metrics](/analytics). It starts with a [lead leak audit](/lead-leak-audit).",
         },
       ],
     },
@@ -220,15 +220,15 @@ export const niches: NicheContent[] = [
   {
     slug: "contractors",
     tileName: "Contractors",
-    tileBlurb: "Fractional digital marketing for contractors: a lead engine you own.",
+    tileBlurb: "Contractor marketing advisory: patch the leaks, verify the spend, hold the vendors to it.",
     image: "/niches/contractors.svg",
     metaTitle: "Contractor Marketing for Contractors | Grand River Labs",
     metaDescription:
-      "Fractional contractor marketing: one experienced owner for your whole lead engine, covering lead routing, LSA, ads, and site management. Contractor leads you own.",
+      "Contractor marketing advisory: patch the leaks in your lead flow—routing, missed calls, slow replies—verify what the spend actually produces, and hold vendors to the plan. Contractor leads you own.",
     hero: {
-      eyebrow: "Fractional digital marketing for contractors",
+      eyebrow: "Contractor marketing advisory",
       headline: "Contractor marketing that fixes the leaks, not just the ads.",
-      copy: "A homeowner fills out a form, and nobody calls back for an hour. By then they've booked the contractor who picked up. We fix the whole lead engine—routing, Local Services Ads, the spend you already make, and the site you already have—with one experienced person, not a junior account manager.",
+      copy: "A homeowner fills out a form, and nobody calls back for an hour. By then they've booked the contractor who picked up. A contractor marketing advisor patches the leaks—routing, missed calls, slow replies—verifies what the spend actually produces, and holds your vendors to the plan. Not a junior account manager.",
       primaryLabel: "Talk through your lead flow",
       secondaryLabel: "See how it works",
       secondaryHref: "#lead-flow",
@@ -261,8 +261,8 @@ export const niches: NicheContent[] = [
     },
     engine: {
       eyebrow: "The lead engine",
-      heading: "One owner for routing, ads, and the site you already have.",
-      copy: "We don't sell you a retainer to spend more. We own how leads get in, where they go, and [whether the money you already spend is working](/analytics).",
+      heading: "One advisor for routing, ads, and everything you already pay for.",
+      copy: "We don't sell you a retainer to spend more. We patch how leads get in, where they go, and verify [whether the money you already spend is working](/analytics).",
       sceneNodes: ["LSA", "Google", "Meta", "Website"],
       cards: [
         {
@@ -293,7 +293,7 @@ export const niches: NicheContent[] = [
           icon: "Site",
           label: "Convert",
           title: "Website",
-          copy: "[We manage the site you already have.](/website-strategy) Agencies sell redesigns. We keep it fast on a phone, keep quote forms working, and make sure every request routes to a person.",
+          copy: "We check the site you already have. Agencies sell redesigns. We make sure [the quote forms actually work](/conversion-rate-optimization), the page loads fast on a phone, and every request routes to a person.",
         },
         {
           icon: "Compound",
@@ -308,9 +308,9 @@ export const niches: NicheContent[] = [
       },
     },
     peace: {
-      eyebrow: "Why fractional",
-      heading: "One experienced owner for your whole lead engine.",
-      copy: "A typical agency hands you to a junior account manager, locks you into a long contract, and sends a report full of impressions. Up to 40% of the marketing budget can disappear into that overhead. General contracting sits alongside [remodeling marketing](/remodeling-marketing) under [home improvement marketing](/home-improvement-marketing).",
+      eyebrow: "Why advisory",
+      heading: "One experienced advisor for the whole picture.",
+      copy: "A typical agency hands you to a junior account manager, locks you into a long contract, and sends a report full of impressions—written by the agency. Up to 40% of the marketing budget can disappear into that overhead. General contracting sits alongside [remodeling marketing](/remodeling-marketing) under [home improvement marketing](/home-improvement-marketing).",
       paths: [
         {
           title: "Living on referrals?",
@@ -346,7 +346,7 @@ export const niches: NicheContent[] = [
         {
           question: "How is this different from a marketing agency?",
           answer:
-            "An agency sells you services. [Fractional contractor marketing](/fractional-digital-department) means one experienced person responsible for routing, LSA, ad advisory, site management, and SEO working together. No long contracts, no junior account managers, and reporting on leads and calls instead of vanity metrics.",
+            "An agency sells you services and reports on itself. [Contractor marketing advisory](/marketing-advisory) means one experienced person patching the leaks in routing, checking LSA and ad spend against real calls, and holding SEO vendors to the plan. No long contracts, no junior account managers, and reporting on leads and calls instead of vanity metrics. It starts with a [lead leak audit](/lead-leak-audit).",
         },
       ],
     },

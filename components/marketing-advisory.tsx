@@ -7,59 +7,59 @@ import { FixValueSection } from "./fix-value";
 import { NicheStrip } from "./niche-page";
 import { FeaturedCaseStudy } from "./sections";
 import { Arrow } from "./site-header";
-import { fractionalDepartmentServices } from "./what-we-do-nav";
+import { advisoryAreas } from "./what-we-do-nav";
 
 const problems = [
   {
-    title: "Every channel wants the budget",
-    copy: "Paid search, SEO, email, social, and the website all make a reasonable case. Nobody is looking at the whole picture, so the loudest request wins.",
+    title: "The spend keeps going, the answer doesn't come",
+    copy: "Budget flows to ads, SEO, and the website every month, but nobody can say which of it produced the jobs you actually booked.",
   },
   {
-    title: "Activity is mistaken for progress",
-    copy: "Campaigns keep shipping and calendars stay full, but the work isn't connected to the business goal it is meant to move.",
+    title: "Vendors grade their own homework",
+    copy: "The agency reports the leads it generated. Nobody checks those numbers against the CRM, or asks what a lead was worth once it got there.",
   },
   {
-    title: "Measurement tells different stories",
-    copy: "Platform dashboards claim credit in isolation. The team sees clicks while the business still cannot see what created demand or revenue.",
+    title: "Leads leak after the click",
+    copy: "Calls ring out, forms break quietly, replies go out days late. The marketing did its job; the lead still never became a conversation.",
   },
   {
-    title: "Priorities change with the week",
-    copy: "A competitor launches, a trend spikes, or a tactic underperforms. The plan resets before useful work has enough time to compound.",
+    title: "Every dashboard tells a different story",
+    copy: "Google claims the lead, Meta claims the lead, the SEO shop claims the lead. The business just sees a number that doesn't match revenue.",
   },
 ];
 
 const steps = [
   {
-    label: "Look",
-    title: "See the whole picture",
-    copy: "Website, spend, search, tools, and what actually turns into conversations—read together, not as separate dashboards.",
+    label: "Audit",
+    title: "Find the leaks and the truth",
+    copy: "A lead leak audit across tracking, forms, calls, routing, and vendor reports — ranked by what each leak is costing you.",
   },
   {
-    label: "Find",
-    title: "Name the opportunity",
-    copy: "What's working, and where the gap is. Sometimes that's the site. Sometimes it's spend. Sometimes leads aren't being followed up.",
+    label: "Patch",
+    title: "Fix what's leaking",
+    copy: "Hands-on fixes for leaks and measurement: tracking, routing, forms, automations, and conversion work. Channel execution stays with your team or vendors.",
   },
   {
-    label: "Step",
-    title: "Step on the gas",
-    copy: "Put effort behind the opportunity, pause what isn't earning its place, and do the work—not a recommendation you have to staff yourself.",
+    label: "Verify",
+    title: "Check the work, hold the plan",
+    copy: "Reconcile what every vendor reports against what shows up in the CRM, and make the calls on what to fund, pause, or dispute — month after month.",
   },
 ];
 
 const leverNotes: Record<
-  (typeof fractionalDepartmentServices)[number]["href"],
+  (typeof advisoryAreas)[number]["href"],
   string
 > = {
-  "/website-strategy":
-    "The site everything else points at—kept current, converting, and owned.",
+  "/lead-leak-audit":
+    "The entry point: where leads and money leak after the click, ranked by what each one is worth.",
   "/conversion-rate-optimization":
-    "Clearer paths from visit to conversation, when the traffic you have isn't turning into work.",
+    "More of the visitors you already have becoming qualified leads, without buying more traffic.",
   "/search-engine-optimization":
-    "Being found for the searches that win the work, when search is where the opportunity is.",
+    "Whether SEO is actually working — and what to ask of whoever is doing it. Strategy and oversight, not production.",
   "/local-ads":
     "What to fund, pause, or dispute. Strategy for local spend—not day-to-day campaign management.",
   "/google-business-profile":
-    "The map result that matches the work you want—categories, photos, hours, and a link to a page that can win the job.",
+    "The map result checked against the work you want: categories, services, reviews, and whether calls from it are tracked.",
   "/analytics":
     "Measurement you can trust—including which calls came from the site, the profile, or somewhere else—so the next decision isn't a guess.",
   "/automation":
@@ -70,27 +70,27 @@ const faqs = [
   {
     question: "Who will I work with?",
     answer:
-      "You work directly with someone who has owned this picture before—where spend goes, which numbers to trust, what to stop, and how to hold vendors to it. Not a rotating account team, and not a junior learning on your budget. Fractional means ongoing access to that leadership without a full-time hire: GR Labs stays with the business and works on whatever is highest priority.",
+      "You work directly with someone who has owned this picture before—where spend goes, which numbers to trust, what to stop, and how to hold vendors to it. Not a rotating account team, and not a junior learning on your budget.",
   },
   {
-    question: "Is this right for my business?",
+    question: "Do you do the work, or just advise?",
     answer:
-      "It's built for owner-led growing businesses that rely on a website, tools, and digital channels, but don't have someone experienced owning the whole picture. Already investing? We look at the goals, channel mix, customer journey, measurement, and [team capacity](/fractional-digital-team-calculator) you have—then stay to strengthen, pause, or stop what no longer earns its place. Building the plan from scratch? We turn your goals, audience, offer, budget, and constraints into a focused starting point, then keep refining it. Either way, we do the work, not just the plan.",
+      "Both, with a clear line. Hands-on where the work is patching leaks or verifying results: tracking, attribution, forms, lead routing, automations, and conversion tests. For channel execution—SEO content, ad campaign management, site builds—we make the call, name the provider, and hold them to it. Your vendors keep relationships that already work; we make sure they earn their place.",
   },
   {
     question: "Do you replace our marketing hire or agency?",
     answer:
-      "No. If a marketing person or an agency is already in place, GR Labs is the layer above them: deciding where effort goes, what good looks like, and when to pause. The people doing the channel work stay, and we coordinate existing vendors rather than replace relationships that already work. Agencies can also partner with us under a [white-label arrangement](/white-label). We stay inside what we can own well—local ads, for example, means strategy for what to fund, pause, or dispute, not day-to-day campaign management. When a specialist is the right provider, we name the need and help coordinate.",
+      "No. If a marketing person or an agency is already in place, GR Labs is the layer above them: deciding where effort goes, what good looks like, and when to pause. The people doing the channel work stay, and we manage them rather than replace relationships that already work. Agencies can also partner with us under a [white-label arrangement](/white-label). When a specialist is the right provider, we name the need and help coordinate.",
   },
   {
     question: "What will you actually work on?",
     answer:
-      "Whatever the numbers say matters most right now. That might be the website, conversion, search, local ads, analytics, or automation. The mix changes as the business does. We don't sell a fixed menu of channels.",
+      "Whatever the numbers say matters most right now. That might be a leak in the lead flow, broken measurement, a vendor who isn't delivering, or a decision about where the budget goes. The mix changes as the business does. We don't sell a fixed menu of channels.",
   },
   {
     question: "Can I just hire you for SEO or ads?",
     answer:
-      "The pages for [SEO](/search-engine-optimization), [local ads](/local-ads), [Google Business Profile](/google-business-profile), [CRO](/conversion-rate-optimization), and the rest explain each lever. The engagement is the whole picture: we figure out whether that lever is the right one before we step on it.",
+      "The pages for [the lead leak audit](/lead-leak-audit), [SEO](/search-engine-optimization), [ads](/local-ads), [Google Business Profile](/google-business-profile), [CRO](/conversion-rate-optimization), and the rest explain each area. The engagement is the whole picture: we figure out whether that lever is the right one before anyone pulls it.",
   },
   {
     question: "How much does it cost?",
@@ -108,14 +108,21 @@ function StepIcon({ label }: { label: string }) {
   };
 
   switch (label) {
-    case "Look":
+    case "Audit":
       return (
         <svg {...common}>
           <circle cx="22" cy="22" r="8" stroke="currentColor" strokeWidth="1.75" />
           <path d="m28 28 8 8" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
         </svg>
       );
-    case "Find":
+    case "Patch":
+      return (
+        <svg {...common}>
+          <path d="M24 10a7 7 0 0 0-7 7v10l7-3 7 3V17a7 7 0 0 0-7-7Z" stroke="currentColor" strokeWidth="1.75" strokeLinejoin="round" />
+          <path d="M24 32v6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </svg>
+      );
+    case "Verify":
       return (
         <svg {...common}>
           <circle cx="24" cy="24" r="12" stroke="currentColor" strokeWidth="1.75" />
@@ -131,22 +138,22 @@ function StepIcon({ label }: { label: string }) {
   }
 }
 
-export function FractionalDigitalDepartmentSections() {
+export function MarketingAdvisorySections() {
   return (
     <>
       <section className="mkt-hero fdd-hero">
         <DepartmentHeroScene />
         <div className="shell">
           <div className="mkt-hero__content fdd-hero__content">
-            <p className="eyebrow">Fractional digital department</p>
+            <p className="eyebrow">Marketing advisory</p>
             <h1 className="mkt-hero__headline">
-              Senior digital marketing leadership, without the full-time hire.
+              Is your marketing actually making you money?
             </h1>
             <p className="mkt-hero__copy">
-              For owner-led growing businesses that rely on digital tools but
-              don&apos;t have a senior person deciding where the effort goes. GR
-              Labs fills that seat: looks across the website, channels, tools,
-              and measurement, chooses what matters, and does the work.
+              Somebody should be able to answer that with evidence. GR Labs is
+              that somebody: we patch the leaks where leads are lost, verify
+              which spend is actually working, advise on where the budget goes,
+              and manage the vendors who do the rest.
             </p>
             <div className="mkt-hero__actions">
               <BookCallLink
@@ -155,8 +162,8 @@ export function FractionalDigitalDepartmentSections() {
                 Book a 30-minute fit call
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#contact">
-                Or send a note
+              <a className="button button-secondary" href="/lead-leak-audit">
+                Get a lead leak audit
               </a>
             </div>
           </div>
@@ -174,14 +181,14 @@ export function FractionalDigitalDepartmentSections() {
             <div>
               <p className="eyebrow">The gap</p>
               <h2 className="section-heading">
-                You have vendors. You don&apos;t have a digital marketing leader.
+                You have vendors. You don&apos;t have anyone checking.
               </h2>
             </div>
             <p className="section-copy">
-              Agencies and specialists each optimize their own part. A junior
-              hire waits to be told. The gap is senior judgment: a partner who
-              sees how it all fits, decides where effort goes, and stays to do
-              the work.
+              Agencies and specialists each optimize their own part, and report
+              on it themselves. The gap is someone whose only job is the truth:
+              what&apos;s leaking, what&apos;s working, and what the next dollar
+              should buy.
             </p>
           </div>
           <div className="fdd-problem__grid fdd-problem__grid--quad reveal">
@@ -196,8 +203,7 @@ export function FractionalDigitalDepartmentSections() {
             ))}
           </div>
           <p className="fdd-problem__insight reveal">
-            More marketing is not the fix. Senior judgment about which marketing
-            is.
+            More marketing is not the fix. Knowing which marketing is working is.
           </p>
         </div>
       </section>
@@ -207,12 +213,12 @@ export function FractionalDigitalDepartmentSections() {
           <div className="fdd-areas__top reveal">
             <div>
               <p className="eyebrow">How we work</p>
-              <h2 className="section-heading">The monthly cadence.</h2>
+              <h2 className="section-heading">Audit. Patch. Verify.</h2>
             </div>
             <p className="section-copy">
-              Find what&apos;s working. Step on the gas. Then do it again next
-              month. The mix follows what will move the business—not a
-              predetermined menu of channels.
+              Find where the money leaks. Fix what&apos;s ours to fix. Check
+              everyone else&apos;s work against the numbers that matter. Then do
+              it again next month.
             </p>
           </div>
           <div className="fdd-areas__grid fdd-areas__grid--steps reveal">
@@ -237,35 +243,35 @@ export function FractionalDigitalDepartmentSections() {
               <p className="eyebrow">The difference</p>
               <h2 className="section-heading fdd-flow__heading">
                 <span>A consultant tells you what to do, then leaves.</span>
-                <span>An agency executes the brief.</span>
-                <span>A fractional department decides what&apos;s worth doing, and does it.</span>
+                <span>An agency executes the brief, and reports on itself.</span>
+                <span>An advisor answers to your numbers, and stays.</span>
               </h2>
             </div>
           </div>
           <p className="fdd-flow__promise reveal">
-            Senior leadership. Hands-on execution. One partner.
+            Leaks patched. Spend verified. Vendors held to it. One partner.
           </p>
         </div>
       </section>
 
       <FixValueSection />
 
-      <section className="section fdd-levers" id="what-the-work-can-touch">
+      <section className="section fdd-levers" id="where-we-look">
         <div className="shell">
           <div className="fdd-areas__top reveal">
             <div>
-              <p className="eyebrow">What the work can touch</p>
+              <p className="eyebrow">Where we look</p>
               <h2 className="section-heading">
                 Depending on what we find.
               </h2>
             </div>
             <p className="section-copy">
-              We decide which levers matter. These are the ones we pull when
-              the numbers say so.
+              Every channel gets checked against the plan and the pipeline.
+              These are the places the leaks and the answers usually are.
             </p>
           </div>
           <div className="fdd-areas__grid fdd-areas__grid--levers reveal">
-            {fractionalDepartmentServices.map((item) => (
+            {advisoryAreas.map((item) => (
               <article className="fdd-areas__card" key={item.href}>
                 <h3>
                   <a href={item.href}>{item.label}</a>
@@ -319,7 +325,7 @@ export function FractionalDigitalDepartmentSections() {
               <h2 className="section-heading">What people usually ask.</h2>
             </div>
             <p className="section-copy">
-              Not a full-time hire, and not a channel you buy off a menu.
+              Not another agency, and not a channel you buy off a menu.
               Engagements start at $2,500/month.
             </p>
           </div>

@@ -13,71 +13,58 @@ const featuredCaseStudy = {
 
 const results = [
   {
-    label: "Clear priorities every month",
-    href: "#how-we-work",
+    label: "Find where leads leak",
+    href: "/lead-leak-audit",
   },
   {
-    label: "Budget going where it works",
-    href: "#leadership",
-  },
-  {
-    label: "Numbers you can trust",
+    label: "Know what's actually working",
     href: "/analytics",
+  },
+  {
+    label: "Vendors held to the plan",
+    href: "#leadership",
   },
 ];
 
 const decisions = [
   {
-    title: "Where the budget goes",
-    copy: "What to fund, pause, or cut — so spend follows what produces leads and revenue, not last quarter's habit.",
+    title: "Patching lead leaks",
+    copy: "Missed calls, broken forms, slow follow-up, bad routing. The marketing did its job — the lead still never became a conversation. We find and fix those.",
   },
   {
-    title: "Which channels earn a place",
-    copy: "Search, ads, the map listing, or something else. Each channel has to justify its seat.",
+    title: "Verifying what's working",
+    copy: "Tracking, attribution, and vendor reports checked against CRM reality — so decisions rest on what actually showed up, not what a dashboard claims.",
   },
   {
-    title: "What the website's job is",
-    copy: "A clear call on what the site is for, and which pages are supposed to win the work.",
+    title: "Holistic marketing advisory",
+    copy: "Where the budget goes, which channels earn a place, and what to say no to — with the whole picture in one head instead of a stack of channel reports.",
   },
   {
-    title: "What gets measured",
-    copy: "What counts as a lead, what counts as success, and which numbers are safe to decide on.",
-  },
-  {
-    title: "Who else is in the room",
-    copy: "Oversight of agencies, vendors, and tools, so outside work serves the plan instead of drifting.",
-  },
-  {
-    title: "What to say no to",
-    copy: "The loud request that won't move revenue gets declined, so attention stays on the work that will.",
+    title: "Managing vendors",
+    copy: "Agencies, media buyers, and SEO shops held to the plan: scoped fairly, reported honestly, and replaced when they stop earning their place.",
   },
 ];
 
 const services = [
   {
-    title: "Website management & strategy",
-    href: "/website-strategy",
-    copy: "A site that converts the traffic you already have, kept current and aimed at revenue instead of sitting still.",
-  },
-  {
     title: "SEO",
     href: "/search-engine-optimization",
-    copy: "More qualified leads from search, on pages and a local presence that keep working after the ads stop.",
+    copy: "Whether SEO is actually working, what to ask of whoever does it, and which pages are worth writing — strategy and oversight, not production.",
   },
   {
-    title: "Analytics & attribution",
-    href: "/analytics",
-    copy: "Measurement you can trust, so you know which channels actually produce leads and revenue—including which calls came from the site, the map listing, and other profiles.",
-  },
-  {
-    title: "Google, Meta & Local Services Ads",
+    title: "Paid ads & Local Services Ads",
     href: "/local-ads",
-    copy: "Clear advice on what to fund, pause, or dispute, so ad spend turns into leads instead of a bigger bill.",
+    copy: "What to fund, pause, or dispute — and whether the leads the platforms report ever show up in your CRM.",
   },
   {
     title: "Google Business Profile",
     href: "/google-business-profile",
-    copy: "A map result that matches the work you want, with photos, hours, and a link to a page that can win the job.",
+    copy: "The map result checked against the work you want: categories, services, reviews, and whether calls from it are even tracked.",
+  },
+  {
+    title: "Analytics & attribution",
+    href: "/analytics",
+    copy: "Measurement you can trust — which channels actually produce leads and revenue, including which calls came from the site, the map listing, and other profiles.",
   },
   {
     title: "Conversion rate optimization",
@@ -85,7 +72,7 @@ const services = [
     copy: "More of the visitors you already have become qualified leads, without buying more traffic.",
   },
   {
-    title: "Marketing automation & lead routing",
+    title: "Automation & lead routing",
     href: "/marketing-automation",
     copy: "Every inquiry gets a next step and reaches the person who can act, while the lead is still warm.",
   },
@@ -93,22 +80,22 @@ const services = [
 
 const processSteps = [
   {
-    title: "Diagnose",
-    copy: "We map channels, the site, and measurement together, then show you where leads and revenue leak.",
-    artifact: "A map of where leads and revenue leak.",
-    roles: "You bring the context; we own the diagnosis.",
+    title: "Audit",
+    copy: "We audit tracking, forms, calls, routing, and vendor reports together, then show you where leads and revenue leak — ranked by what each leak costs.",
+    artifact: "A leak map, ranked by what it's costing you.",
+    roles: "You bring the context; we own the audit.",
   },
   {
     title: "Decide",
-    copy: "We make the call on what gets funded, paused, or done next — ranked by what will move revenue, not by whichever request is loudest.",
+    copy: "We make the call on what gets funded, paused, or fixed next — ranked by what will move revenue, not by whichever request is loudest.",
     artifact: "A now / next / later list, with the call already made.",
     roles: "We own the recommendation; you have the final say.",
   },
   {
-    title: "Ship & review",
-    copy: "The change goes live — a page, the tracking, or a workflow — then we measure what moved and adjust the next decision.",
-    artifact: "Work live in production, measured against the decision.",
-    roles: "We ship and review; you keep the result.",
+    title: "Verify",
+    copy: "Leaks get patched — tracking, routing, forms, tests by us; channel work by your team or vendors — then we measure what moved and adjust the next decision.",
+    artifact: "Fixes live in production, measured against the decision.",
+    roles: "Your team or vendors ship; we verify it moved the number.",
   },
 ];
 
@@ -181,12 +168,12 @@ export function LeadershipSection() {
       <div className="shell">
         <div className="services__top reveal">
           <div>
-            <p className="eyebrow">What you get</p>
-            <h2 className="section-heading">The decisions, owned.</h2>
+            <p className="eyebrow">What we do</p>
+            <h2 className="section-heading">Answers, not more marketing.</h2>
           </div>
           <p className="section-copy">
-            The calls that move the business, made and carried out — not a
-            stack of channel reports. You keep the final say.
+            Four things, one advisor. We&apos;re not another channel vendor —
+            we&apos;re the check on all of them. You keep the final say.
           </p>
         </div>
 
@@ -209,14 +196,13 @@ export function ServicesSection() {
       <div className="shell">
         <div className="services__top reveal">
           <div>
-            <p className="eyebrow">Execution included</p>
-            <h2 className="section-heading">And the work gets done.</h2>
+            <p className="eyebrow">Where we look</p>
+            <h2 className="section-heading">Every channel, checked.</h2>
           </div>
           <p className="section-copy">
-            The same engagement covers SEO, the site, ads, analytics, and the
-            routing between them. Tracking stays honest and leads keep moving
-            while they&apos;re warm, so the work compounds instead of sitting
-            in a deck.
+            We audit, advise, and hold vendors accountable across all of it —
+            so spend follows what produces leads and revenue, not last
+            quarter&apos;s habit.
           </p>
         </div>
 
@@ -232,8 +218,8 @@ export function ServicesSection() {
         </ul>
 
         <p className="services__more reveal">
-          <a href="/fractional-digital-department">
-            Learn more about the fractional digital department →
+          <a href="/marketing-advisory">
+            Learn more about marketing advisory →
           </a>
         </p>
       </div>
@@ -285,12 +271,12 @@ export function ProcessSection() {
         <div className="process__top reveal">
           <div>
             <p className="eyebrow">How we work</p>
-            <h2 className="section-heading">Decisions, then the work.</h2>
+            <h2 className="section-heading">Find it, fix it, prove it.</h2>
           </div>
           <p className="section-copy">
-            You bring the business context. We diagnose, decide, and ship — so
-            the plan is a set of calls that get carried out, not another slide
-            deck.
+            You bring the business context. We audit, decide, and verify — so
+            the plan is a set of calls that actually get made and checked, not
+            another slide deck.
           </p>
         </div>
 

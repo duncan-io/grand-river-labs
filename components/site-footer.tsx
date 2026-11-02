@@ -15,7 +15,7 @@ export function SiteFooter() {
           <a href="/chat">Ask us</a>
           <a href="/blog">Blog</a>
           <a href="/work">Work</a>
-          <a href="/fractional-digital-team-calculator">Cost calculator</a>
+          <a href="/lead-leak-audit">Lead leak audit</a>
           <a href="/about">About</a>
           <a href="/#contact">Contact</a>
           <a href="mailto:hello@grandriverlabs.io">

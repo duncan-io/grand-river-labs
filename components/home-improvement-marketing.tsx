@@ -30,7 +30,7 @@ const fit = [
 const halves = [
   {
     title: "How the lead gets in",
-    copy: "[Google Ads](/local-ads), [Local Services Ads](/local-ads), [SEO](/search-engine-optimization), your [Google Business Profile](/google-business-profile), and the [website](/website-strategy). That's the half most companies already pay for, usually as separate vendors who never talk to each other.",
+    copy: "[Google Ads](/local-ads), [Local Services Ads](/local-ads), [SEO](/search-engine-optimization), your [Google Business Profile](/google-business-profile), and the website. That's the half most companies already pay for, usually as separate vendors who never talk to each other—and whose reports nobody checks.",
   },
   {
     title: "What happens after",
@@ -64,12 +64,12 @@ const trades: { name: string; copy: string; href?: string }[] = [
   },
   {
     name: "Roofing",
-    href: "/fractional-digital-department/roofing",
+    href: "/marketing-advisory/roofing",
     copy: "Storm weeks, shared leads, and a reply that has to land while the homeowner is still in the driveway.",
   },
   {
     name: "General contracting",
-    href: "/fractional-digital-department/contractors",
+    href: "/marketing-advisory/contractors",
     copy: "Remodels and the jobs that die between a form fill and an estimator who's already on site.",
   },
   {
@@ -119,34 +119,34 @@ const channels = [
     icon: "Advise",
     label: "Advise",
     title: "Google Ads",
-    copy: "[We audit the spend you already make](/local-ads)—search terms, wasted clicks, the towns you actually work—and tell you what to cut. We advise. We don't sell you a bigger budget.",
+    copy: "[We audit the spend you already make](/local-ads)—search terms, wasted clicks, the towns you actually work—and tell you what to cut. We advise, and we check the reported leads against your CRM. We don't sell you a bigger budget.",
   },
   {
     icon: "Target",
     label: "Map",
     title: "Google Business Profile",
-    copy: "A lot of these jobs start on the map. Categories, photos, hours, and a link to a page that can win the estimate. [The profile has to match the work you want](/google-business-profile).",
+    copy: "A lot of these jobs start on the map. We audit [the profile against the work you want](/google-business-profile)—categories, photos, hours—and fix the small leaks, including whether calls from the map get counted at all.",
   },
   {
     icon: "Site",
     label: "Convert",
-    title: "Website",
-    copy: "The call comes in on a phone. [The site stays fast](/website-strategy), the call button stays one tap away, and every quote form routes to a person.",
+    title: "The page they land on",
+    copy: "The call comes in on a phone. We check [the page the ads open](/conversion-rate-optimization): the call button one tap away, the quote form working, and both tested end to end—not assumed.",
   },
   {
     icon: "Compound",
     label: "Compound",
     title: "SEO",
-    copy: "Ads stop when you stop paying. Service pages and reviews keep bringing leads for years. [SEO](/search-engine-optimization) is slow—months, not weeks—so it's one part of the plan, not the whole plan.",
+    copy: "Ads stop when you stop paying. Service pages and reviews keep bringing leads for years. We check whether [SEO](/search-engine-optimization) is actually producing work and what to ask of whoever does it—no content mill, no link schemes.",
   },
 ];
 
 const faqs = [
   {
     question:
-      "Is a fractional digital department worth it for an established home improvement company?",
+      "Is marketing advisory worth it for an established home improvement company?",
     answer:
-      "If you're doing roughly $1M–$50M, you already have crews, an office, and money going out for ads or leads. What's missing is one person who owns generation and response together. On this work—a roof around $9,500, a general contracting job around $6,300, a deck in the $6,400–$8,200 range—one extra booked job covers months of the engagement. For a company around $2M, that spend is a rounding error next to revenue. If you're a solo operator, it isn't the right first step. A per-lead vendor or ads you run yourself are a reasonable start.",
+      "If you're doing roughly $1M–$50M, you already have crews, an office, and money going out for ads or leads. What's missing is someone checking whether that money is working and where the leads leak. On this work—a roof around $9,500, a general contracting job around $6,300, a deck in the $6,400–$8,200 range—one extra booked job covers months of the engagement. For a company around $2M, that spend is a rounding error next to revenue. If you're a solo operator, it isn't the right first step. A per-lead vendor or ads you run yourself are a reasonable start.",
   },
   {
     question: "Why do home improvement leads go unanswered?",
@@ -156,7 +156,7 @@ const faqs = [
   {
     question: "How is this different from a home improvement marketing company?",
     answer:
-      "A typical home improvement marketing company sells you a channel, hands the account to a junior, and sends a report full of impressions. [A fractional digital department](/fractional-digital-department) is one experienced person responsible for the site, Local Services Ads, ad advisory, the Google Business Profile, routing, and SEO working together. No long contracts, and [reporting on leads and calls](/analytics) instead of vanity metrics.",
+      "A typical home improvement marketing company sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the people being paid. [A marketing advisor](/marketing-advisory) is one experienced person checking the spend, patching the leaks in routing and follow-up, and holding Local Services Ads, the Google Business Profile, and SEO vendors to the plan. No long contracts, and [reporting on leads and calls](/analytics) instead of vanity metrics.",
   },
   {
     question: "Do you run our ads, or just advise?",
@@ -179,9 +179,10 @@ export function HomeImprovementMarketingSections() {
               Home Improvement Marketing That Owns the Whole Pipeline
             </h1>
             <p className="mkt-hero__copy">
-              One person owns how leads get in and what happens after they do.
-              Not a pile of freelancers, not a per-lead vendor, and not an
-              office manager running ads between estimates.
+              One advisor checks whether the marketing is actually making you
+              money: leaks patched, spend verified, and the vendors who do the
+              rest held to the plan. Not a pile of freelancers, and not another
+              channel vendor.
             </p>
             <div className="mkt-hero__actions">
               <BookCallLink
@@ -344,7 +345,7 @@ export function HomeImprovementMarketingSections() {
               Home improvement marketing searches peak in fall and winter,
               while homeowners are planning. A home improvement marketing
               strategy that waits for March is already late. The operators who
-              build the profile, the pages, the routing, and the ads account
+              fix the profile, the pages, the routing, and the ad spend
               in the quiet months are the ones who answer when the weather
               turns.
             </p>
@@ -358,11 +359,11 @@ export function HomeImprovementMarketingSections() {
             <div className="fwd-services__intro">
               <p className="eyebrow">The lead engine</p>
               <h2 className="section-heading">
-                What a fractional digital department handles.
+                What a marketing advisor handles.
               </h2>
               <p className="section-copy">
                 {renderInline(
-                  "[One experienced owner](/fractional-digital-department) for every channel that brings work in, and for the reply that books it. Not five vendors, and not a monthly report full of impressions.",
+                  "[One experienced advisor](/marketing-advisory) checking every channel that brings work in, and the reply that books it. Not five vendors reporting on themselves, and not a monthly report full of impressions. It starts with a [lead leak audit](/lead-leak-audit).",
                 )}
               </p>
             </div>

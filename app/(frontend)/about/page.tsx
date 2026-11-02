@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { getSiteUrl } from "@/lib/site";
 
 const description =
-  "Grand River Labs is a fractional digital marketing team, not an agency. See who decides the work, who you talk to, and how the engagement is billed.";
+  "Grand River Labs is a marketing advisor, not another agency. We patch lead leaks, verify what's working, and manage your vendors. See who decides the work and how it's billed.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },

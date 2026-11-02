@@ -32,18 +32,26 @@ const ways = [
       "A plan for leads that are yours—not shared with four other companies, and not billed for a click.",
   },
   {
-    title: "Local PPC strategy",
-    lead: "Pay for the searches that can become a job, inside the area you actually serve.",
+    title: "Paid search and Meta strategy",
+    lead: "Pay for the searches and feeds that can become a job, inside the area you actually serve.",
     setup:
-      "Search terms, match types, and geo targeting reviewed against the spend you already make—and a list of what to pause.",
+      "Google Ads and Meta spend, search terms, match types, and geo targeting reviewed against the spend you already make—and a list of what to pause.",
     outcome:
       "Fewer wasted clicks. The budget stays on the work you want, in the towns you cover.",
+  },
+  {
+    title: "The report vs. the CRM",
+    lead: "Platforms count every call and form as a lead. Your booked jobs disagree.",
+    setup:
+      "What Google, Meta, and the media buyer report, reconciled against what actually showed up in the CRM—lead by lead.",
+    outcome:
+      "The real cost per real lead, and the number to take into the next contract conversation.",
   },
   {
     title: "What a lead is worth",
     lead: "The useful number is what a contacted lead is worth if it becomes a job.",
     setup:
-      "A comparison of what you pay now—shared leads, LSA, local search—against what actually turns into work.",
+      "A comparison of what you pay now—shared leads, LSA, paid search—against what actually turns into work.",
     outcome:
       "A decision you can defend. No flat cost-per-lead, and no push to spend more.",
   },
@@ -59,7 +67,7 @@ const ways = [
     title: "Who runs the account",
     lead: "This is strategy and oversight, not day-to-day campaign management.",
     setup:
-      "We set the rules—what to fund, test, pause, or dispute—and coordinate a specialist when someone else should run the account.",
+      "We set the rules—what to fund, test, pause, or dispute—manage the media buyer against them, and coordinate a specialist when someone else should run the account.",
     outcome:
       "One person accountable for the decision, without pretending to be the media buyer for every click.",
   },
@@ -68,10 +76,10 @@ const ways = [
 const steps = [
   {
     title: "See what you pay now",
-    copy: "We look at LSA, local search, and any shared leads—what you spend, what contacts you, and what turns into a job.",
+    copy: "We look at Google Ads, Meta, LSA, and any shared leads—what you spend, what contacts you, and what turns into a job.",
   },
   {
-    title: "Choose LSA, local PPC, or both",
+    title: "Choose the channel, or none",
     copy: "We say which one fits how you win work, and which spend should stop. Sometimes the answer is less, not another channel.",
   },
   {
@@ -79,8 +87,8 @@ const steps = [
     copy: "Geography, the jobs you'll take, the terms worth bidding on, and what a bad lead looks like. Then someone can run the account without guessing.",
   },
   {
-    title: "Review and cut",
-    copy: "We come back to what contacted you and what didn't. Waste gets paused. What works stays. The budget doesn't grow by default.",
+    title: "Verify and cut",
+    copy: "We reconcile what the platforms reported against what reached the CRM. Waste gets paused and disputed. What works stays. The budget doesn't grow by default.",
   },
 ];
 
@@ -289,14 +297,15 @@ export function LocalAdsSections() {
         </div>
         <div className="shell">
           <div className="local-ads-hero__content">
-            <p className="eyebrow">Local ads</p>
+            <p className="eyebrow">Paid ads &amp; LSA advisory</p>
             <h1 className="local-ads-hero__headline">
               Spend on leads you can own.
             </h1>
             <p className="local-ads-hero__copy">
-              Google Local Services Ads and local PPC—strategy for what to
-              fund, pause, or dispute. Not a bigger budget, and not day-to-day
-              campaign management.
+              Google Ads, Meta, and Local Services Ads—strategy for what to
+              fund, pause, or dispute, and verification that the leads the
+              platforms report actually show up. Not a bigger budget, and not
+              day-to-day campaign management.
             </p>
             <div className="local-ads-hero__actions">
               <BookCallLink
@@ -351,11 +360,12 @@ export function LocalAdsSections() {
           <div className="local-ads-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">Google LSA and local PPC.</h2>
+              <h2 className="section-heading">Paid search, Meta, and LSA.</h2>
             </div>
             <p className="section-copy">
-              Two ways to buy local demand. We decide which one fits, what to
-              cut, and who should run the account.
+              Three ways to buy local demand. We decide which one fits, what to
+              cut, whether the reported leads are real, and who should run the
+              account.
             </p>
           </div>
           <div className="local-ads-ways__grid reveal">
@@ -393,8 +403,8 @@ export function LocalAdsSections() {
               This is not day-to-day campaign management.{" "}
               <Link href="/analytics">Analytics</Link> shows whether the spend
               turns into calls.{" "}
-              <Link href="/website-strategy">The website</Link> is the page the
-              click lands on.
+              <Link href="/conversion-rate-optimization">The page</Link> the
+              click lands on decides whether the call happens.
             </p>
           </div>
           <ol className="local-ads-flow__steps reveal">
@@ -433,11 +443,10 @@ export function LocalAdsSections() {
             <span className="fwd-services__also-label">Part of the bigger picture</span>
             Local ads are one lever. Whether more spend is the right move
             depends on the site, the routing, and everything else—that&apos;s
-            what the{" "}
-            <Link href="/fractional-digital-department">
-              Fractional Digital Department
-            </Link>{" "}
-            figures out.
+            what{" "}
+            <Link href="/marketing-advisory">marketing advisory</Link>{" "}
+            figures out, starting with a{" "}
+            <Link href="/lead-leak-audit">lead leak audit</Link>.
           </p>
         </div>
       </section>

@@ -1,15 +1,4 @@
-import {
-  DEFAULT_ASSUMPTIONS,
-  DEFAULT_FRACTIONAL_MONTHLY,
-  calculateFullTimeCost,
-  defaultTeamRoles,
-  formatUsd,
-} from "@/lib/fractional-team-calculator";
-
-const fullTime = calculateFullTimeCost(
-  defaultTeamRoles(),
-  DEFAULT_ASSUMPTIONS,
-);
+import { ADVISORY_MONTHLY, formatUsd } from "@/lib/pricing";
 
 export function EngagementBlock() {
   return (
@@ -18,45 +7,36 @@ export function EngagementBlock() {
         <div className="services__top reveal">
           <div>
             <p className="eyebrow">The engagement</p>
-            <h2 className="section-heading">One rate, instead of a hire.</h2>
+            <h2 className="section-heading">One rate, one answer.</h2>
           </div>
           <p className="section-copy">
-            A full-time hire means salary, benefits, months of ramp-up, and
-            the risk of a bad fit. This is the same judgment and the work
-            behind it, billed monthly.
+            The usual answer to unclear marketing is another agency or a bigger
+            budget. The alternative is someone whose only job is the truth about
+            what&apos;s working.
           </p>
         </div>
 
         <div className="engagement-compare reveal">
           <article className="engagement-compare__card">
-            <p className="engagement-compare__label">In-house, year one</p>
-            <p className="engagement-compare__value">
-              {formatUsd(fullTime.year1)}
-            </p>
+            <p className="engagement-compare__label">The usual path</p>
+            <p className="engagement-compare__value">Another vendor</p>
             <p className="engagement-compare__note">
-              A senior digital leader and a coordinator, with benefits, tools,
-              and the cost of hiring. About{" "}
-              {formatUsd(fullTime.monthlyOngoing)} a month after that.
+              A new agency, a bigger ad budget, or a channel you&apos;re not
+              sure is working — sold by the people who report on it.
             </p>
           </article>
           <article className="engagement-compare__card engagement-compare__card--us">
             <p className="engagement-compare__label">With us</p>
             <p className="engagement-compare__value">
-              From {formatUsd(DEFAULT_FRACTIONAL_MONTHLY)}
+              From {formatUsd(ADVISORY_MONTHLY)}
               <span className="engagement-compare__period">/month</span>
             </p>
             <p className="engagement-compare__note">
-              You work with the person who makes the calls. The plan follows
-              what matters, and the work gets done — not just recommended.
+              You work with the person who makes the calls. Leaks patched, spend
+              verified, vendors held to the plan — no long contracts.
             </p>
           </article>
         </div>
-
-        <p className="engagement-compare__more reveal">
-          <a href="/fractional-digital-team-calculator">
-            Compare that with the team you would hire →
-          </a>
-        </p>
       </div>
     </section>
   );

@@ -6,9 +6,9 @@ import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/google-business-profile" },
-  title: "Google Business Profile | Grand River Labs",
+  title: "Google Business Profile Audit | Grand River Labs",
   description:
-    "Categories, services, photos, hours, and the link from your Google Business Profile to the site. Not review schemes, not a citation blast, and not posts for their own sake.",
+    "An audit of your Google Business Profile—categories, services, photos, hours, the link to the site, and whether calls from the map listing are tracked. Quick wins fixed, not review schemes or citation blasts.",
 };
 
 export default function GoogleBusinessProfilePage() {
@@ -24,7 +24,7 @@ export default function GoogleBusinessProfilePage() {
           variant="cta"
           eyebrow="Ready when you are"
           heading="Let's see what the map result says."
-          copy="Tell us how people find you nearby. We'll look at the profile Google shows, and which fixes are worth making first."
+          copy="Tell us how people find you nearby. We'll audit the profile Google shows, fix the leaks, and make sure calls from the map listing get counted."
           messageLabel="How do people find you nearby?"
           messagePlaceholder="A profile with the wrong category, hours that are off, photos that don't match the work—start wherever you are."
         />

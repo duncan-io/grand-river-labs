@@ -6,9 +6,9 @@ import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/home-improvement-marketing" },
-  title: "Home Improvement Marketing for Companies | Grand River Labs",
+  title: "Home Improvement Marketing Advisory | Grand River Labs",
   description:
-    "A fractional digital department for established home improvement companies doing $1M–$50M. One owner for lead generation and the reply that books the job.",
+    "Marketing advisory for established home improvement companies doing $1M–$50M. Patch the leaks in your lead flow, verify what the spend produces, and hold vendors to the plan.",
 };
 
 export default function HomeImprovementMarketingPage() {

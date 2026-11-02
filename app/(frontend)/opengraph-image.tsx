@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "Grand River Labs — Digital marketing leadership. Without the full-time hire.";
+  "Grand River Labs — Is your marketing actually making you money?";
 
 export const size = {
   width: 1200,
@@ -47,8 +47,8 @@ export default async function Image() {
             letterSpacing: "-0.03em",
           }}
         >
-          <div>Digital marketing leadership.</div>
-          <div>Without the full-time hire.</div>
+          <div>Is your marketing actually</div>
+          <div>making you money?</div>
         </div>
         <div
           style={{

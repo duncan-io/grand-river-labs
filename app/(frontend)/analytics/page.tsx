@@ -6,9 +6,9 @@ import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/analytics" },
-  title: "Analytics | Grand River Labs",
+  title: "Marketing Analytics & Verification | Grand River Labs",
   description:
-    "GA4, Google Tag Manager, event tracking, call tracking, and attribution—measurement you can make decisions on.",
+    "Is it working? GA4, Google Tag Manager, event tracking, call tracking, and attribution—audited so the numbers can be trusted, and vendor reports checked against CRM reality.",
 };
 
 export default function AnalyticsPage() {
@@ -23,8 +23,8 @@ export default function AnalyticsPage() {
           turnstileSiteKey={turnstileSiteKey}
           variant="cta"
           eyebrow="Ready when you are"
-          heading="Let's get measurement you can trust."
-          copy="Tell us what you need to see. We'll map a practical path across GA4, Tag Manager, events, calls, and attribution."
+          heading="Let's get numbers you can trust."
+          copy="Tell us what you're not sure is working. We'll audit what's firing, fix the tracking, and reconcile the vendor reports against what actually showed up."
           messageLabel="What do you need to see?"
           messagePlaceholder="Numbers you don't trust, calls that never show up, a report nobody can act on—start wherever you are."
         />

@@ -27,56 +27,56 @@ const ways = [
     title: "Categories and services",
     lead: "Google has to know what you do before it can show you.",
     setup:
-      "Primary and secondary categories, plus the services you actually want, written the way people search.",
+      "Primary and secondary categories, plus the services you actually want, checked against the jobs you're trying to win.",
     outcome: "A listing that matches the job, instead of a generic trade.",
   },
   {
     title: "Photos, hours, and the service area",
     lead: "The map result should look like a business someone can trust.",
     setup:
-      "Current photos, accurate hours, and a service area that covers the towns you work—not a default circle.",
+      "Photos, hours, and the service area audited against how the business actually runs—not the defaults someone picked years ago.",
     outcome: "A profile that looks open, local, and specific.",
   },
   {
-    title: "Description and the website link",
+    title: "The website link and where calls go",
     lead: "The listing should send people to a page that can win the job.",
     setup:
-      "A short description in plain language, and a link to the service page—not the homepage by default. The listing’s call button gets its own number, so map calls aren’t mixed with the website. That’s [call tracking](/analytics).",
-    outcome: "The tap lands on a page that names the work and how to start.",
+      "Where the link and the call button actually send people, and whether calls from the profile are tracked at all. A separate number for the listing is [call tracking](/analytics)—without it, map calls and website calls look the same.",
+    outcome: "The tap lands on a page that names the work, and map calls get counted.",
   },
   {
     title: "Reviews and questions",
     lead: "A review is part of the listing, not a separate project.",
     setup:
-      "Replies to reviews and questions, in your voice. No schemes, and no asking only the happy customers.",
+      "The review process audited: who asks, who replies, and what an unanswered one-star says to the next searcher. No schemes, and no asking only the happy customers.",
     outcome:
       "A profile that looks looked-after, including when the review isn't glowing.",
   },
   {
-    title: "Kept current",
-    lead: "A profile set up once drifts.",
+    title: "Small fixes, done",
+    lead: "A listing that's mostly right still leaks.",
     setup:
-      "Hours, photos, services, and seasonal changes checked as part of looking after the local presence.",
-    outcome: "A listing that stays true, instead of a setup that expires.",
+      "The quick wins—categories, hours, the link, a reply to the last review—fixed as part of patching the leak, not left in a report.",
+    outcome: "The profile corrected where it was costing you, not just noted.",
   },
 ];
 
 const steps = [
   {
     title: "See the listing",
-    copy: "We look at what Google shows today—categories, photos, hours, reviews, and where the website link goes.",
+    copy: "We audit what Google shows today—categories, photos, hours, reviews, where the website link goes, and whether calls from the profile are tracked.",
   },
   {
     title: "Match it to the work",
     copy: "We line the profile up with the jobs you want and the towns you serve. If the listing overclaims, we cut it back.",
   },
   {
-    title: "Fix what Google shows",
-    copy: "We update categories, services, photos, hours, the description, and the page the profile opens. Reviews and questions get a reply.",
+    title: "Fix the quick wins",
+    copy: "Categories, services, hours, the description, and the page the profile opens get corrected—the small fixes that were leaking leads.",
   },
   {
-    title: "Keep it current",
-    copy: "Hours change. Photos age. We come back so the listing doesn't drift back to the default.",
+    title: "Check the result",
+    copy: "With call tracking in place, calls from the map listing get counted and checked against the work they produce.",
   },
 ];
 
@@ -343,9 +343,10 @@ export function GbpSections() {
               Show up in the map results that win the work.
             </h1>
             <p className="gbp-hero__copy">
-              Categories, services, photos, hours, and the link to the site.
-              Not review schemes, not a citation blast, and not posts for their
-              own sake.
+              An audit of categories, services, photos, hours, and the link to
+              the site—with the small leaks fixed and the calls tracked. Not
+              review schemes, not a citation blast, and not posts for their own
+              sake.
             </p>
             <div className="gbp-hero__actions">
               <BookCallLink
@@ -400,12 +401,12 @@ export function GbpSections() {
           <div className="gbp-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">What the profile work includes.</h2>
+              <h2 className="section-heading">What the profile audit covers.</h2>
             </div>
             <p className="section-copy">
-              Categories, services, photos, hours, and the link to the site.
-              Not review schemes, not a citation blast, and not posts for their
-              own sake.
+              What Google shows, checked against the work you actually want.
+              Quick wins get fixed; the rest gets a recommendation you can hand
+              to whoever manages the listing.
             </p>
           </div>
           <div className="gbp-ways__grid reveal">
@@ -417,7 +418,7 @@ export function GbpSections() {
                 <h3>{item.title}</h3>
                 <p className="gbp-way__lead">{item.lead}</p>
                 <p className="gbp-way__setup">
-                  <span className="gbp-way__label">What we do</span>
+                  <span className="gbp-way__label">What we check</span>
                   {renderInline(item.setup)}
                 </p>
                 <p className="gbp-way__outcome">
@@ -436,7 +437,7 @@ export function GbpSections() {
             <div>
               <p className="eyebrow">How it works</p>
               <h2 className="section-heading">
-                Fix what Google shows. Then keep it true.
+                Audit it. Fix the leaks. Count the calls.
               </h2>
             </div>
             <p className="section-copy">
@@ -483,11 +484,10 @@ export function GbpSections() {
             <span className="fwd-services__also-label">Part of the bigger picture</span>
             The Google Business Profile is one lever. Whether the map result is
             the right place to spend effort depends on the site and everything
-            else—that&apos;s what the{" "}
-            <Link href="/fractional-digital-department">
-              Fractional Digital Department
-            </Link>{" "}
-            figures out.
+            else—that&apos;s what{" "}
+            <Link href="/marketing-advisory">marketing advisory</Link>{" "}
+            figures out, starting with a{" "}
+            <Link href="/lead-leak-audit">lead leak audit</Link>.
           </p>
         </div>
       </section>

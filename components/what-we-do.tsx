@@ -1143,8 +1143,8 @@ export function WhatWeDoSections() {
             <p className="section-copy">
               Automation is one lever. Whether it&apos;s the right one right
               now depends on everything else—that&apos;s what the{" "}
-              <Link className="inline-link" href="/fractional-digital-department">
-                Fractional Digital Department
+              <Link className="inline-link" href="/marketing-advisory">
+                marketing advisory
               </Link>{" "}
               figures out.
             </p>

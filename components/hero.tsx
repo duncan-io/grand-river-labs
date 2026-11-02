@@ -157,27 +157,27 @@ export function Hero() {
       <div className="shell">
         <div className="hero__content">
           <h1 className="hero__headline">
-            <span>Digital marketing leadership.</span>
+            <span>Is your marketing actually</span>
             <span>
-              Without the <span className="hero__keep">full-time hire.</span>
+              <span className="hero__keep">making you money?</span>
             </span>
           </h1>
           <p className="hero__copy">
-            Someone who sets the strategy, recommends where the budget goes,
-            and stays accountable for leads and revenue. Execution is
-            included, so those decisions don&apos;t stall.
+            We patch the leaks where leads are lost, verify which spend is
+            actually working, advise on where the budget goes, and manage the
+            vendors who do the rest.
           </p>
           <div className="hero__actions">
             <BookCallLink className="button button-primary">
               Book a call
               <Arrow />
             </BookCallLink>
-            <a className="button button-secondary" href="#contact">
-              Or send a note
+            <a className="button button-secondary" href="/lead-leak-audit">
+              Get a lead leak audit
             </a>
           </div>
           <p className="hero__aside">
-            <a href="/fractional-digital-department">How the leadership works</a>
+            <a href="/marketing-advisory">How the advisory works</a>
           </p>
         </div>
       </div>
