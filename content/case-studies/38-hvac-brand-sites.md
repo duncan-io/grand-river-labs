@@ -88,4 +88,4 @@ Order beats effort. That is most of it.
 
 ## Let's look at yours
 
-If you are running a portfolio of brands — or one site you suspect has the same problem — I will walk through the audit with you. [Book a 30-minute call](https://calendly.com/duncan-grandriverlabs/30min) or email [hello@grandriverlabs.com](mailto:hello@grandriverlabs.com).
+If you are running a portfolio of brands — or one site you suspect has the same problem — I will walk through the audit with you. [Book a 30-minute call](https://calendly.com/duncan-grandriverlabs/30min) or email [hello@grandriverlabs.io](mailto:hello@grandriverlabs.io).

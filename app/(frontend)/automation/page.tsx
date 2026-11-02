@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { WhatWeDoSections } from "@/components/what-we-do";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/automation" },
   title: "Automation and AI | Grand River Labs",
   description:
     "Automate the busywork between the tools you already trust—business process, marketing, consulting, and AI—without a rip-and-replace.",

@@ -1,21 +1,26 @@
-const cards = [
+import { Arrow } from "./site-header";
+
+const steps = [
   {
     label: "Today",
-    value: "30 booked jobs",
-    copy: "$8,000 a month in ads brings in 100 leads, and 30% of them book.",
-    featured: false,
+    value: "30",
+    unit: "/mo",
+    copy: "booked jobs from 100 leads on $8,000 a month in ads",
+    total: false,
   },
   {
     label: "After the patch",
-    value: "36 booked jobs",
-    copy: "Faster pages, better forms and same-day follow-up lift booking to 36%.",
-    featured: false,
+    value: "36",
+    unit: "/mo",
+    copy: "faster pages, better forms and same-day follow-up",
+    total: false,
   },
   {
     label: "The difference",
-    value: "+72 jobs a year",
-    copy: "Six more booked jobs every month from the same ad spend, for as long as the patch stays in place.",
-    featured: true,
+    value: "+72",
+    unit: "/yr",
+    copy: "more booked jobs from the same ad spend",
+    total: true,
   },
 ];
 
@@ -26,7 +31,7 @@ export function FixValueSection() {
         <div className="services__top reveal">
           <div>
             <p className="eyebrow">The math</p>
-            <h2 className="section-heading">What a fix is worth.</h2>
+            <h2 className="section-heading">What patching one leak is worth.</h2>
           </div>
           <p className="section-copy">
             An illustration of what patching one leak looks like. Same ad
@@ -34,27 +39,35 @@ export function FixValueSection() {
           </p>
         </div>
 
-        <ol className="fix-value__compare reveal">
-          {cards.map((card) => (
-            <li key={card.label}>
-              <article
-                className={
-                  card.featured
-                    ? "fix-value__card fix-value__card--difference"
-                    : "fix-value__card"
-                }
-              >
-                <p className="fix-value__label">{card.label}</p>
-                <p className="fix-value__value">{card.value}</p>
-                <p className="fix-value__note">{card.copy}</p>
-              </article>
+        <ol className="fix-value__equation reveal">
+          {steps.map((step) => (
+            <li
+              className={
+                step.total
+                  ? "fix-value__term fix-value__term--total"
+                  : "fix-value__term"
+              }
+              key={step.label}
+            >
+              <p className="fix-value__label">{step.label}</p>
+              <p className="fix-value__value">
+                {step.value}
+                <span className="fix-value__unit">{step.unit}</span>
+              </p>
+              <p className="fix-value__note">{step.copy}</p>
             </li>
           ))}
         </ol>
 
-        <p className="fix-value__note fix-value__note--disclaimer reveal">
-          The numbers are an example, not a client result.
-        </p>
+        <div className="fix-value__footer reveal">
+          <p className="fix-value__disclaimer">
+            The numbers are an example, not a client result.
+          </p>
+          <a className="fix-value__more" href="/conversion-rate-optimization">
+            Find your leaks
+            <Arrow />
+          </a>
+        </div>
       </div>
     </section>
   );

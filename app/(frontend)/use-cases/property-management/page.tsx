@@ -8,6 +8,7 @@ import { UseCasesCta } from "@/components/use-cases";
 const industry = getIndustry("property-management")!;
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/use-cases/property-management" },
   title: industry.metaTitle,
   description: industry.metaDescription,
 };

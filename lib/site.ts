@@ -25,7 +25,7 @@ export function buildBookingHref(options?: {
   return url.toString();
 }
 
-const DEFAULT_SITE_URL = "https://grandriverlabs.com";
+const DEFAULT_SITE_URL = "https://grandriverlabs.io";
 
 export function getSiteUrl() {
   const value = process.env.SITE_URL?.trim() || DEFAULT_SITE_URL;
@@ -85,7 +85,7 @@ export function getPayloadTrustedOrigins(serverURL: string) {
     ...withHostVariants(originFromHost(process.env.RAILWAY_STATIC_URL)),
     ...withHostVariants(originFromHost(process.env.RAILWAY_SERVICE_GRAND_RIVER_LABS_URL)),
     ...extraOrigins.flatMap((origin) => withHostVariants(origin)),
-    // Live admin is served on .io; brand/email still uses .com.
+    // The site, admin, and email are served on .io; .com origins stay trusted for legacy links.
     "https://grandriverlabs.io",
     "https://www.grandriverlabs.io",
     "https://grandriverlabs.com",

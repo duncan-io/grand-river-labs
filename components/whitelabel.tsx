@@ -1066,7 +1066,7 @@ export function WhitelabelSections() {
             <div className="whitelabel-hero__actions">
               <a
                 className="button button-primary"
-                href="mailto:hello@grandriverlabs.com?subject=White-label%20partnership"
+                href="mailto:hello@grandriverlabs.io?subject=White-label%20partnership"
               >
                 Talk about partnering
                 <Arrow />
@@ -1236,7 +1236,7 @@ export function WhitelabelCta() {
           <div className="use-cases-cta__buttons">
             <a
               className="button button-primary"
-              href="mailto:hello@grandriverlabs.com?subject=White-label%20partnership"
+              href="mailto:hello@grandriverlabs.io?subject=White-label%20partnership"
             >
               Talk about partnering
               <Arrow />

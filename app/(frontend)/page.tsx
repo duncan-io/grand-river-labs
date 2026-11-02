@@ -20,6 +20,7 @@ const description =
   "Senior digital marketing leadership that makes the strategy, budget, and channel decisions — with hands-on execution included, and without the full-time hire.";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/" },
   title: "Fractional Digital Marketing Team | Grand River Labs",
   description,
 };
@@ -30,7 +31,7 @@ const professionalServiceJsonLd = {
   name: "Grand River Labs",
   url: getSiteUrl(),
   description,
-  email: "hello@grandriverlabs.com",
+  email: "hello@grandriverlabs.io",
 };
 
 export default function Home() {
@@ -50,9 +51,9 @@ export default function Home() {
         <FeaturedCaseStudy />
         <ResultsBar />
         <LeadershipSection />
-        <FixValueSection />
         <EngagementBlock />
         <ProcessSection />
+        <FixValueSection />
         <ServicesSection />
         <TestimonialsSection />
         <UseCaseStrip />

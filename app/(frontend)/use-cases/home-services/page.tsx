@@ -10,6 +10,7 @@ import { SiteHeader } from "@/components/site-header";
 const industry = getIndustry("home-services")!;
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/use-cases/home-services" },
   title: industry.metaTitle,
   description: industry.metaDescription,
 };

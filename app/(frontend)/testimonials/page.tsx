@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/testimonials" },
   title: "Testimonials | Grand River Labs",
   description:
     "What clients say about working with Grand River Labs—clearer direction, less noise, and guidance that sticks.",

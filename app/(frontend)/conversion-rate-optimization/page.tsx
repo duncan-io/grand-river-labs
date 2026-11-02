@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/conversion-rate-optimization" },
   title: "Conversion Rate Optimization (CRO) | Grand River Labs",
   description:
     "Turn the traffic you already have into inquiries and bookings—clearer journeys, stronger calls to action, tighter forms, and tests sized to your traffic.",

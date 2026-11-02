@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/google-business-profile" },
   title: "Google Business Profile | Grand River Labs",
   description:
     "Categories, services, photos, hours, and the link from your Google Business Profile to the site. Not review schemes, not a citation blast, and not posts for their own sake.",

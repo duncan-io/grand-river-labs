@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/fractional-digital-team-calculator" },
   title: "Fractional Digital Team vs Full-Time Calculator | Grand River Labs",
   description:
     "Compare the cost of the in-house team you would hire with a fractional digital department. Starts with a senior leader and a junior—add roles, edit salaries, and see the gap.",

@@ -35,6 +35,25 @@ export function ChatLauncher() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [covering, setCovering] = useState(false);
+
+  useEffect(() => {
+    const targets = document.querySelectorAll("#contact, .site-footer");
+    const inView = new Set<Element>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          inView.add(entry.target);
+        } else {
+          inView.delete(entry.target);
+        }
+      }
+      setCovering(inView.size > 0);
+    });
+
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [pathname]);
 
   useEffect(() => {
     if (pathname === "/chat" || pathname.startsWith("/chat/")) {
@@ -63,17 +82,14 @@ export function ChatLauncher() {
   }
 
   return (
-    <div className="chat-launcher">
+    <div className="chat-launcher" data-hidden={covering}>
       <a
         className="chat-launcher__link"
         href={`/chat?from=${encodeURIComponent(pathname)}`}
+        aria-label="Ask AI: chat with the assistant"
       >
         <ChatIcon />
-        <span className="chat-launcher__copy">
-          <span className="chat-launcher__eyebrow">Ask AI</span>
-          <span className="chat-launcher__label">Chat with the assistant</span>
-        </span>
-        <span className="chat-launcher__label-mobile">Ask AI</span>
+        <span className="chat-launcher__label">Ask AI</span>
       </a>
       <button
         type="button"

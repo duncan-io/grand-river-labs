@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { WebsiteStrategySections } from "@/components/website-strategy";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/website-strategy" },
   title: "Website Partner | Grand River Labs",
   description:
     "A trusted Website Partner—on-demand website operations, growth recommendations, ownership, and CRO. Existing sites or new builds, across WordPress, Webflow, Wix, Squarespace, and more.",

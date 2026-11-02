@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/search-engine-optimization" },
   title: "SEO | Grand River Labs",
   description:
     "On-site SEO for the searches that win the work—structure, titles, crawlability, and pages aligned to search intent. Not link building, and not a content mill.",

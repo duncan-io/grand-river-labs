@@ -10,6 +10,7 @@ import { isMedia, mediaImageSrc } from "@/lib/media";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/case-studies" },
   title: "Case studies | Grand River Labs",
   description:
     "Specific examples of digital work: what was broken, what changed, and the lead result that followed.",

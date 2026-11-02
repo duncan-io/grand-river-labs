@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/home-improvement-marketing" },
   title: "Home Improvement Marketing for Companies | Grand River Labs",
   description:
     "A fractional digital department for established home improvement companies doing $1M–$50M. One owner for lead generation and the reply that books the job.",

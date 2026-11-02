@@ -18,8 +18,8 @@ export function SiteFooter() {
           <a href="/fractional-digital-team-calculator">Cost calculator</a>
           <a href="/about">About</a>
           <a href="/#contact">Contact</a>
-          <a href="mailto:hello@grandriverlabs.com">
-            hello@grandriverlabs.com
+          <a href="mailto:hello@grandriverlabs.io">
+            hello@grandriverlabs.io
           </a>
           <a href="#top">Back to top</a>
         </div>

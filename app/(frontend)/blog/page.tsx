@@ -11,6 +11,7 @@ import { isMedia, mediaImageSrc } from "@/lib/media";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/blog" },
   title: "Blog | Grand River Labs",
   description:
     "Notes on digital strategy, websites, automation, and running a focused digital department.",

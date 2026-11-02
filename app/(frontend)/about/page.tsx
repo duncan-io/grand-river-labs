@@ -9,6 +9,7 @@ const description =
   "Grand River Labs is a fractional digital marketing team, not an agency. See who decides the work, who you talk to, and how the engagement is billed.";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About | Grand River Labs",
   description,
 };
@@ -24,7 +25,7 @@ const aboutPageJsonLd = {
     name: "Grand River Labs",
     url: getSiteUrl(),
     description,
-    email: "hello@grandriverlabs.com",
+    email: "hello@grandriverlabs.io",
   },
 };
 

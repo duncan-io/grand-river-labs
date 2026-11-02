@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/analytics" },
   title: "Analytics | Grand River Labs",
   description:
     "GA4, Google Tag Manager, event tracking, call tracking, and attribution—measurement you can make decisions on.",

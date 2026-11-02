@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { WhitelabelCta, WhitelabelSections } from "@/components/whitelabel";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/white-label" },
   title: "White-label AI Automation | Grand River Labs",
   description:
     "Your clients are asking for AI. Offer automation under your brand—we deliver behind the scenes.",

@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   return {
     title: `${study.metaTitle || study.title} | Grand River Labs`,
     description: study.metaDescription || study.excerpt || undefined,
+    alternates: { canonical: `/case-studies/${slug}` },
   };
 }
 

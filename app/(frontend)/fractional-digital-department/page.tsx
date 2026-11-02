@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/fractional-digital-department" },
   title: "Fractional Digital Marketing Leadership | Grand River Labs",
   description:
     "Senior digital marketing leadership for owner-led growing businesses, without a full-time hire. One partner who decides where effort goes and does the work. Starting at $2,500/month.",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Outfit } from "next/font/google";
 import Script from "next/script";
 import { ChatLauncher } from "@/components/chat-launcher";
+import { getSiteUrl } from "@/lib/site";
 import "../globals.css";
 
 const outfit = Outfit({
@@ -15,9 +16,18 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: "Fractional Digital Marketing Team | Grand River Labs",
   description:
     "Get the expertise and execution of an in-house digital team without hiring one. GR Labs provides ongoing website management, digital strategy, technical execution, and more.",
+  openGraph: {
+    siteName: "Grand River Labs",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

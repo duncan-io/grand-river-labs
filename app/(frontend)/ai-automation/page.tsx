@@ -7,6 +7,7 @@ import {
 } from "@/components/ai-automation";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/ai-automation" },
   title: "AI Automation | Grand River Labs",
   description:
     "Practical AI inside the work you already do—extraction, triage, drafting, and assistants tied to your real systems. No demos that die on a slide.",
