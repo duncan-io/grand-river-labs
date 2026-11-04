@@ -29,7 +29,7 @@ const comparisons = [
   {
     dimension: "How you're billed",
     agency: "A quote per channel.",
-    fractional: "One monthly rate, starting at $2,500.",
+    fractional: "One monthly rate, starting at $1,500.",
   },
   {
     dimension: "Specialists",
@@ -41,7 +41,7 @@ const comparisons = [
 const changes = [
   {
     title: "Someone owns the picture",
-    copy: "Agencies and specialists each optimize their own part, and report on it themselves. GR Labs stays with the goals, the channel mix, and the measurement—and decides where effort goes. That working model is [marketing advisory](/marketing-advisory).",
+    copy: "Agencies and specialists each optimize their own part, and report on it themselves. GR Labs stays with the goals, the channel mix, and the measurement—and decides where effort goes. That working model is the [fractional marketing director](/fractional-marketing-director).",
   },
   {
     title: "You work with the owner",
@@ -49,7 +49,7 @@ const changes = [
   },
   {
     title: "One rate for the mix",
-    copy: "Starting at $2,500 a month, priced against the work that matters. One engagement, not a quote for each channel—and no long contracts.",
+    copy: "Starting at $1,500 a month, priced against the work that matters. One engagement, not a quote for each channel—and no long contracts.",
   },
 ] as const;
 
@@ -60,9 +60,9 @@ const fits = [
     copy: "You already have someone setting priorities, and you need one channel executed well. Agencies can also partner with us under a [white-label arrangement](/white-label): we show up as the delivery bench.",
   },
   {
-    label: "Marketing advisor",
-    title: "When an advisor is the right call",
-    copy: "The business has marketing running—ads, SEO, vendors, a site—but nobody who can answer \"is it working?\" with evidence. GR Labs patches the leaks, verifies the spend, and holds the vendors to the plan.",
+    label: "Fractional director",
+    title: "When a fractional director is the right call",
+    copy: "The business has marketing running—ads, SEO, vendors, a site—but nobody who owns it. GR Labs takes the director's seat part-time: patches the leaks, verifies the spend, and holds the vendors to the plan.",
   },
 ] as const;
 
@@ -74,12 +74,13 @@ export function AboutSections() {
           <p className="eyebrow">About GR Labs</p>
           <h1 className="about-hero__headline">
             <span>An agency sells you more marketing.</span>
-            <span>An advisor tells you which marketing works.</span>
+            <span>A director tells you which marketing works.</span>
           </h1>
           <p className="about-hero__support">
-            Grand River Labs is a marketing advisor for owner-led growing
-            businesses. We patch the leaks where leads are lost, verify which
-            spend is actually working, and manage the vendors who do the rest.
+            Grand River Labs is a fractional marketing director for
+            owner-led growing businesses. We patch the leaks where leads are
+            lost, verify which spend is actually working, and manage the
+            vendors who do the rest.
           </p>
           <div className="about-hero__actions">
             <BookCallLink
@@ -88,8 +89,8 @@ export function AboutSections() {
               Book a 30-minute fit call
               <Arrow />
             </BookCallLink>
-            <a className="about-hero__link" href="/marketing-advisory">
-              See how the advisory works →
+            <a className="about-hero__link" href="/fractional-marketing-director">
+              See how the fractional director works →
             </a>
           </div>
         </div>
@@ -103,8 +104,8 @@ export function AboutSections() {
               <h2 className="section-heading">Same words. A different job.</h2>
             </div>
             <p className="section-copy">
-              An agency is hired for a channel and reports on itself. An
-              advisor is hired to answer “is it working?”—with evidence.
+              An agency is hired for a channel and reports on itself. A
+              director is hired to answer “is it working?”—with evidence.
             </p>
           </div>
 
@@ -115,7 +116,7 @@ export function AboutSections() {
                 An agency
               </span>
               <span className="about-compare__col about-compare__col--team">
-                An advisor
+                A fractional director
               </span>
             </div>
             {comparisons.map((row) => (
@@ -126,7 +127,7 @@ export function AboutSections() {
                   {row.agency}
                 </p>
                 <p className="about-compare__cell about-compare__cell--team">
-                  <span className="about-compare__side">An advisor</span>
+                  <span className="about-compare__side">A fractional director</span>
                   {row.fractional}
                 </p>
               </article>
@@ -134,7 +135,7 @@ export function AboutSections() {
           </div>
 
           <p className="about-compare__promise reveal">
-            Not another vendor. An advisor for the whole picture.
+            Not another vendor. A director for the whole picture.
           </p>
         </div>
       </section>
@@ -178,7 +179,7 @@ export function AboutSections() {
             </div>
             <p className="section-copy">
               A defined channel with someone already setting priorities is an
-              agency job. A spend nobody verifies is an advisor job.
+              agency job. A spend nobody verifies is a director&apos;s job.
             </p>
           </div>
           <div className="about-fit__grid reveal">

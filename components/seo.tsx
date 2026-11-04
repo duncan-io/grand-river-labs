@@ -83,6 +83,8 @@ const steps = [
   },
 ];
 
+const leadBars = [14, 18, 16, 20, 30, 40];
+
 function ResultBody({
   url,
   title,
@@ -310,6 +312,75 @@ function SeoHeroScene() {
             muted
           />
         </g>
+
+        <g transform="translate(1016 632)">
+          <rect
+            width="412"
+            height="88"
+            rx="14"
+            fill="#FFFDF4"
+            stroke="#057A72"
+            strokeWidth="1.6"
+          />
+          <text
+            x="24"
+            y="36"
+            fill="#057A72"
+            fontFamily="system-ui, -apple-system, sans-serif"
+            fontSize="12"
+            fontWeight="650"
+          >
+            Calls &amp; forms from search
+          </text>
+          <text
+            x="24"
+            y="60"
+            fill="#365e5b"
+            fontFamily="system-ui, -apple-system, sans-serif"
+            fontSize="11"
+          >
+            this month
+          </text>
+          {leadBars.map((height, index) => (
+            <rect
+              key={index}
+              className={
+                index >= leadBars.length - 2 ? "seo-hero__leads-bar" : undefined
+              }
+              x={220 + index * 18}
+              y={68 - height}
+              width="10"
+              height={height}
+              rx="2"
+              fill="#3A948C"
+              opacity={index >= leadBars.length - 2 ? 0.9 : 0.4}
+            />
+          ))}
+          <text
+            className="seo-hero__leads-low"
+            x="388"
+            y="58"
+            textAnchor="end"
+            fill="#3A948C"
+            fontFamily="system-ui, -apple-system, sans-serif"
+            fontSize="30"
+            fontWeight="700"
+          >
+            3
+          </text>
+          <text
+            className="seo-hero__leads-high"
+            x="388"
+            y="58"
+            textAnchor="end"
+            fill="#075752"
+            fontFamily="system-ui, -apple-system, sans-serif"
+            fontSize="30"
+            fontWeight="700"
+          >
+            11
+          </text>
+        </g>
       </g>
 
       <path
@@ -330,14 +401,14 @@ export function SeoSections() {
         </div>
         <div className="shell">
           <div className="seo-hero__content">
-            <p className="eyebrow">SEO strategy &amp; advisory</p>
+            <p className="eyebrow">SEO strategy &amp; oversight</p>
             <h1 className="seo-hero__headline">
               Know whether your SEO is actually working.
             </h1>
             <p className="seo-hero__copy">
               Rankings and traffic checked against leads and booked jobs. What
-              to fix, what to write, and what to ask of whoever does the
-              work—strategy and oversight, not another content mill.
+              to fix and what to write, with the work checked against real
+              leads. Not another content mill.
             </p>
             <div className="seo-hero__actions">
               <BookCallLink
@@ -392,7 +463,7 @@ export function SeoSections() {
           <div className="seo-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">What SEO advisory includes.</h2>
+              <h2 className="section-heading">What SEO oversight includes.</h2>
             </div>
             <p className="section-copy">
               Strategy, priorities, and oversight—not links, not a blog produced
@@ -427,11 +498,10 @@ export function SeoSections() {
           <div className="seo-flow__top reveal">
             <div>
               <p className="eyebrow">How it works</p>
-              <h2 className="section-heading">Strategy first. Someone else can ship it.</h2>
+              <h2 className="section-heading">Strategy first. Then checked against leads.</h2>
             </div>
             <p className="section-copy">
-              This is advisory and oversight, not production. Once someone
-              arrives,{" "}
+              Once someone arrives,{" "}
               <Link href="/conversion-rate-optimization">CRO</Link> is how the
               visit becomes a conversation.
             </p>
@@ -439,7 +509,7 @@ export function SeoSections() {
           <ol className="seo-flow__steps reveal">
             {steps.map((step, index) => (
               <li className="seo-flow__step" key={step.title}>
-                {index > 0 ? (
+                {index < steps.length - 1 ? (
                   <span className="seo-flow__connector" aria-hidden="true">
                     <svg viewBox="0 0 80 24" fill="none">
                       <path
@@ -473,7 +543,7 @@ export function SeoSections() {
             SEO is one channel, and whether it deserves the next dollar depends
             on everything else—tracking, leaks, the other vendors. That&apos;s
             what{" "}
-            <Link href="/marketing-advisory">marketing advisory</Link>{" "}
+            <Link href="/fractional-marketing-director">the fractional marketing director</Link>{" "}
             figures out, starting with a{" "}
             <Link href="/lead-leak-audit">lead leak audit</Link>.
           </p>

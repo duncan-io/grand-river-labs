@@ -502,9 +502,10 @@ export function AiAutomationCta() {
         </div>
         <div className="use-cases-cta__actions">
           <p className="section-copy">
-            Tell us about a process that eats time in the gray area. We&apos;ll
-            map a practical path from today&apos;s bottleneck to a working
-            automation.
+            AI is one lever your fractional marketing director pulls—when
+            it&apos;s worth it, and not before. Tell us about a process that
+            eats time; if it&apos;s ours to automate, we&apos;ll scope it. If
+            it belongs with a vendor, we&apos;ll say so and check their work.
           </p>
           <div className="use-cases-cta__buttons">
             <BookCallLink

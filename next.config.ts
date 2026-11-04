@@ -65,8 +65,18 @@ const nextConfig: NextConfig = {
     return [
       { source: "/whitelabel", destination: "/white-label", permanent: true },
       {
+        source: "/marketing-advisory/:slug*",
+        destination: "/fractional-marketing-director/:slug*",
+        permanent: true,
+      },
+      {
+        source: "/digital-marketing-consultant",
+        destination: "/fractional-marketing-director",
+        permanent: true,
+      },
+      {
         source: "/digital-strategy",
-        destination: "/marketing-advisory",
+        destination: "/fractional-marketing-director",
         permanent: true,
       },
       {
@@ -76,17 +86,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/fractional-digital-department/:slug*",
-        destination: "/marketing-advisory/:slug*",
+        destination: "/fractional-marketing-director/:slug*",
         permanent: true,
       },
       {
         source: "/website-strategy",
-        destination: "/marketing-advisory",
+        destination: "/fractional-marketing-director",
         permanent: true,
       },
       {
         source: "/fractional-digital-team-calculator",
-        destination: "/marketing-advisory",
+        destination: "/fractional-marketing-director",
         permanent: true,
       },
       {

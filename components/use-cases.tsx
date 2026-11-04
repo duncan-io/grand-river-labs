@@ -88,8 +88,9 @@ export function UseCasesCta() {
         </div>
         <div className="use-cases-cta__actions">
           <p className="section-copy">
-            Tell us about a process that eats time. We&apos;ll map a practical
-            path from today&apos;s bottleneck to a working automation.
+            Automation is one lever among many the director weighs. Tell us
+            about a process that eats time—we&apos;ll tell you whether
+            it&apos;s worth it, and whether it&apos;s ours to build.
           </p>
           <div className="use-cases-cta__buttons">
             <a className="button button-primary" href="/#contact">

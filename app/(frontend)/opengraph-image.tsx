@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "Grand River Labs — Is your marketing actually making you money?";
+  "Grand River Labs — Your marketing director, part-time.";
 
 export const size = {
   width: 1200,
@@ -47,8 +47,18 @@ export default async function Image() {
             letterSpacing: "-0.03em",
           }}
         >
-          <div>Is your marketing actually</div>
-          <div>making you money?</div>
+          <div>Your marketing director,</div>
+          <div>part-time.</div>
+          <div
+            style={{
+              marginTop: 28,
+              fontSize: 38,
+              letterSpacing: "-0.01em",
+              color: "#057a72",
+            }}
+          >
+            Fractional marketing director for lead-driven businesses
+          </div>
         </div>
         <div
           style={{

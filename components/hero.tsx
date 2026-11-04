@@ -1,4 +1,5 @@
 import { BookCallLink } from "./book-call-link";
+import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
 
 function RiverScene() {
@@ -156,33 +157,42 @@ export function Hero() {
       <RiverScene />
       <div className="shell">
         <div className="hero__content">
+          <p className="eyebrow">For lead-driven businesses</p>
           <h1 className="hero__headline">
-            <span>Is your marketing actually</span>
+            <span>Your marketing director,</span>
             <span>
-              <span className="hero__keep">making you money?</span>
+              <span className="hero__keep">part-time.</span>
             </span>
           </h1>
           <p className="hero__copy">
-            We patch the leaks where leads are lost, verify which spend is
-            actually working, advise on where the budget goes, and manage the
-            vendors who do the rest.
+            A senior fractional marketing director who owns the plan, checks
+            which spend is actually making you money, and manages your vendors
+            — for a fraction of the cost of a full-time hire.
           </p>
           <div className="hero__actions">
             <BookCallLink className="button button-primary">
               Book a call
               <Arrow />
             </BookCallLink>
-            <a className="button button-secondary" href="/lead-leak-audit">
-              Get a lead leak audit
+            <a className="button button-secondary" href="#how-we-work">
+              See how it works
             </a>
           </div>
+          <ul className="hero__facts">
+            <li>Starting at {formatUsd(DIRECTOR_MONTHLY)}/month</li>
+            <li>No long contracts</li>
+            <li>Works with your current vendors</li>
+          </ul>
           <p className="hero__aside">
-            <a href="/marketing-advisory">How the advisory works</a>
+            <a href="/lead-leak-audit">
+              Just want an audit first? Start with a {formatUsd(AUDIT_FEE)} lead leak
+              audit →
+            </a>
           </p>
         </div>
       </div>
-      <a className="hero__cue" href="#leadership">
-        What you get
+      <a className="hero__cue" href="#engagement">
+        What a fractional director is
       </a>
     </section>
   );

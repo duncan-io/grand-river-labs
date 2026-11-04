@@ -1105,10 +1105,12 @@ export function WhatWeDoSections() {
               Automate the busywork between the tools you already trust.
             </h1>
             <p className="what-we-do-hero__copy">
-              We integrate the systems you run today, speed up the handoffs in
-              between, and{" "}
+              A lever your fractional marketing director pulls: we scope and
+              prioritize the work against everything else, build the small
+              lead-flow automations ourselves, and hand larger builds to a
+              vendor whose work we then{" "}
               <Link className="inline-link" href="/automation-consulting">
-                stay with you from discovery through support
+                scope and verify from discovery on
               </Link>
               —so you reclaim time and cost without a rip-and-replace.
             </p>
@@ -1143,8 +1145,8 @@ export function WhatWeDoSections() {
             <p className="section-copy">
               Automation is one lever. Whether it&apos;s the right one right
               now depends on everything else—that&apos;s what the{" "}
-              <Link className="inline-link" href="/marketing-advisory">
-                marketing advisory
+              <Link className="inline-link" href="/fractional-marketing-director">
+                fractional marketing director
               </Link>{" "}
               figures out.
             </p>

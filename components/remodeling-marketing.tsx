@@ -50,7 +50,7 @@ const engine = [
     icon: "Rank",
     label: "Bring leads in",
     title: "Local Services Ads and Google Ads",
-    copy: "We set the direction for Local Services Ads so you pay for leads that contact you, not shared ones. On Google Ads, [we audit the spend you already make](/local-ads), check the reported leads against your CRM, and tell you what to cut. We advise. We don't sell you a bigger budget.",
+    copy: "We set the direction for Local Services Ads so you pay for leads that contact you, not shared ones. On Google Ads, [we audit the spend you already make](/local-ads), check the reported leads against your CRM, and tell you what to cut. We don't sell you a bigger budget.",
   },
   {
     icon: "Target",
@@ -110,9 +110,9 @@ const monthly = [
 const faqs = [
   {
     question:
-      "Is marketing advisory worth it for an established remodeling company?",
+      "Is a fractional marketing director worth it for an established remodeling company?",
     answer:
-      "If you're a design-build or kitchen and bath remodeler with crews or install partners and money already going out for ads or leads, the gap usually isn't more leads. It's that nobody checks the whole path from the first search to the signed contract. We take that seat: we trace where your leads come from, patch where they leak, verify what the spend produces, and report on signed jobs. [See how marketing advisory works](/marketing-advisory).",
+      "If you're a design-build or kitchen and bath remodeler with crews or install partners and money already going out for ads or leads, the gap usually isn't more leads. It's that nobody checks the whole path from the first search to the signed contract. We take that seat: we trace where your leads come from, patch where they leak, verify what the spend produces, and report on signed jobs. [See how the fractional marketing director works](/fractional-marketing-director).",
   },
   {
     question: "Why do remodeling leads go unanswered?",
@@ -122,12 +122,7 @@ const faqs = [
   {
     question: "How is this different from a kitchen and bath marketing agency?",
     answer:
-      "An agency usually sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the agency. We answer to your numbers: Local Services Ads, ad advisory, the Google Business Profile, routing, follow-up, and project content checked against signed jobs. No long contracts, and [reporting on leads and signed jobs](/analytics) instead of vanity metrics.",
-  },
-  {
-    question: "Do you run our ads, or just advise?",
-    answer:
-      "We advise on the Google spend you already make: what to cut, where the service area is wrong, and which clicks were never going to be a kitchen. If you need hands-on campaign management, we'll work with the person you have or help you find the right one. We're not here to sell you a bigger budget.",
+      "An agency usually sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the agency. We answer to your numbers: Local Services Ads, ad direction, the Google Business Profile, routing, follow-up, and project content checked against signed jobs. No long contracts, and [reporting on leads and signed jobs](/analytics) instead of vanity metrics.",
   },
 ];
 
@@ -145,7 +140,7 @@ export function RemodelingMarketingSections() {
               Remodeling Marketing for Design-Build Remodelers
             </h1>
             <p className="mkt-hero__copy">
-              Grand River Labs becomes your marketing advisor. We patch the
+              Grand River Labs becomes your fractional marketing director. We patch the
               leaks between a kitchen and bath lead and a design appointment,
               verify what the spend actually produces, and hold your vendors to
               the plan.
@@ -242,7 +237,7 @@ export function RemodelingMarketingSections() {
               </h2>
               <p className="section-copy">
                 {renderInline(
-                  "Most remodelers pay for the first half and leave the second to whoever answers the phone. [We check both](/marketing-advisory) and patch the gap between them, starting with a [lead leak audit](/lead-leak-audit).",
+                  "Most remodelers pay for the first half and leave the second to whoever answers the phone. [We check both](/fractional-marketing-director) and patch the gap between them, starting with a [lead leak audit](/lead-leak-audit).",
                 )}
               </p>
             </div>
@@ -316,13 +311,13 @@ export function RemodelingMarketingSections() {
               </h2>
             </div>
             <p className="section-copy">
-              One experienced advisor checking the profile, the ads, the
+              One experienced director checking the profile, the ads, the
               routing, and the follow-up—and for whether any of it turns into
               kitchens and baths.
             </p>
           </div>
           <p className="fdd-flow__promise reveal">
-            One advisor. Both halves. Reporting on signed jobs.
+            One director. Both halves. Reporting on signed jobs.
           </p>
         </div>
       </section>

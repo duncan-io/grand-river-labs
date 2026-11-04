@@ -3,7 +3,11 @@
 import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 import { BookCallLink } from "./book-call-link";
-import { advisoryAreas, advisoryNav, industriesNav } from "./what-we-do-nav";
+import {
+  directorAreas,
+  directorNav,
+  industriesNav,
+} from "./what-we-do-nav";
 
 const Arrow = () => (
   <svg
@@ -60,7 +64,7 @@ function IndustriesMoreNote() {
     <p className="nav-industries-more">
       <span className="nav-group__label">And more</span>
       <span className="nav-group__desc">
-        We work with any business. We specialize in lead-based companies.
+        We work with any business. We specialize in lead-driven ones.
       </span>
     </p>
   );
@@ -239,16 +243,16 @@ export function SiteHeader({
             </button>
             <div className="site-nav__dropdown" id={whatWeDoId}>
               <div className="nav-group">
-                <a className="nav-group__parent" href={advisoryNav.href}>
-                  <span className="nav-group__label">{advisoryNav.label}</span>
-                  <span className="nav-group__desc">{advisoryNav.description}</span>
+                <a className="nav-group__parent" href={directorNav.href}>
+                  <span className="nav-group__label">{directorNav.label}</span>
+                  <span className="nav-group__desc">{directorNav.description}</span>
                 </a>
-                <span className="nav-group__areas-label">Where we look</span>
+                <span className="nav-group__areas-label">What the director oversees</span>
                 <div
                   className="nav-group__children"
-                  aria-label={`${advisoryNav.label} areas`}
+                  aria-label={`${directorNav.label} areas`}
                 >
-                  {advisoryAreas.map((item) => (
+                  {directorAreas.map((item) => (
                     <a href={item.href} key={item.href}>
                       {item.label}
                     </a>
@@ -311,18 +315,18 @@ export function SiteHeader({
               <div className="nav-group">
                 <a
                   className="nav-group__parent"
-                  href={advisoryNav.href}
+                  href={directorNav.href}
                   onClick={closeMenu}
                 >
-                  <span className="nav-group__label">{advisoryNav.label}</span>
-                  <span className="nav-group__desc">{advisoryNav.description}</span>
+                  <span className="nav-group__label">{directorNav.label}</span>
+                  <span className="nav-group__desc">{directorNav.description}</span>
                 </a>
-                <span className="nav-group__areas-label">Where we look</span>
+                <span className="nav-group__areas-label">What the director oversees</span>
                 <div
                   className="nav-group__children"
-                  aria-label={`${advisoryNav.label} areas`}
+                  aria-label={`${directorNav.label} areas`}
                 >
-                  {advisoryAreas.map((item) => (
+                  {directorAreas.map((item) => (
                     <a href={item.href} key={item.href} onClick={closeMenu}>
                       {item.label}
                     </a>

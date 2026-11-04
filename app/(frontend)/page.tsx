@@ -1,37 +1,55 @@
 import type { Metadata } from "next";
 import { ContactSection } from "@/components/contact";
 import { EngagementBlock } from "@/components/engagement-block";
-import { FixValueSection } from "@/components/fix-value";
 import { Hero } from "@/components/hero";
 import {
+  DirectorIntro,
   FeaturedCaseStudy,
   LeadershipSection,
   ProcessSection,
-  ResultsBar,
   ServicesSection,
   TestimonialsSection,
   UseCaseStrip,
 } from "@/components/sections";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { getSiteUrl } from "@/lib/site";
 
 const description =
-  "Is your marketing actually making you money? Marketing advisory that patches lead leaks, verifies which spend is working, and manages your vendors — without another agency retainer.";
+  "A fractional marketing director for lead-driven businesses. One senior director, part-time: patching lead leaks, verifying which spend is working, and managing your vendors — without another agency retainer.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  title: "Marketing Advisory & Lead Leak Fixes | Grand River Labs",
+  title: "Grand River Labs | Fractional Marketing Director for Lead-Driven Businesses",
   description,
 };
 
-const professionalServiceJsonLd = {
+const homeJsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Grand River Labs",
-  url: getSiteUrl(),
-  description,
-  email: "hello@grandriverlabs.io",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      name: "Grand River Labs",
+      url: getSiteUrl(),
+    },
+    {
+      "@type": "ProfessionalService",
+      name: "Grand River Labs",
+      url: getSiteUrl(),
+      description,
+      email: "hello@grandriverlabs.io",
+      logo: `${getSiteUrl()}/icon.png`,
+      image: `${getSiteUrl()}/icon.png`,
+      serviceType: "Fractional marketing director",
+      audience: {
+        "@type": "BusinessAudience",
+        audienceType: "Lead-driven businesses",
+      },
+      areaServed: { "@type": "Country", name: "United States" },
+      priceRange: `Starting at ${formatUsd(DIRECTOR_MONTHLY)}/month`,
+    },
+  ],
 };
 
 export default function Home() {
@@ -42,18 +60,17 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(professionalServiceJsonLd),
+          __html: JSON.stringify(homeJsonLd),
         }}
       />
       <SiteHeader />
       <main>
         <Hero />
-        <FeaturedCaseStudy />
-        <ResultsBar />
-        <LeadershipSection />
         <EngagementBlock />
+        <LeadershipSection />
+        <DirectorIntro />
         <ProcessSection />
-        <FixValueSection />
+        <FeaturedCaseStudy />
         <ServicesSection />
         <TestimonialsSection />
         <UseCaseStrip />

@@ -1,19 +1,21 @@
 import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
+import { renderInline } from "@/components/inline-links";
+import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
 
 const friction = [
   {
-    title: "Traffic without inquiries",
-    copy: "Visits show up in the report. The inbox stays quiet. The site is busy, and the business still isn't hearing from the people it wanted.",
+    title: "Traffic that doesn't call",
+    copy: "The report shows visits. The phone stays quiet. People find the site, look around, and call whichever company made the next step easier.",
   },
   {
-    title: "Unclear next step",
-    copy: "The offer is on the page. The action isn't. Visitors scroll, hesitate, and leave because nothing tells them what to do next.",
+    title: "A number you can't tap",
+    copy: "The phone number sits in an image, the footer, or a desktop-only header. On a phone, calling takes three steps, and [nobody tracks the calls](/analytics) that do come in.",
   },
   {
-    title: "Forms that lose people",
-    copy: "Too many fields, a buried submit, a booking flow that restarts the question. People who were ready to talk drop off at the last step.",
+    title: "Quote forms that lose people",
+    copy: "Twelve fields, a CAPTCHA, and a submit button below the fold. Homeowners who were ready to book give up at the last step.",
   },
   {
     title: "Changes based on opinion",
@@ -23,59 +25,98 @@ const friction = [
 
 const ways = [
   {
-    title: "Journey and funnel audit",
-    lead: "See where the path from visit to inquiry actually breaks.",
+    title: "Drop-off review",
+    lead: "See where the path from visit to call actually breaks.",
     setup:
-      "A walkthrough of the pages, steps, and dead ends between arrival and a conversation.",
+      "A walk through the pages, devices, and steps between the click and the call, building on the [lead leak audit](/lead-leak-audit) if you've had one.",
     outcome:
-      "A short list of the changes worth making first—not a fifty-point critique.",
+      "A short list of the changes worth making first, not a fifty-point critique.",
   },
   {
-    title: "Page hierarchy and CTAs",
-    lead: "The page should make the next step obvious.",
+    title: "Mobile call path",
+    lead: "Most visits happen on a phone. Calling should take one tap.",
     setup:
-      "Headline, hierarchy, proof, and calls to action shaped around how you win the work.",
-    outcome: "A page that points somewhere, instead of explaining everything at once.",
+      "Tap-to-call above the fold, a call button that stays in reach, and [call tracking](/analytics) that tells site calls apart from map and ad calls.",
+    outcome: "More calls from the same visits, and a count you can trust.",
   },
   {
-    title: "Form and booking flow",
+    title: "Quote forms and booking",
     lead: "The last step should be the easiest one.",
     setup:
-      "Shorter forms, clearer labels, and booking paths that don't make people start over.",
-    outcome: "More of the people who meant to inquire actually finish.",
+      "Fewer fields, clearer labels, booking that doesn't make people start over, and every request [routed to a person](/marketing-automation) while it's warm.",
+    outcome:
+      "More of the homeowners who meant to ask for a quote actually finish.",
   },
   {
-    title: "A/B and multivariate testing",
-    lead: "Change something you can judge, not the whole page at once.",
+    title: "Service and ad landing pages",
+    lead: "The page should match the search or the ad that brought someone in.",
     setup:
-      "Tests on headlines, calls to action, forms, and layout—sized to the traffic you actually have.",
+      "Service pages and [ad landing pages](/local-ads) with one job: a clear headline, proof like reviews and project photos, and one next step.",
+    outcome:
+      "Ad spend lands on a page built to convert, not the generic homepage.",
+  },
+  {
+    title: "A/B testing, sized to your traffic",
+    lead: "Test when the traffic can settle it. Measure when it can't.",
+    setup:
+      "Head-to-head tests on headlines, call buttons, and forms where there's enough traffic. Most home services sites can't support multivariate tests, so smaller changes get measured before and after.",
     outcome: "A winner you can keep, and a record of what you tried.",
-  },
-  {
-    title: "Landing pages for campaigns",
-    lead: "A campaign deserves a page that matches the click.",
-    setup:
-      "Focused pages for ads, offers, and seasons—one job, one next step.",
-    outcome: "Spend lands on a page built to convert, not the generic homepage.",
   },
 ];
 
 const steps = [
   {
     title: "Measure",
-    copy: "We look at where people arrive, stall, and leave—and whether the tracking can support the decision. If the numbers aren't trustworthy yet, that gets fixed first.",
+    copy: "We check where visitors arrive, stall, and leave, and whether calls and forms are tracked well enough to judge a change. If the numbers aren't trustworthy, that gets fixed first.",
   },
   {
     title: "Hypothesize",
-    copy: "We pick the few changes most likely to turn a visit into an inquiry, and say what we expect to happen before anything ships.",
+    copy: "We pick the few changes most likely to turn a visit into a call or a quote request, and write down what we expect before anything ships.",
   },
   {
     title: "Test and ship",
-    copy: "We change hierarchy, calls to action, forms, or a landing page—and test when there's enough traffic to learn from.",
+    copy: "We change the call path, forms, page hierarchy, or a landing page, and run a proper test when there's enough traffic to learn from.",
   },
   {
     title: "Learn and repeat",
-    copy: "We keep what moved the number, drop what didn't, and take the next change from evidence rather than the loudest opinion.",
+    copy: "We keep what moved calls and booked jobs, drop what didn't, and take the next change from evidence rather than the loudest opinion.",
+  },
+];
+
+export const faqs = [
+  {
+    question: "What is conversion rate optimization?",
+    answer:
+      "Conversion rate optimization (CRO) is the work of getting more of the people who already visit your site to take the next step. For a home services company, that's usually a phone call, a quote request, or a booked estimate. It means finding where visitors drop off, changing the page, call path, or form, and measuring whether the change helped.",
+  },
+  {
+    question: "What's a good conversion rate for a home services website?",
+    answer:
+      "It depends on where the traffic comes from. Someone who clicked an emergency ad behaves very differently from someone reading a blog post, so one industry average doesn't tell you much. We measure your own baseline by source and page, counting calls as well as forms. Most sites undercount calls and look worse than they are.",
+  },
+  {
+    question: "Do we have enough traffic to A/B test?",
+    answer:
+      "Maybe not, and that's fine. A real A/B test needs enough calls and form fills to tell a winner from noise. When a page doesn't have that, we make the change most likely to help and measure before and after. Proper tests go on the pages with the most traffic, usually the ones your ads point to.",
+  },
+  {
+    question: "Do you redesign our website?",
+    answer:
+      "No. We work on the site you already have, alongside your web vendor if you have one. Most gains come from the call path, the quote form, and a few key pages, not a new site. If a rebuild really is the answer, we'll say so and help you brief it.",
+  },
+  {
+    question: "How do you count phone calls?",
+    answer:
+      "With [call tracking](/analytics) that separates calls from the website, your Google Business Profile, and your ads, tied back to the page and campaign that produced them. Without it, a site can look like it isn't working while the phone is actually ringing.",
+  },
+  {
+    question: "How much does conversion rate optimization cost?",
+    answer: `CRO is part of the [fractional marketing director](/fractional-marketing-director) engagement, starting at ${formatUsd(DIRECTOR_MONTHLY)}/month, rather than a separate project fee. Many clients start with the ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit).`,
+  },
+  {
+    question: "How long before we see results?",
+    answer:
+      "The first fixes, usually the call path and the main quote form, ship in the first month or two. Tests take longer, depending on traffic. You see what moved in the monthly scorecard, measured in calls and booked jobs rather than clicks.",
   },
 ];
 
@@ -85,7 +126,7 @@ const stages = [
   { id: "visit", label: "Visit", y: 248, width: 364, fill: "#075752" },
   {
     id: "engage",
-    label: "Engage",
+    label: "Call tap or form start",
     y: 344,
     width: 304,
     fill: "#057A72",
@@ -93,7 +134,7 @@ const stages = [
   },
   {
     id: "form",
-    label: "Form start",
+    label: "Lead",
     y: 440,
     width: 236,
     fill: "#3A948C",
@@ -101,7 +142,7 @@ const stages = [
   },
   {
     id: "inquiry",
-    label: "Inquiry",
+    label: "Booked job",
     y: 536,
     width: 168,
     fill: "#024E49",
@@ -196,7 +237,7 @@ function CroHeroScene() {
           fontWeight="700"
           letterSpacing="0.08em"
         >
-          INQUIRY FUNNEL
+          EXAMPLE FUNNEL
         </text>
 
         {stages.map((stage) => {
@@ -267,7 +308,7 @@ function CroHeroScene() {
             fontWeight="700"
             letterSpacing="0.12em"
           >
-            VARIANT B
+            EXAMPLE · QUOTE FORM TEST
           </text>
           <text
             x="18"
@@ -307,36 +348,39 @@ function CroHeroScene() {
 export function CroSections() {
   return (
     <>
-      <section className="cro-hero">
+      <section className="mkt-hero cro-hero">
         <div className="cro-hero__scene-wrap">
           <CroHeroScene />
         </div>
         <div className="shell">
-          <div className="cro-hero__content">
-            <p className="eyebrow">Conversion Rate Optimization</p>
-            <h1 className="cro-hero__headline">
-              Turn the traffic you already have into conversations.
+          <div className="mkt-hero__content">
+            <p className="eyebrow">Conversion rate optimization · Home services</p>
+            <h1 className="mkt-hero__headline">
+              More calls and quote requests from the traffic you already pay
+              for.
             </h1>
-            <p className="cro-hero__copy">
-              Clearer journeys, stronger calls to action, and forms people
-              finish. We improve the path from visit to inquiry—on the site you
-              already have.
+            <p className="mkt-hero__copy">
+              Conversion rate optimization for home services: the phone number
+              one tap away, a quote form people finish, and pages that match the
+              click. On the site you already have.
             </p>
-            <div className="cro-hero__actions">
-              <BookCallLink
-                className="button button-primary"
-              >
-                Book a call
+            <div className="mkt-hero__actions">
+              <BookCallLink className="button button-primary">
+                Book a 30-minute call
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#contact">
-                Contact us
-                <Arrow />
+              <a className="button button-secondary" href="#ways">
+                See what we change
               </a>
             </div>
+            <ul className="mkt-hero__facts">
+              <li>Phone calls counted, not just forms</li>
+              <li>Tests sized to your traffic</li>
+              <li>Part of the fractional marketing director engagement</li>
+            </ul>
           </div>
         </div>
-        <a className="cro-hero__cue" href="#friction">
+        <a className="mkt-hero__cue" href="#friction">
           Where visitors drop off
         </a>
       </section>
@@ -347,13 +391,13 @@ export function CroSections() {
             <div>
               <p className="eyebrow">The leak</p>
               <h2 className="section-heading">
-                The traffic is there. The conversations aren&apos;t.
+                The traffic is there. The calls aren&apos;t.
               </h2>
             </div>
             <p className="section-copy">
-              Most sites don&apos;t need more visitors first. They need a path
-              that tells the right people what to do—and a way to know whether
-              a change helped.
+              Most home services sites don&apos;t need more visitors first. They
+              need a path that makes calling or asking for a quote the obvious
+              next step, and a way to know whether a change helped.
             </p>
           </div>
           <div className="cro-friction__grid reveal">
@@ -363,7 +407,7 @@ export function CroSections() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>
@@ -375,11 +419,11 @@ export function CroSections() {
           <div className="cro-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">What we change.</h2>
+              <h2 className="section-heading">What we change on your site.</h2>
             </div>
             <p className="section-copy">
-              Conversion work on the pages, forms, and campaigns you already
-              run—not a redesign for its own sake.
+              Conversion work on the pages, forms, and call paths you already
+              have. Not a redesign for its own sake.
             </p>
           </div>
           <div className="cro-ways__grid reveal">
@@ -392,7 +436,7 @@ export function CroSections() {
                 <p className="cro-way__lead">{item.lead}</p>
                 <p className="cro-way__setup">
                   <span className="cro-way__label">What we do</span>
-                  {item.setup}
+                  {renderInline(item.setup)}
                 </p>
                 <p className="cro-way__outcome">
                   <span className="cro-way__label">You get</span>
@@ -414,9 +458,10 @@ export function CroSections() {
               </h2>
             </div>
             <p className="section-copy">
-              CRO depends on clean tracking. We start from the drop-off you can
-              already see, and when the numbers aren&apos;t trustworthy yet, that
-              gets fixed first—see <Link href="/analytics">Analytics</Link>.
+              CRO only works if calls and forms are counted. We start from the
+              drop-off you can already see, and when the numbers aren&apos;t
+              trustworthy yet, we fix the{" "}
+              <Link href="/analytics">tracking</Link> first.
             </p>
           </div>
           <ol className="cro-flow__steps reveal">
@@ -451,16 +496,85 @@ export function CroSections() {
               </li>
             ))}
           </ol>
-          <p className="fwd-services__also reveal">
-            <span className="fwd-services__also-label">Part of the bigger picture</span>
-            CRO is one lever. Whether conversion is the right place to start
-            depends on whether the tracking is honest and where the leaks
-            actually are. That&apos;s what a{" "}
-            <Link href="/lead-leak-audit">lead leak audit</Link>{" "}
-            finds, and what{" "}
-            <Link href="/marketing-advisory">marketing advisory</Link>{" "}
-            keeps deciding month after month.
-          </p>
+        </div>
+      </section>
+
+      <section className="section leak-next cro-next" id="next">
+        <div className="shell">
+          <div className="services__top reveal">
+            <div>
+              <p className="eyebrow">Where CRO fits</p>
+              <h2 className="section-heading">
+                Part of the engagement, not a one-off project.
+              </h2>
+            </div>
+            <p className="section-copy">
+              Conversion is one lever. Whether it&apos;s the right one to pull
+              first depends on where the leads are actually leaking.
+            </p>
+          </div>
+          <div className="engagement-compare leak-next__options reveal">
+            <article className="engagement-compare__card">
+              <p className="engagement-compare__label">Start with the audit</p>
+              <p className="engagement-compare__value">
+                {formatUsd(AUDIT_FEE)}
+                <span className="engagement-compare__period"> flat</span>
+              </p>
+              <p className="engagement-compare__note">
+                Two weeks tracing calls, forms, follow-up, and tracking, ranked
+                by what each leak costs. The right first step if you&apos;re not
+                sure conversion is the problem.
+              </p>
+              <Link className="leak-next__link" href="/lead-leak-audit">
+                What the audit covers
+                <Arrow />
+              </Link>
+            </article>
+            <article className="engagement-compare__card engagement-compare__card--us">
+              <p className="engagement-compare__label">
+                Fractional marketing director
+              </p>
+              <p className="engagement-compare__value">
+                <span className="engagement-compare__period">Starting at </span>
+                {formatUsd(DIRECTOR_MONTHLY)}
+                <span className="engagement-compare__period">/month</span>
+              </p>
+              <p className="engagement-compare__note">
+                CRO is part of the hands-on work. We ship the changes, check they
+                moved calls and booked jobs, and keep going month after month.
+              </p>
+              <Link
+                className="leak-next__link"
+                href="/fractional-marketing-director"
+              >
+                How the engagement works
+                <Arrow />
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="section fdd-faq" id="faq">
+        <div className="shell">
+          <div className="fdd-faq__top reveal">
+            <div>
+              <p className="eyebrow">Questions</p>
+              <h2 className="section-heading">What people usually ask.</h2>
+            </div>
+            <p className="section-copy">
+              Calls counted, tests sized to your traffic, and changes made on the
+              site you already have.
+            </p>
+          </div>
+          <div className="fdd-faq__list reveal">
+            {faqs.map((item) => (
+              <details className="fdd-faq__item" key={item.question}>
+                <summary>{item.question}</summary>
+                <p>{renderInline(item.answer)}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
     </>

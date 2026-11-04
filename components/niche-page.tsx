@@ -167,7 +167,7 @@ export function NicheStrip() {
           {niches.map((item) => (
             <a
               className="industry-strip__tile"
-              href={`/marketing-advisory/${item.slug}`}
+              href={`/fractional-marketing-director/${item.slug}`}
               key={item.slug}
             >
               <span className="industry-strip__media">

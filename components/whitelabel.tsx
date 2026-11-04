@@ -1231,7 +1231,9 @@ export function WhitelabelCta() {
           <p className="section-copy">
             Tell us who you serve and what clients are asking for. We&apos;ll
             map a practical white-label path from first conversation to
-            delivery.
+            delivery. Client-facing direction work—the plan, the budget calls,
+            the vendor oversight—sits with the{" "}
+            <Link href="/fractional-marketing-director">fractional marketing director</Link>.
           </p>
           <div className="use-cases-cta__buttons">
             <a

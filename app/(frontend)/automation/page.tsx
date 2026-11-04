@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/automation" },
   title: "Automation and AI | Grand River Labs",
   description:
-    "Automate the busywork between the tools you already trust—business process, marketing, consulting, and AI—without a rip-and-replace.",
+    "A lever your fractional marketing director pulls: automate the busywork between the tools you already trust—business process, marketing, and AI—scoped and prioritized against every other option.",
 };
 
 export default function WhatWeDoPage() {

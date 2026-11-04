@@ -27,7 +27,7 @@ const ways = [
     title: "Local Services Ads strategy",
     lead: "A lead you own, at the top of Google, paid for when someone contacts you.",
     setup:
-      "Whether LSA fits, what budget makes sense, which jobs to accept, and which leads to dispute.",
+      "Whether LSA fits your trade and market, which job types and towns to turn on, the budget and bid, hours that match who actually answers the phone, and which leads to dispute.",
     outcome:
       "A plan for leads that are yours—not shared with four other companies, and not billed for a click.",
   },
@@ -64,12 +64,122 @@ const ways = [
       "The ad and the site tell the same story, and a new lead still gets a next step.",
   },
   {
-    title: "Who runs the account",
-    lead: "This is strategy and oversight, not day-to-day campaign management.",
+    title: "Who answers for the account",
+    lead: "One person accountable for every dollar in the account.",
     setup:
-      "We set the rules—what to fund, test, pause, or dispute—manage the media buyer against them, and coordinate a specialist when someone else should run the account.",
+      "We set the rules—what to fund, test, pause, or dispute—and hold the account to them every month, judged on booked jobs.",
     outcome:
-      "One person accountable for the decision, without pretending to be the media buyer for every click.",
+      "Every budget call has an owner and a reason you can see.",
+  },
+];
+
+const placements = [
+  {
+    name: "Local Services Ads",
+    tag: "Pay per lead",
+    copy: "A verification badge, reviews, and a button to call or message. The spot this page is about.",
+  },
+  {
+    name: "Search ads",
+    tag: "Pay per click",
+    copy: "Text ads that open your site. The click is billed whether or not anyone calls.",
+  },
+  {
+    name: "Map pack",
+    tag: "Free",
+    copy: "Your [Google Business Profile](/google-business-profile)—categories, reviews, and hours.",
+  },
+  {
+    name: "Organic results",
+    tag: "Free",
+    copy: "Your service pages, ranked by [SEO](/search-engine-optimization).",
+  },
+];
+
+const facts = [
+  {
+    label: "You pay for",
+    copy: "A lead—a call, message, or booking request from someone in your area asking about a job type you turned on. Not a click.",
+  },
+  {
+    label: "The badge",
+    copy: "Google screens the business first: background checks, plus license and insurance checks where the trade requires them. Home services companies that pass show the Google Guaranteed badge.",
+  },
+  {
+    label: "Who gets the lead",
+    copy: "You. The customer contacted your business directly, and the lead isn't resold to other companies.",
+  },
+  {
+    label: "Who shows first",
+    copy: "Google points to distance from the searcher, reviews, how fast you respond, business hours, and complaints—then budget and bid.",
+  },
+  {
+    label: "Bad leads",
+    copy: "Wrong job, outside the area, or spam can be credited back. Someone has to check that the credits actually happen.",
+  },
+];
+
+const channels = [
+  {
+    name: "Local Services Ads",
+    pay: "A lead—a call, message, or booking. Not a click.",
+    shared: "Nobody. The customer contacted you directly.",
+    where: "The top of Google search, usually above the other ads, with a verification badge.",
+    best: "The job is urgent and common in your trade, and your reviews are strong.",
+  },
+  {
+    name: "Google search ads",
+    pay: "A click, whether or not they call.",
+    shared: "Nobody—but a click isn't a lead until they reach out.",
+    where: "Google search results, below Local Services Ads when both show.",
+    best: "You want jobs LSA doesn't cover, or control over the search terms and the page.",
+  },
+  {
+    name: "Meta ads",
+    pay: "Impressions—people seeing the ad.",
+    shared: "Nobody—but most people who see it weren't looking for you.",
+    where: "Facebook and Instagram feeds.",
+    best: "The work is planned and visual, like a remodel, and people need to see it before they search.",
+  },
+  {
+    name: "Shared lead sites",
+    pay: "A lead, often sold to several companies.",
+    shared: "Often three or four other contractors.",
+    where: "The lead site's own pages and ads.",
+    best: "You need volume fast and can call back within minutes.",
+  },
+];
+
+export const faqs = [
+  {
+    question: "What are Google Local Services Ads?",
+    answer:
+      "Ads that appear at the top of a local Google search for service businesses, with a verification badge, reviews, and a button to call or message. You pay per lead instead of per click, and the lead comes to you directly—it isn't shared with other companies.",
+  },
+  {
+    question: "How much do Local Services Ads cost?",
+    answer:
+      "You set a weekly budget and pay for each lead, not each click. The price per lead varies by trade, market, and job type, and Google shows its estimates inside the account. The number that matters is the cost per booked job, and that only shows up when the leads are checked against your CRM.",
+  },
+  {
+    question: "What's the difference between Local Services Ads and Google Ads?",
+    answer:
+      "Local Services Ads bill per lead and show above the other ads with a verification badge. You choose job types and a service area, and Google decides which searches you show for. Google search ads bill per click. You choose the keywords, the ad, and the landing page—more control, and more ways to waste money. Many home services companies run both, with LSA covering the core jobs.",
+  },
+  {
+    question: "What is the Google Guaranteed badge?",
+    answer:
+      "The badge home services businesses earn by passing Google's screening for Local Services Ads—background checks, plus license and insurance checks where the trade requires them. If a customer books through the ad and the work isn't up to standard, Google may reimburse them up to a set limit.",
+  },
+  {
+    question: "Can you dispute bad Local Services Ads leads?",
+    answer:
+      "Yes. Leads for a job you don't offer, from outside your service area, or that are spam can qualify for a credit. Google's rules on what qualifies change, so we check what was charged against what actually came in and flag the leads that shouldn't have been billed.",
+  },
+  {
+    question: "How does Google decide which Local Services Ads to show?",
+    answer:
+      "Google says it weighs how close the business is to the searcher, review score and count, how quickly you respond to leads, business hours, and serious or repeated complaints. Budget and bid matter too. That's why a missed call costs more on LSA than it looks: it hurts the next lead as well as this one.",
   },
 ];
 
@@ -297,15 +407,15 @@ export function LocalAdsSections() {
         </div>
         <div className="shell">
           <div className="local-ads-hero__content">
-            <p className="eyebrow">Paid ads &amp; LSA advisory</p>
+            <p className="eyebrow">Google LSA, paid search &amp; Meta</p>
             <h1 className="local-ads-hero__headline">
-              Spend on leads you can own.
+              Local Services Ads, held to the jobs they book.
             </h1>
             <p className="local-ads-hero__copy">
-              Google Ads, Meta, and Local Services Ads—strategy for what to
-              fund, pause, or dispute, and verification that the leads the
-              platforms report actually show up. Not a bigger budget, and not
-              day-to-day campaign management.
+              Strategy and oversight for Google Local Services Ads and the
+              Google Ads and Meta spend around them: what to fund, which leads
+              to dispute, and proof that the leads Google reports reached your
+              CRM. Not a bigger budget.
             </p>
             <div className="local-ads-hero__actions">
               <BookCallLink
@@ -321,9 +431,78 @@ export function LocalAdsSections() {
             </div>
           </div>
         </div>
-        <a className="local-ads-hero__cue" href="#friction">
-          Where local spend leaks
+        <a className="local-ads-hero__cue" href="#how-lsa-works">
+          How Local Services Ads work
         </a>
+      </section>
+
+      <section className="section local-ads-explainer" id="how-lsa-works">
+        <div className="shell">
+          <div className="local-ads-explainer__top reveal">
+            <div>
+              <p className="eyebrow">How LSA works</p>
+              <h2 className="section-heading">
+                What Google Local Services Ads actually are.
+              </h2>
+            </div>
+            <p className="section-copy">
+              The ads at the very top of a local Google search, with a
+              verification badge and a call button. You pay when someone
+              contacts you, not when they click.
+            </p>
+          </div>
+          <div className="local-ads-explainer__body reveal">
+            <figure className="local-ads-serp">
+              <div className="local-ads-serp__search" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" strokeWidth="1.6" />
+                  <path d="m13 13 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+                roof repair near me
+              </div>
+              <ol className="local-ads-serp__list">
+                {placements.map((item, index) => (
+                  <li
+                    className={`local-ads-serp__item${index === 0 ? " local-ads-serp__item--lsa" : ""}${item.tag === "Free" ? " local-ads-serp__item--free" : ""}`}
+                    key={item.name}
+                  >
+                    <div className="local-ads-serp__row">
+                      <h3>{item.name}</h3>
+                      <span className="local-ads-serp__tag">{item.tag}</span>
+                    </div>
+                    {index === 0 ? (
+                      <div className="local-ads-serp__providers" aria-hidden="true">
+                        {[0, 1].map((n) => (
+                          <span className="local-ads-serp__provider" key={n}>
+                            <svg viewBox="0 0 20 20" fill="none">
+                              <circle cx="10" cy="10" r="9" fill="currentColor" />
+                              <path d="m6 10.2 2.6 2.6L14 7.5" stroke="#fffdf4" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                            <span className="local-ads-serp__bar" />
+                            <span className="local-ads-serp__stars">★★★★★</span>
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                    <p>{renderInline(item.copy)}</p>
+                  </li>
+                ))}
+              </ol>
+              <figcaption className="local-ads-serp__caption">
+                A typical local search, top to bottom. Only the first two are
+                paid.
+              </figcaption>
+            </figure>
+            <dl className="local-ads-facts">
+              {facts.map((fact) => (
+                <div className="local-ads-facts__row" key={fact.label}>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.copy}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
       </section>
 
       <section className="section local-ads-friction" id="friction">
@@ -355,17 +534,64 @@ export function LocalAdsSections() {
         </div>
       </section>
 
+      <section className="section local-ads-compare" id="compare">
+        <div className="shell">
+          <div className="local-ads-compare__top reveal">
+            <div>
+              <p className="eyebrow">Compare</p>
+              <h2 className="section-heading">
+                LSA vs. Google Ads, Meta, and lead sites.
+              </h2>
+            </div>
+            <p className="section-copy">
+              Four ways to buy local demand, and what each one actually charges
+              you for. Most companies need one or two, not all four.
+            </p>
+          </div>
+          <table className="local-ads-compare__table reveal">
+            <caption className="visually-hidden">
+              How Google Local Services Ads compare with Google search ads,
+              Meta ads, and shared lead sites
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Channel</th>
+                <th scope="col">You pay for</th>
+                <th scope="col">Who else gets the lead</th>
+                <th scope="col">Where it shows</th>
+                <th scope="col">Works best when</th>
+              </tr>
+            </thead>
+            <tbody>
+              {channels.map((channel, index) => (
+                <tr
+                  className={index === 0 ? "local-ads-compare__row--lsa" : undefined}
+                  key={channel.name}
+                >
+                  <th scope="row">{channel.name}</th>
+                  <td data-label="You pay for">{channel.pay}</td>
+                  <td data-label="Who else gets it">{channel.shared}</td>
+                  <td data-label="Where it shows">{channel.where}</td>
+                  <td data-label="Works best when">{channel.best}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section className="section local-ads-ways" id="ways">
         <div className="shell">
           <div className="local-ads-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">Paid search, Meta, and LSA.</h2>
+              <h2 className="section-heading">
+                What LSA and paid ads oversight covers.
+              </h2>
             </div>
             <p className="section-copy">
-              Three ways to buy local demand. We decide which one fits, what to
-              cut, whether the reported leads are real, and who should run the
-              account.
+              We decide which channel fits, what to cut, whether the reported
+              leads are real, and who should run the account.
             </p>
           </div>
           <div className="local-ads-ways__grid reveal">
@@ -396,11 +622,10 @@ export function LocalAdsSections() {
             <div>
               <p className="eyebrow">How it works</p>
               <h2 className="section-heading">
-                Strategy first. Someone else can click publish.
+                Strategy first. Every click checked.
               </h2>
             </div>
             <p className="section-copy">
-              This is not day-to-day campaign management.{" "}
               <Link href="/analytics">Analytics</Link> shows whether the spend
               turns into calls.{" "}
               <Link href="/conversion-rate-optimization">The page</Link> the
@@ -444,10 +669,32 @@ export function LocalAdsSections() {
             Local ads are one lever. Whether more spend is the right move
             depends on the site, the routing, and everything else—that&apos;s
             what{" "}
-            <Link href="/marketing-advisory">marketing advisory</Link>{" "}
+            <Link href="/fractional-marketing-director">the fractional marketing director</Link>{" "}
             figures out, starting with a{" "}
             <Link href="/lead-leak-audit">lead leak audit</Link>.
           </p>
+        </div>
+      </section>
+
+      <section className="section fdd-faq" id="faq">
+        <div className="shell">
+          <div className="fdd-faq__top reveal">
+            <div>
+              <p className="eyebrow">Questions</p>
+              <h2 className="section-heading">Local Services Ads, answered.</h2>
+            </div>
+            <p className="section-copy">
+              What owners usually ask before putting more money into LSA.
+            </p>
+          </div>
+          <div className="fdd-faq__list reveal">
+            {faqs.map((item) => (
+              <details className="fdd-faq__item" key={item.question}>
+                <summary>{item.question}</summary>
+                <p>{renderInline(item.answer)}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
     </>

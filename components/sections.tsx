@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { BookCallLink } from "./book-call-link";
 import { testimonials } from "@/lib/testimonials";
+import { industriesNav } from "./what-we-do-nav";
 import { Arrow } from "./site-header";
 
 const featuredCaseStudy = {
@@ -11,37 +13,26 @@ const featuredCaseStudy = {
     "Ownership, one content strategy run across every brand, and conversion work on the pages that already had traffic.",
 };
 
-const results = [
-  {
-    label: "Find where leads leak",
-    href: "/lead-leak-audit",
-  },
-  {
-    label: "Know what's actually working",
-    href: "/analytics",
-  },
-  {
-    label: "Vendors held to the plan",
-    href: "#leadership",
-  },
-];
-
 const decisions = [
   {
-    title: "Patching lead leaks",
-    copy: "Missed calls, broken forms, slow follow-up, bad routing. The marketing did its job — the lead still never became a conversation. We find and fix those.",
-  },
-  {
-    title: "Verifying what's working",
-    copy: "Tracking, attribution, and vendor reports checked against CRM reality — so decisions rest on what actually showed up, not what a dashboard claims.",
-  },
-  {
-    title: "Holistic marketing advisory",
-    copy: "Where the budget goes, which channels earn a place, and what to say no to — with the whole picture in one head instead of a stack of channel reports.",
+    title: "Directing the marketing",
+    href: "/fractional-marketing-director",
+    copy: "Where the budget goes, which channels earn a place, and what to say no to — one director owning the whole picture instead of a stack of channel reports.",
   },
   {
     title: "Managing vendors",
+    href: "/fractional-marketing-director#the-gap",
     copy: "Agencies, media buyers, and SEO shops held to the plan: scoped fairly, reported honestly, and replaced when they stop earning their place.",
+  },
+  {
+    title: "Verifying what's working",
+    href: "/analytics",
+    copy: "Tracking, attribution, and vendor reports checked against CRM reality — so decisions rest on what actually showed up, not what a dashboard claims.",
+  },
+  {
+    title: "Patching lead leaks",
+    href: "/lead-leak-audit",
+    copy: "Missed calls, broken forms, slow follow-up, bad routing. The marketing did its job — the lead still never became a conversation. We find and fix those.",
   },
 ];
 
@@ -49,7 +40,7 @@ const services = [
   {
     title: "SEO",
     href: "/search-engine-optimization",
-    copy: "Whether SEO is actually working, what to ask of whoever does it, and which pages are worth writing — strategy and oversight, not production.",
+    copy: "Whether SEO is actually working, which pages are worth writing, and what to fix first — checked against real leads.",
   },
   {
     title: "Paid ads & Local Services Ads",
@@ -86,41 +77,71 @@ const processSteps = [
     roles: "You bring the context; we own the audit.",
   },
   {
-    title: "Decide",
-    copy: "We make the call on what gets funded, paused, or fixed next — ranked by what will move revenue, not by whichever request is loudest.",
-    artifact: "A now / next / later list, with the call already made.",
-    roles: "We own the recommendation; you have the final say.",
+    title: "Patch",
+    copy: "We fix tracking, routing, forms, and automations, and run conversion tests.",
+    artifact: "Leaks patched in production, with the plan for the rest.",
+    roles: "We ship the fixes and check they held.",
   },
   {
     title: "Verify",
-    copy: "Leaks get patched — tracking, routing, forms, tests by us; channel work by your team or vendors — then we measure what moved and adjust the next decision.",
-    artifact: "Fixes live in production, measured against the decision.",
-    roles: "Your team or vendors ship; we verify it moved the number.",
+    copy: "We reconcile every vendor report against what actually showed up in the CRM, measure what moved, and make the next call — fund, pause, or dispute.",
+    artifact: "A verified read on what moved, and the next call made.",
+    roles: "We verify the numbers; you keep the final say.",
   },
 ];
 
-const useCases = [
-  {
-    title: "Home services",
-    href: "/use-cases/home-services",
-    copy: "Roofing, decking, and painting.",
-  },
-  {
-    title: "Accounting",
-    href: "/use-cases/accounting",
-    copy: "Professional services firms.",
-  },
-  {
-    title: "Insurance",
-    href: "/use-cases/insurance",
-    copy: "Brokerages.",
-  },
-  {
-    title: "Property management",
-    href: "/use-cases/property-management",
-    copy: "Owners and operators.",
-  },
-];
+const industryNotes: Record<
+  (typeof industriesNav)[number]["href"],
+  string
+> = {
+  "/home-improvement-marketing": "Established home improvement companies.",
+  "/remodeling-marketing": "Design-build remodelers.",
+  "/fractional-marketing-director/roofing": "Roofers running Local Services Ads.",
+  "/fractional-marketing-director/contractors":
+    "Trades and specialty contractors.",
+};
+
+const director = {
+  name: "Duncan",
+  role: "Owner · Grand River Labs",
+  // Set to a file in /public (e.g. "/duncan.jpg") once the headshot is added.
+  photo: null as string | null,
+  bio: "The person who makes the calls is the person on the call. You work directly with me — no rotating account team, no handoffs, and no junior learning on your budget.",
+};
+
+export function DirectorIntro() {
+  return (
+    <section className="director-intro" aria-label="Your director">
+      <div
+        className={
+          director.photo
+            ? "shell director-intro__layout"
+            : "shell director-intro__layout director-intro__layout--solo"
+        }
+      >
+        {director.photo ? (
+          <Image
+            className="director-intro__photo"
+            src={director.photo}
+            alt={director.name}
+            width={352}
+            height={352}
+          />
+        ) : null}
+        <div>
+          <p className="eyebrow">Your director</p>
+          <p className="director-intro__name">{director.name}</p>
+          <p className="featured-study__client">{director.role}</p>
+          <p className="director-intro__bio">{director.bio}</p>
+          <a className="director-intro__more" href="/about">
+            More about how we work
+            <Arrow />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export function FeaturedCaseStudy() {
   return (
@@ -143,44 +164,27 @@ export function FeaturedCaseStudy() {
   );
 }
 
-export function ResultsBar() {
-  return (
-    <section className="results-bar" id="results" aria-label="Outcomes">
-      <div className="shell">
-        <ul className="results-bar__list">
-          {results.map((item) => (
-            <li key={item.href}>
-              <a href={item.href}>
-                {item.label}
-                <Arrow />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
 export function LeadershipSection() {
   return (
     <section className="section services" id="leadership">
       <div className="shell">
         <div className="services__top reveal">
           <div>
-            <p className="eyebrow">What we do</p>
-            <h2 className="section-heading">Answers, not more marketing.</h2>
+            <p className="eyebrow">What your director does</p>
+            <h2 className="section-heading">Owns the plan. Checks the work.</h2>
           </div>
           <p className="section-copy">
-            Four things, one advisor. We&apos;re not another channel vendor —
-            we&apos;re the check on all of them. You keep the final say.
+            One senior person who owns your marketing — not another channel
+            vendor, but the check on all of them. You keep the final say.
           </p>
         </div>
 
         <ul className="services__grid reveal">
           {decisions.map((item) => (
             <li className="services__item" key={item.title}>
-              <h3>{item.title}</h3>
+              <h3>
+                <a href={item.href}>{item.title}</a>
+              </h3>
               <p>{item.copy}</p>
             </li>
           ))}
@@ -196,13 +200,13 @@ export function ServicesSection() {
       <div className="shell">
         <div className="services__top reveal">
           <div>
-            <p className="eyebrow">Where we look</p>
+            <p className="eyebrow">What the director oversees</p>
             <h2 className="section-heading">Every channel, checked.</h2>
           </div>
           <p className="section-copy">
-            We audit, advise, and hold vendors accountable across all of it —
-            so spend follows what produces leads and revenue, not last
-            quarter&apos;s habit.
+            The director audits, directs, and holds vendors accountable across
+            all of it — so spend follows what produces leads and revenue, not
+            last quarter&apos;s habit.
           </p>
         </div>
 
@@ -218,8 +222,8 @@ export function ServicesSection() {
         </ul>
 
         <p className="services__more reveal">
-          <a href="/marketing-advisory">
-            Learn more about marketing advisory →
+          <a href="/fractional-marketing-director">
+            Learn how the fractional director works →
           </a>
         </p>
       </div>
@@ -233,9 +237,7 @@ export function TestimonialsSection() {
       <div className="shell">
         <div className="testimonials__top reveal">
           <p className="eyebrow">From clients</p>
-          <h2 className="testimonials__heading">
-            Results that feel personal.
-          </h2>
+          <h2 className="testimonials__heading">Less noise. Better calls.</h2>
           <p className="testimonials__more">
             <a href="/work">See the work →</a>
           </p>
@@ -274,8 +276,8 @@ export function ProcessSection() {
             <h2 className="section-heading">Find it, fix it, prove it.</h2>
           </div>
           <p className="section-copy">
-            You bring the business context. We audit, decide, and verify — so
-            the plan is a set of calls that actually get made and checked, not
+            Month one is an audit. After that, it&apos;s a monthly rhythm: fix
+            what&apos;s ours, verify what moved, and make the next call — not
             another slide deck.
           </p>
         </div>
@@ -331,20 +333,26 @@ export function UseCaseStrip() {
       <div className="shell">
         <div className="use-cases-strip__top reveal">
           <div>
-            <p className="eyebrow">Where it fits</p>
-            <h2 className="section-heading">Built for how you win work.</h2>
+            <p className="eyebrow">Who we work with</p>
+            <h2 className="section-heading">
+              Built for lead-driven businesses.
+            </h2>
           </div>
-          <p className="use-cases-strip__more">
-            <a href="/use-cases">All use cases →</a>
+          <p className="section-copy">
+            Home services is where we&apos;re deepest. The work is the same
+            wherever a single inquiry can be worth thousands — law firms and
+            other lead-driven businesses included.
           </p>
         </div>
 
         <ul className="use-cases-strip__list reveal">
-          {useCases.map((item) => (
+          {industriesNav.map((item) => (
             <li key={item.href}>
               <a href={item.href}>
-                <span className="use-cases-strip__title">{item.title}</span>
-                <span className="use-cases-strip__copy">{item.copy}</span>
+                <span className="use-cases-strip__title">{item.label}</span>
+                <span className="use-cases-strip__copy">
+                  {industryNotes[item.href]}
+                </span>
               </a>
             </li>
           ))}

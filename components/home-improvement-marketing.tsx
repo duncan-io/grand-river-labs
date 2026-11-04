@@ -64,12 +64,12 @@ const trades: { name: string; copy: string; href?: string }[] = [
   },
   {
     name: "Roofing",
-    href: "/marketing-advisory/roofing",
+    href: "/fractional-marketing-director/roofing",
     copy: "Storm weeks, shared leads, and a reply that has to land while the homeowner is still in the driveway.",
   },
   {
     name: "General contracting",
-    href: "/marketing-advisory/contractors",
+    href: "/fractional-marketing-director/contractors",
     copy: "Remodels and the jobs that die between a form fill and an estimator who's already on site.",
   },
   {
@@ -119,7 +119,7 @@ const channels = [
     icon: "Advise",
     label: "Advise",
     title: "Google Ads",
-    copy: "[We audit the spend you already make](/local-ads)—search terms, wasted clicks, the towns you actually work—and tell you what to cut. We advise, and we check the reported leads against your CRM. We don't sell you a bigger budget.",
+    copy: "[We audit the spend you already make](/local-ads)—search terms, wasted clicks, the towns you actually work—and tell you what to cut. We check the reported leads against your CRM, too. We don't sell you a bigger budget.",
   },
   {
     icon: "Target",
@@ -137,14 +137,14 @@ const channels = [
     icon: "Compound",
     label: "Compound",
     title: "SEO",
-    copy: "Ads stop when you stop paying. Service pages and reviews keep bringing leads for years. We check whether [SEO](/search-engine-optimization) is actually producing work and what to ask of whoever does it—no content mill, no link schemes.",
+    copy: "Ads stop when you stop paying. Service pages and reviews keep bringing leads for years. We check whether [SEO](/search-engine-optimization) is actually producing work and what it should produce next—no content mill, no link schemes.",
   },
 ];
 
 const faqs = [
   {
     question:
-      "Is marketing advisory worth it for an established home improvement company?",
+      "Is a fractional marketing director worth it for an established home improvement company?",
     answer:
       "If you're doing roughly $1M–$50M, you already have crews, an office, and money going out for ads or leads. What's missing is someone checking whether that money is working and where the leads leak. On this work—a roof around $9,500, a general contracting job around $6,300, a deck in the $6,400–$8,200 range—one extra booked job covers months of the engagement. For a company around $2M, that spend is a rounding error next to revenue. If you're a solo operator, it isn't the right first step. A per-lead vendor or ads you run yourself are a reasonable start.",
   },
@@ -156,12 +156,7 @@ const faqs = [
   {
     question: "How is this different from a home improvement marketing company?",
     answer:
-      "A typical home improvement marketing company sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the people being paid. [A marketing advisor](/marketing-advisory) is one experienced person checking the spend, patching the leaks in routing and follow-up, and holding Local Services Ads, the Google Business Profile, and SEO vendors to the plan. No long contracts, and [reporting on leads and calls](/analytics) instead of vanity metrics.",
-  },
-  {
-    question: "Do you run our ads, or just advise?",
-    answer:
-      "We advise on the Google spend you already make: what to cut, where the service area is wrong, and which clicks were never going to be a job. If you need hands-on campaign management, we'll work with the person you have or help you find the right one. We're not here to sell you a bigger budget.",
+      "A typical home improvement marketing company sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the people being paid. [A fractional marketing director](/fractional-marketing-director) is one experienced person checking the spend, patching the leaks in routing and follow-up, and holding Local Services Ads, the Google Business Profile, and SEO vendors to the plan. No long contracts, and [reporting on leads and calls](/analytics) instead of vanity metrics.",
   },
 ];
 
@@ -179,7 +174,7 @@ export function HomeImprovementMarketingSections() {
               Home Improvement Marketing That Owns the Whole Pipeline
             </h1>
             <p className="mkt-hero__copy">
-              One advisor checks whether the marketing is actually making you
+              One director checks whether the marketing is actually making you
               money: leaks patched, spend verified, and the vendors who do the
               rest held to the plan. Not a pile of freelancers, and not another
               channel vendor.
@@ -359,11 +354,11 @@ export function HomeImprovementMarketingSections() {
             <div className="fwd-services__intro">
               <p className="eyebrow">The lead engine</p>
               <h2 className="section-heading">
-                What a marketing advisor handles.
+                What your marketing director handles.
               </h2>
               <p className="section-copy">
                 {renderInline(
-                  "[One experienced advisor](/marketing-advisory) checking every channel that brings work in, and the reply that books it. Not five vendors reporting on themselves, and not a monthly report full of impressions. It starts with a [lead leak audit](/lead-leak-audit).",
+                  "[One experienced director](/fractional-marketing-director) checking every channel that brings work in, and the reply that books it. Not five vendors reporting on themselves, and not a monthly report full of impressions. It starts with a [lead leak audit](/lead-leak-audit).",
                 )}
               </p>
             </div>

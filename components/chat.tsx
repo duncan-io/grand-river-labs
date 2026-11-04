@@ -34,7 +34,7 @@ const EMAIL_KEY = "grl-chat-email";
 const FROM_KEY = "grl-chat-from";
 
 const WELCOME_MESSAGE =
-  "Is your marketing actually making you money? I’m the Grand River Labs assistant. We’re a marketing advisor for home improvement, remodeling, roofing, HVAC, and contractor businesses—we patch lead leaks, verify what’s working, and manage your vendors.";
+  "I’m the Grand River Labs assistant. We’re a fractional marketing director—your marketing director, part-time—for lead-driven businesses—home improvement, remodeling, roofing, HVAC, contractors, law firms, and others where a lead is worth thousands. We own the plan, verify what’s actually making you money, and manage your vendors.";
 
 function createId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {

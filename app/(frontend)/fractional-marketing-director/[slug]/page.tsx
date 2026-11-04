@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   return {
     title: niche.metaTitle,
     description: niche.metaDescription,
-    alternates: { canonical: `/marketing-advisory/${slug}` },
+    alternates: { canonical: `/fractional-marketing-director/${slug}` },
   };
 }
 

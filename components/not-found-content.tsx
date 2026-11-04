@@ -5,7 +5,7 @@ import { SiteHeader } from "./site-header";
 const links = [
   { href: "/", label: "Home" },
   { href: "/work", label: "Work" },
-  { href: "/marketing-advisory", label: "Marketing Advisory" },
+  { href: "/fractional-marketing-director", label: "Fractional Marketing Director" },
 ] as const;
 
 export function NotFoundContent() {

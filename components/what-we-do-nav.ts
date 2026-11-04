@@ -1,11 +1,11 @@
-export const advisoryNav = {
-  label: "Marketing Advisory",
-  href: "/marketing-advisory",
+export const directorNav = {
+  label: "Fractional Marketing Director",
+  href: "/fractional-marketing-director",
   description:
-    "Answer “Is your marketing actually making you money?” Patching lead leaks, verifying what works, and managing your vendors for one flat monthly rate.",
+    "Your marketing director, part-time: one senior person who owns the plan, verifies what's working, and manages your vendors for one monthly rate.",
 } as const;
 
-export const advisoryAreas = [
+export const directorAreas = [
   { label: "Lead leak audit", href: "/lead-leak-audit" },
   { label: "CRO", href: "/conversion-rate-optimization" },
   { label: "SEO", href: "/search-engine-optimization" },
@@ -15,7 +15,7 @@ export const advisoryAreas = [
   { label: "Automation and AI", href: "/automation" },
 ] as const;
 
-export const whatWeDoNav = [advisoryNav, ...advisoryAreas] as const;
+export const whatWeDoNav = [directorNav, ...directorAreas] as const;
 
 export const homeImprovementNav = {
   label: "Home improvement",
@@ -30,17 +30,17 @@ export const industriesNav = [
     label: "Remodeling",
     href: "/remodeling-marketing",
     description:
-      "Marketing advisory for design-build remodelers: is the lead spend producing booked consults?",
+      "Fractional marketing direction for design-build remodelers: is the lead spend producing booked consults?",
   },
   {
     label: "Roofing",
-    href: "/marketing-advisory/roofing",
+    href: "/fractional-marketing-director/roofing",
     description:
-      "A roofing advisor who patches lead leaks, checks Local Services Ads, and holds the vendors to it.",
+      "A marketing director for roofing companies who patches lead leaks, checks Local Services Ads, and holds the vendors to it.",
   },
   {
     label: "Contractors",
-    href: "/marketing-advisory/contractors",
+    href: "/fractional-marketing-director/contractors",
     description:
       "Fix the leaks in contractor lead flow, from routing and Local Services Ads to whether the spend is working.",
   },

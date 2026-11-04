@@ -1,4 +1,5 @@
-export const ADVISORY_MONTHLY = 2_500;
+export const DIRECTOR_MONTHLY = 1_500;
+export const AUDIT_FEE = 1_500;
 
 export function formatUsd(value: number): string {
   return new Intl.NumberFormat("en-US", {

@@ -516,9 +516,10 @@ export function ConsultingCta() {
         </div>
         <div className="use-cases-cta__actions">
           <p className="section-copy">
-            Tell us how work moves today. We&apos;ll run discovery, prioritize
-            what to automate first, and leave you with a roadmap—or a clear path
-            into build.
+            Discovery feeds the director&apos;s plan: what to automate first,
+            what to hand to a vendor, and what to leave alone. Tell us how work
+            moves today and we&apos;ll leave you with a roadmap you can fund and
+            measure.
           </p>
           <div className="use-cases-cta__buttons">
             <BookCallLink

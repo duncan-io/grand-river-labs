@@ -486,9 +486,10 @@ export function MarketingAutomationCta() {
         </div>
         <div className="use-cases-cta__actions">
           <p className="section-copy">
-            Tell us how leads move today. We&apos;ll map a practical path from
-            your CRM and channels to cleaner routing, nurture, and campaign
-            ops.
+            Lead routing and fast follow-up are leak-patching—your
+            fractional marketing director builds those directly. Larger
+            campaign ops go to a vendor, scoped by us and verified against the
+            CRM. Tell us how leads move today.
           </p>
           <div className="use-cases-cta__buttons">
             <BookCallLink

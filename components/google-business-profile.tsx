@@ -1,12 +1,47 @@
 import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
+import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
+
+const factors = [
+  {
+    name: "Relevance",
+    copy: "How well the listing matches the search. Categories, services, and the description do most of the work.",
+  },
+  {
+    name: "Distance",
+    copy: "How far the business is from the searcher, or from the town they typed. You can't move, but the service area has to be honest.",
+  },
+  {
+    name: "Prominence",
+    copy: "How well known the business is: review count and rating, plus the pages and links about it across the web, [your own site](/search-engine-optimization) included.",
+  },
+];
+
+const facts = [
+  {
+    label: "You control",
+    copy: "Categories, services, hours, photos, the description, the website link, and whether reviews get a reply.",
+  },
+  {
+    label: "You don't",
+    copy: "Where the searcher is standing, and how many competitors are closer to them than you are.",
+  },
+  {
+    label: "Off limits",
+    copy: "Keywords stuffed into the business name, an address you don't work from, and paid or filtered reviews. They break Google's guidelines and can get the listing suspended.",
+  },
+  {
+    label: "Where calls go",
+    copy: "The call button dials whatever number is on the profile. Without a [tracking number](/analytics) for the listing, map calls and website calls look the same.",
+  },
+];
 
 const friction = [
   {
     title: "A listing that doesn't match the work",
-    copy: "The profile says contractor. People search for the job you actually do. Google shows the business whose categories match the words they typed.",
+    copy: "The profile says contractor. Homeowners search for the job you actually do. Google shows the business whose categories match the words they typed.",
   },
   {
     title: "Defaults and a vague service area",
@@ -14,11 +49,11 @@ const friction = [
   },
   {
     title: "Reviews left unanswered",
-    copy: "A five-star review sits there. So does the one-star. Neither gets a reply, so the listing looks unattended.",
+    copy: "A five-star review sits there. So does the one-star. Neither gets a reply, so the listing looks unattended to the next homeowner reading it.",
   },
   {
     title: "A profile that opens a weak page",
-    copy: "Someone taps the website. They land on a homepage that doesn't name the service, the town, or how to call.",
+    copy: "Someone taps the website and lands on a homepage that doesn't name the service, the town, or how to call. And [nobody can tell](/analytics) whether the calls that do come in started on the map.",
   },
 ];
 
@@ -76,7 +111,50 @@ const steps = [
   },
   {
     title: "Check the result",
-    copy: "With call tracking in place, calls from the map listing get counted and checked against the work they produce.",
+    copy: "With call tracking in place, calls from the map listing get counted and checked against the jobs they book.",
+  },
+];
+
+export const faqs = [
+  {
+    question: "What is Google Business Profile optimization?",
+    answer:
+      "It's the work of making your Google Business Profile, the listing that shows on Google Maps and in the map results, match the jobs you want and the towns you serve. That means the right categories and services, accurate hours and service area, real photos, replies to reviews, and a website link that opens a page able to win the job. For a home services company it also means counting the calls the listing produces.",
+  },
+  {
+    question: "How do I get my business into the map results?",
+    answer:
+      "Google says it ranks local results on relevance, distance, and prominence. Relevance is how well your categories and services match the search. Distance is how close you are to the searcher, which you can't change. Prominence is how well known the business is, including reviews and your [website](/search-engine-optimization). A complete, accurate profile with steady, honest reviews gives you the best chance. Nobody can promise a spot in the top three.",
+  },
+  {
+    question:
+      "Which categories should a contractor or home services company choose?",
+    answer:
+      "The primary category should name the work you most want, as specifically as Google allows. Pick \"Roofing contractor\" over \"Contractor\", for example. Secondary categories cover the other jobs you really do. Adding categories for work you don't want brings in calls you'll turn down, so we check every category against the jobs you're trying to win.",
+  },
+  {
+    question: "Do service-area businesses need to show an address?",
+    answer:
+      "No. If customers don't come to your location, Google's guidelines say to hide the address and list the areas you serve instead. The service area should match where you'll actually send a truck, not a wide circle drawn to look bigger.",
+  },
+  {
+    question: "Can we offer discounts for reviews, or only ask happy customers?",
+    answer:
+      "No to both. Google's policies prohibit paying for reviews or offering incentives, and they prohibit asking only the customers you expect to leave a good one. Either can get reviews removed or the profile penalized. What works is asking every customer at the same point in the job, and replying to every review, including the bad ones.",
+  },
+  {
+    question: "How do you track calls from the Google Business Profile?",
+    answer:
+      "With a [call tracking](/analytics) number used only on the listing, with your main number kept on the profile as an additional phone. Calls from the map then show up separately from website and ad calls, and can be checked against the jobs they book.",
+  },
+  {
+    question: "How much does Google Business Profile optimization cost?",
+    answer: `The profile is part of the [fractional marketing director](/fractional-marketing-director) engagement, starting at ${formatUsd(DIRECTOR_MONTHLY)}/month, rather than a separate fee. The ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit) checks the profile alongside the site, calls, and follow-up.`,
+  },
+  {
+    question: "How long before changes to the profile show up?",
+    answer:
+      "Edits like hours, categories, and the website link usually appear within days, though Google sometimes reviews a change first. Whether the listing then shows up for more searches takes longer, often weeks, and depends on the competition nearby. We judge it on calls from the listing, not on where it ranks on a given day.",
   },
 ];
 
@@ -332,39 +410,79 @@ function GbpHeroScene() {
 export function GbpSections() {
   return (
     <>
-      <section className="gbp-hero">
+      <section className="mkt-hero gbp-hero">
         <div className="gbp-hero__scene-wrap">
           <GbpHeroScene />
         </div>
         <div className="shell">
-          <div className="gbp-hero__content">
-            <p className="eyebrow">Google Business Profile</p>
-            <h1 className="gbp-hero__headline">
-              Show up in the map results that win the work.
+          <div className="mkt-hero__content">
+            <p className="eyebrow">Google Business Profile · Home services</p>
+            <h1 className="mkt-hero__headline">
+              Show up on the map for the jobs you actually want.
             </h1>
-            <p className="gbp-hero__copy">
-              An audit of categories, services, photos, hours, and the link to
-              the site—with the small leaks fixed and the calls tracked. Not
-              review schemes, not a citation blast, and not posts for their own
-              sake.
+            <p className="mkt-hero__copy">
+              Google Business Profile optimization for home services:
+              categories that match the work, a service area you really cover,
+              and a listing that opens the right page. Map calls counted, not
+              guessed.
             </p>
-            <div className="gbp-hero__actions">
-              <BookCallLink
-                className="button button-primary"
-              >
-                Book a call
+            <div className="mkt-hero__actions">
+              <BookCallLink className="button button-primary">
+                Book a 30-minute call
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#contact">
-                Contact us
-                <Arrow />
+              <a className="button button-secondary" href="#ways">
+                See what we check
               </a>
             </div>
+            <ul className="mkt-hero__facts">
+              <li>Map calls counted separately</li>
+              <li>No review schemes or citation blasts</li>
+              <li>Part of the fractional marketing director engagement</li>
+            </ul>
           </div>
         </div>
-        <a className="gbp-hero__cue" href="#friction">
-          Why the map result stalls
+        <a className="mkt-hero__cue" href="#how-the-map-works">
+          How the map results work
         </a>
+      </section>
+
+      <section className="section gbp-explainer" id="how-the-map-works">
+        <div className="shell">
+          <div className="gbp-explainer__top reveal">
+            <div>
+              <p className="eyebrow">How the map works</p>
+              <h2 className="section-heading">
+                How Google decides who shows on the map.
+              </h2>
+            </div>
+            <p className="section-copy">
+              Google says it ranks local results on three things: relevance,
+              distance, and prominence. Only some of that is yours to change.
+            </p>
+          </div>
+          <div className="gbp-explainer__body reveal">
+            <ol className="gbp-factors">
+              {factors.map((factor, index) => (
+                <li className="gbp-factor" key={factor.name}>
+                  <span className="gbp-factor__number">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{factor.name}</h3>
+                  <p>{renderInline(factor.copy)}</p>
+                </li>
+              ))}
+            </ol>
+            <dl className="local-ads-facts">
+              {facts.map((fact) => (
+                <div className="local-ads-facts__row" key={fact.label}>
+                  <dt>{fact.label}</dt>
+                  <dd>{renderInline(fact.copy)}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
       </section>
 
       <section className="section gbp-friction" id="friction">
@@ -389,7 +507,7 @@ export function GbpSections() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <p>{renderInline(item.copy)}</p>
               </article>
             ))}
           </div>
@@ -401,7 +519,9 @@ export function GbpSections() {
           <div className="gbp-ways__top reveal">
             <div>
               <p className="eyebrow">What&apos;s covered</p>
-              <h2 className="section-heading">What the profile audit covers.</h2>
+              <h2 className="section-heading">
+                What we check on your profile.
+              </h2>
             </div>
             <p className="section-copy">
               What Google shows, checked against the work you actually want.
@@ -444,8 +564,8 @@ export function GbpSections() {
               This is the profile itself.{" "}
               <Link href="/search-engine-optimization">SEO</Link> is the service
               pages the listing should open.{" "}
-              <Link href="/local-ads">Local ads</Link> is the paid spot above
-              it.
+              <Link href="/local-ads">Local Services Ads</Link> are the paid
+              spot above it.
             </p>
           </div>
           <ol className="gbp-flow__steps reveal">
@@ -480,15 +600,88 @@ export function GbpSections() {
               </li>
             ))}
           </ol>
-          <p className="fwd-services__also reveal">
-            <span className="fwd-services__also-label">Part of the bigger picture</span>
-            The Google Business Profile is one lever. Whether the map result is
-            the right place to spend effort depends on the site and everything
-            else—that&apos;s what{" "}
-            <Link href="/marketing-advisory">marketing advisory</Link>{" "}
-            figures out, starting with a{" "}
-            <Link href="/lead-leak-audit">lead leak audit</Link>.
-          </p>
+        </div>
+      </section>
+
+      <section className="section leak-next gbp-next" id="next">
+        <div className="shell">
+          <div className="services__top reveal">
+            <div>
+              <p className="eyebrow">Where the profile fits</p>
+              <h2 className="section-heading">
+                Part of the engagement, not a one-off cleanup.
+              </h2>
+            </div>
+            <p className="section-copy">
+              The profile is one lever. Whether it&apos;s the right one to pull
+              first depends on the site, the calls, and where the leads are
+              actually leaking.
+            </p>
+          </div>
+          <div className="engagement-compare leak-next__options reveal">
+            <article className="engagement-compare__card">
+              <p className="engagement-compare__label">Start with the audit</p>
+              <p className="engagement-compare__value">
+                {formatUsd(AUDIT_FEE)}
+                <span className="engagement-compare__period"> flat</span>
+              </p>
+              <p className="engagement-compare__note">
+                Two weeks tracing calls, forms, follow-up, tracking, and the
+                profile, ranked by what each leak costs. The right first step
+                if you&apos;re not sure the map listing is the problem.
+              </p>
+              <Link className="leak-next__link" href="/lead-leak-audit">
+                What the audit covers
+                <Arrow />
+              </Link>
+            </article>
+            <article className="engagement-compare__card engagement-compare__card--us">
+              <p className="engagement-compare__label">
+                Fractional marketing director
+              </p>
+              <p className="engagement-compare__value">
+                <span className="engagement-compare__period">Starting at </span>
+                {formatUsd(DIRECTOR_MONTHLY)}
+                <span className="engagement-compare__period">/month</span>
+              </p>
+              <p className="engagement-compare__note">
+                We direct the profile work alongside the site and the ads, and
+                check map calls against booked jobs month after month.
+              </p>
+              <Link
+                className="leak-next__link"
+                href="/fractional-marketing-director"
+              >
+                How the engagement works
+                <Arrow />
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="section fdd-faq" id="faq">
+        <div className="shell">
+          <div className="fdd-faq__top reveal">
+            <div>
+              <p className="eyebrow">Questions</p>
+              <h2 className="section-heading">
+                Google Business Profile, answered.
+              </h2>
+            </div>
+            <p className="section-copy">
+              What owners usually ask about categories, reviews, and getting
+              into the map results.
+            </p>
+          </div>
+          <div className="fdd-faq__list reveal">
+            {faqs.map((item) => (
+              <details className="fdd-faq__item" key={item.question}>
+                <summary>{item.question}</summary>
+                <p>{renderInline(item.answer)}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
     </>

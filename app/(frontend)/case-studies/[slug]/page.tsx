@@ -65,7 +65,7 @@ export default async function CaseStudyPage({ params }: Args) {
           <header className="section blog-hero">
             <div className="shell blog-post__header">
               <p className="eyebrow">
-                <Link href="/case-studies">Case studies</Link>
+                <Link href="/work">Case studies</Link>
               </p>
               <h1 className="section-heading case-study-header__headline">
                 {study.title}

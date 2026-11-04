@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/search-engine-optimization" },
-  title: "SEO Strategy & Advisory | Grand River Labs",
+  title: "SEO Strategy & Oversight | Grand River Labs",
   description:
     "Know whether your SEO is actually working. Rankings and traffic checked against leads and booked jobs—strategy, priorities, and vendor oversight. Not link building, and not a content mill.",
 };

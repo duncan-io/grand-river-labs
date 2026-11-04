@@ -420,8 +420,10 @@ export function BpaCta() {
         </div>
         <div className="use-cases-cta__actions">
           <p className="section-copy">
-            Tell us how work moves today. We&apos;ll find the handoffs that pay
-            for themselves—and automate them across the tools you already trust.
+            Which process is worth automating first is the director&apos;s
+            call—ranked against every other lever, not sold as a package. Tell
+            us how work moves today; we&apos;ll find the handoffs that pay for
+            themselves.
           </p>
           <div className="use-cases-cta__buttons">
             <BookCallLink
