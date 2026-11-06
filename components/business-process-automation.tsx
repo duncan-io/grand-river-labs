@@ -38,7 +38,7 @@ const featured = {
 const morePaths = [
   { label: "Approvals" },
   { label: "Lead intake", href: "/marketing-automation" },
-  { label: "Reporting", href: "/analytics" },
+  { label: "Reporting", href: "/lead-system" },
   { label: "Onboarding" },
   { label: "Invoicing" },
   { label: "…and yours" },

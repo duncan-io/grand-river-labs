@@ -7,6 +7,7 @@ import {
   directorAreas,
   directorNav,
   industriesNav,
+  leadSystemNav,
 } from "./what-we-do-nav";
 
 const Arrow = () => (
@@ -282,6 +283,7 @@ export function SiteHeader({
               </div>
             </div>
           </div>
+          <a href={leadSystemNav.href}>{leadSystemNav.label}</a>
           <a href="/work">Work</a>
           <a href="/about">About</a>
           <BookCallLink className="button button-primary">
@@ -344,6 +346,9 @@ export function SiteHeader({
               </div>
             </div>
           </div>
+          <a href={leadSystemNav.href} onClick={closeMenu}>
+            {leadSystemNav.label}
+          </a>
           <a href="/work" onClick={closeMenu}>
             Work
           </a>

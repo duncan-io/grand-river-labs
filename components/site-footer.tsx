@@ -1,5 +1,5 @@
 import { BrandMark } from "./site-header";
-import { industriesNav, whatWeDoNav } from "./what-we-do-nav";
+import { industriesNav, leadSystemNav, whatWeDoNav } from "./what-we-do-nav";
 
 export function SiteFooter() {
   return (
@@ -33,6 +33,7 @@ export function SiteFooter() {
                 {item.label}
               </a>
             ))}
+            <a href={leadSystemNav.href}>{leadSystemNav.label}</a>
             <a href="/white-label">White-label</a>
           </div>
         </div>

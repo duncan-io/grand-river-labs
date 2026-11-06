@@ -26,7 +26,7 @@ const decisions = [
   },
   {
     title: "Verifying what's working",
-    href: "/analytics",
+    href: "/lead-system",
     copy: "Tracking, attribution, and vendor reports checked against CRM reality — so decisions rest on what actually showed up, not what a dashboard claims.",
   },
   {
@@ -53,9 +53,9 @@ const services = [
     copy: "The map result checked against the work you want: categories, services, reviews, and whether calls from it are even tracked.",
   },
   {
-    title: "Analytics & attribution",
-    href: "/analytics",
-    copy: "Measurement you can trust — which channels actually produce leads and revenue, including which calls came from the site, the map listing, and other profiles.",
+    title: "Lead System",
+    href: "/lead-system",
+    copy: "Tracking and daily monitoring you can trust — which channels actually produce booked jobs, including which calls came from the site, the map listing, and other profiles.",
   },
   {
     title: "Conversion rate optimization",

@@ -198,7 +198,7 @@ export const niches: NicheContent[] = [
         {
           question: "How is this different from a roofing marketing agency?",
           answer:
-            "An agency sells you services and reports on itself. We answer to your numbers: one experienced director patching the leaks, checking LSA and ad spend against real calls, holding routing and SEO vendors to the plan. No long contracts, no junior account managers, and [reporting on leads and calls instead of vanity metrics](/analytics). It starts with a [lead leak audit](/lead-leak-audit).",
+            "An agency sells you services and reports on itself. We answer to your numbers: one experienced director patching the leaks, checking LSA and ad spend against real calls, holding routing and SEO vendors to the plan. No long contracts, no junior account managers, and [reporting on leads and calls instead of vanity metrics](/lead-system). It starts with a [lead leak audit](/lead-leak-audit).",
         },
       ],
     },
@@ -257,7 +257,7 @@ export const niches: NicheContent[] = [
     engine: {
       eyebrow: "The lead engine",
       heading: "One director for routing, ads, and everything you already pay for.",
-      copy: "We don't sell you a retainer to spend more. We patch how leads get in, where they go, and verify [whether the money you already spend is working](/analytics).",
+      copy: "We don't sell you a retainer to spend more. We patch how leads get in, where they go, and verify [whether the money you already spend is working](/lead-system).",
       sceneNodes: ["LSA", "Google", "Meta", "Website"],
       cards: [
         {

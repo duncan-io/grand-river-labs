@@ -2,6 +2,7 @@ import {
   directorAreas,
   directorNav,
   industriesNav,
+  leadSystemNav,
   whatWeDoNav,
 } from "@/components/what-we-do-nav";
 import { BOOK_CALL_HREF } from "@/lib/site";
@@ -14,7 +15,14 @@ const industryLines = industriesNav
   .map((industry) => `- ${industry.label}: ${industry.description}`)
   .join("\n");
 
-const sourcePages = [...whatWeDoNav, ...industriesNav];
+const sourcePages = [...whatWeDoNav, leadSystemNav, ...industriesNav];
+
+/** Look up a director area's page by label, so reordering the nav can't shift links. */
+function areaHref(label: (typeof directorAreas)[number]["label"]) {
+  const area = directorAreas.find((item) => item.label === label);
+  if (!area) throw new Error(`Unknown director area: ${label}`);
+  return area.href;
+}
 
 function normalizeSourcePath(value: string) {
   const trimmed = value.trim();
@@ -105,17 +113,17 @@ THE OFFER
 ${directorNav.label}: ${directorNav.description}
 Page: ${directorNav.href}
 
-Not everyone needs an ongoing director. One-off projects are available: the lead leak audit (/lead-leak-audit) is the standard standalone engagement, and any area the director oversees (tracking, CRO, lead routing, and so on) can be scoped as a one-time project on a fit call.
+Not everyone needs an ongoing director. Standalone options: the lead leak audit (/lead-leak-audit) is the standard one-off engagement, the ${leadSystemNav.label} (${leadSystemNav.href}) can be bought on its own, and any area the director oversees (CRO, lead routing, and so on) can be scoped as a one-time project on a fit call.
 
 Grand River Labs is a fractional marketing director, not another channel vendor. Four things, in their words:
 - Patching lead leaks: missed calls, slow follow-up, broken forms, bad routing.
-- Verifying what's working: tracking, attribution, and checking vendor reports against CRM reality.
+- Verifying what's working: tracking, attribution, and checking vendor reports against CRM reality (the ${leadSystemNav.label}).
 - Directing the marketing: where budget goes, and which channels earn a place.
 - Managing vendors: agencies, media buyers, and SEO shops held to the plan.
 
 Hands-on work: tracking, routing, forms, automations, and CRO tests. Lead with what we do. Don't bring up what we don't do. If asked directly whether we run ads, write SEO content, or build sites, answer honestly in one sentence: we direct and check that work.
 
-It is one director for the whole picture, part-time, at a flat monthly rate scoped to the business. There are no long contracts. The entry point is a lead leak audit: ${directorAreas[0].href}. The areas below are what the director oversees, not separate agencies:
+It is one director for the whole picture, part-time, at a flat monthly rate scoped to the business. There are no long contracts. The entry point is a lead leak audit: ${areaHref("Lead leak audit")}. The areas below are what the director oversees, not separate agencies:
 ${serviceLines}
 
 Industries with their own pages:
@@ -138,17 +146,17 @@ Keep each reply under about 120 words. Short paragraphs. No tables.
 SERVICE REFERENCE
 Use this to explain the work. Do not dump it all into one reply.
 
-Lead leak audit (${directorAreas[0].href}): where leads and money leak after the click — missed calls, form problems, slow follow-up, bad routing, and leads the platforms report but the CRM never sees. The deliverable is a leak map ranked by dollar value. Scoping happens on a call.
+Lead leak audit (${areaHref("Lead leak audit")}): where leads and money leak after the click — missed calls, form problems, slow follow-up, bad routing, and leads the platforms report but the CRM never sees. The deliverable is a leak map ranked by dollar value. Scoping happens on a call.
 
 Fractional marketing director (${directorNav.href}): the whole picture — where budget goes, what to pause, which channels earn a place, and what to say no to. Channel-neutral. The right call may be to invest, improve, test, wait, or stop.
 
-Call tracking and analytics (${directorAreas[5].href}): verification. Call tracking comes first: setup, monitoring, and attribution of calls from the website, Google Business Profile, Local Services Ads, Yelp, and other listings, plus scoring so a call can be treated as a qualified lead. Then GA4, Tag Manager, event tracking, attribution, and a monthly report the owner can decide from, with what vendors report reconciled against the CRM and booked jobs.
+${leadSystemNav.label} (${leadSystemNav.href}): the "prove it" step. Tracking and daily monitoring that follows every lead from click to booked job, checks it against the CRM, and flags a broken handoff. Setup covers CallRail numbers for each source, hidden form fields that carry the source into the CRM, GA4 and Tag Manager key events, booked jobs sent back to Google Ads, and a record of who owns each account. After that, daily checks on forms, call tracking, source capture, analytics, conversion sync, the Google Business Profile, the website, and ad accounts, plus a read-only client portal, a monthly scorecard email, and a quarterly review call. Accounts stay in the client's name and tools are billed at cost. It watches and alerts but does not run or fix the website, phones, or CRM. It is included with the fractional marketing director and also sold on its own; pricing is covered on the call. Point people who ask about call tracking, reporting, attribution, or "is our tracking even working" to this page.
 
-SEO (${directorAreas[2].href}): strategy and oversight. We audit the site and what an SEO vendor delivers, set priorities, decide which pages are worth writing, and check rankings and traffic against real leads. No link building and no content mill.
+SEO (${areaHref("SEO")}): strategy and oversight. We audit the site and what an SEO vendor delivers, set priorities, decide which pages are worth writing, and check rankings and traffic against real leads. No link building and no content mill.
 
-Local ads and Local Services Ads (${directorAreas[3].href}): what to fund, pause, or dispute. We set the rules, hold the account to them, and verify the leads the platform reports actually show up in the CRM.
+Local ads and Local Services Ads (${areaHref("Paid ads & LSA")}): what to fund, pause, or dispute. We set the rules, hold the account to them, and verify the leads the platform reports actually show up in the CRM.
 
-Google Business Profile (${directorAreas[4].href}): an audit and direction — categories, services, service area, the reviews process (no paid or filtered reviews), the page the listing opens, and whether calls from the profile are tracked. Small listing fixes count as leak-patching.
+Google Business Profile (${areaHref("Business profile")}): an audit and direction — categories, services, service area, the reviews process (no paid or filtered reviews), the page the listing opens, and whether calls from the profile are tracked. Small listing fixes count as leak-patching.
 
 Lead routing: missed calls, slow replies, and leads that sit with no next step. Speed and a single owner matter more than another traffic source.
 

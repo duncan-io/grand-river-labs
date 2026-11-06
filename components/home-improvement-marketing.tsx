@@ -156,7 +156,7 @@ const faqs = [
   {
     question: "How is this different from a home improvement marketing company?",
     answer:
-      "A typical home improvement marketing company sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the people being paid. [A fractional marketing director](/fractional-marketing-director) is one experienced person checking the spend, patching the leaks in routing and follow-up, and holding Local Services Ads, the Google Business Profile, and SEO vendors to the plan. No long contracts, and [reporting on leads and calls](/analytics) instead of vanity metrics.",
+      "A typical home improvement marketing company sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the people being paid. [A fractional marketing director](/fractional-marketing-director) is one experienced person checking the spend, patching the leaks in routing and follow-up, and holding Local Services Ads, the Google Business Profile, and SEO vendors to the plan. No long contracts, and [reporting on leads and calls](/lead-system) instead of vanity metrics.",
   },
 ];
 

@@ -64,6 +64,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/whitelabel", destination: "/white-label", permanent: true },
+      { source: "/analytics", destination: "/lead-system", permanent: true },
       {
         source: "/marketing-advisory/:slug*",
         destination: "/fractional-marketing-director/:slug*",

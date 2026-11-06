@@ -59,7 +59,7 @@ const ways = [
     title: "The page and the phone path",
     lead: "A good click still dies if nobody can answer it.",
     setup:
-      "The landing page, the call button, and where the lead goes after the tap—checked against the ad that bought the visit. [Call tracking](/analytics) ties the call back to the ad, so what a lead is worth and which leads to dispute use real calls, not clicks.",
+      "The landing page, the call button, and where the lead goes after the tap—checked against the ad that bought the visit. [Call tracking](/lead-system) ties the call back to the ad, so what a lead is worth and which leads to dispute use real calls, not clicks.",
     outcome:
       "The ad and the site tell the same story, and a new lead still gets a next step.",
   },
@@ -626,7 +626,7 @@ export function LocalAdsSections() {
               </h2>
             </div>
             <p className="section-copy">
-              <Link href="/analytics">Analytics</Link> shows whether the spend
+              <Link href="/lead-system">The Lead System</Link> shows whether the spend
               turns into calls.{" "}
               <Link href="/conversion-rate-optimization">The page</Link> the
               click lands on decides whether the call happens.

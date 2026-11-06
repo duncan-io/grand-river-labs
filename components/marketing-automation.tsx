@@ -28,7 +28,7 @@ const examples = [
   },
   {
     title: "Incoming call → score → route",
-    copy: "A call comes in from the website, the Google Business Profile, Yelp, or another profile. The [source is already on the record](/analytics). The lead is scored and assigned to the right owner—with a short brief—so sales gets a qualified call, not a raw ring.",
+    copy: "A call comes in from the website, the Google Business Profile, Yelp, or another profile. The [source is already on the record](/lead-system). The lead is scored and assigned to the right owner—with a short brief—so sales gets a qualified call, not a raw ring.",
   },
   {
     title: "Behavior-triggered nurture that respects the CRM",
@@ -40,7 +40,7 @@ const examples = [
   },
   {
     title: "Campaign ops: lists, UTMs, and clean attribution",
-    copy: "Audience lists sync from your CRM. [Campaign tags and UTMs stay consistent across channels](/analytics). When a lead converts, the source story is already on the record—so reporting stops being a weekly archaeology project.",
+    copy: "Audience lists sync from your CRM. [Campaign tags and UTMs stay consistent across channels](/lead-system). When a lead converts, the source story is already on the record—so reporting stops being a weekly archaeology project.",
   },
   {
     title: "No-show and abandoned-inquiry follow-up",

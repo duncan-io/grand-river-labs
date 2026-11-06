@@ -59,7 +59,7 @@ const examples = [
   {
     title: "Reporting and insight summaries",
     scenario:
-      "[Dashboards exist](/analytics), but executives still ask for the story: what moved, what stalled, what needs a decision. Analysts spend Mondays assembling the narrative by hand.",
+      "[Dashboards exist](/lead-system), but executives still ask for the story: what moved, what stalled, what needs a decision. Analysts spend Mondays assembling the narrative by hand.",
     does: "AI reads the numbers and open items, then drafts a weekly brief—patterns, exceptions, and suggested follow-ups—ready for a human to tighten.",
     outcome: "Less scrolling, more decisions. Like adding an analyst for the first pass.",
   },

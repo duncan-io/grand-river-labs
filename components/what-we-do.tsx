@@ -815,7 +815,7 @@ const integration = [
   {
     number: "03",
     title: "Savings compound",
-    copy: "Hours reclaimed. Effort reduced. Cost lowered. [We measure what changed](/analytics)—then refine so the gains keep building.",
+    copy: "Hours reclaimed. Effort reduced. Cost lowered. [We measure what changed](/lead-system)—then refine so the gains keep building.",
   },
 ];
 

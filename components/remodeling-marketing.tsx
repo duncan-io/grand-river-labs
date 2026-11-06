@@ -80,7 +80,7 @@ const engine = [
     icon: "Compound",
     label: "Turn them into jobs",
     title: "Reporting on signed jobs",
-    copy: "[We report on leads, design appointments, and signed jobs](/analytics), not impressions. You'll know which source turned into a kitchen and which one only turned into an invoice.",
+    copy: "[We report on leads, design appointments, and signed jobs](/lead-system), not impressions. You'll know which source turned into a kitchen and which one only turned into an invoice.",
   },
 ];
 
@@ -122,7 +122,7 @@ const faqs = [
   {
     question: "How is this different from a kitchen and bath marketing agency?",
     answer:
-      "An agency usually sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the agency. We answer to your numbers: Local Services Ads, ad direction, the Google Business Profile, routing, follow-up, and project content checked against signed jobs. No long contracts, and [reporting on leads and signed jobs](/analytics) instead of vanity metrics.",
+      "An agency usually sells you a channel, hands the account to a junior, and sends a report full of impressions—written by the agency. We answer to your numbers: Local Services Ads, ad direction, the Google Business Profile, routing, follow-up, and project content checked against signed jobs. No long contracts, and [reporting on leads and signed jobs](/lead-system) instead of vanity metrics.",
   },
 ];
 

@@ -11,7 +11,7 @@ const friction = [
   },
   {
     title: "A number you can't tap",
-    copy: "The phone number sits in an image, the footer, or a desktop-only header. On a phone, calling takes three steps, and [nobody tracks the calls](/analytics) that do come in.",
+    copy: "The phone number sits in an image, the footer, or a desktop-only header. On a phone, calling takes three steps, and [nobody tracks the calls](/lead-system) that do come in.",
   },
   {
     title: "Quote forms that lose people",
@@ -36,7 +36,7 @@ const ways = [
     title: "Mobile call path",
     lead: "Most visits happen on a phone. Calling should take one tap.",
     setup:
-      "Tap-to-call above the fold, a call button that stays in reach, and [call tracking](/analytics) that tells site calls apart from map and ad calls.",
+      "Tap-to-call above the fold, a call button that stays in reach, and [call tracking](/lead-system) that tells site calls apart from map and ad calls.",
     outcome: "More calls from the same visits, and a count you can trust.",
   },
   {
@@ -107,7 +107,7 @@ export const faqs = [
   {
     question: "How do you count phone calls?",
     answer:
-      "With [call tracking](/analytics) that separates calls from the website, your Google Business Profile, and your ads, tied back to the page and campaign that produced them. Without it, a site can look like it isn't working while the phone is actually ringing.",
+      "With [call tracking](/lead-system) that separates calls from the website, your Google Business Profile, and your ads, tied back to the page and campaign that produced them. Without it, a site can look like it isn't working while the phone is actually ringing.",
   },
   {
     question: "How much does conversion rate optimization cost?",
@@ -461,7 +461,7 @@ export function CroSections() {
               CRO only works if calls and forms are counted. We start from the
               drop-off you can already see, and when the numbers aren&apos;t
               trustworthy yet, we fix the{" "}
-              <Link href="/analytics">tracking</Link> first.
+              <Link href="/lead-system">tracking</Link> first.
             </p>
           </div>
           <ol className="cro-flow__steps reveal">

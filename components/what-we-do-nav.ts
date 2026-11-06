@@ -11,9 +11,15 @@ export const directorAreas = [
   { label: "SEO", href: "/search-engine-optimization" },
   { label: "Paid ads & LSA", href: "/local-ads" },
   { label: "Business profile", href: "/google-business-profile" },
-  { label: "Analytics", href: "/analytics" },
   { label: "Automation and AI", href: "/automation" },
 ] as const;
+
+export const leadSystemNav = {
+  label: "Lead System",
+  href: "/lead-system",
+  description:
+    "Tracking and daily monitoring that follows every lead from click to booked job, checks it against your CRM, and flags a broken handoff.",
+} as const;
 
 export const whatWeDoNav = [directorNav, ...directorAreas] as const;
 

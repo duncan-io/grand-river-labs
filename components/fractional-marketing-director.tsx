@@ -7,7 +7,9 @@ import { EngagementBlock } from "./engagement-block";
 import { NicheStrip } from "./niche-page";
 import { FeaturedCaseStudy } from "./sections";
 import { Arrow } from "./site-header";
-import { directorAreas } from "./what-we-do-nav";
+import { directorAreas, leadSystemNav } from "./what-we-do-nav";
+
+const scopeAreas = [...directorAreas, leadSystemNav] as const;
 
 const scorecardRows = [
   {
@@ -73,7 +75,7 @@ const deliverables = [
 ];
 
 const scope: Record<
-  (typeof directorAreas)[number]["href"],
+  (typeof scopeAreas)[number]["href"],
   { mode: "do" | "direct"; note: string }
 > = {
   "/lead-leak-audit": {
@@ -84,9 +86,9 @@ const scope: Record<
     mode: "do",
     note: "More leads from the traffic you already pay for.",
   },
-  "/analytics": {
+  "/lead-system": {
     mode: "do",
-    note: "Tracking and call attribution you can make decisions on.",
+    note: "Included: tracking, daily checks, and a portal showing what booked.",
   },
   "/automation": {
     mode: "do",
@@ -143,7 +145,7 @@ export const faqs = [
   {
     question: "What does a fractional marketing director do?",
     answer:
-      "Meets with you every week to plan and set strategy, decides where the budget goes, and advises you on the big calls. Coaches whoever runs marketing day to day and holds every vendor to the plan. Hands-on, we fix where leads leak and the [tracking](/analytics) behind the numbers, usually starting with a [lead leak audit](/lead-leak-audit).",
+      "Meets with you every week to plan and set strategy, decides where the budget goes, and advises you on the big calls. Coaches whoever runs marketing day to day and holds every vendor to the plan. Hands-on, we fix where leads leak and the [tracking](/lead-system) behind the numbers, usually starting with a [lead leak audit](/lead-leak-audit).",
   },
   {
     question:
@@ -157,7 +159,7 @@ export const faqs = [
   },
   {
     question: "Do you take on one-off projects?",
-    answer: `Yes. Not every problem needs an ongoing director. The [lead leak audit](/lead-leak-audit) is a ${formatUsd(AUDIT_FEE)} flat standalone engagement, and any area we oversee — tracking, conversion fixes, lead routing — can be scoped as a one-time project. We confirm scope and price on a 30-minute fit call.`,
+    answer: `Yes. Not every problem needs an ongoing director. The [lead leak audit](/lead-leak-audit) is a ${formatUsd(AUDIT_FEE)} flat standalone engagement, the [Lead System](/lead-system) is available on its own, and any area we oversee — conversion fixes, lead routing — can be scoped as a one-time project. We confirm scope and price on a 30-minute fit call.`,
   },
   {
     question: "Will you replace our agency or marketing hire?",
@@ -398,7 +400,7 @@ export function FractionalDirectorSections() {
                 <h3 className="director-scope__title">{column.title}</h3>
                 <p className="director-scope__copy">{column.copy}</p>
                 <ul className="director-scope__list">
-                  {directorAreas
+                  {scopeAreas
                     .filter((area) => scope[area.href].mode === column.mode)
                     .map((area) => (
                       <li key={area.href}>

@@ -83,7 +83,7 @@ const deliverables = [
   },
   {
     title: "ROI hypotheses",
-    copy: "Hours and cost framed in language your team trusts—so you can decide, fund, and [measure the next step](/analytics).",
+    copy: "Hours and cost framed in language your team trusts—so you can decide, fund, and [measure the next step](/lead-system).",
   },
 ];
 

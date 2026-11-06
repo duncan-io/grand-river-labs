@@ -34,7 +34,7 @@ const facts = [
   },
   {
     label: "Where calls go",
-    copy: "The call button dials whatever number is on the profile. Without a [tracking number](/analytics) for the listing, map calls and website calls look the same.",
+    copy: "The call button dials whatever number is on the profile. Without a [tracking number](/lead-system) for the listing, map calls and website calls look the same.",
   },
 ];
 
@@ -53,7 +53,7 @@ const friction = [
   },
   {
     title: "A profile that opens a weak page",
-    copy: "Someone taps the website and lands on a homepage that doesn't name the service, the town, or how to call. And [nobody can tell](/analytics) whether the calls that do come in started on the map.",
+    copy: "Someone taps the website and lands on a homepage that doesn't name the service, the town, or how to call. And [nobody can tell](/lead-system) whether the calls that do come in started on the map.",
   },
 ];
 
@@ -76,7 +76,7 @@ const ways = [
     title: "The website link and where calls go",
     lead: "The listing should send people to a page that can win the job.",
     setup:
-      "Where the link and the call button actually send people, and whether calls from the profile are tracked at all. A separate number for the listing is [call tracking](/analytics)—without it, map calls and website calls look the same.",
+      "Where the link and the call button actually send people, and whether calls from the profile are tracked at all. A separate number for the listing is [call tracking](/lead-system)—without it, map calls and website calls look the same.",
     outcome: "The tap lands on a page that names the work, and map calls get counted.",
   },
   {
@@ -145,7 +145,7 @@ export const faqs = [
   {
     question: "How do you track calls from the Google Business Profile?",
     answer:
-      "With a [call tracking](/analytics) number used only on the listing, with your main number kept on the profile as an additional phone. Calls from the map then show up separately from website and ad calls, and can be checked against the jobs they book.",
+      "With a [call tracking](/lead-system) number used only on the listing, with your main number kept on the profile as an additional phone. Calls from the map then show up separately from website and ad calls, and can be checked against the jobs they book.",
   },
   {
     question: "How much does Google Business Profile optimization cost?",
