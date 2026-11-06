@@ -1,5 +1,4 @@
 import { BookCallLink } from "./book-call-link";
-import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
 
 function RiverScene() {
@@ -159,9 +158,9 @@ export function Hero() {
         <div className="hero__content">
           <p className="eyebrow">For lead-driven businesses</p>
           <h1 className="hero__headline">
-            <span>Your marketing director,</span>
+            <span>Senior Marketing Leadership,</span>
             <span>
-              <span className="hero__keep">part-time.</span>
+              <span className="hero__keep">Part-Time Costs</span>
             </span>
           </h1>
           <p className="hero__copy">
@@ -178,17 +177,6 @@ export function Hero() {
               See how it works
             </a>
           </div>
-          <ul className="hero__facts">
-            <li>Starting at {formatUsd(DIRECTOR_MONTHLY)}/month</li>
-            <li>No long contracts</li>
-            <li>Works with your current vendors</li>
-          </ul>
-          <p className="hero__aside">
-            <a href="/lead-leak-audit">
-              Just want an audit first? Start with a {formatUsd(AUDIT_FEE)} lead leak
-              audit →
-            </a>
-          </p>
         </div>
       </div>
       <a className="hero__cue" href="#engagement">

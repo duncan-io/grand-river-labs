@@ -542,19 +542,6 @@ button.site-nav__trigger {
   margin-top: 2rem;
 }
 
-.hero__aside {
-  margin: 1rem 0 0;
-}
-
-.hero__aside a {
-  color: var(--accent-dark);
-  font-weight: 650;
-}
-
-.hero__aside a:hover {
-  color: var(--accent);
-}
-
 .hero__cue {
   position: absolute;
   z-index: 2;
@@ -3009,8 +2996,7 @@ button.site-nav__trigger {
   margin-top: 2rem;
 }
 
-.mkt-hero__facts,
-.hero__facts {
+.mkt-hero__facts {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.25rem;
@@ -3022,15 +3008,13 @@ button.site-nav__trigger {
   list-style: none;
 }
 
-.mkt-hero__facts li,
-.hero__facts li {
+.mkt-hero__facts li {
   display: flex;
   align-items: center;
   gap: 0.45rem;
 }
 
-.mkt-hero__facts li::before,
-.hero__facts li::before {
+.mkt-hero__facts li::before {
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 50%;
@@ -11033,8 +11017,7 @@ button.site-nav__trigger {
     flex: none;
   }
 
-  .mkt-hero__facts,
-  .hero__facts {
+  .mkt-hero__facts {
     flex-direction: column;
     margin-top: 1.1rem;
     font-size: 0.85rem;
