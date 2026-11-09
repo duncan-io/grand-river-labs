@@ -11,7 +11,7 @@ import type { Payload, PayloadRequest } from 'payload'
 const CASE_STUDY_SLUG = '38-hvac-brand-sites'
 const CASE_STUDY_TITLE = 'Organic leads up 78% across 38 HVAC brand sites'
 const CASE_STUDY_EXCERPT =
-  'I took over digital for 38 brand websites owned by a Midwest HVAC consolidator group. Across one fiscal year — FY2024 to FY2025 — organic leads grew 78% year over year. The work was not clever. It was ownership, an audit, one content strategy executed 38 times, a repaired technical floor, deliberate internal linking, and conversion work on the pages that already had traffic.'
+  'I took over digital for 38 brand websites owned by a Midwest HVAC consolidator group. Across one fiscal year — FY2024 to FY2025 — organic leads grew 78% year over year. The result came from a year of disciplined work: ownership, an audit, one content strategy executed 38 times, a repaired technical floor, deliberate internal linking, and conversion work on the pages that already had traffic.'
 
 export async function seedHvacCaseStudy({
   payload,

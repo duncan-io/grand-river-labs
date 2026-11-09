@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { BookCallLink } from "./book-call-link";
 import { testimonials } from "@/lib/testimonials";
 import { industriesNav } from "./what-we-do-nav";
@@ -100,48 +99,6 @@ const industryNotes: Record<
   "/fractional-marketing-director/contractors":
     "Trades and specialty contractors.",
 };
-
-const director = {
-  name: "Duncan",
-  role: "Owner · Grand River Labs",
-  // Set to a file in /public (e.g. "/duncan.jpg") once the headshot is added.
-  photo: null as string | null,
-  bio: "The person who makes the calls is the person on the call. You work directly with me — no rotating account team, no handoffs, and no junior learning on your budget.",
-};
-
-export function DirectorIntro() {
-  return (
-    <section className="director-intro" aria-label="Your director">
-      <div
-        className={
-          director.photo
-            ? "shell director-intro__layout"
-            : "shell director-intro__layout director-intro__layout--solo"
-        }
-      >
-        {director.photo ? (
-          <Image
-            className="director-intro__photo"
-            src={director.photo}
-            alt={director.name}
-            width={352}
-            height={352}
-          />
-        ) : null}
-        <div>
-          <p className="eyebrow">Your director</p>
-          <p className="director-intro__name">{director.name}</p>
-          <p className="featured-study__client">{director.role}</p>
-          <p className="director-intro__bio">{director.bio}</p>
-          <a className="director-intro__more" href="/about">
-            More about how we work
-            <Arrow />
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export function FeaturedCaseStudy() {
   return (

@@ -3,7 +3,6 @@ import { ContactSection } from "@/components/contact";
 import { EngagementBlock } from "@/components/engagement-block";
 import { Hero } from "@/components/hero";
 import {
-  DirectorIntro,
   FeaturedCaseStudy,
   LeadershipSection,
   ProcessSection,
@@ -68,7 +67,6 @@ export default function Home() {
         <Hero />
         <EngagementBlock />
         <LeadershipSection />
-        <DirectorIntro />
         <ProcessSection />
         <FeaturedCaseStudy />
         <ServicesSection />
