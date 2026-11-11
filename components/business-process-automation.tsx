@@ -310,10 +310,10 @@ export function BpaSections() {
                 Book a call
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#examples">
-                See examples
+              <Link className="button button-secondary" href="/#contact">
+                Contact us
                 <Arrow />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

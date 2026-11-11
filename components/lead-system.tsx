@@ -1,263 +1,127 @@
 import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
-import type { ReactNode } from "react";
 import { renderInline } from "@/components/inline-links";
 import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
 
-const leaks = [
+const questions = [
   {
-    title: "The form that stopped sending",
-    copy: "A plugin update breaks the quote form's notification. No error, no bounce. The prospect sees a thank-you page, the office sees nothing, and nobody notices the leads stopped.",
+    title: "How many leads were real?",
+    copy: "Platforms count robocalls and repeat callers.",
   },
   {
-    title: "A suggested edit swaps the number",
-    copy: "Google accepts a stranger's suggested edit to your [Business Profile](/google-business-profile) and replaces the tracking number. Map calls still ring, but they stop counting, and the listing looks like it went quiet.",
+    title: "What did each lead cost?",
+    copy: "Spend is in four places. Leads are in one.",
   },
   {
-    title: "Leads that arrive without a source",
-    copy: "Form leads land in the CRM with no campaign, no gclid, and no landing page. Six months later nobody can say which channel earned the jobs, so the budget follows whoever reports loudest.",
+    title: "Which channel books jobs?",
+    copy: "Form leads arrive without a source.",
   },
   {
-    title: "An ad account goes dark on a Friday",
-    copy: "A card fails, an ad gets disapproved, or a budget caps out by noon. The phone gets quiet over the weekend, and the first person to notice is the owner on Monday.",
+    title: "Is each vendor earning its fee?",
+    copy: "Every agency grades its own homework.",
   },
 ];
 
 const steps = [
   {
-    title: "Set up",
-    copy: "A tracking number for each source, hidden form fields that carry the source into your CRM, GA4 key events verified end to end, and booked jobs sent back to Google Ads. We record who owns every account and take a baseline.",
+    title: "Build",
+    copy: "This is the hard part, and we do all of it. A tracking number for each source, hidden form fields that carry the source into your CRM, analytics key events verified end to end, booked jobs sent back to Google Ads, and your CRM connected to the dashboard.",
   },
   {
-    title: "Watch daily",
-    copy: "Eight checks run every day, from test form submissions to the Business Profile and the ad accounts. Critical breaks get flagged to you within one business day.",
+    title: "Blend",
+    copy: "Our attribution model matches every call, form, and CRM record, removes spam and duplicates, and gives each lead one source and one cost. Every vendor gets measured the same way, on the same numbers.",
   },
   {
-    title: "Report monthly",
-    copy: "The portal stays current. A scorecard email lands each month, and once a quarter we walk through it with you on a call: what booked, what it cost, and what changed.",
+    title: "Report",
+    copy: "The dashboard stays current, a scorecard lands each month, and once a quarter we walk through it with you. Eight daily checks keep the tracking underneath it from quietly breaking.",
   },
 ];
 
-const portalTabs = [
-  { id: "portal-overview", label: "Overview" },
-  { id: "portal-budget", label: "Budget & vendors" },
-  { id: "portal-leads", label: "Leads" },
-  { id: "portal-health", label: "System health" },
-] as const;
-
-/* Sample data: Lakeshore Roofing (fictional), October vs. September. */
-const kpis = [
-  {
-    label: "Real leads",
-    value: "351",
-    change: "+9% vs. Sep",
-    goal: "Goal 340",
-    progress: 100,
-    status: "met",
-  },
-  {
-    label: "Booked jobs",
-    value: "168",
-    change: "+13% vs. Sep",
-    goal: "Goal 160",
-    progress: 100,
-    status: "met",
-  },
-  {
-    label: "Book rate",
-    value: "48%",
-    change: "+2 pts vs. Sep",
-    goal: "Goal 50%",
-    progress: 96,
-    status: "96% of goal",
-  },
-  {
-    label: "Cost per booked job",
-    value: "$108",
-    change: "−10% vs. Sep · paid sources",
-    goal: "Goal under $115",
-    progress: 100,
-    status: "met",
-  },
-];
-
-const leadFlow = [
-  { label: "Contacts", value: "412", note: "Calls and forms" },
-  { label: "Spam removed", value: "−61", note: "Robocalls, vendors, junk" },
-  { label: "Real leads", value: "351", note: "Checked against the CRM" },
-  { label: "Booked jobs", value: "168", note: "48% book rate" },
-];
-
-type BreakoutRow = {
-  source: string;
-  calls: number;
-  forms: number;
-  leads: number;
-  spam: number;
-  booked: number;
-  rate: string;
-  share: string;
-  spend: string;
-  cpl: string;
-  cpb: string;
-  change: string;
-  campaign?: boolean;
+type VendorRow = {
+  vendor: string;
+  covers: string;
+  reported: number;
+  verified: number;
+  cplReported: string;
+  cplVerified: string;
 };
 
-const breakoutRows: BreakoutRow[] = [
+/* Sample data: Lakeshore Roofing (fictional), October. Vendor figures reconcile
+   with teaserSources; the SEO agency covers the Business Profile and organic. */
+const vendorRows: VendorRow[] = [
   {
-    source: "Google Ads",
-    calls: 74,
-    forms: 46,
-    leads: 96,
-    spam: 24,
-    booked: 42,
-    rate: "44%",
-    share: "25%",
-    spend: "$4,830",
-    cpl: "$50",
-    cpb: "$115",
-    change: "+17%",
+    vendor: "Google Ads agency",
+    covers: "Google Ads",
+    reported: 120,
+    verified: 96,
+    cplReported: "$40",
+    cplVerified: "$50",
   },
   {
-    source: "Roof replacement · Search",
-    calls: 48,
-    forms: 30,
-    leads: 64,
-    spam: 14,
-    booked: 30,
-    rate: "47%",
-    share: "18%",
-    spend: "$3,180",
-    cpl: "$50",
-    cpb: "$106",
-    change: "+20%",
-    campaign: true,
+    vendor: "Local Services Ads",
+    covers: "Run in-house",
+    reported: 83,
+    verified: 74,
+    cplReported: "$46",
+    cplVerified: "$51",
   },
   {
-    source: "Storm & repair · Search",
-    calls: 26,
-    forms: 16,
-    leads: 32,
-    spam: 10,
-    booked: 12,
-    rate: "38%",
-    share: "7%",
-    spend: "$1,650",
-    cpl: "$52",
-    cpb: "$138",
-    change: "+9%",
-    campaign: true,
-  },
-  {
-    source: "Local Services Ads",
-    calls: 79,
-    forms: 4,
-    leads: 74,
-    spam: 9,
-    booked: 38,
-    rate: "51%",
-    share: "23%",
-    spend: "$3,810",
-    cpl: "$51",
-    cpb: "$100",
-    change: "+15%",
-  },
-  {
-    source: "Google Business Profile",
-    calls: 92,
-    forms: 20,
-    leads: 98,
-    spam: 14,
-    booked: 46,
-    rate: "47%",
-    share: "27%",
-    spend: "—",
-    cpl: "—",
-    cpb: "—",
-    change: "+12%",
+    vendor: "SEO agency",
+    covers: "Business Profile & organic",
+    reported: 214,
+    verified: 156,
+    cplReported: "$8",
+    cplVerified: "$12",
   },
 ];
 
-const breakoutTotal: BreakoutRow = {
-  source: "All sources",
-  calls: 297,
-  forms: 115,
-  leads: 351,
-  spam: 61,
-  booked: 168,
-  rate: "48%",
-  share: "100%",
-  spend: "$8,640",
-  cpl: "$51",
-  cpb: "$108",
-  change: "+13%",
-};
+const vendorReportedTotal = vendorRows.reduce((sum, row) => sum + row.reported, 0);
+const vendorVerifiedTotal = vendorRows.reduce((sum, row) => sum + row.verified, 0);
+const vendorBarMax = Math.max(...vendorRows.map((row) => row.reported));
 
-const healthChecks = [
-  { name: "Call tracking", detail: "Every tracking number rings through and records" },
-  { name: "Forms", detail: "Test submissions delivered and created in the CRM" },
-  { name: "Source capture", detail: "Source, campaign, gclid, and landing page on new leads" },
-  { name: "Analytics", detail: "GA4 key events firing on calls and forms" },
-  { name: "Conversion sync", detail: "Booked jobs reaching Google Ads" },
-  { name: "Business Profile", detail: "Phone, hours, categories, and links unchanged" },
-  { name: "Website", detail: "Uptime, SSL, and domain expiry" },
-  { name: "Ad accounts", detail: "No disapprovals, billing failures, or capped budgets" },
+const teaserFeatures = [
+  { title: "Real lead counts", copy: "Spam and duplicates out." },
+  { title: "Cost per lead and booked job", copy: "For every source and campaign." },
+  { title: "Vendor scorecard", copy: "Reported vs. verified, side by side." },
+  { title: "Daily system checks", copy: "Broken tracking caught within a day." },
 ];
 
-const setupItems = [
-  "CallRail with a tracking number for each source, call recording, and spam-call tagging",
-  "Hidden form fields that pass UTMs, gclid, and the landing page into your CRM, plus form spam protection",
-  "GA4 and Tag Manager key events, verified end to end",
-  "Booked and sold jobs sent back to Google Ads (and Meta's Conversions API if you run Meta), so the ads optimize for jobs instead of calls",
-  "An account ownership register: who holds admin on GA4, Ads, the Business Profile, Tag Manager, the domain, Meta, and CallRail",
-  "A baseline scorecard",
+const teaserTabs = ["Overview", "Budget & vendors", "Leads", "System health"];
+
+const teaserKpis = [
+  { label: "Real leads", value: "351", change: "+9% vs. Sep" },
+  { label: "Booked jobs", value: "168", change: "+13% vs. Sep" },
+  { label: "Cost per lead", value: "$51", change: "Paid sources" },
+  { label: "Cost per booked job", value: "$108", change: "−10% vs. Sep" },
 ];
 
-const monthlyItems = [
-  "Daily test submissions on key forms, confirming the notification arrived and the CRM record was created",
-  "Uptime, SSL, and domain-expiry alerts",
-  "Business Profile watch: changes to phone, hours, categories, or links, and suspensions",
-  "Ad account guardrails: disapprovals, paused campaigns, billing failures, budgets capped early, and LSA leads to dispute",
-  "The client portal, a monthly scorecard email, and a quarterly review call",
-  "Critical breaks flagged to you within one business day",
+const teaserSources = [
+  { source: "Business Profile", leads: 98, booked: 46, cpb: "—" },
+  { source: "Google Ads", leads: 96, booked: 42, cpb: "$115" },
+  { source: "Local Services Ads", leads: 74, booked: 38, cpb: "$100" },
+  { source: "Organic & referrals", leads: 83, booked: 42, cpb: "—" },
 ];
 
 export const faqs = [
   {
-    question: "How much does call tracking setup cost?",
-    answer: `Call tracking is part of the Lead System's one-time setup fee, along with form tracking, GA4, and conversion sync. A monthly fee covers the daily checks and the portal. We scope both on a call based on how many sources, forms, and ad accounts you run, and tools like CallRail are billed to you at cost. On the [fractional marketing director](/fractional-marketing-director) engagement, starting at ${formatUsd(DIRECTOR_MONTHLY)}/month, it's included.`,
+    question: "Isn't this just analytics and call tracking?",
+    answer:
+      "No. Analytics, call tracking, your ad accounts, and your CRM are the inputs. On their own, each one counts leads its own way, and none of them agree. The dashboard, the attribution model, and the way the data is matched and blended are ours. That's what turns four conflicting reports into one lead count, one cost per lead, and one cost per booked job for every source and vendor.",
   },
   {
-    question: "Who owns the accounts?",
+    question: "Who owns the accounts and the data?",
     answer:
-      "You do. GA4, Google Ads, the Business Profile, Tag Manager, the domain, Meta, and CallRail stay in your name, with us added as users. The ownership register from setup records who holds admin on each one, so nothing gets stuck with a past agency again. Tools are billed to you at cost, and the history stays with you if you ever stop working with us.",
+      "Your analytics, ad accounts, Business Profile, domain, and CRM stay in your name, with us added as users. Call tracking, the dashboard, and the attribution model run on our side. Your accounts, and the history in them, stay with you if you ever stop working with us.",
   },
   {
-    question: "What happens when something breaks?",
-    answer:
-      "We flag critical breaks to you within one business day: what broke, what it affects, and who needs to fix it. We watch the website, phones, and CRM, but we don't run or fix them, so the fix goes to your web vendor, phone provider, or office. On the [director engagement](/fractional-marketing-director), the director sees it through. Every break goes into the caught-and-fixed log in the portal.",
-  },
-  {
-    question: "Which CRMs does it work with?",
-    answer:
-      "Most of the ones home services companies use. It needs two things: forms that can pass hidden fields (source, campaign, gclid, and landing page) into the CRM, and a way to get booked jobs back out, through an API, an integration, or an export. We confirm yours on the scoping call.",
-  },
-  {
-    question: "How is this different from an agency dashboard?",
-    answer:
-      "An agency dashboard is built from the agency's own tools and shows what the agency is paid to show. The Lead System counts leads and booked jobs from your CRM, takes out the spam, and holds every vendor to the same numbers, including us. It also checks the plumbing every day, so you hear about a broken form before the month-end report.",
+    question: "How much does it cost?",
+    answer: `A one-time build fee plus a monthly fee for the dashboard, reporting, and daily checks. Call tracking runs on our account, so there's no separate tool to sign up for. We scope both on the demo, based on how many sources, forms, ad accounts, and vendors you run. On the [fractional marketing director](/fractional-marketing-director) engagement, starting at ${formatUsd(DIRECTOR_MONTHLY)}/month, it's included.`,
   },
   {
     question: "Will call tracking numbers hurt my Google Business Profile?",
     answer:
       "Not when it's set up properly. On the [Google Business Profile](/google-business-profile), the tracking number goes in as the primary phone and your main number stays listed as an additional phone, so the listing still matches your other listings. On the website, a script swaps the number for visitors, so your main number stays in the page itself.",
-  },
-  {
-    question: "Do we need GA4 if our agency already sends reports?",
-    answer:
-      "Yes, and it should be yours. Agency reports come from the agency's own tools and show what the agency is paid to show. A GA4 property you own, with calls and quote requests set up as key events, gives you one source you control, and keeps the history when you change vendors.",
   },
 ];
 
@@ -488,238 +352,81 @@ function LeadSystemHeroScene() {
   );
 }
 
-function SampleTag() {
-  return <span className="leak-map__tag">Sample data · Lakeshore Roofing</span>;
-}
-
-function BreakoutCells({ row }: { row: BreakoutRow }) {
-  return (
-    <>
-      <td>{row.calls}</td>
-      <td>{row.forms}</td>
-      <td>{row.leads}</td>
-      <td>{row.spam}</td>
-      <td>{row.booked}</td>
-      <td>{row.rate}</td>
-      <td>{row.share}</td>
-      <td>{row.spend}</td>
-      <td>{row.cpl}</td>
-      <td>{row.cpb}</td>
-      <td className="lead-portal__change">{row.change}</td>
-    </>
-  );
-}
-
-function OverviewPreview() {
-  return (
-    <figure className="leak-map lead-portal__preview">
-      <figcaption className="leak-map__head">
-        <span className="leak-map__title">Overview · October</span>
-        <SampleTag />
-      </figcaption>
-      <p className="lead-portal__controls">
-        <span>
-          <span className="lead-portal__control-label">Date range</span> Oct 1 –
-          Oct 31
-        </span>
-        <span>
-          <span className="lead-portal__control-label">Compare to</span>{" "}
-          Previous period (Sep)
-        </span>
-      </p>
-
-      <ul className="lead-portal__kpis" aria-label="Key numbers, October">
-        {kpis.map((kpi) => (
-          <li className="lead-portal__kpi" key={kpi.label}>
-            <span className="lead-portal__kpi-label">{kpi.label}</span>
-            <span className="lead-portal__kpi-value">{kpi.value}</span>
-            <span className="lead-portal__kpi-change">{kpi.change}</span>
-            <span className="lead-portal__goal-bar" aria-hidden="true">
-              <span style={{ width: `${kpi.progress}%` }} />
-            </span>
-            <span className="lead-portal__goal">
-              {kpi.goal} · {kpi.status}
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <div className="lead-portal__flow-wrap">
-        <p className="lead-portal__subhead">Lead flow</p>
-        <ol className="lead-portal__flow">
-          {leadFlow.map((stage) => (
-            <li key={stage.label}>
-              <span className="lead-portal__flow-value">{stage.value}</span>
-              <span className="lead-portal__flow-label">{stage.label}</span>
-              <span className="lead-portal__flow-note">{stage.note}</span>
-            </li>
-          ))}
-          <li className="lead-portal__flow-locked">
-            <span className="lead-portal__flow-value">
-              <svg
-                aria-hidden="true"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-              >
-                <rect x="3.5" y="8" width="11" height="7.5" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-                <path d="M6 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
-            </span>
-            <span className="lead-portal__flow-label">Sold jobs</span>
-            <span className="lead-portal__flow-note">
-              Unlocks with revenue attribution
-            </span>
-          </li>
-        </ol>
-      </div>
-
-      <div className="lead-portal__table-head">
-        <p className="lead-portal__subhead">Lead sources</p>
-        <p className="lead-portal__hint" aria-hidden="true">
-          Scroll for more →
-        </p>
-      </div>
-      <div
-        className="lead-portal__table-wrap"
-        role="region"
-        aria-label="Lead source breakout, October sample data"
-        tabIndex={0}
-      >
-        <table className="lead-portal__table">
-          <thead>
-            <tr>
-              <th scope="col">Source</th>
-              <th scope="col">Calls</th>
-              <th scope="col">Forms</th>
-              <th scope="col">Real leads</th>
-              <th scope="col">Spam removed</th>
-              <th scope="col">Booked</th>
-              <th scope="col">Book rate</th>
-              <th scope="col">Share of booked</th>
-              <th scope="col">Spend</th>
-              <th scope="col">Cost per lead</th>
-              <th scope="col">Cost per booked job</th>
-              <th scope="col">Booked vs. Sep</th>
-            </tr>
-          </thead>
-          <tbody>
-            {breakoutRows.map((row) => (
-              <tr
-                key={row.source}
-                className={row.campaign ? "lead-portal__campaign" : undefined}
-              >
-                <th scope="row">
-                  {row.campaign ? (
-                    <span className="visually-hidden">Google Ads campaign: </span>
-                  ) : null}
-                  {row.source}
-                </th>
-                <BreakoutCells row={row} />
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th scope="row">{breakoutTotal.source}</th>
-              <BreakoutCells row={breakoutTotal} />
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      <p className="leak-map__note">
-        Excerpt: 3 of 5 sources, with Google Ads expanded into its campaigns.
-        Totals include organic search and referrals. Cost columns cover paid
-        sources only.
-      </p>
-    </figure>
-  );
-}
-
-function HealthPreview() {
-  return (
-    <figure className="leak-map lead-portal__preview">
-      <figcaption className="leak-map__head">
-        <span className="leak-map__title">System health · Today</span>
-        <SampleTag />
-      </figcaption>
-      <p className="lead-portal__health-summary">
-        <span className="lead-portal__health-dot" aria-hidden="true" />
-        8 of 8 checks passing
-      </p>
-      <ul className="lead-portal__checks">
-        {healthChecks.map((check) => (
-          <li key={check.name}>
-            <svg
-              className="lead-portal__check-icon"
-              aria-hidden="true"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <circle cx="10" cy="10" r="9" fill="currentColor" />
-              <path
-                d="m6 10.2 2.6 2.6L14 7.4"
-                stroke="#fff"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="lead-portal__check-text">
-              <span className="lead-portal__check-name">{check.name}</span>
-              <span className="lead-portal__check-detail">{check.detail}</span>
-            </span>
-            <span className="lead-portal__check-status">Passing</span>
-          </li>
-        ))}
-      </ul>
-    </figure>
-  );
-}
-
-function PortalTab({
-  id,
-  number,
-  title,
-  lead,
-  points,
-  preview,
+function GapBar({
+  value,
+  kind,
 }: {
-  id: string;
-  number: number;
-  title: string;
-  lead: string;
-  points: string[];
-  preview?: ReactNode;
+  value: number;
+  kind: "reported" | "verified";
 }) {
   return (
-    <article
-      className={[
-        "lead-portal__tab",
-        preview ? "" : "lead-portal__tab--text",
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      id={id}
-      aria-labelledby={`${id}-title`}
-    >
-      <div className="lead-portal__tab-copy reveal">
-        <span className="lead-portal__tab-number">
-          Tab {String(number).padStart(2, "0")}
+    <span className="lead-gap__bar-line">
+      <span
+        className={`lead-gap__bar lead-gap__bar--${kind}`}
+        style={{ width: `calc((100% - 3.5rem) * ${value / vendorBarMax})` }}
+        aria-hidden="true"
+      />
+      <span className={`lead-gap__value lead-gap__value--${kind}`}>
+        {value}
+        <span className="visually-hidden">
+          {kind === "reported" ? " reported" : " verified"}
         </span>
-        <h3 id={`${id}-title`}>{title}</h3>
-        <p className="lead-portal__tab-lead">{lead}</p>
-        <ul className="lead-portal__points">
-          {points.map((point) => (
-            <li key={point}>{renderInline(point)}</li>
-          ))}
-        </ul>
+      </span>
+    </span>
+  );
+}
+
+function VendorGapChart() {
+  return (
+    <figure className="lead-gap reveal">
+      <figcaption className="lead-gap__head">
+        <span className="lead-gap__title">Leads, October · sample data</span>
+        <span className="lead-gap__legend" aria-hidden="true">
+          <span>
+            <span className="lead-gap__swatch lead-gap__swatch--reported" />
+            Vendor reported
+          </span>
+          <span>
+            <span className="lead-gap__swatch lead-gap__swatch--verified" />
+            Verified in your CRM
+          </span>
+        </span>
+      </figcaption>
+      <ul className="lead-gap__rows">
+        {vendorRows.map((row) => (
+          <li className="lead-gap__row" key={row.vendor}>
+            <span className="lead-gap__vendor">
+              <span className="lead-gap__name">{row.vendor}</span>
+              <span className="lead-gap__covers">{row.covers}</span>
+            </span>
+            <span className="lead-gap__bars">
+              <GapBar value={row.reported} kind="reported" />
+              <GapBar value={row.verified} kind="verified" />
+            </span>
+          </li>
+        ))}
+      </ul>
+      <div className="lead-gap__total">
+        <p className="lead-gap__sums">
+          <span>
+            <span className="lead-gap__sum lead-gap__sum--reported">
+              {vendorReportedTotal}
+            </span>{" "}
+            reported
+          </span>
+          <span>
+            <span className="lead-gap__sum lead-gap__sum--verified">
+              {vendorVerifiedTotal}
+            </span>{" "}
+            held up
+          </span>
+        </p>
+        <p className="lead-gap__note">
+          The other {vendorReportedTotal - vendorVerifiedTotal} were spam,
+          duplicates, or never reached the CRM.
+        </p>
       </div>
-      {preview ? <div className="lead-portal__tab-preview">{preview}</div> : null}
-    </article>
+    </figure>
   );
 }
 
@@ -734,60 +441,59 @@ export function LeadSystemSections() {
           <div className="mkt-hero__content">
             <p className="eyebrow">Lead System · Home services</p>
             <h1 className="mkt-hero__headline">
-              We watch every handoff from click to booked job.
+              Know what every lead cost, and which vendor earned it.
             </h1>
             <p className="mkt-hero__copy">
-              Tracking and daily monitoring for lead-driven businesses. Every
-              call and form gets a source, every booked job is checked against
-              your CRM, and when a handoff breaks, we flag it and get it fixed.
+              A custom reporting dashboard for lead-driven businesses. We do
+              the hard setup, then blend your data with our own attribution
+              model, so you see real lead counts, cost per lead,
+              cost per booked job, and how every vendor performs on the same
+              numbers.
             </p>
             <div className="mkt-hero__actions">
               <BookCallLink className="button button-primary">
-                Book a 30-minute call
+                Book a demo
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#portal">
-                Tour the portal
+              <a className="button button-secondary" href="#contact">
+                Contact us
               </a>
             </div>
             <ul className="mkt-hero__facts">
-              <li>Booked jobs verified against your CRM</li>
-              <li>8 checks run every day</li>
-              <li>Included with the fractional marketing director</li>
+              <li>Lead counts verified against your CRM</li>
+              <li>Cost per lead and per booked job, by source</li>
+              <li>Every vendor measured the same way</li>
             </ul>
           </div>
         </div>
-        <a className="mkt-hero__cue" href="#leaks">
-          What breaks quietly
+        <a className="mkt-hero__cue" href="#questions">
+          What you can&apos;t see today
         </a>
       </section>
 
-      <section className="section lead-system-friction" id="leaks">
+      <section className="section lead-system-friction" id="questions">
         <div className="shell">
           <div className="lead-system-friction__top reveal">
             <div>
-              <p className="eyebrow">The silent leaks</p>
+              <p className="eyebrow">The blind spots</p>
               <h2 className="section-heading">
-                Nothing looks broken. The leads just stop.
+                Every vendor has a report. None of them agree.
               </h2>
             </div>
             <p className="section-copy">
-              Owners want to know nothing is quietly broken. Marketing managers
-              need numbers that hold up when they defend a budget or question
-              an agency. Both start with someone checking every day.
+              One month at a sample roofing company: what each vendor
+              reported, and what the CRM shows.
             </p>
           </div>
-          <div className="lead-system-friction__grid reveal">
-            {leaks.map((item, index) => (
-              <article className="lead-system-friction__cell" key={item.title}>
-                <span className="lead-system-friction__number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+          <VendorGapChart />
+          <ol className="lead-gap__questions reveal">
+            {questions.map((item) => (
+              <li key={item.title}>
                 <h3>{item.title}</h3>
-                <p>{renderInline(item.copy)}</p>
-              </article>
+                <p>{item.copy}</p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -797,15 +503,17 @@ export function LeadSystemSections() {
             <div>
               <p className="eyebrow">How it works</p>
               <h2 className="section-heading">
-                Set up once. Checked every day.
+                The tools are standard. Making them agree isn&apos;t.
               </h2>
             </div>
             <p className="section-copy">
-              Find it, fix it, prove it. The{" "}
-              <Link href="/lead-leak-audit">lead leak audit</Link> finds the
-              leaks and the{" "}
-              <Link href="/fractional-marketing-director">director</Link> fixes
-              them. The Lead System proves they stay fixed.
+              Your analytics, ad platforms, and CRM each see part of the
+              picture. We wire them together, verify every handoff, and run the
+              result through our attribution model. The{" "}
+              <Link href="/lead-leak-audit">lead leak audit</Link> finds what&apos;s
+              broken, the{" "}
+              <Link href="/fractional-marketing-director">director</Link> acts
+              on the numbers, and the Lead System is where they come from.
             </p>
           </div>
           <ol className="lead-system-flow__steps reveal">
@@ -843,131 +551,119 @@ export function LeadSystemSections() {
         </div>
       </section>
 
-      <section className="section lead-portal" id="portal">
+      <section className="section lead-teaser" id="dashboard">
         <div className="shell">
           <div className="lead-system-flow__top reveal">
             <div>
-              <p className="eyebrow">The client portal</p>
+              <p className="eyebrow">The dashboard</p>
               <h2 className="section-heading">
-                What booked, what it cost, and what broke.
+                The numbers that matter, in one view.
               </h2>
             </div>
             <p className="section-copy">
-              A read-only portal with four tabs. Every view has a date range,
-              with presets or custom dates, and a compare-to option: the
-              previous period, the same period last year, or none.
+              Updated daily, checked against your CRM, and the same for every
+              vendor.
             </p>
           </div>
 
-          <nav className="lead-portal__tabs reveal" aria-label="Portal tabs">
-            {portalTabs.map((tab) => (
-              <a href={`#${tab.id}`} key={tab.id}>
-                {tab.label}
-              </a>
+          <ul className="lead-teaser__features reveal">
+            {teaserFeatures.map((feature) => (
+              <li key={feature.title}>
+                <strong>{feature.title}</strong>
+                <span>{feature.copy}</span>
+              </li>
             ))}
-          </nav>
+          </ul>
 
-          <PortalTab
-            id="portal-overview"
-            number={1}
-            title="Overview"
-            lead="The numbers an owner checks first and a marketing manager reports up the chain."
-            points={[
-              "Key numbers with progress toward goals: real leads, booked jobs, book rate, and cost per booked job.",
-              "Lead flow from contacts to real leads (spam removed) to booked jobs. Sold jobs stay locked until revenue attribution is added.",
-              "A 12-month booked-jobs trend with a numbered change log: a new site, the month LSA started, an agency switch.",
-              "Every source broken out, with campaign rows that expand underneath.",
-              "Money recovered since install: LSA dispute credits, leads recovered during outages, breaks caught, and average time to fix.",
-              "Monthly notes from the director.",
-            ]}
-            preview={<OverviewPreview />}
-          />
+          <figure className="lead-teaser__frame reveal">
+            <figcaption className="lead-teaser__bar">
+              <span className="lead-teaser__tabs" aria-hidden="true">
+                {teaserTabs.map((tab) => (
+                  <span key={tab}>{tab}</span>
+                ))}
+              </span>
+              <span className="lead-teaser__range">
+                Oct 1 – Oct 31 · vs. Sep · Sample data
+              </span>
+            </figcaption>
 
-          <PortalTab
-            id="portal-budget"
-            number={2}
-            title="Budget & vendors"
-            lead="Where the money is going this month, and whether each vendor is earning it."
-            points={[
-              "Month-to-date pacing against plan for each channel, with projected month-end spend, so an overspend shows up on the 12th, not the 31st.",
-              "A vendor scorecard that rates each agency against its brief using booked jobs verified in your CRM, not the vendor's own report.",
-            ]}
-          />
-
-          <PortalTab
-            id="portal-leads"
-            number={3}
-            title="Leads"
-            lead="Which work the leads are for, where they come from, and which ones go unanswered."
-            points={[
-              "Breakdowns by service line and service area: replacement vs. repair, and the towns that book vs. the ones that only call.",
-              "Call patterns: answer rate, missed calls, and after-hours leads, with a day-by-time heatmap of missed calls.",
-            ]}
-          />
-
-          <PortalTab
-            id="portal-health"
-            number={4}
-            title="System health"
-            lead="Eight checks run daily, so a broken handoff shows up here before it shows up in the numbers."
-            points={[
-              "Call tracking, forms, source capture, analytics, conversion sync, the Business Profile, the website (uptime, SSL, domain), and the ad accounts.",
-              "A caught-and-fixed log: what broke, when we caught it, and how long the fix took.",
-              "A How we count panel defining a real lead, a booked job, book rate, cost per booked job, source, and how fresh the data is.",
-            ]}
-            preview={<HealthPreview />}
-          />
-        </div>
-      </section>
-
-      <section className="section lead-included" id="included">
-        <div className="shell">
-          <div className="lead-system-flow__top reveal">
-            <div>
-              <p className="eyebrow">What&apos;s included</p>
-              <h2 className="section-heading">What you get, and what you don&apos;t.</h2>
-            </div>
-            <p className="section-copy">
-              Every account stays in your name, and tools are billed to you at
-              cost. Your GA4 should be yours, and so should everything else.
-            </p>
-          </div>
-          <div className="lead-included__grid reveal">
-            <div className="lead-included__col">
-              <h3>Setup</h3>
-              <ul className="lead-included__list">
-                {setupItems.map((item) => (
-                  <li key={item}>{item}</li>
+            <div className="lead-teaser__body">
+              <ul className="lead-teaser__kpis" aria-label="Key numbers, October">
+                {teaserKpis.map((kpi) => (
+                  <li key={kpi.label}>
+                    <span className="lead-teaser__kpi-label">{kpi.label}</span>
+                    <span className="lead-teaser__kpi-value">{kpi.value}</span>
+                    <span className="lead-teaser__kpi-change">{kpi.change}</span>
+                  </li>
                 ))}
               </ul>
+
+              <div className="lead-teaser__panels">
+                <div className="lead-teaser__panel">
+                  <p className="lead-teaser__panel-title">Lead sources</p>
+                  <table className="lead-teaser__table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Source</th>
+                        <th scope="col">Leads</th>
+                        <th scope="col">Booked</th>
+                        <th scope="col">Per job</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {teaserSources.map((row) => (
+                        <tr key={row.source}>
+                          <th scope="row">{row.source}</th>
+                          <td>{row.leads}</td>
+                          <td>{row.booked}</td>
+                          <td>{row.cpb}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="lead-teaser__panel">
+                  <p className="lead-teaser__panel-title">
+                    Vendor scorecard · cost per lead
+                  </p>
+                  <table className="lead-teaser__table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Vendor</th>
+                        <th scope="col" className="lead-teaser__reported">
+                          Reported
+                        </th>
+                        <th scope="col" className="lead-teaser__verified">
+                          Verified
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {vendorRows.map((row) => (
+                        <tr key={row.vendor}>
+                          <th scope="row">{row.vendor}</th>
+                          <td className="lead-teaser__reported">
+                            {row.cplReported}
+                          </td>
+                          <td className="lead-teaser__verified">
+                            {row.cplVerified}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-            <div className="lead-included__col">
-              <h3>Every month</h3>
-              <ul className="lead-included__list">
-                {monthlyItems.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+
+            <div className="lead-teaser__fade">
+              <p>See the full dashboard with your own numbers.</p>
+              <BookCallLink className="button button-primary">
+                Book a demo
+                <Arrow />
+              </BookCallLink>
             </div>
-          </div>
-          <div className="lead-included__not reveal">
-            <h3>Not included</h3>
-            <ul>
-              <li>
-                We watch the website, phones, and CRM and alert you when
-                something breaks. We don&apos;t run them or fix them.
-              </li>
-              <li>
-                Speed-to-lead texting, unsold estimate follow-up, review
-                requests, CSR booking-rate scoring, and revenue attribution are
-                automations in the{" "}
-                <Link href="/fractional-marketing-director">
-                  fractional marketing director
-                </Link>{" "}
-                engagement.
-              </li>
-            </ul>
-          </div>
+          </figure>
         </div>
       </section>
 
@@ -977,33 +673,34 @@ export function LeadSystemSections() {
             <div>
               <p className="eyebrow">Pricing</p>
               <h2 className="section-heading">
-                Included with the director. Available on its own.
+                On its own, or with a director.
               </h2>
             </div>
             <p className="section-copy">
-              The fractional marketing director includes the Lead System and
-              the lead leak audit. Without the director, it&apos;s a setup fee
-              plus a monthly fee.
+              Your analytics, ad accounts, and CRM stay in your name.
             </p>
           </div>
           <div className="engagement-compare leak-next__options reveal">
-            <article className="engagement-compare__card">
-              <p className="engagement-compare__label">Lead System on its own</p>
+            <article className="engagement-compare__card lead-pricing__card">
+              <p className="engagement-compare__label">Lead System</p>
               <p className="engagement-compare__value">
-                Setup
+                Build fee
                 <span className="engagement-compare__period"> + monthly</span>
               </p>
+              <ul className="lead-pricing__list">
+                <li>We build and verify the tracking and the dashboard</li>
+                <li>Monthly scorecard and a quarterly review</li>
+                <li>Daily checks on forms, calls, and ad accounts</li>
+              </ul>
               <p className="engagement-compare__note">
-                A one-time setup fee plus a monthly fee, scoped on a call to
-                how many sources, forms, and ad accounts you run. Tools are
-                billed to you at cost.
+                Scoped on the demo to your sources and vendors.
               </p>
-              <BookCallLink className="leak-next__link">
-                Book a scoping call
+              <BookCallLink className="button button-primary">
+                Book a demo
                 <Arrow />
               </BookCallLink>
             </article>
-            <article className="engagement-compare__card engagement-compare__card--us">
+            <article className="engagement-compare__card engagement-compare__card--us lead-pricing__card">
               <p className="engagement-compare__label">
                 Fractional marketing director
               </p>
@@ -1012,11 +709,11 @@ export function LeadSystemSections() {
                 {formatUsd(DIRECTOR_MONTHLY)}
                 <span className="engagement-compare__period">/month</span>
               </p>
-              <p className="engagement-compare__note">
-                The Lead System and the {formatUsd(AUDIT_FEE)} lead leak audit
-                are included, plus the automations that act on what it finds
-                and a director who sees every fix through.
-              </p>
+              <ul className="lead-pricing__list">
+                <li>The Lead System, included</li>
+                <li>The {formatUsd(AUDIT_FEE)} lead leak audit, included</li>
+                <li>A director who acts on the numbers</li>
+              </ul>
               <Link
                 className="leak-next__link"
                 href="/fractional-marketing-director"
@@ -1037,8 +734,7 @@ export function LeadSystemSections() {
               <h2 className="section-heading">What people usually ask.</h2>
             </div>
             <p className="section-copy">
-              Setup cost, who owns the accounts, what happens when something
-              breaks, and how this differs from the report your agency sends.
+              Anything else, we&apos;ll cover on the demo.
             </p>
           </div>
           <div className="fdd-faq__list reveal">

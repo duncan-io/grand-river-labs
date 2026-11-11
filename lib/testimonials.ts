@@ -12,7 +12,7 @@ export const testimonials: Testimonial[] = [
       "Duncan was a huge help here. With his SEO and marketing knowledge, he's been a wealth of information in guiding how we go about being found online. GMB, local seo, and just more general marketing advise as well, he's been able to allow us to blot out the noise that you get overwhelmed with and just focus on the things that move the needle for a local business in the digital marketing realm. Super happy and a fan!",
     name: "Noah B.",
     role: "Owner · Paint To Life",
-    highlight: "Focus on the things that move the needle.",
+    highlight: "[Duncan helped us] Focus on the things that move the needle.",
   },
   {
     quote:

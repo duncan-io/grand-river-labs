@@ -18,7 +18,7 @@ export const leadSystemNav = {
   label: "Lead System",
   href: "/lead-system",
   description:
-    "Tracking and daily monitoring that follows every lead from click to booked job, checks it against your CRM, and flags a broken handoff.",
+    "A custom dashboard we build and set up, showing real lead counts, cost per lead and per booked job, and how every vendor performs.",
 } as const;
 
 export const whatWeDoNav = [directorNav, ...directorAreas] as const;

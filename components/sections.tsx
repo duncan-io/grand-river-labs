@@ -54,7 +54,7 @@ const services = [
   {
     title: "Lead System",
     href: "/lead-system",
-    copy: "Tracking and daily monitoring you can trust — which channels actually produce booked jobs, including which calls came from the site, the map listing, and other profiles.",
+    copy: "A custom dashboard we build and set up for you — real lead counts, cost per lead and per booked job, and every vendor measured on the same numbers.",
   },
   {
     title: "Conversion rate optimization",

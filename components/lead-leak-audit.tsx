@@ -315,8 +315,8 @@ export function LeadLeakAuditSections() {
                 Book a 30-minute scoping call
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#deliverable">
-                See what you get
+              <a className="button button-secondary" href="#contact">
+                Contact us
               </a>
             </div>
             <ul className="mkt-hero__facts">

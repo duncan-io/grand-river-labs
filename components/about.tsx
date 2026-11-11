@@ -1,199 +1,184 @@
+import Image from "next/image";
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
-import { renderInline } from "@/components/inline-links";
 import { Arrow } from "./site-header";
+import { testimonials } from "@/lib/testimonials";
+import duncanPhoto from "@/public/team/duncan.png";
 
-const comparisons = [
+const profileFacts = [
+  { label: "Role", value: "Founder, fractional marketing director" },
+  { label: "You talk to", value: "Duncan, not an account manager" },
+  { label: "Engagement", value: "One monthly rate, no long contracts" },
+  { label: "Worked with", value: "Close to 100 businesses" },
+  { label: "Based in", value: "Grand Rapids, Michigan" },
+] as const;
+
+const takeaways = [
   {
-    dimension: "Who decides the work",
-    agency: "You brief a channel. The agency executes what you asked for.",
-    fractional:
-      "We look at the whole picture and make the call on what's next.",
+    title: "He's been the agency",
+    copy: "So he knows which reports to trust, and which questions get a straight answer.",
   },
   {
-    dimension: "What the engagement covers",
-    agency: "Usually one channel, scoped as its own retainer.",
-    fractional:
-      "Every channel, checked—plus the leaks where leads are lost.",
+    title: "He's run marketing for home service companies",
+    copy: "Seasonal swings, phones that have to ring, techs who need booked jobs. This isn't new to him.",
   },
   {
-    dimension: "Who you talk to",
-    agency: "An account team, with handoffs between planning and execution.",
-    fractional:
-      "The owner. The person who makes the calls is the person on the call.",
-  },
-  {
-    dimension: "Who checks the work",
-    agency: "The agency reports on the agency. Nobody verifies it.",
-    fractional: "Vendor reports reconciled against your CRM, lead by lead.",
-  },
-  {
-    dimension: "How you're billed",
-    agency: "A quote per channel.",
-    fractional: "One monthly rate, starting at $1,500.",
-  },
-  {
-    dimension: "Specialists",
-    agency: "The work stays inside the channel they were hired for.",
-    fractional: "We manage existing vendors when they are the better fit.",
+    title: "He checks the numbers himself",
+    copy: "Leads are matched against your CRM and your calls, not against a vendor's dashboard.",
   },
 ] as const;
 
-const changes = [
-  {
-    title: "Someone owns the picture",
-    copy: "Agencies and specialists each optimize their own part, and report on it themselves. GR Labs stays with the goals, the channel mix, and the measurement—and decides where effort goes. That working model is the [fractional marketing director](/fractional-marketing-director).",
-  },
-  {
-    title: "You work with the owner",
-    copy: "No rotating account team. When a specialist is the better fit for a piece of work, we coordinate rather than keep every task in-house.",
-  },
-  {
-    title: "One rate for the mix",
-    copy: "Starting at $1,500 a month, priced against the work that matters. One engagement, not a quote for each channel—and no long contracts.",
-  },
-] as const;
-
-const fits = [
-  {
-    label: "Agency",
-    title: "When an agency is the right call",
-    copy: "You already have someone setting priorities, and you need one channel executed well. Agencies can also partner with us under a [white-label arrangement](/white-label): we show up as the delivery bench.",
-  },
-  {
-    label: "Fractional director",
-    title: "When a fractional director is the right call",
-    copy: "The business has marketing running—ads, SEO, vendors, a site—but nobody who owns it. GR Labs takes the director's seat part-time: patches the leaks, verifies the spend, and holds the vendors to the plan.",
-  },
-] as const;
+const featuredTestimonial = testimonials[0];
 
 export function AboutSections() {
   return (
     <>
       <section className="about-hero">
-        <div className="shell about-hero__content">
-          <p className="eyebrow">About GR Labs</p>
-          <h1 className="about-hero__headline">
-            <span>An agency sells you more marketing.</span>
-            <span>A director tells you which marketing works.</span>
-          </h1>
-          <p className="about-hero__support">
-            Grand River Labs is a fractional marketing director for
-            owner-led growing businesses. We patch the leaks where leads are
-            lost, verify which spend is actually working, and manage the
-            vendors who do the rest.
-          </p>
-          <div className="about-hero__actions">
-            <BookCallLink
-              className="button button-primary"
-            >
-              Book a 30-minute fit call
-              <Arrow />
-            </BookCallLink>
-            <a className="about-hero__link" href="/fractional-marketing-director">
-              See how the fractional director works →
-            </a>
+        <div className="shell about-hero__layout">
+          <div className="about-hero__content">
+            <p className="eyebrow">About GR Labs</p>
+            <h1 className="about-hero__headline">
+              <span>An agency sells you more marketing.</span>
+              <span>A director tells you what marketing makes money.</span>
+            </h1>
+            <p className="about-hero__support">
+              Grand River Labs is a fractional marketing director firm for
+              owner-led growing businesses. We patch the leaks where leads are
+              lost, verify which spend is actually working, and manage the
+              vendors who do the rest. It&apos;s run by Duncan McKee, who has
+              worked on both the agency side and the in-house side of home
+              services marketing.
+            </p>
+            <div className="about-hero__actions">
+              <BookCallLink className="button button-primary">
+                Book a 30-minute fit call
+                <Arrow />
+              </BookCallLink>
+              <Link
+                className="about-hero__link"
+                href="/fractional-marketing-director"
+              >
+                See how the fractional director works →
+              </Link>
+            </div>
           </div>
+
+          <figure className="about-hero__figure">
+            <div className="about-hero__halo" aria-hidden="true">
+              <span className="about-hero__ring about-hero__ring--outer" />
+              <span className="about-hero__ring about-hero__ring--inner" />
+              <span className="about-hero__disc" />
+            </div>
+            <Image
+              className="about-hero__photo"
+              src={duncanPhoto}
+              alt="Duncan McKee, founder of Grand River Labs"
+              sizes="(max-width: 900px) 22rem, 34rem"
+              placeholder="blur"
+              preload
+            />
+            <figcaption className="about-hero__tag">
+              <strong>Duncan McKee</strong>
+              <span>Founder · Grand Rapids, MI</span>
+            </figcaption>
+            <p className="about-hero__chip" aria-hidden="true">
+              <span className="about-hero__chip-dot" />
+              ~100 businesses worked with
+            </p>
+          </figure>
         </div>
       </section>
 
-      <section className="section about-compare" id="the-difference">
-        <div className="shell">
-          <div className="about-compare__top reveal">
-            <div>
-              <p className="eyebrow">The difference</p>
-              <h2 className="section-heading">Same words. A different job.</h2>
-            </div>
-            <p className="section-copy">
-              An agency is hired for a channel and reports on itself. A
-              director is hired to answer “is it working?”—with evidence.
+      <section className="section about-profile" id="meet-duncan">
+        <div className="shell about-profile__layout">
+          <div className="about-profile__head reveal">
+            <p className="eyebrow">Who you&apos;ll work with</p>
+            <h2 className="section-heading">Duncan McKee</h2>
+          </div>
+          <div className="about-profile__story reveal">
+            <p className="about-profile__lead">
+              Duncan has spent his career on both sides of the table: first
+              selling marketing at an agency, then buying it and answering for
+              the results in-house.
+            </p>
+            <p>
+              He started as an SEO strategist at a digital marketing agency and
+              worked up to SEO manager, running search strategy for client
+              businesses. That&apos;s where he learned how agencies sell, how
+              they report on themselves, and how a report can look good while
+              the phone stays quiet.
+            </p>
+            <p>
+              Then he went in-house. He built and leads the website team for a
+              group of 38 home service companies, and works across the
+              marketing and lead operations around it: where leads come from,
+              how calls get answered, how follow-up runs through the CRM, and
+              whether the numbers tie back to booked jobs. Digital is his
+              specialty, but he looks at the whole system. His budget, his
+              results, no agency to blame.
+            </p>
+            <p>
+              Along the way he built LocalScout, a tool that shows local
+              businesses not just where they rank on Google Maps, but why their
+              top competitors outrank them.
+            </p>
+            <p>
+              He has worked with close to 100 businesses, from local
+              mom-and-pop shops to nationwide franchise brands. The size
+              changes.{" "}
+              <strong>
+                The people don&apos;t: an owner who needs straight answers, and
+                a team counting on the phone to ring.
+              </strong>
+            </p>
+            <p className="about-profile__signoff">
+              Grand River Labs is built for that owner. You get someone in the
+              director&apos;s seat, without a full-time hire.
             </p>
           </div>
-
-          <div className="about-compare__board reveal">
-            <div className="about-compare__head" aria-hidden="true">
-              <span />
-              <span className="about-compare__col about-compare__col--agency">
-                An agency
-              </span>
-              <span className="about-compare__col about-compare__col--team">
-                A fractional director
-              </span>
-            </div>
-            {comparisons.map((row) => (
-              <article className="about-compare__row" key={row.dimension}>
-                <h3 className="about-compare__dimension">{row.dimension}</h3>
-                <p className="about-compare__cell about-compare__cell--agency">
-                  <span className="about-compare__side">An agency</span>
-                  {row.agency}
-                </p>
-                <p className="about-compare__cell about-compare__cell--team">
-                  <span className="about-compare__side">A fractional director</span>
-                  {row.fractional}
-                </p>
-              </article>
+          <dl className="about-profile__facts reveal">
+            {profileFacts.map((fact) => (
+              <div key={fact.label}>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
             ))}
-          </div>
-
-          <p className="about-compare__promise reveal">
-            Not another vendor. A director for the whole picture.
-          </p>
+          </dl>
         </div>
       </section>
 
-      <section className="section about-changes" id="what-changes">
+      <section className="section about-meaning" id="what-it-means">
         <div className="shell">
           <div className="about-changes__top reveal">
             <div>
-              <p className="eyebrow">What that changes</p>
+              <p className="eyebrow">What that means for you</p>
               <h2 className="section-heading">
-                Ownership, the person, and the rate.
+                Someone who has sat in your seat.
               </h2>
             </div>
             <p className="section-copy">
-              The engagement is built around those differences. The mix of work
-              follows what will move the business.
+              You get a straight read on what&apos;s working, from someone
+              who has had to answer for the results.
             </p>
           </div>
           <div className="about-changes__grid reveal">
-            {changes.map((item, index) => (
+            {takeaways.map((item) => (
               <article className="about-changes__card" key={item.title}>
-                <span className="about-changes__number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
                 <h3>{item.title}</h3>
-                <p>{renderInline(item.copy)}</p>
+                <p>{item.copy}</p>
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section about-fit" id="which-fits">
-        <div className="shell">
-          <div className="about-fit__top reveal">
-            <div>
-              <p className="eyebrow">Which one fits</p>
-              <h2 className="section-heading">
-                Both models are useful. They answer different questions.
-              </h2>
-            </div>
-            <p className="section-copy">
-              A defined channel with someone already setting priorities is an
-              agency job. A spend nobody verifies is a director&apos;s job.
-            </p>
-          </div>
-          <div className="about-fit__grid reveal">
-            {fits.map((item) => (
-              <article
-                className={`about-fit__card about-fit__card--${item.label === "Agency" ? "agency" : "team"}`}
-                key={item.title}
-              >
-                <span className="about-fit__label">{item.label}</span>
-                <h3>{item.title}</h3>
-                <p>{renderInline(item.copy)}</p>
-              </article>
-            ))}
-          </div>
+          {featuredTestimonial ? (
+            <figure className="about-meaning__quote reveal">
+              <blockquote>
+                <p>“{featuredTestimonial.highlight ?? featuredTestimonial.quote}”</p>
+              </blockquote>
+              <figcaption>
+                {featuredTestimonial.name} · {featuredTestimonial.role}
+              </figcaption>
+            </figure>
+          ) : null}
         </div>
       </section>
     </>

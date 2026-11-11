@@ -1,4 +1,5 @@
 import { BookCallLink } from "./book-call-link";
+import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
 import { Arrow } from "./site-header";
 
@@ -350,10 +351,10 @@ export function AiAutomationSections() {
                 Book a call
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#examples">
-                See examples
+              <Link className="button button-secondary" href="/#contact">
+                Contact us
                 <Arrow />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

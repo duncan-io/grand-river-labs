@@ -26,7 +26,7 @@ const directorJsonLd = {
         "A part-time senior marketing director who meets with leadership weekly to plan strategy, decide where the budget goes, and advise on key decisions, while coaching the team and holding every vendor to the plan.",
       audience: {
         "@type": "BusinessAudience",
-        audienceType: "Home services companies",
+        audienceType: "Home services companies and other lead-driven businesses",
       },
       areaServed: { "@type": "Country", name: "United States" },
       offers: {
@@ -53,7 +53,7 @@ const directorJsonLd = {
 export const metadata: Metadata = {
   alternates: { canonical: "/fractional-marketing-director" },
   title: "Fractional Marketing Director (Fractional CMO) for Home Services | Grand River Labs",
-  description: `Meet weekly with a part-time senior marketing director for home services: strategy, budget, advice on the big calls, and every vendor held to the plan. Starting at ${formatUsd(DIRECTOR_MONTHLY)}/month.`,
+  description: `Meet weekly with a part-time senior marketing director for home services and other lead-driven businesses: strategy, budget, advice on the big calls, and every vendor held to the plan. Starting at ${formatUsd(DIRECTOR_MONTHLY)}/month.`,
 };
 
 export default function FractionalMarketingDirectorPage() {

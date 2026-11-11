@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { getSiteUrl } from "@/lib/site";
 
 const description =
-  "Grand River Labs is a fractional marketing director, not another agency. We own the plan: patch lead leaks, verify what's working, and manage your vendors. See who decides the work and how it's billed.";
+  "Meet Duncan McKee and Grand River Labs: a fractional marketing director, not another agency. We own the plan: patch lead leaks, verify what's working, and manage your vendors.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
@@ -26,6 +26,17 @@ const aboutPageJsonLd = {
     url: getSiteUrl(),
     description,
     email: "hello@grandriverlabs.io",
+    founder: {
+      "@type": "Person",
+      name: "Duncan McKee",
+      jobTitle: "Founder",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Grand Rapids",
+        addressRegion: "MI",
+        addressCountry: "US",
+      },
+    },
   },
 };
 
@@ -49,7 +60,7 @@ export default function AboutPage() {
           eyebrow="Start a conversation"
           heading="Who owns the picture today?"
           copy="Tell us who currently owns digital, and where the picture breaks—a channel that keeps asking for budget, numbers you don't trust, or work nobody named. We'll get back within two business days."
-          directLabel="Book a 30-minute fit call"
+          directLabel="Book a 30-minute call with Duncan"
           messageLabel="Who owns digital today?"
           messagePlaceholder="An agency on one channel, a hire you haven't made, a pile of vendors—start wherever you are."
         />

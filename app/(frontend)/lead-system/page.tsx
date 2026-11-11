@@ -21,9 +21,9 @@ const leadSystemJsonLd = {
         url: getSiteUrl(),
         email: "hello@grandriverlabs.io",
       },
-      serviceType: "Lead tracking and monitoring",
+      serviceType: "Lead attribution and marketing reporting",
       description:
-        "Call tracking, form source capture, GA4, and conversion sync for home services companies, with daily checks on forms, call tracking, the Google Business Profile, the website, and ad accounts, and a client portal that reports booked jobs verified against the CRM.",
+        "A custom reporting dashboard for home services companies, built on a proprietary attribution model. It reports real lead counts, cost per lead, cost per booked job, and vendor performance verified against the CRM. Setup, conversion sync, and daily tracking checks are included.",
       audience: {
         "@type": "BusinessAudience",
         audienceType: "Home services companies",
@@ -46,9 +46,10 @@ const leadSystemJsonLd = {
 
 export const metadata: Metadata = {
   alternates: { canonical: "/lead-system" },
-  title: "Lead System: Call Tracking & Lead Monitoring | Grand River Labs",
+  title:
+    "Lead System: Lead Attribution & Marketing Reporting Dashboard | Grand River Labs",
   description:
-    "Call tracking, form source capture, GA4, and daily monitoring for home services. Every lead followed from click to booked job, checked against your CRM, and flagged when a handoff breaks.",
+    "A custom reporting dashboard for home services. Real lead counts, cost per lead, cost per booked job, and every vendor measured the same way. We handle the complex setup.",
 };
 
 export default function LeadSystemPage() {
@@ -68,12 +69,12 @@ export default function LeadSystemPage() {
         <ContactSection
           turnstileSiteKey={turnstileSiteKey}
           variant="cta"
-          eyebrow="Book a call"
-          heading="Find out what happens to your leads after the click."
-          copy={`On a free 30-minute call we'll look at how leads reach you today and what the Lead System would watch. Not sure where it's leaking yet? Start with the ${formatUsd(AUDIT_FEE)} lead leak audit.`}
-          directLabel="Book a 30-minute call"
-          messageLabel="What do you want to be sure of?"
-          messagePlaceholder="Whether the forms work, which calls come from the map listing, whether the agency's lead count matches the CRM. Start wherever you are."
+          eyebrow="Book a demo"
+          heading="See it with your own numbers."
+          copy={`On a free 30-minute demo we'll walk through the dashboard and what it would show for your sources and vendors. Not sure where it's leaking yet? Start with the ${formatUsd(AUDIT_FEE)} lead leak audit.`}
+          directLabel="Book a demo"
+          messageLabel="What do you want to know?"
+          messagePlaceholder="What a lead really costs from Google Ads, whether the SEO agency is earning its retainer, why the agency's lead count doesn't match the CRM. Start wherever you are."
         />
       </main>
       <SiteFooter />

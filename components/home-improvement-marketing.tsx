@@ -186,8 +186,8 @@ export function HomeImprovementMarketingSections() {
                 Talk through your lead flow
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#engine">
-                See the engine
+              <a className="button button-secondary" href="#contact">
+                Contact us
                 <Arrow />
               </a>
             </div>

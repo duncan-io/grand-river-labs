@@ -369,8 +369,8 @@ export function CroSections() {
                 Book a 30-minute call
                 <Arrow />
               </BookCallLink>
-              <a className="button button-secondary" href="#ways">
-                See what we change
+              <a className="button button-secondary" href="#contact">
+                Contact us
               </a>
             </div>
             <ul className="mkt-hero__facts">

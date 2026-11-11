@@ -87,8 +87,8 @@ export const niches: NicheContent[] = [
       headline: "Roofing marketing that builds a lead engine you own.",
       copy: "The leads you buy get sold to 3–5 other roofers at the same time, and a lot of them are spam. A fractional marketing director patches the leaks—missed calls, slow replies, bad routing—verifies what the ad spend actually produces, and holds your vendors to the plan. Not a junior account manager.",
       primaryLabel: "Talk through your lead flow",
-      secondaryLabel: "See how it works",
-      secondaryHref: "#lead-flow",
+      secondaryLabel: "Contact us",
+      secondaryHref: "#contact",
       cueLabel: "Where leads leak",
     },
     gap: {
@@ -225,8 +225,8 @@ export const niches: NicheContent[] = [
       headline: "Contractor marketing that fixes the leaks, not just the ads.",
       copy: "A homeowner fills out a form, and nobody calls back for an hour. By then they've booked the contractor who picked up. A fractional marketing director patches the leaks—routing, missed calls, slow replies—verifies what the spend actually produces, and holds your vendors to the plan. Not a junior account manager.",
       primaryLabel: "Talk through your lead flow",
-      secondaryLabel: "See how it works",
-      secondaryHref: "#lead-flow",
+      secondaryLabel: "Contact us",
+      secondaryHref: "#contact",
       cueLabel: "Where leads leak",
     },
     gap: {

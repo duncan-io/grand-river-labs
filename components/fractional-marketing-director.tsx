@@ -11,6 +11,40 @@ import { directorAreas, leadSystemNav } from "./what-we-do-nav";
 
 const scopeAreas = [...directorAreas, leadSystemNav] as const;
 
+const comparisons = [
+  {
+    dimension: "Who decides the work",
+    agency: "You brief a channel. The agency executes what you asked for.",
+    fractional: "We look at the whole picture and make the call on what's next.",
+  },
+  {
+    dimension: "What the engagement covers",
+    agency: "Usually one channel, scoped as its own retainer.",
+    fractional: "Every channel, checked—plus the leaks where leads are lost.",
+  },
+  {
+    dimension: "Who you talk to",
+    agency: "An account team, with handoffs between planning and execution.",
+    fractional:
+      "The owner. The person who makes the calls is the person on the call.",
+  },
+  {
+    dimension: "Who checks the work",
+    agency: "The agency reports on the agency. Nobody verifies it.",
+    fractional: "Vendor reports reconciled against your CRM, lead by lead.",
+  },
+  {
+    dimension: "How you're billed",
+    agency: "A quote per channel.",
+    fractional: `One monthly rate, starting at ${formatUsd(DIRECTOR_MONTHLY)}.`,
+  },
+  {
+    dimension: "Specialists",
+    agency: "The work stays inside the channel they were hired for.",
+    fractional: "We manage existing vendors when they are the better fit.",
+  },
+] as const;
+
 const scorecardRows = [
   {
     channel: "Google Ads",
@@ -151,7 +185,7 @@ export const faqs = [
     question:
       "How is a fractional marketing director different from a full-time hire?",
     answer:
-      "A full-time director costs six figures plus overhead, and most home services companies don't have forty hours a week of director-level work. A fractional director covers the part that needs senior judgment: the strategy, the budget calls, the advice, and the oversight. You pay only for those hours.",
+      "A full-time director costs six figures plus overhead, and most home services and other lead-driven companies don't have forty hours a week of director-level work. A fractional director covers the part that needs senior judgment: the strategy, the budget calls, the advice, and the oversight. You pay only for those hours.",
   },
   {
     question: "How much does a fractional marketing director cost?",
@@ -220,7 +254,7 @@ export function FractionalDirectorSections() {
           <div className="director-hero__layout">
             <div className="mkt-hero__content director-hero__content">
               <p className="eyebrow">
-                Fractional marketing director · Home services
+                Fractional marketing director · Home services &amp; other lead-driven businesses
               </p>
               <h1 className="mkt-hero__headline">
                 A senior marketing leader on your team, without the full-time
@@ -238,8 +272,8 @@ export function FractionalDirectorSections() {
                   Book a 30-minute fit call
                   <Arrow />
                 </BookCallLink>
-                <a className="button button-secondary" href="#deliverable">
-                  See what you get
+                <a className="button button-secondary" href="#contact">
+                  Contact us
                 </a>
               </div>
               <ul className="mkt-hero__facts">
@@ -426,6 +460,52 @@ export function FractionalDirectorSections() {
             </Link>
             .{" "}
             <BookCallLink>Book a fit call to scope it →</BookCallLink>
+          </p>
+        </div>
+      </section>
+
+      <section className="section director-compare" id="vs-agency">
+        <div className="shell">
+          <div className="director-compare__top reveal">
+            <div>
+              <p className="eyebrow">The difference</p>
+              <h2 className="section-heading">Same words. A different job.</h2>
+            </div>
+            <p className="section-copy">
+              An agency is hired for a channel and reports on itself. A
+              director is hired to answer “is it working?”—with evidence.
+            </p>
+          </div>
+
+          <div className="director-compare__board reveal">
+            <div className="director-compare__head" aria-hidden="true">
+              <span />
+              <span className="director-compare__col director-compare__col--agency">
+                An agency
+              </span>
+              <span className="director-compare__col director-compare__col--team">
+                A fractional director
+              </span>
+            </div>
+            {comparisons.map((row) => (
+              <article className="director-compare__row" key={row.dimension}>
+                <h3 className="director-compare__dimension">{row.dimension}</h3>
+                <p className="director-compare__cell director-compare__cell--agency">
+                  <span className="director-compare__side">An agency</span>
+                  {row.agency}
+                </p>
+                <p className="director-compare__cell director-compare__cell--team">
+                  <span className="director-compare__side">
+                    A fractional director
+                  </span>
+                  {row.fractional}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <p className="director-compare__promise reveal">
+            Not another vendor. A director for the whole picture.
           </p>
         </div>
       </section>
