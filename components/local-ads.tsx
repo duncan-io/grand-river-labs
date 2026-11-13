@@ -626,7 +626,7 @@ export function LocalAdsSections() {
               </h2>
             </div>
             <p className="section-copy">
-              <Link href="/lead-system">The Lead System</Link> shows whether the spend
+              <Link href="/lead-system">The Lead Monitoring System</Link> shows whether the spend
               turns into calls.{" "}
               <Link href="/conversion-rate-optimization">The page</Link> the
               click lands on decides whether the call happens.

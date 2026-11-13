@@ -18,12 +18,14 @@ const staticPaths = [
   "/local-ads",
   "/google-business-profile",
   "/home-improvement-marketing",
+  "/industries",
   "/remodeling-marketing",
   "/fractional-marketing-director",
   "/fractional-marketing-director/roofing",
   "/fractional-marketing-director/contractors",
   "/lead-leak-audit",
   "/lead-system",
+  "/lead-qualification",
   "/marketing-automation",
   "/use-cases",
   "/use-cases/accounting",
@@ -31,6 +33,7 @@ const staticPaths = [
   "/use-cases/insurance",
   "/use-cases/property-management",
   "/white-label",
+  "/wordpress-hosting",
   "/work",
 ] as const;
 

@@ -52,7 +52,7 @@ const services = [
     copy: "The map result checked against the work you want: categories, services, reviews, and whether calls from it are even tracked.",
   },
   {
-    title: "Lead System",
+    title: "Lead Monitoring System",
     href: "/lead-system",
     copy: "A custom dashboard we build and set up for you — real lead counts, cost per lead and per booked job, and every vendor measured on the same numbers.",
   },

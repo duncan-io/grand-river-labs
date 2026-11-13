@@ -439,7 +439,7 @@ export function LeadSystemSections() {
         </div>
         <div className="shell">
           <div className="mkt-hero__content">
-            <p className="eyebrow">Lead System · Home services</p>
+            <p className="eyebrow">Lead Monitoring System · Home services</p>
             <h1 className="mkt-hero__headline">
               Know what every lead cost, and which vendor earned it.
             </h1>
@@ -513,7 +513,7 @@ export function LeadSystemSections() {
               <Link href="/lead-leak-audit">lead leak audit</Link> finds what&apos;s
               broken, the{" "}
               <Link href="/fractional-marketing-director">director</Link> acts
-              on the numbers, and the Lead System is where they come from.
+              on the numbers, and the Lead Monitoring System is where they come from.
             </p>
           </div>
           <ol className="lead-system-flow__steps reveal">
@@ -682,7 +682,7 @@ export function LeadSystemSections() {
           </div>
           <div className="engagement-compare leak-next__options reveal">
             <article className="engagement-compare__card lead-pricing__card">
-              <p className="engagement-compare__label">Lead System</p>
+              <p className="engagement-compare__label">Lead Monitoring System</p>
               <p className="engagement-compare__value">
                 Build fee
                 <span className="engagement-compare__period"> + monthly</span>
@@ -710,7 +710,7 @@ export function LeadSystemSections() {
                 <span className="engagement-compare__period">/month</span>
               </p>
               <ul className="lead-pricing__list">
-                <li>The Lead System, included</li>
+                <li>The Lead Monitoring System, included</li>
                 <li>The {formatUsd(AUDIT_FEE)} lead leak audit, included</li>
                 <li>A director who acts on the numbers</li>
               </ul>

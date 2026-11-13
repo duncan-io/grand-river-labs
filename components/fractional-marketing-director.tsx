@@ -193,7 +193,7 @@ export const faqs = [
   },
   {
     question: "Do you take on one-off projects?",
-    answer: `Yes. Not every problem needs an ongoing director. The [lead leak audit](/lead-leak-audit) is a ${formatUsd(AUDIT_FEE)} flat standalone engagement, the [Lead System](/lead-system) is available on its own, and any area we oversee — conversion fixes, lead routing — can be scoped as a one-time project. We confirm scope and price on a 30-minute fit call.`,
+    answer: `Yes. Not every problem needs an ongoing director. The [lead leak audit](/lead-leak-audit) is a ${formatUsd(AUDIT_FEE)} flat standalone engagement, the [Lead Monitoring System](/lead-system) is available on its own, and any area we oversee — conversion fixes, lead routing — can be scoped as a one-time project. We confirm scope and price on a 30-minute fit call.`,
   },
   {
     question: "Will you replace our agency or marketing hire?",

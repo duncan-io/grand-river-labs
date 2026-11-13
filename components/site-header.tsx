@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { BookCallLink } from "./book-call-link";
 import {
   directorAreas,
   directorNav,
-  industriesNav,
-  leadSystemNav,
+  standaloneNav,
 } from "./what-we-do-nav";
 
 const Arrow = () => (
@@ -41,36 +40,6 @@ const Chevron = () => (
   </svg>
 );
 
-const ChevronRight = () => (
-  <svg
-    aria-hidden="true"
-    className="nav-flyout__chevron"
-    width="12"
-    height="12"
-    viewBox="0 0 12 12"
-    fill="none"
-  >
-    <path
-      d="M4.25 2.5 7.75 6l-3.5 3.5"
-      stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-function IndustriesMoreNote() {
-  return (
-    <p className="nav-industries-more">
-      <span className="nav-group__label">And more</span>
-      <span className="nav-group__desc">
-        We work with any business. We specialize in lead-driven ones.
-      </span>
-    </p>
-  );
-}
-
 const MenuIcon = ({ open }: { open: boolean }) => (
   <svg
     aria-hidden="true"
@@ -98,6 +67,108 @@ const MenuIcon = ({ open }: { open: boolean }) => (
   </svg>
 );
 
+/**
+ * A hover/click dropdown in the desktop nav. Hover opens it; a click right
+ * after hover-open is ignored so it doesn't immediately close again.
+ */
+function NavDropdown({
+  label,
+  className,
+  children,
+}: {
+  label: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const id = useId();
+  const ref = useRef<HTMLDivElement>(null);
+  const openedAt = useRef(0);
+  const expanded = open && !dismissed;
+
+  useEffect(() => {
+    if (!expanded) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        setDismissed(true);
+      }
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!ref.current?.contains(event.target as Node)) {
+        setOpen(false);
+        setDismissed(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [expanded]);
+
+  return (
+    <div
+      className={[
+        "site-nav__item",
+        expanded ? "site-nav__item--open" : "",
+        dismissed ? "site-nav__item--dismissed" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      ref={ref}
+      onMouseEnter={() => {
+        openedAt.current = Date.now();
+        setDismissed(false);
+        setOpen(true);
+      }}
+      onMouseLeave={() => {
+        setOpen(false);
+        setDismissed(false);
+      }}
+      onBlur={(event) => {
+        if (!ref.current?.contains(event.relatedTarget as Node)) {
+          setOpen(false);
+          setDismissed(false);
+        }
+      }}
+    >
+      <button
+        type="button"
+        className="site-nav__trigger"
+        aria-expanded={expanded}
+        aria-controls={id}
+        onClick={() => {
+          if (Date.now() - openedAt.current < 400) return;
+
+          if (expanded) {
+            setOpen(false);
+            setDismissed(true);
+            return;
+          }
+
+          setDismissed(false);
+          setOpen(true);
+        }}
+      >
+        {label}
+        <Chevron />
+      </button>
+      <div
+        className={["site-nav__dropdown", className].filter(Boolean).join(" ")}
+        id={id}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function BrandMark() {
   return (
     <span className="wordmark">
@@ -120,13 +191,7 @@ export function SiteHeader({
   embedded?: boolean;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [whatWeDoOpen, setWhatWeDoOpen] = useState(false);
-  const [whatWeDoDismissed, setWhatWeDoDismissed] = useState(false);
   const panelId = useId();
-  const whatWeDoId = useId();
-  const whatWeDoRef = useRef<HTMLDivElement>(null);
-  const whatWeDoOpenedAt = useRef(0);
-  const whatWeDoExpanded = whatWeDoOpen && !whatWeDoDismissed;
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -153,31 +218,6 @@ export function SiteHeader({
     };
   }, [menuOpen]);
 
-  useEffect(() => {
-    if (!whatWeDoExpanded) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setWhatWeDoOpen(false);
-        setWhatWeDoDismissed(true);
-      }
-    };
-
-    const onPointerDown = (event: PointerEvent) => {
-      if (!whatWeDoRef.current?.contains(event.target as Node)) {
-        setWhatWeDoOpen(false);
-        setWhatWeDoDismissed(false);
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [whatWeDoExpanded]);
-
   const closeMenu = () => setMenuOpen(false);
 
   const headerClass = [
@@ -196,94 +236,39 @@ export function SiteHeader({
         </a>
 
         <nav className="site-nav" aria-label="Main navigation">
-          <div
-            className={[
-              "site-nav__item",
-              whatWeDoExpanded ? "site-nav__item--open" : "",
-              whatWeDoDismissed ? "site-nav__item--dismissed" : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            ref={whatWeDoRef}
-            onMouseEnter={() => {
-              whatWeDoOpenedAt.current = Date.now();
-              setWhatWeDoDismissed(false);
-              setWhatWeDoOpen(true);
-            }}
-            onMouseLeave={() => {
-              setWhatWeDoOpen(false);
-              setWhatWeDoDismissed(false);
-            }}
-            onBlur={(event) => {
-              if (!whatWeDoRef.current?.contains(event.relatedTarget as Node)) {
-                setWhatWeDoOpen(false);
-                setWhatWeDoDismissed(false);
-              }
-            }}
-          >
-            <button
-              type="button"
-              className="site-nav__trigger"
-              aria-expanded={whatWeDoExpanded}
-              aria-controls={whatWeDoId}
-              onClick={() => {
-                if (Date.now() - whatWeDoOpenedAt.current < 400) return;
-
-                if (whatWeDoExpanded) {
-                  setWhatWeDoOpen(false);
-                  setWhatWeDoDismissed(true);
-                  return;
-                }
-
-                setWhatWeDoDismissed(false);
-                setWhatWeDoOpen(true);
-              }}
-            >
-              What we do
-              <Chevron />
-            </button>
-            <div className="site-nav__dropdown" id={whatWeDoId}>
-              <div className="nav-group">
-                <a className="nav-group__parent" href={directorNav.href}>
-                  <span className="nav-group__label">{directorNav.label}</span>
-                  <span className="nav-group__desc">{directorNav.description}</span>
-                </a>
-                <span className="nav-group__areas-label">What the director oversees</span>
-                <div
-                  className="nav-group__children"
-                  aria-label={`${directorNav.label} areas`}
-                >
-                  {directorAreas.map((item) => (
-                    <a href={item.href} key={item.href}>
-                      {item.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div className="nav-group nav-flyout">
-                <button type="button" className="nav-flyout__trigger" aria-haspopup="true">
-                  Industries
-                  <ChevronRight />
-                </button>
-                <div className="nav-flyout__panel">
-                  <div aria-label="Industries">
-                    {industriesNav.map((item) => (
-                      <a
-                        className="nav-group__parent"
-                        href={item.href}
-                        key={item.href}
-                      >
-                        <span className="nav-group__label">{item.label}</span>
-                        <span className="nav-group__desc">{item.description}</span>
-                      </a>
-                    ))}
-                  </div>
-                  <IndustriesMoreNote />
-                </div>
+          <NavDropdown label="Services" className="site-nav__dropdown--services">
+            <div className="nav-group nav-group--featured">
+              <a className="nav-group__parent" href={directorNav.href}>
+                <span className="nav-group__label">{directorNav.label}</span>
+                <span className="nav-group__desc">{directorNav.description}</span>
+                <span className="nav-group__price">{directorNav.price}</span>
+              </a>
+              <span className="nav-group__areas-label">What the director oversees</span>
+              <div
+                className="nav-group__children"
+                aria-label={`${directorNav.label} areas`}
+              >
+                {directorAreas.map((item) => (
+                  <a href={item.href} key={item.href}>
+                    {item.label}
+                  </a>
+                ))}
               </div>
             </div>
-          </div>
-          <a href={leadSystemNav.href}>{leadSystemNav.label}</a>
+            <div className="nav-group nav-group--standalone">
+              <span className="nav-group__areas-label">Standalone</span>
+              {standaloneNav.map((item) => (
+                <a className="nav-group__parent" href={item.href} key={item.href}>
+                  <span className="nav-group__label">{item.label}</span>
+                  <span className="nav-group__desc">{item.summary}</span>
+                  {"price" in item ? (
+                    <span className="nav-group__price">{item.price}</span>
+                  ) : null}
+                </a>
+              ))}
+            </div>
+          </NavDropdown>
+          <a href="/industries">Industries</a>
           <a href="/work">Work</a>
           <a href="/about">About</a>
           <BookCallLink className="button button-primary">
@@ -312,7 +297,7 @@ export function SiteHeader({
       >
         <nav className="site-nav-panel__nav" aria-label="Mobile navigation">
           <div className="site-nav-panel__group">
-            <span className="site-nav-panel__label">What we do</span>
+            <span className="site-nav-panel__label">Services</span>
             <div className="site-nav-panel__industries">
               <div className="nav-group">
                 <a
@@ -334,20 +319,21 @@ export function SiteHeader({
                     </a>
                   ))}
                 </div>
-                <span className="nav-group__areas-label">Industries</span>
-                <div className="nav-group__children" aria-label="Industries">
-                  {industriesNav.map((item) => (
+              </div>
+              <div className="nav-group">
+                <span className="nav-group__areas-label">Standalone</span>
+                <div className="nav-group__children" aria-label="Standalone services">
+                  {standaloneNav.map((item) => (
                     <a href={item.href} key={item.href} onClick={closeMenu}>
                       {item.label}
                     </a>
                   ))}
                 </div>
-                <IndustriesMoreNote />
               </div>
             </div>
           </div>
-          <a href={leadSystemNav.href} onClick={closeMenu}>
-            {leadSystemNav.label}
+          <a href="/industries" onClick={closeMenu}>
+            Industries
           </a>
           <a href="/work" onClick={closeMenu}>
             Work

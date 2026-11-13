@@ -14,7 +14,7 @@ const leadSystemJsonLd = {
   "@graph": [
     {
       "@type": "Service",
-      name: "Lead System",
+      name: "Lead Monitoring System",
       provider: {
         "@type": "ProfessionalService",
         name: "Grand River Labs",
@@ -47,7 +47,7 @@ const leadSystemJsonLd = {
 export const metadata: Metadata = {
   alternates: { canonical: "/lead-system" },
   title:
-    "Lead System: Lead Attribution & Marketing Reporting Dashboard | Grand River Labs",
+    "Lead Monitoring System: Lead Attribution & Marketing Reporting Dashboard | Grand River Labs",
   description:
     "A custom reporting dashboard for home services. Real lead counts, cost per lead, cost per booked job, and every vendor measured the same way. We handle the complex setup.",
 };

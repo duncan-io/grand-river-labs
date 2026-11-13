@@ -1,8 +1,11 @@
+import { DIRECTOR_MONTHLY, HOSTING_MONTHLY_FROM, formatUsd } from "@/lib/pricing";
+
 export const directorNav = {
   label: "Fractional Marketing Director",
   href: "/fractional-marketing-director",
   description:
     "Your marketing director, part-time: one senior person who owns the plan, verifies what's working, and manages your vendors for one monthly rate.",
+  price: `From ${formatUsd(DIRECTOR_MONTHLY)}/mo`,
 } as const;
 
 export const directorAreas = [
@@ -15,11 +18,32 @@ export const directorAreas = [
 ] as const;
 
 export const leadSystemNav = {
-  label: "Lead System",
+  label: "Lead Monitoring System",
   href: "/lead-system",
   description:
     "A custom dashboard we build and set up, showing real lead counts, cost per lead and per booked job, and how every vendor performs.",
+  summary: "Cost per lead and per booked job, by vendor.",
 } as const;
+
+export const leadQualificationNav = {
+  label: "Lead qualification",
+  href: "/lead-qualification",
+  summary: "Every new lead scored and routed to the right person.",
+} as const;
+
+export const wordpressHostingNav = {
+  label: "WordPress hosting",
+  href: "/wordpress-hosting",
+  summary: "Managed hosting, daily backups, optional care plans.",
+  price: `From ${formatUsd(HOSTING_MONTHLY_FROM)}/mo`,
+} as const;
+
+/** Products sold on their own, without the fractional marketing director. */
+export const standaloneNav = [
+  leadSystemNav,
+  leadQualificationNav,
+  wordpressHostingNav,
+] as const;
 
 export const whatWeDoNav = [directorNav, ...directorAreas] as const;
 
