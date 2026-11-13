@@ -54,7 +54,7 @@ const services = [
   {
     title: "Lead Monitoring System",
     href: "/lead-system",
-    copy: "A custom dashboard we build and set up for you — real lead counts, cost per lead and per booked job, and every vendor measured on the same numbers.",
+    copy: "A custom system built into the tools you already use — real lead counts, cost per lead and per booked job, and every vendor measured on the same numbers.",
   },
   {
     title: "Conversion rate optimization",

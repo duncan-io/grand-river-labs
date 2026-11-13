@@ -23,7 +23,7 @@ const leadSystemJsonLd = {
       },
       serviceType: "Lead attribution and marketing reporting",
       description:
-        "A custom reporting dashboard for home services companies, built on a proprietary attribution model. It reports real lead counts, cost per lead, cost per booked job, and vendor performance verified against the CRM. Setup, conversion sync, and daily tracking checks are included.",
+        "A custom lead monitoring and reporting system for home services companies, built into their existing CRM, ad accounts and analytics and powered by a proprietary attribution model. No software to switch. It reports real lead counts, cost per lead, cost per booked job, and vendor performance verified against the CRM. Setup, conversion sync, and daily tracking checks are included.",
       audience: {
         "@type": "BusinessAudience",
         audienceType: "Home services companies",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   title:
     "Lead Monitoring System: Lead Attribution & Marketing Reporting Dashboard | Grand River Labs",
   description:
-    "A custom reporting dashboard for home services. Real lead counts, cost per lead, cost per booked job, and every vendor measured the same way. We handle the complex setup.",
+    "A custom system built into your existing CRM, ad accounts and analytics. Real lead counts, cost per lead, cost per booked job, and every vendor measured the same way. We handle the complex setup.",
 };
 
 export default function LeadSystemPage() {

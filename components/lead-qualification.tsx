@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
+import { renderInline } from "@/components/inline-links";
 import { Arrow } from "./site-header";
 
 const sources = [
@@ -43,6 +44,34 @@ const steps = [
     copy: "Score, tier and booked status go into your CRM, and you get a weekly summary of every lead handled.",
   },
 ] as const;
+
+const stackPoints = [
+  {
+    title: "Built on your current stack",
+    copy: "Your phone line, forms and CRM stay. Score, tier and booked status are written back to the CRM you already use.",
+  },
+  {
+    title: "Custom scoring",
+    copy: "Service area, job types, knockouts and what counts as “hot” are set to your business during the build.",
+  },
+  {
+    title: "Close more leads",
+    copy: "Every lead gets a fast reply and hot leads go straight onto the estimator’s calendar, so fewer good leads go cold.",
+  },
+];
+
+export const faqs = [
+  {
+    question: "Do we have to switch CRMs or phone systems?",
+    answer:
+      "No. It's built into the phone line, forms and CRM you already use. Leads keep landing where your team already looks, with a score, a tier and a next step attached.",
+  },
+  {
+    question: "Is this off-the-shelf software?",
+    answer:
+      "No. It's built for your business. Your scoring rules, service area, knockouts and routing are set up for you, then connected to the tools you already run. Pair it with the [Lead Monitoring System](/lead-system) to see what each qualified lead cost.",
+  },
+];
 
 type IconName =
   | (typeof sources)[number]["icon"]
@@ -159,12 +188,13 @@ export function LeadQualificationSections() {
             <div className="mkt-hero__content">
               <p className="eyebrow">Lead Qualification System · Home services</p>
               <h1 className="mkt-hero__headline">
-                Every lead answered fast. Every hour spent on jobs that close.
+                Don&apos;t Waste Time Quoting Tire Kickers
               </h1>
               <p className="mkt-hero__copy">
-                The Lead Qualification System responds to every new lead in
-                seconds and sorts it by how likely it is to buy, so your team
-                spends its time where the work is.
+                A custom system built into your existing phone line, forms and
+                CRM. It responds to every new lead in seconds, scores it on how
+                likely it is to buy, and books the best ones, so your team
+                closes more of the leads you&apos;re already paying for.
               </p>
               <div className="mkt-hero__actions">
                 <BookCallLink className="button button-primary">
@@ -177,7 +207,7 @@ export function LeadQualificationSections() {
               </div>
               <ul className="mkt-hero__facts">
                 <li>Text back within a minute</li>
-                <li>Scored on fit, intent and urgency</li>
+                <li>Built into your phone line, forms and CRM</li>
                 <li>Hot leads booked on the estimator’s calendar</li>
               </ul>
             </div>
@@ -226,6 +256,30 @@ export function LeadQualificationSections() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section className="section lq-stack" id="your-stack">
+        <div className="shell">
+          <div className="lead-system-flow__top reveal">
+            <div>
+              <p className="eyebrow">Built for your business</p>
+              <h2 className="section-heading">Your rules, inside your tools.</h2>
+            </div>
+            <p className="section-copy">
+              It isn&apos;t another app for your team to check. Leads keep
+              landing where they already look, with a score and a next step
+              attached.
+            </p>
+          </div>
+          <ul className="lead-teaser__features reveal">
+            {stackPoints.map((point) => (
+              <li key={point.title}>
+                <strong>{point.title}</strong>
+                <span>{point.copy}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -279,6 +333,28 @@ export function LeadQualificationSections() {
                 <span>So your ad spend is optimized for buyers, not form fills.</span>
               </li>
             </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="section fdd-faq" id="faq">
+        <div className="shell">
+          <div className="fdd-faq__top reveal">
+            <div>
+              <p className="eyebrow">Questions</p>
+              <h2 className="section-heading">What people usually ask.</h2>
+            </div>
+            <p className="section-copy">
+              Anything else, we&apos;ll cover on the demo.
+            </p>
+          </div>
+          <div className="fdd-faq__list reveal">
+            {faqs.map((item) => (
+              <details className="fdd-faq__item" key={item.question}>
+                <summary>{item.question}</summary>
+                <p>{renderInline(item.answer)}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

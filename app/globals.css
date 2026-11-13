@@ -14395,3 +14395,25 @@ button.site-nav__trigger {
     animation: none;
   }
 }
+
+/* "Built into your stack" sections on the lead system pages. They reuse the
+   dashboard feature list, minus the margin it keeps above the dashboard frame. */
+.lead-system-stack,
+.lq-stack {
+  background: var(--surface);
+}
+
+.lead-system-stack .lead-teaser__features,
+.lq-stack .lead-teaser__features {
+  margin-bottom: 0;
+}
+
+.lq-stack .lead-teaser__features {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .lq-stack .lead-teaser__features {
+    grid-template-columns: 1fr;
+  }
+}

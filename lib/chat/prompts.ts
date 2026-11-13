@@ -2,6 +2,7 @@ import {
   directorAreas,
   directorNav,
   industriesNav,
+  leadQualificationNav,
   leadSystemNav,
   whatWeDoNav,
 } from "@/components/what-we-do-nav";
@@ -15,7 +16,12 @@ const industryLines = industriesNav
   .map((industry) => `- ${industry.label}: ${industry.description}`)
   .join("\n");
 
-const sourcePages = [...whatWeDoNav, leadSystemNav, ...industriesNav];
+const sourcePages = [
+  ...whatWeDoNav,
+  leadSystemNav,
+  leadQualificationNav,
+  ...industriesNav,
+];
 
 /** Look up a director area's page by label, so reordering the nav can't shift links. */
 function areaHref(label: (typeof directorAreas)[number]["label"]) {
@@ -113,7 +119,7 @@ THE OFFER
 ${directorNav.label}: ${directorNav.description}
 Page: ${directorNav.href}
 
-Not everyone needs an ongoing director. Standalone options: the lead leak audit (/lead-leak-audit) is the standard one-off engagement, the ${leadSystemNav.label} (${leadSystemNav.href}) can be bought on its own, and any area the director oversees (CRO, lead routing, and so on) can be scoped as a one-time project on a fit call.
+Not everyone needs an ongoing director. Standalone options: the lead leak audit (/lead-leak-audit) is the standard one-off engagement, the ${leadSystemNav.label} (${leadSystemNav.href}) and the ${leadQualificationNav.label} (${leadQualificationNav.href}) can each be bought on their own, and any area the director oversees (CRO, lead routing, and so on) can be scoped as a one-time project on a fit call.
 
 Grand River Labs is a fractional marketing director, not another channel vendor. Four things, in their words:
 - Patching lead leaks: missed calls, slow follow-up, broken forms, bad routing.
@@ -150,7 +156,9 @@ Lead leak audit (${areaHref("Lead leak audit")}): where leads and money leak aft
 
 Fractional marketing director (${directorNav.href}): the whole picture — where budget goes, what to pause, which channels earn a place, and what to say no to. Channel-neutral. The right call may be to invest, improve, test, wait, or stop.
 
-${leadSystemNav.label} (${leadSystemNav.href}): the "prove it" step. Tracking and daily monitoring that follows every lead from click to booked job, checks it against the CRM, and flags a broken handoff. Setup covers CallRail numbers for each source, hidden form fields that carry the source into the CRM, GA4 and Tag Manager key events, booked jobs sent back to Google Ads, and a record of who owns each account. After that, daily checks on forms, call tracking, source capture, analytics, conversion sync, the Google Business Profile, the website, and ad accounts, plus a read-only client portal, a monthly scorecard email, and a quarterly review call. Accounts stay in the client's name and tools are billed at cost. It watches and alerts but does not run or fix the website, phones, or CRM. It is included with the fractional marketing director and also sold on its own; pricing is covered on the call. Point people who ask about call tracking, reporting, attribution, or "is our tracking even working" to this page.
+${leadSystemNav.label} (${leadSystemNav.href}): the "prove it" step. A custom system built into the client's existing CRM, phones, forms, and ad accounts; they don't switch software and their team keeps working the way it does now. Tracking and daily monitoring that follows every lead from click to booked job, checks it against the CRM, and flags a broken handoff, so they can see what each lead cost and put budget behind the sources that book jobs. Setup covers tracking numbers for each source, hidden form fields that carry the source into the CRM, GA4 and Tag Manager key events, booked jobs sent back to Google Ads, and a record of who owns each account. After that, daily checks on forms, call tracking, source capture, analytics, conversion sync, the Google Business Profile, the website, and ad accounts, plus a read-only client portal, a monthly scorecard email, and a quarterly review call. Analytics, ad accounts, the Business Profile, and the CRM stay in the client's name; call tracking runs on our account, so there is no separate tool to sign up for. It watches and alerts but does not run or fix the website, phones, or CRM. It is included with the fractional marketing director and also sold on its own; pricing is covered on the call. Point people who ask about call tracking, reporting, attribution, or "is our tracking even working" to this page.
+
+${leadQualificationNav.label} (${leadQualificationNav.href}): helps them close more of the leads they already get. A custom system built into the client's existing phone line, forms, and CRM, not another app for the team to check. Form leads and missed calls get a text back within a minute and calls are transcribed. Each lead is verified (spam, solicitors, and existing service customers screened out), run through knockouts (wrong service, outside the area, renters), then scored on fit, intent, and urgency. Hot leads trigger an instant alert and are booked on the estimator's calendar, warm leads get timed follow-up, and poor fits are tagged with the reason. Score, tier, and booked status are written back to the CRM, with a weekly summary. Scoring rules, service area, and routing are set up for each business. Sold on its own and pairs with the ${leadSystemNav.label} for cost per qualified lead by channel; pricing is covered on the call. Point people who mention slow follow-up, missed calls, junk leads, or estimators wasting time on poor fits to this page.
 
 SEO (${areaHref("SEO")}): strategy and oversight. We audit the site and what an SEO vendor delivers, set priorities, decide which pages are worth writing, and check rankings and traffic against real leads. No link building and no content mill.
 

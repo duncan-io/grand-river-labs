@@ -21,14 +21,16 @@ export const leadSystemNav = {
   label: "Lead Monitoring System",
   href: "/lead-system",
   description:
-    "A custom dashboard we build and set up, showing real lead counts, cost per lead and per booked job, and how every vendor performs.",
-  summary: "Cost per lead and per booked job, by vendor.",
+    "A custom system we build into your existing CRM, ad accounts and analytics, showing real lead counts, cost per lead and per booked job, and how every vendor performs.",
+  summary: "Custom-built: cost per lead and booked job, by vendor.",
 } as const;
 
 export const leadQualificationNav = {
-  label: "Lead qualification",
+  label: "Lead Qualification System",
   href: "/lead-qualification",
-  summary: "Every new lead scored and routed to the right person.",
+  description:
+    "A custom system built into your existing phone line, forms and CRM that answers every new lead fast, scores it, and books the best ones on the estimator's calendar.",
+  summary: "Custom scoring and routing, built into your CRM.",
 } as const;
 
 export const wordpressHostingNav = {

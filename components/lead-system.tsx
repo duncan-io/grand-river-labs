@@ -80,6 +80,25 @@ const vendorReportedTotal = vendorRows.reduce((sum, row) => sum + row.reported, 
 const vendorVerifiedTotal = vendorRows.reduce((sum, row) => sum + row.verified, 0);
 const vendorBarMax = Math.max(...vendorRows.map((row) => row.reported));
 
+const stackPoints = [
+  {
+    title: "Works with what you have",
+    copy: "Your CRM, ad accounts, analytics, and Business Profile stay as they are. We connect to them.",
+  },
+  {
+    title: "Custom to your business",
+    copy: "Your sources, your vendors, and what counts as a booked job are set up for you. No template.",
+  },
+  {
+    title: "Visibility you can act on",
+    copy: "See which sources and vendors book jobs, and move budget toward them.",
+  },
+  {
+    title: "Fewer leads slip through",
+    copy: "Broken forms and tracking are caught within a day, so leads keep reaching your team.",
+  },
+];
+
 const teaserFeatures = [
   { title: "Real lead counts", copy: "Spam and duplicates out." },
   { title: "Cost per lead and booked job", copy: "For every source and campaign." },
@@ -104,6 +123,11 @@ const teaserSources = [
 ];
 
 export const faqs = [
+  {
+    question: "Do we have to switch CRMs or software?",
+    answer:
+      "No. It's built around the CRM, phone line, forms, and ad accounts you already use. We connect to them and run call tracking and the dashboard on our side. Your team keeps working the way it does now.",
+  },
   {
     question: "Isn't this just analytics and call tracking?",
     answer:
@@ -441,14 +465,14 @@ export function LeadSystemSections() {
           <div className="mkt-hero__content">
             <p className="eyebrow">Lead Monitoring System · Home services</p>
             <h1 className="mkt-hero__headline">
-              Know what every lead cost, and which vendor earned it.
+              Know what a booked job really costs you, source by source.
             </h1>
             <p className="mkt-hero__copy">
-              A custom reporting dashboard for lead-driven businesses. We do
-              the hard setup, then blend your data with our own attribution
-              model, so you see real lead counts, cost per lead,
-              cost per booked job, and how every vendor performs on the same
-              numbers.
+              A custom system we build into the tools you already use: your
+              analytics, ad accounts, and CRM. We do the hard setup, then blend
+              the data with our own attribution model, so you can see what
+              every lead really cost and put budget behind the sources that
+              book jobs.
             </p>
             <div className="mkt-hero__actions">
               <BookCallLink className="button button-primary">
@@ -462,7 +486,7 @@ export function LeadSystemSections() {
             <ul className="mkt-hero__facts">
               <li>Lead counts verified against your CRM</li>
               <li>Cost per lead and per booked job, by source</li>
-              <li>Every vendor measured the same way</li>
+              <li>Built into your existing CRM and ad accounts</li>
             </ul>
           </div>
         </div>
@@ -548,6 +572,32 @@ export function LeadSystemSections() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section className="section lead-system-stack" id="your-stack">
+        <div className="shell">
+          <div className="lead-system-flow__top reveal">
+            <div>
+              <p className="eyebrow">Built for your business</p>
+              <h2 className="section-heading">
+                Built into the stack you already run.
+              </h2>
+            </div>
+            <p className="section-copy">
+              No new CRM, no new phone system, nothing new for your team to
+              learn. We build it around the tools you already pay for, and set
+              it up to match how you sell.
+            </p>
+          </div>
+          <ul className="lead-teaser__features reveal">
+            {stackPoints.map((point) => (
+              <li key={point.title}>
+                <strong>{point.title}</strong>
+                <span>{point.copy}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
