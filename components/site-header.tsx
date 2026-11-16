@@ -256,7 +256,7 @@ export function SiteHeader({
               </div>
             </div>
             <div className="nav-group nav-group--standalone">
-              <span className="nav-group__areas-label">Standalone</span>
+              <span className="nav-group__areas-label">Other services</span>
               {standaloneNav.map((item) => (
                 <a className="nav-group__parent" href={item.href} key={item.href}>
                   <span className="nav-group__label">{item.label}</span>
@@ -321,8 +321,8 @@ export function SiteHeader({
                 </div>
               </div>
               <div className="nav-group">
-                <span className="nav-group__areas-label">Standalone</span>
-                <div className="nav-group__children" aria-label="Standalone services">
+                <span className="nav-group__areas-label">Other services</span>
+                <div className="nav-group__children" aria-label="Other services">
                   {standaloneNav.map((item) => (
                     <a href={item.href} key={item.href} onClick={closeMenu}>
                       {item.label}

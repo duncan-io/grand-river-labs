@@ -4,6 +4,7 @@ import { renderInline } from "@/components/inline-links";
 import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { testimonials } from "@/lib/testimonials";
 import { EngagementBlock } from "./engagement-block";
+import { FiveStars } from "./five-stars";
 import { NicheStrip } from "./niche-page";
 import { FeaturedCaseStudy } from "./sections";
 import { Arrow } from "./site-header";
@@ -36,7 +37,7 @@ const comparisons = [
   {
     dimension: "How you're billed",
     agency: "A quote per channel.",
-    fractional: `One monthly rate, starting at ${formatUsd(DIRECTOR_MONTHLY)}.`,
+    fractional: `One monthly rate, starting at ${formatUsd(DIRECTOR_MONTHLY)} for weekly advising.`,
   },
   {
     dimension: "Specialists",
@@ -104,7 +105,7 @@ const deliverables = [
   },
   {
     title: "A team that can run it",
-    copy: "We coach whoever owns marketing and train the office on lead handling, and we fix the leaks ourselves along the way.",
+    copy: "We coach whoever owns marketing and train the office on lead handling, so the fixes hold after the meeting ends.",
   },
 ];
 
@@ -122,7 +123,7 @@ const scope: Record<
   },
   "/lead-system": {
     mode: "do",
-    note: "Included: tracking, daily checks, and a portal showing what booked.",
+    note: "Tracking, daily checks, and a portal showing what booked.",
   },
   "/automation": {
     mode: "do",
@@ -146,7 +147,7 @@ const scopeColumns = [
   {
     mode: "do",
     title: "We do it ourselves",
-    copy: "Hands-on work on the leaks and the measurement.",
+    copy: "Hands-on work on the leaks and the measurement, added as you need it.",
   },
   {
     mode: "direct",
@@ -162,7 +163,7 @@ const steps = [
   },
   {
     title: "Month one: audit and plan",
-    copy: "We learn how the business runs, run the lead leak audit, fix the tracking, and write the plan and budget. Already had the audit? We start from its findings.",
+    copy: "We learn how the business runs, trace where leads are getting lost, and write the plan and budget with you. Already had the audit? We start from its findings.",
   },
   {
     title: "Every month after",
@@ -179,7 +180,7 @@ export const faqs = [
   {
     question: "What does a fractional marketing director do?",
     answer:
-      "Meets with you every week to plan and set strategy, decides where the budget goes, and advises you on the big calls. Coaches whoever runs marketing day to day and holds every vendor to the plan. Hands-on, we fix where leads leak and the [tracking](/lead-system) behind the numbers, usually starting with a [lead leak audit](/lead-leak-audit).",
+      "Meets with you every week to plan and set strategy, decides where the budget goes, and advises you on the big calls. Coaches whoever runs marketing day to day and holds every vendor to the plan. Add hands-on work and we fix where leads leak and the [tracking](/lead-system) behind the numbers, usually starting with a [lead leak audit](/lead-leak-audit).",
   },
   {
     question:
@@ -189,7 +190,7 @@ export const faqs = [
   },
   {
     question: "How much does a fractional marketing director cost?",
-    answer: `Engagements start at ${formatUsd(DIRECTOR_MONTHLY)}/month, one monthly fee rather than a quote per channel. The price depends on scope, and there are no long contracts. Many clients start with the ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit).`,
+    answer: `Engagements start at ${formatUsd(DIRECTOR_MONTHLY)}/month for weekly advising: the plan, the budget, and the call on every channel. Hands-on work is scoped on top, still as one monthly fee rather than a quote per channel. There are no long contracts. Many clients start with the ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit).`,
   },
   {
     question: "Do you take on one-off projects?",
@@ -203,7 +204,7 @@ export const faqs = [
   {
     question: "What happens in the first 90 days?",
     answer:
-      "Month one is the [lead leak audit](/lead-leak-audit), the tracking fixes, and a written plan and budget. Months two and three bring the first fixes, vendor briefs, team coaching, and scorecards, so by day 90 you know which channels earn their budget.",
+      "Month one is learning the business, tracing where leads are getting lost, and a written plan and budget. Months two and three bring the first fixes, vendor briefs, team coaching, and scorecards, so by day 90 you know which channels earn their budget.",
   },
   {
     question: "How involved are you day to day?",
@@ -278,7 +279,7 @@ export function FractionalDirectorSections() {
               </div>
               <ul className="mkt-hero__facts">
                 <li>Weekly meetings with your director</li>
-                <li>Starting at {formatUsd(DIRECTOR_MONTHLY)}/month</li>
+                <li>Advising from {formatUsd(DIRECTOR_MONTHLY)}/month</li>
                 <li>No long contracts</li>
               </ul>
             </div>
@@ -422,7 +423,8 @@ export function FractionalDirectorSections() {
               </h2>
             </div>
             <p className="section-copy">
-              Every channel is in scope, held to one plan.
+              Every channel is in scope, held to one plan. Advising covers
+              all of it.
             </p>
           </div>
           <div className="director-scope__columns reveal">
@@ -520,7 +522,8 @@ export function FractionalDirectorSections() {
               </h2>
             </div>
             <p className="section-copy">
-              Starting at {formatUsd(DIRECTOR_MONTHLY)}/month, no long contracts.
+              Advising starts at {formatUsd(DIRECTOR_MONTHLY)}/month, no long
+              contracts.
             </p>
           </div>
           <ol className="seo-flow__steps reveal">
@@ -574,6 +577,7 @@ export function FractionalDirectorSections() {
           <div className="fdd-proof__quotes reveal">
             {testimonials.map((item) => (
               <blockquote className="fdd-proof__quote" key={item.name}>
+                <FiveStars />
                 <p>{item.quote}</p>
                 <footer>
                   <cite>{item.name}</cite>
@@ -596,8 +600,8 @@ export function FractionalDirectorSections() {
               <h2 className="section-heading">What people usually ask.</h2>
             </div>
             <p className="section-copy">
-              Starting at {formatUsd(DIRECTOR_MONTHLY)}/month, no long contracts, and
-              your current vendors stay.
+              Advising starts at {formatUsd(DIRECTOR_MONTHLY)}/month, no long
+              contracts, and your current vendors stay.
             </p>
           </div>
           <div className="fdd-faq__list reveal">

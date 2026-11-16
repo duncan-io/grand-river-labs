@@ -40,7 +40,7 @@ export default async function WorkPage() {
           variant="cta"
           eyebrow="Your turn"
           heading="Want this kind of result?"
-          copy="Tell us what your marketing is doing now and the number that isn't moving. We'll reply within two business days with whether a fractional marketing director is the right fit—or what is."
+          copy="Tell us what your marketing is doing now and the number that isn't moving. We'll reply within one business day with whether a fractional marketing director is the right fit—or what is."
           messageLabel="What should we look at?"
           messagePlaceholder="The brands, the sites, or the number that isn't moving."
         />

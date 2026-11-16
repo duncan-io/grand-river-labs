@@ -149,7 +149,7 @@ export const faqs = [
   },
   {
     question: "How much does Google Business Profile optimization cost?",
-    answer: `The profile is part of the [fractional marketing director](/fractional-marketing-director) engagement, starting at ${formatUsd(DIRECTOR_MONTHLY)}/month, rather than a separate fee. The ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit) checks the profile alongside the site, calls, and follow-up.`,
+    answer: `Direction on the profile is part of the [fractional marketing director](/fractional-marketing-director) engagement rather than a separate fee. Advising starts at ${formatUsd(DIRECTOR_MONTHLY)}/month. The ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit) checks the profile alongside the site, calls, and follow-up.`,
   },
   {
     question: "How long before changes to the profile show up?",

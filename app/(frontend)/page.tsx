@@ -3,11 +3,10 @@ import { ContactSection } from "@/components/contact";
 import { EngagementBlock } from "@/components/engagement-block";
 import { Hero } from "@/components/hero";
 import {
-  FeaturedCaseStudy,
   LeadershipSection,
   ProcessSection,
-  ServicesSection,
-  TestimonialsSection,
+  ProofSection,
+  SystemsSection,
   UseCaseStrip,
 } from "@/components/sections";
 import { SiteFooter } from "@/components/site-footer";
@@ -16,11 +15,11 @@ import { DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { getSiteUrl } from "@/lib/site";
 
 const description =
-  "A fractional marketing director for lead-driven businesses. One senior director, part-time: patching lead leaks, verifying which spend is working, and managing your vendors — without another agency retainer.";
+  "A fractional marketing director for roofers, remodelers and home improvement companies. Know which marketing dollars turn into booked jobs and what to do next. Lead monitoring and lead qualification systems are available on their own.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  title: "Grand River Labs | Fractional Marketing Director for Lead-Driven Businesses",
+  title: "Grand River Labs | Fractional Marketing Director for Home Service Companies",
   description,
 };
 
@@ -43,7 +42,7 @@ const homeJsonLd = {
       serviceType: "Fractional marketing director",
       audience: {
         "@type": "BusinessAudience",
-        audienceType: "Lead-driven businesses",
+        audienceType: "Home service companies: roofing, remodeling and home improvement",
       },
       areaServed: { "@type": "Country", name: "United States" },
       priceRange: `Starting at ${formatUsd(DIRECTOR_MONTHLY)}/month`,
@@ -65,18 +64,22 @@ export default function Home() {
       <SiteHeader />
       <main>
         <Hero />
-        <EngagementBlock />
+        <EngagementBlock
+          eyebrow="What it costs"
+          copy="Someone senior who sets your marketing plan, decides where the budget goes, and tells you straight what's booking jobs — for a few hours a week instead of a full-time salary."
+          directorLabel="A part-time director"
+          ctaLabel="Book a call"
+        />
+        <ProofSection />
         <LeadershipSection />
+        <SystemsSection />
         <ProcessSection />
-        <FeaturedCaseStudy />
-        <ServicesSection />
-        <TestimonialsSection />
         <UseCaseStrip />
         <ContactSection
           turnstileSiteKey={turnstileSiteKey}
           variant="cta"
           atmosphere
-          copy="Tell us what you're spending and what you're not sure is working—an agency that reports its own numbers, leads that don't get answered, spend you can't tie to jobs. We'll tell you where the leaks probably are, and we'll get back within two business days."
+          copy="Tell me what you're spending and what you're not sure is working—an agency that reports its own numbers, leads that don't get answered, spend you can't tie to booked jobs. I'll tell you where I'd look first, and I'll reply within one business day."
         />
       </main>
       <SiteFooter />

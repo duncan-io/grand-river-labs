@@ -91,7 +91,7 @@ export function ContactSection({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<FormStatus>({
     state: "idle",
-    message: "We’ll get back to you within two business days.",
+    message: "We’ll get back to you within one business day.",
   });
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {

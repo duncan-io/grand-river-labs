@@ -107,7 +107,7 @@ export const faqs = [
   {
     question: "Do you fix the leaks too?",
     answer:
-      "The audit gives you the map: every leak ranked, with what's wrong, what it costs, and who should fix it. To have us own the fixes and check they held, that's the [fractional marketing director](/fractional-marketing-director) engagement.",
+      "The audit gives you the map: every leak ranked, with what's wrong, what it costs, and who should fix it. To work through the fixes with a director every week and check they held, that's the [fractional marketing director](/fractional-marketing-director) engagement, with hands-on work added as you need it.",
   },
   {
     question: "What if you don't find much?",
@@ -510,8 +510,9 @@ export function LeadLeakAuditSections() {
                 <span className="engagement-compare__period">/month</span>
               </p>
               <p className="engagement-compare__note">
-                We own the fixes, check they moved the number, and hold your
-                vendors to the plan.
+                A weekly meeting to work through the map: what to fix first,
+                who fixes it, and where the budget goes next. Add hands-on work
+                as you need it.
               </p>
               <Link
                 className="leak-next__link"

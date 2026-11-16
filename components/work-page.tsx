@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { testimonials } from "@/lib/testimonials";
+import { FiveStars } from "./five-stars";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 import type { CaseStudy } from "@/payload-types";
 import { Arrow } from "./site-header";
@@ -211,6 +212,7 @@ export function WorkPageContent({ studies }: { studies: CaseStudy[] }) {
                 <p>{leadQuote.quote}</p>
               </blockquote>
               <figcaption className="work-voices__attribution">
+                <FiveStars />
                 <cite>{leadQuote.name}</cite>
                 <span>{leadQuote.role}</span>
               </figcaption>
@@ -230,6 +232,7 @@ export function WorkPageContent({ studies }: { studies: CaseStudy[] }) {
                         <p>{item.quote}</p>
                       </blockquote>
                       <figcaption className="work-voices__attribution">
+                        <FiveStars />
                         <cite>{item.name}</cite>
                         <span>{item.role}</span>
                       </figcaption>

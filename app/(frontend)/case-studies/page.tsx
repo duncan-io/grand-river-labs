@@ -114,7 +114,7 @@ export default async function CaseStudiesPage() {
           variant="cta"
           eyebrow="Let's look at yours"
           heading="Walk through the audit."
-          copy="If you are running a portfolio of brands — or one site you suspect has the same problem — send a note. We'll get back within two business days."
+          copy="If you are running a portfolio of brands — or one site you suspect has the same problem — send a note. We'll get back within one business day."
           messageLabel="What should we look at?"
           messagePlaceholder="The brands, the sites, or the number that isn't moving."
         />

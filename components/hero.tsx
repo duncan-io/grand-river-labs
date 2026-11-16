@@ -1,4 +1,5 @@
 import { BookCallLink } from "./book-call-link";
+import { AUDIT_FEE, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
 
 function RiverScene() {
@@ -156,7 +157,6 @@ export function Hero() {
       <RiverScene />
       <div className="shell">
         <div className="hero__content">
-          <p className="eyebrow">For lead-driven businesses</p>
           <h1 className="hero__headline">
             <span>Senior Marketing Leadership,</span>
             <span>
@@ -164,23 +164,24 @@ export function Hero() {
             </span>
           </h1>
           <p className="hero__copy">
-            A senior fractional marketing director who owns the plan, checks
-            which spend is actually making you money, and manages your vendors
-            — for a fraction of the cost of a full-time hire.
+            I&apos;m Duncan, a part-time marketing director for owner-run home
+            service companies. I work out what each dollar is booking, tell you
+            where to put the next one and what to stop, and keep whoever does
+            your marketing on the plan.
           </p>
           <div className="hero__actions">
             <BookCallLink className="button button-primary">
               Book a call
               <Arrow />
             </BookCallLink>
-            <a className="button button-secondary" href="#how-we-work">
-              See how it works
+            <a className="button button-secondary" href="/lead-leak-audit">
+              Start with a {formatUsd(AUDIT_FEE)} lead leak audit
             </a>
           </div>
         </div>
       </div>
       <a className="hero__cue" href="#engagement">
-        What a fractional director is
+        What it costs
       </a>
     </section>
   );

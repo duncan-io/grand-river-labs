@@ -111,7 +111,7 @@ export const faqs = [
   },
   {
     question: "How much does conversion rate optimization cost?",
-    answer: `CRO is part of the [fractional marketing director](/fractional-marketing-director) engagement, starting at ${formatUsd(DIRECTOR_MONTHLY)}/month, rather than a separate project fee. Many clients start with the ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit).`,
+    answer: `CRO is part of the [fractional marketing director](/fractional-marketing-director) engagement rather than a separate project fee. Advising starts at ${formatUsd(DIRECTOR_MONTHLY)}/month: what to change first and whether it worked. Hands-on work is scoped on top. Many clients start with the ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit).`,
   },
   {
     question: "How long before we see results?",
@@ -540,8 +540,9 @@ export function CroSections() {
                 <span className="engagement-compare__period">/month</span>
               </p>
               <p className="engagement-compare__note">
-                CRO is part of the hands-on work. We ship the changes, check they
-                moved calls and booked jobs, and keep going month after month.
+                A weekly meeting on what to change first and whether it moved
+                calls and booked jobs. Add hands-on work and we ship the
+                changes ourselves.
               </p>
               <Link
                 className="leak-next__link"

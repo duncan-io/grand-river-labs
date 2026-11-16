@@ -168,7 +168,7 @@ export default async function BlogPostPage({ params }: Args) {
           variant="cta"
           eyebrow="From the article"
           heading="Want to talk about this?"
-          copy="If this raised a question about your site, your channels, or work still sitting with the team, send a note. We'll get back within two business days."
+          copy="If this raised a question about your site, your channels, or work still sitting with the team, send a note. We'll get back within one business day."
           messageLabel="What should we look at?"
           messagePlaceholder="The part of this that matches a problem you're in—or the decision you're trying to make."
         />

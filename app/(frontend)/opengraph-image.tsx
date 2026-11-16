@@ -57,7 +57,7 @@ export default async function Image() {
               color: "#057a72",
             }}
           >
-            Fractional marketing director for lead-driven businesses
+            Fractional marketing director for home service companies
           </div>
         </div>
         <div

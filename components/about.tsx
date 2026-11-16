@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
+import { FiveStars } from "./five-stars";
 import { Arrow } from "./site-header";
 import { testimonials } from "@/lib/testimonials";
 import duncanPhoto from "@/public/team/duncan.png";
@@ -171,6 +172,7 @@ export function AboutSections() {
           </div>
           {featuredTestimonial ? (
             <figure className="about-meaning__quote reveal">
+              <FiveStars />
               <blockquote>
                 <p>“{featuredTestimonial.highlight ?? featuredTestimonial.quote}”</p>
               </blockquote>

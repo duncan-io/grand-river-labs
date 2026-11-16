@@ -1,4 +1,5 @@
 import { testimonials } from "@/lib/testimonials";
+import { FiveStars } from "./five-stars";
 
 export function TestimonialsPageContent({
   showHero = true,
@@ -29,8 +30,11 @@ export function TestimonialsPageContent({
           <div className="tp-quotes__list">
             {testimonials.map((item) => (
               <blockquote className="tp-quote reveal" key={item.name}>
-                <span className="tp-quote__mark" aria-hidden="true">
-                  “
+                <span className="testimonial__head">
+                  <span className="tp-quote__mark" aria-hidden="true">
+                    “
+                  </span>
+                  <FiveStars />
                 </span>
                 <p className="tp-quote__body">{item.quote}</p>
                 <footer className="tp-quote__attribution">

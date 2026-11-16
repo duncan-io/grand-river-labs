@@ -1,7 +1,7 @@
 import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
-import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
+import { DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
 
 const questions = [
@@ -140,7 +140,7 @@ export const faqs = [
   },
   {
     question: "How much does it cost?",
-    answer: `A one-time build fee plus a monthly fee for the dashboard, reporting, and daily checks. Call tracking runs on our account, so there's no separate tool to sign up for. We scope both on the demo, based on how many sources, forms, ad accounts, and vendors you run. On the [fractional marketing director](/fractional-marketing-director) engagement, starting at ${formatUsd(DIRECTOR_MONTHLY)}/month, it's included.`,
+    answer: `A one-time build fee plus a monthly fee for the dashboard, reporting, and daily checks. Call tracking runs on our account, so there's no separate tool to sign up for. We scope both on the demo, based on how many sources, forms, ad accounts, and vendors you run. It also runs alongside the [fractional marketing director](/fractional-marketing-director) engagement, where a director uses these numbers to plan with you every week. Advising starts at ${formatUsd(DIRECTOR_MONTHLY)}/month.`,
   },
   {
     question: "Will call tracking numbers hurt my Google Business Profile?",
@@ -760,9 +760,9 @@ export function LeadSystemSections() {
                 <span className="engagement-compare__period">/month</span>
               </p>
               <ul className="lead-pricing__list">
-                <li>The Lead Monitoring System, included</li>
-                <li>The {formatUsd(AUDIT_FEE)} lead leak audit, included</li>
-                <li>A director who acts on the numbers</li>
+                <li>A weekly meeting with a senior director</li>
+                <li>A plan and budget built on these numbers</li>
+                <li>The call on every source: fund, pause, or fix</li>
               </ul>
               <Link
                 className="leak-next__link"

@@ -4,7 +4,7 @@ export const directorNav = {
   label: "Fractional Marketing Director",
   href: "/fractional-marketing-director",
   description:
-    "Your marketing director, part-time: one senior person who owns the plan, verifies what's working, and manages your vendors for one monthly rate.",
+    "Your marketing director, part-time: one senior person who meets with you every week to set the plan, check what's working, and decide where the budget goes.",
   price: `From ${formatUsd(DIRECTOR_MONTHLY)}/mo`,
 } as const;
 
