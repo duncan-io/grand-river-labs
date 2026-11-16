@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -83,14 +84,14 @@ export function ChatLauncher() {
 
   return (
     <div className="chat-launcher" data-hidden={covering}>
-      <a
+      <Link
         className="chat-launcher__link"
         href={`/chat?from=${encodeURIComponent(pathname)}`}
         aria-label="Ask AI: chat with the assistant"
       >
         <ChatIcon />
         <span className="chat-launcher__label">Ask AI</span>
-      </a>
+      </Link>
       <button
         type="button"
         className="chat-launcher__close"

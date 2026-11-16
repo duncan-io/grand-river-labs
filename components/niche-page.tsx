@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
 import { DepartmentHeroScene } from "./department-hero-scene";
@@ -30,13 +31,13 @@ export function NichePage({
                 {content.hero.primaryLabel}
                 <Arrow />
               </BookCallLink>
-              <a
+              <Link
                 className="button button-secondary"
                 href={content.hero.secondaryHref}
               >
                 {content.hero.secondaryLabel}
                 <Arrow />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -165,7 +166,7 @@ export function NicheStrip() {
         </div>
         <div className="industry-strip__grid reveal">
           {niches.map((item) => (
-            <a
+            <Link
               className="industry-strip__tile"
               href={`/fractional-marketing-director/${item.slug}`}
               key={item.slug}
@@ -186,7 +187,7 @@ export function NicheStrip() {
                   <Arrow />
                 </span>
               </span>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

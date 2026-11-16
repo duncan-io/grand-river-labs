@@ -1071,10 +1071,10 @@ export function WhitelabelSections() {
                 Talk about partnering
                 <Arrow />
               </a>
-              <a className="button button-secondary" href="/#contact">
+              <Link className="button button-secondary" href="/#contact">
                 Get in touch
                 <Arrow />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -1243,10 +1243,10 @@ export function WhitelabelCta() {
               Talk about partnering
               <Arrow />
             </a>
-            <a className="button button-secondary" href="/#contact">
+            <Link className="button button-secondary" href="/#contact">
               Get in touch
               <Arrow />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

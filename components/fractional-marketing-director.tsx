@@ -587,7 +587,7 @@ export function FractionalDirectorSections() {
             ))}
           </div>
           <p className="fdd-proof__more reveal">
-            <a href="/work">See the work →</a>
+            <Link href="/work">See the work →</Link>
           </p>
         </div>
       </section>

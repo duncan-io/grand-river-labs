@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { getIndustry } from "./industries";
 import { Arrow } from "./site-header";
@@ -397,10 +398,10 @@ export function HomeServicesCta() {
               Book a call
               <Arrow />
             </BookCallLink>
-            <a className="button button-secondary" href="/use-cases">
+            <Link className="button button-secondary" href="/use-cases">
               Back to use cases
               <Arrow />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

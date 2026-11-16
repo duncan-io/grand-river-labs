@@ -529,10 +529,10 @@ export function ConsultingCta() {
               Book a call
               <Arrow />
             </BookCallLink>
-            <a className="button button-secondary" href="/use-cases">
+            <Link className="button button-secondary" href="/use-cases">
               Browse use cases
               <Arrow />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

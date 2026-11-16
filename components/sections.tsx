@@ -106,10 +106,10 @@ export function FeaturedCaseStudy() {
         <div>
           <p className="featured-study__client">{featuredCaseStudy.client}</p>
           <p className="featured-study__summary">{featuredCaseStudy.summary}</p>
-          <a className="featured-study__more" href={featuredCaseStudy.href}>
+          <Link className="featured-study__more" href={featuredCaseStudy.href}>
             Read the case study
             <Arrow />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -198,10 +198,10 @@ export function SystemsSection() {
               <p className="lq-pair__kicker">{item.kicker}</p>
               <h3>{item.label}</h3>
               <p>{item.copy}</p>
-              <a className="lq-pair__link" href={item.href}>
+              <Link className="lq-pair__link" href={item.href}>
                 See the {item.label}
                 <Arrow />
-              </a>
+              </Link>
             </article>
           ))}
         </div>
@@ -218,7 +218,7 @@ export function ProofSection() {
           <p className="eyebrow">From clients</p>
           <h2 className="testimonials__heading">Less noise. Better calls.</h2>
           <p className="testimonials__more">
-            <a href="/work">See the work →</a>
+            <Link href="/work">See the work →</Link>
           </p>
         </div>
       </div>
@@ -259,10 +259,10 @@ export function ProofSection() {
                 {featuredCaseStudy.client}
               </p>
               <p className="testimonial__quote">{featuredCaseStudy.summary}</p>
-              <a className="featured-study__more" href={featuredCaseStudy.href}>
+              <Link className="featured-study__more" href={featuredCaseStudy.href}>
                 Read the case study
                 <Arrow />
-              </a>
+              </Link>
             </article>
           </li>
         </ul>
@@ -353,12 +353,12 @@ export function UseCaseStrip() {
         <ul className="use-cases-strip__list reveal">
           {industriesNav.map((item) => (
             <li key={item.href}>
-              <a href={item.href}>
+              <Link href={item.href}>
                 <span className="use-cases-strip__title">{item.label}</span>
                 <span className="use-cases-strip__copy">
                   {industryNotes[item.href]}
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

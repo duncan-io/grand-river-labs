@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./site-header";
 
@@ -93,10 +94,10 @@ export function UseCasesCta() {
             it&apos;s worth it, and whether it&apos;s ours to build.
           </p>
           <div className="use-cases-cta__buttons">
-            <a className="button button-primary" href="/#contact">
+            <Link className="button button-primary" href="/#contact">
               Get in touch
               <Arrow />
-            </a>
+            </Link>
             <BookCallLink
               className="button button-secondary"
             >

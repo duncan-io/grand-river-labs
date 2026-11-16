@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
 import { DepartmentHeroScene } from "./department-hero-scene";
@@ -315,7 +316,7 @@ export function HomeImprovementMarketingSections() {
                 ) : null}
                 <h3>
                   {trade.href ? (
-                    <a href={trade.href}>{trade.name}</a>
+                    <Link href={trade.href}>{trade.name}</Link>
                   ) : (
                     trade.name
                   )}

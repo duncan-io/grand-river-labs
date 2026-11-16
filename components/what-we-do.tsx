@@ -1153,7 +1153,7 @@ export function WhatWeDoSections() {
           </div>
           <div className="what-we-do-services__grid reveal">
             {services.map((item, index) => (
-              <a
+              <Link
                 className="what-we-do-service"
                 href={item.href}
                 key={item.title}
@@ -1172,7 +1172,7 @@ export function WhatWeDoSections() {
                     <Arrow />
                   </span>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

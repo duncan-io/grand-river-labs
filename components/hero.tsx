@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { AUDIT_FEE, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
@@ -174,9 +175,9 @@ export function Hero() {
               Book a call
               <Arrow />
             </BookCallLink>
-            <a className="button button-secondary" href="/lead-leak-audit">
+            <Link className="button button-secondary" href="/lead-leak-audit">
               Start with a {formatUsd(AUDIT_FEE)} lead leak audit
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./site-header";
 import { industriesNav } from "./what-we-do-nav";
@@ -105,7 +106,7 @@ export function IndustriesSections() {
             {industryCards.map((card) => (
               <li className="industries-card" key={card.label}>
                 <h2 className="industries-card__title">
-                  {card.href ? <a href={card.href}>{card.label}</a> : card.label}
+                  {card.href ? <Link href={card.href}>{card.label}</Link> : card.label}
                 </h2>
                 <p className="industries-card__who">{card.who}</p>
                 <ul className="industries-card__callouts">
@@ -114,14 +115,14 @@ export function IndustriesSections() {
                   ))}
                 </ul>
                 {card.href ? (
-                  <a
+                  <Link
                     className="industries-card__more"
                     href={card.href}
                     aria-label={`${card.label}: learn more`}
                   >
                     Learn more
                     <Arrow />
-                  </a>
+                  </Link>
                 ) : null}
               </li>
             ))}

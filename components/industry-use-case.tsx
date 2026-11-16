@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./site-header";
 import type { IndustryContent } from "./industries";
@@ -14,10 +15,10 @@ export function IndustryUseCase({ content }: { content: IndustryContent }) {
           </h1>
           <p className="section-copy industry-hero__copy">{content.copy}</p>
           <div className="industry-hero__actions">
-            <a className="button button-primary" href="/#contact">
+            <Link className="button button-primary" href="/#contact">
               Tell us what&apos;s slowing you down
               <Arrow />
-            </a>
+            </Link>
             <BookCallLink
               className="button button-secondary"
             >
@@ -122,7 +123,7 @@ export function IndustryStrip({
         </div>
         <div className="industry-strip__grid reveal">
           {industries.map((item) => (
-            <a
+            <Link
               className="industry-strip__tile"
               href={`/use-cases/${item.slug}`}
               key={item.slug}
@@ -143,7 +144,7 @@ export function IndustryStrip({
                   <Arrow />
                 </span>
               </span>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

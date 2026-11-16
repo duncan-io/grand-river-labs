@@ -499,10 +499,10 @@ export function MarketingAutomationCta() {
               Book a call
               <Arrow />
             </BookCallLink>
-            <a className="button button-secondary" href="/automation">
+            <Link className="button button-secondary" href="/automation">
               Back to Automation and AI
               <Arrow />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

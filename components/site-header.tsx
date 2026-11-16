@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { BookCallLink } from "./book-call-link";
@@ -231,46 +232,46 @@ export function SiteHeader({
   return (
     <header className={headerClass}>
       <div className="shell site-header__inner">
-        <a href="/" aria-label="Grand River Labs, home" onClick={closeMenu}>
+        <Link href="/" aria-label="Grand River Labs, home" onClick={closeMenu}>
           <BrandMark />
-        </a>
+        </Link>
 
         <nav className="site-nav" aria-label="Main navigation">
           <NavDropdown label="Services" className="site-nav__dropdown--services">
             <div className="nav-group nav-group--featured">
-              <a className="nav-group__parent" href={directorNav.href}>
+              <Link className="nav-group__parent" href={directorNav.href}>
                 <span className="nav-group__label">{directorNav.label}</span>
                 <span className="nav-group__desc">{directorNav.description}</span>
                 <span className="nav-group__price">{directorNav.price}</span>
-              </a>
+              </Link>
               <span className="nav-group__areas-label">What the director oversees</span>
               <div
                 className="nav-group__children"
                 aria-label={`${directorNav.label} areas`}
               >
                 {directorAreas.map((item) => (
-                  <a href={item.href} key={item.href}>
+                  <Link href={item.href} key={item.href}>
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
             <div className="nav-group nav-group--standalone">
               <span className="nav-group__areas-label">Other services</span>
               {standaloneNav.map((item) => (
-                <a className="nav-group__parent" href={item.href} key={item.href}>
+                <Link className="nav-group__parent" href={item.href} key={item.href}>
                   <span className="nav-group__label">{item.label}</span>
                   <span className="nav-group__desc">{item.summary}</span>
                   {"price" in item ? (
                     <span className="nav-group__price">{item.price}</span>
                   ) : null}
-                </a>
+                </Link>
               ))}
             </div>
           </NavDropdown>
-          <a href="/industries">Industries</a>
-          <a href="/work">Work</a>
-          <a href="/about">About</a>
+          <Link href="/industries">Industries</Link>
+          <Link href="/work">Work</Link>
+          <Link href="/about">About</Link>
           <BookCallLink className="button button-primary">
             Book a call
             <Arrow />
@@ -300,23 +301,23 @@ export function SiteHeader({
             <span className="site-nav-panel__label">Services</span>
             <div className="site-nav-panel__industries">
               <div className="nav-group">
-                <a
+                <Link
                   className="nav-group__parent"
                   href={directorNav.href}
                   onClick={closeMenu}
                 >
                   <span className="nav-group__label">{directorNav.label}</span>
                   <span className="nav-group__desc">{directorNav.description}</span>
-                </a>
+                </Link>
                 <span className="nav-group__areas-label">What the director oversees</span>
                 <div
                   className="nav-group__children"
                   aria-label={`${directorNav.label} areas`}
                 >
                   {directorAreas.map((item) => (
-                    <a href={item.href} key={item.href} onClick={closeMenu}>
+                    <Link href={item.href} key={item.href} onClick={closeMenu}>
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -324,23 +325,23 @@ export function SiteHeader({
                 <span className="nav-group__areas-label">Other services</span>
                 <div className="nav-group__children" aria-label="Other services">
                   {standaloneNav.map((item) => (
-                    <a href={item.href} key={item.href} onClick={closeMenu}>
+                    <Link href={item.href} key={item.href} onClick={closeMenu}>
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-          <a href="/industries" onClick={closeMenu}>
+          <Link href="/industries" onClick={closeMenu}>
             Industries
-          </a>
-          <a href="/work" onClick={closeMenu}>
+          </Link>
+          <Link href="/work" onClick={closeMenu}>
             Work
-          </a>
-          <a href="/about" onClick={closeMenu}>
+          </Link>
+          <Link href="/about" onClick={closeMenu}>
             About
-          </a>
+          </Link>
           <BookCallLink
             className="button button-primary site-nav-panel__cta"
             onClick={closeMenu}

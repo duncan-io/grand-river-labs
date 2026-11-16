@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./site-header";
@@ -65,10 +66,10 @@ export function EngagementBlock({
             {ctaLabel}
             <Arrow />
           </BookCallLink>
-          <a className="engagement__alt" href="/lead-leak-audit">
+          <Link className="engagement__alt" href="/lead-leak-audit">
             Not ready for ongoing? Start with a {formatUsd(AUDIT_FEE)} lead leak
             audit →
-          </a>
+          </Link>
         </div>
       </div>
     </section>
