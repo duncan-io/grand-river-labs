@@ -3,6 +3,7 @@ import { BookCallLink } from "./book-call-link";
 import { getIndustry } from "./industries";
 import { Arrow } from "./icons";
 import "./home-services.css";
+import { curveTo } from "./svg-utils";
 
 const content = getIndustry("home-services")!;
 
@@ -14,14 +15,6 @@ const fieldNodes = [
 ] as const;
 
 const hub = { cx: 1320, cy: 420 } as const;
-
-type Point = { cx: number; cy: number };
-
-function curveTo(from: Point, to: Point, bend: number) {
-  const midX = (from.cx + to.cx) / 2 + bend;
-  const midY = (from.cy + to.cy) / 2 - bend * 0.4;
-  return `M${from.cx} ${from.cy} Q${midX} ${midY} ${to.cx} ${to.cy}`;
-}
 
 function HomeServicesScene() {
   const paths = [
