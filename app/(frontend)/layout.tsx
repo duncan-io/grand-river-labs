@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+// Global styles first, so per-component stylesheets load after (and can build on) them.
+import "../globals.css";
 import { Fraunces, Outfit } from "next/font/google";
 import Script from "next/script";
 import { ChatLauncher } from "@/components/chat-launcher";
 import { getSiteUrl } from "@/lib/site";
-import "../globals.css";
 
 const outfit = Outfit({
   variable: "--font-outfit",

@@ -10,6 +10,7 @@ import {
   leadSystemNav,
 } from "./what-we-do-nav";
 import { Arrow } from "./icons";
+import "./sections.css";
 
 const featuredCaseStudy = {
   href: "/case-studies/38-hvac-brand-sites",

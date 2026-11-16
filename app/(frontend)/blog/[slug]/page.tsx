@@ -11,6 +11,7 @@ import { formatDate } from "@/lib/format";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 import type { Category } from "@/payload-types";
 import { PageShell } from "@/components/page-shell";
+import "../blog.css";
 
 type Args = {
   params: Promise<{ slug: string }>;

@@ -3,6 +3,7 @@ import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./icons";
 import type { IndustryContent } from "./industries";
 import { industries } from "./industries";
+import "./industry-use-case.css";
 
 export function IndustryUseCase({ content }: { content: IndustryContent }) {
   return (

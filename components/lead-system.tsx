@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./icons";
 import { FaqSection } from "./faq-section";
+import "./lead-system.css";
 
 const questions = [
   {

@@ -1,0 +1,328 @@
+/* —— CRO page —— */
+/* Layout and type come from .mkt-hero; this only adds the funnel scene. */
+.cro-hero__scene-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 58%,
+    rgba(0, 0, 0, 0.35) 70%,
+    #000 84%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 58%,
+    rgba(0, 0, 0, 0.35) 70%,
+    #000 84%
+  );
+}
+
+.cro-hero__scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cro-hero__glow {
+  transform-origin: center;
+  animation: sun-breathe 8s ease-in-out infinite;
+}
+
+.cro-hero__live {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cro-live 2.4s ease-in-out infinite;
+}
+
+.cro-hero__bar {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.cro-hero__bar--engage {
+  animation: cro-bar-engage 14s ease-in-out infinite;
+}
+
+.cro-hero__bar--form {
+  animation: cro-bar-form 14s ease-in-out infinite;
+}
+
+.cro-hero__bar--inquiry {
+  animation: cro-bar-inquiry 14s ease-in-out infinite;
+}
+
+.cro-hero__lift,
+.cro-hero__variant {
+  opacity: 0;
+  animation: cro-fade-up 14s ease-in-out infinite;
+}
+
+.cro-friction {
+  background:
+    radial-gradient(circle at 0 100%, rgba(176, 228, 220, 0.55), transparent 36%),
+    linear-gradient(165deg, #f4fbf9 0%, #dff3ef 55%, #ccebe5 100%);
+}
+
+.cro-friction__top .section-copy,
+.cro-ways__top .section-copy,
+.cro-flow__top .section-copy {
+  max-width: 28rem;
+  margin: 0 0 0.5rem;
+}
+
+.cro-flow__top a {
+  color: var(--accent-dark);
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.cro-flow__top a:hover {
+  color: var(--accent);
+}
+
+.cro-friction__cell:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.cro-friction__number {
+  display: inline-block;
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.9rem;
+  font-weight: 650;
+  animation: ws-friction-number-pulse 3.6s ease-in-out infinite;
+}
+
+.cro-friction__cell:nth-child(2) .cro-friction__number {
+  animation-delay: 0.4s;
+}
+
+.cro-friction__cell:nth-child(3) .cro-friction__number {
+  animation-delay: 0.8s;
+}
+
+.cro-friction__cell:nth-child(4) .cro-friction__number {
+  animation-delay: 1.2s;
+}
+
+.cro-friction__cell p {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.cro-ways {
+  background: var(--surface);
+}
+
+.cro-way:last-child {
+  grid-column: 1 / -1;
+}
+
+.cro-way__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.95rem;
+}
+
+.cro-way__lead {
+  margin: 0 0 0.5rem;
+  color: var(--foreground);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.cro-way__setup,
+.cro-way__outcome {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.cro-way__label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 901px) {
+  .cro-way:last-child {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 1.75rem;
+    align-items: start;
+  }
+
+  .cro-way:last-child .cro-way__number {
+    grid-row: 1 / span 2;
+  }
+
+  .cro-way:last-child h3,
+  .cro-way:last-child .cro-way__lead {
+    grid-column: 2;
+  }
+
+  .cro-way:last-child .cro-way__setup {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+
+  .cro-way:last-child .cro-way__outcome {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+  }
+}
+
+.cro-flow {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.75), transparent 38%),
+    radial-gradient(circle at 100% 100%, rgba(176, 228, 220, 0.5), transparent 34%),
+    linear-gradient(160deg, var(--sky) 0%, #dff4f1 50%, var(--accent-soft) 100%);
+}
+
+.cro-flow__connector svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.cro-flow__connector-line {
+  stroke-dasharray: 4 6;
+  animation: whitelabel-connector-dash 2.4s linear infinite;
+}
+
+.cro-flow__number {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.05rem;
+}
+
+.cro-flow__step h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.45rem, 2.2vw, 1.85rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.cro-flow__step p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 1100px) {
+
+  .cro-flow__step:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .cro-flow__step:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+@keyframes cro-bar-engage {
+  0%,
+  18% {
+    transform: scaleX(0.7);
+  }
+
+  36%,
+  76% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(0.7);
+  }
+}
+
+@keyframes cro-bar-form {
+  0%,
+  18% {
+    transform: scaleX(0.55);
+  }
+
+  36%,
+  76% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(0.55);
+  }
+}
+
+@keyframes cro-bar-inquiry {
+  0%,
+  18% {
+    transform: scaleX(0.46);
+  }
+
+  36%,
+  76% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(0.46);
+  }
+}
+
+@media (max-width: 640px) {
+
+  .cro-hero__scene-wrap {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 18%,
+      rgba(0, 0, 0, 0.22) 40%,
+      #000 70%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 18%,
+      rgba(0, 0, 0, 0.22) 40%,
+      #000 70%
+    );
+  }
+
+  /* The funnel sits behind the hero copy at phone width; keep it faint. */
+  .cro-hero__scene {
+    opacity: 0.45;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .cro-hero__bar {
+    transform: none !important;
+  }
+
+  .cro-hero__lift,
+  .cro-hero__variant {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

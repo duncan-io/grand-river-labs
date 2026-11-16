@@ -1,0 +1,124 @@
+.mkt-hero.industries-hero {
+  min-height: auto;
+  padding: clamp(8rem, 14vw, 10rem) 0 clamp(3.5rem, 7vw, 5rem);
+}
+
+.industries-list__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.industries-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface);
+}
+
+.industries-card__title {
+  margin: 0;
+  color: var(--accent-dark);
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+  font-weight: 580;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.industries-card__title a {
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+.industries-card__title a:hover {
+  color: var(--accent);
+}
+
+.industries-card__who {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.industries-card__callouts {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.industries-card__callouts li {
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.5;
+}
+
+.industries-card__callouts li::before {
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 0.75rem;
+  height: 1px;
+  content: "";
+  background: var(--accent);
+}
+
+.industries-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  color: var(--accent-dark);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.industries-card__more:hover {
+  color: var(--accent);
+}
+
+.industries-more {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: 0.85rem;
+  background: var(--mist);
+}
+
+.industries-more__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.35rem;
+  font-weight: 580;
+  letter-spacing: -0.03em;
+}
+
+.industries-more__copy {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .industries-list__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industries-more {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

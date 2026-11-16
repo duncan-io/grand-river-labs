@@ -1,6 +1,7 @@
 import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { Arrow } from "./icons";
+import "./seo.css";
 
 const friction = [
   {

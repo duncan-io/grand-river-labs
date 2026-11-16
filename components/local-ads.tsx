@@ -3,6 +3,7 @@ import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
 import { Arrow } from "./icons";
 import { FaqSection } from "./faq-section";
+import "./local-ads.css";
 
 const friction = [
   {

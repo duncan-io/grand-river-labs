@@ -10,6 +10,7 @@ import {
   directorNav,
   standaloneNav,
 } from "./what-we-do-nav";
+import "./site-header.css";
 
 const Chevron = () => (
   <svg

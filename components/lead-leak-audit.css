@@ -1,0 +1,172 @@
+/* —— Lead leak audit page —— */
+.leak-hero .mkt-hero__content {
+  width: min(46rem, 60%);
+}
+
+.leak-hero__drop {
+  animation: leak-drip 2.7s ease-in infinite;
+}
+
+@keyframes leak-drip {
+  0% {
+    opacity: 0;
+  }
+
+  15%,
+  70% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.leak-path {
+  background:
+    radial-gradient(circle at 0 100%, rgba(176, 228, 220, 0.55), transparent 36%),
+    linear-gradient(165deg, #f4fbf9 0%, #dff3ef 55%, #ccebe5 100%);
+}
+
+.leak-path__list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The vertical line joining the checkpoints into one path. */
+.leak-path__list::before {
+  position: absolute;
+  top: 2.4rem;
+  bottom: 2.4rem;
+  left: 1.25rem;
+  border-left: 1.5px dashed rgba(5, 122, 114, 0.4);
+  content: "";
+}
+
+.leak-path__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 0.7fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem clamp(1.5rem, 3vw, 2.75rem);
+  align-items: start;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.leak-path__item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.leak-path__marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent-dark);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.95rem;
+  background: #f4fbf9;
+}
+
+.leak-path__item h3 {
+  margin: 0.3rem 0 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.45rem, 2.2vw, 1.85rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.leak-path__detail {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.leak-path__label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.leak-path__label--leak {
+  color: #9a5a24;
+}
+
+@media (min-width: 1101px) {
+  .leak-flow .seo-flow__steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .leak-path__item {
+    grid-template-columns: 2.5rem minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .leak-path__item h3 {
+    grid-column: 2 / -1;
+  }
+
+  .leak-path__item .leak-path__detail:first-of-type {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 900px) {
+  .leak-hero .mkt-hero__content {
+    width: min(38rem, 78%);
+  }
+
+  .leak-hero .mkt-hero__scene {
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 640px) {
+  .leak-hero .mkt-hero__content {
+    width: 100%;
+  }
+
+  .leak-hero .mkt-hero__scene {
+    opacity: 0.32;
+    transform: translate(22%, 6%) scale(1.2);
+    transform-origin: right center;
+  }
+
+  .leak-path__list::before {
+    left: 1rem;
+  }
+
+  .leak-path__item {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.9rem 1rem;
+  }
+
+  .leak-path__marker {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.8rem;
+  }
+
+  .leak-path__item h3,
+  .leak-path__item .leak-path__detail,
+  .leak-path__item .leak-path__detail:first-of-type {
+    grid-column: 2;
+  }
+
+  .leak-path__item h3 {
+    margin-top: 0.15rem;
+  }
+}

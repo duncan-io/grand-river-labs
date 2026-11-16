@@ -3,6 +3,7 @@ import { BookCallLink } from "./book-call-link";
 import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./icons";
 import { FaqSection } from "./faq-section";
+import "./lead-leak-audit.css";
 
 const checkpoints = [
   {

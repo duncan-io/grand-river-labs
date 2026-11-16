@@ -1,0 +1,258 @@
+/* —— Lead Qualification System page —— */
+/* Hero: copy beside a diagram of the client's own sources → qualification → the client's own systems. */
+.lq-hero__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 28rem);
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.lq-hero .mkt-hero__content {
+  width: auto;
+}
+
+.lq-diagram {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.lq-diagram__label {
+  margin: 0 0 0.65rem;
+  color: #365e5b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lq-diagram__label--end {
+  margin: 0.65rem 0 0;
+}
+
+.lq-diagram__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lq-diagram__tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--surface);
+  color: var(--foreground);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.lq-diagram__tile svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--accent);
+}
+
+.lq-diagram__tile--out {
+  border: 1.5px solid var(--accent);
+  background: #fffdf4;
+}
+
+.lq-diagram__tile-name {
+  font-weight: 650;
+}
+
+.lq-diagram__tile-detail {
+  color: #365e5b;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.lq-diagram__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  height: 2.1rem;
+}
+
+.lq-diagram__links span {
+  justify-self: center;
+  width: 1.5px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--accent) 0 5px,
+    transparent 5px 10px
+  );
+  animation: lq-flow 1.2s linear infinite;
+}
+
+@keyframes lq-flow {
+  to {
+    background-position: 0 10px;
+  }
+}
+
+.lq-diagram__core {
+  padding: 1.1rem 1.25rem 1.25rem;
+  border-radius: 1rem;
+  background: var(--accent-dark);
+  color: #fffdf4;
+  box-shadow: 0 24px 50px -36px rgba(7, 87, 82, 0.7);
+}
+
+.lq-diagram__core-label {
+  margin: 0 0 0.75rem;
+  color: #cfe9e4;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.lq-diagram__steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  font-size: 0.88rem;
+  font-weight: 650;
+  list-style: none;
+  text-align: center;
+}
+
+.lq-diagram__steps li {
+  padding: 0.6rem 0.25rem;
+  border: 1px solid rgba(255, 253, 244, 0.18);
+  border-radius: 0.6rem;
+  background: rgba(255, 253, 244, 0.1);
+}
+
+/* How it works: five steps, one consistent row each. */
+.lq-how {
+  border-block: 1px solid rgba(16, 47, 47, 0.08);
+  background: var(--mist);
+}
+
+.lq-steps {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+  list-style: none;
+}
+
+.lq-step {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 0.6rem 3rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.lq-step__head {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+}
+
+.lq-step__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.75rem;
+  font-weight: 560;
+  line-height: 1;
+}
+
+.lq-step h3 {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.lq-step p,
+.lq-step__routes {
+  max-width: 40rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.06rem;
+  line-height: 1.65;
+}
+
+.lq-step__route {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.lq-step__route + .lq-step__route {
+  margin-top: 0.4rem;
+}
+
+.lq-step__route dd {
+  margin: 0;
+}
+
+.lq-step__tier {
+  font-weight: 700;
+}
+
+.lq-step__tier--hot {
+  color: #b4531a;
+}
+
+.lq-step__tier--warm {
+  color: var(--accent-dark);
+}
+
+.lq-step__tier--fit {
+  color: #365e5b;
+}
+
+@media (max-width: 900px) {
+  .lq-hero__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .lq-diagram {
+    width: 100%;
+    max-width: 32rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .lq-step {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .lq-diagram__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lq-diagram__links span {
+    animation: none;
+  }
+}
+
+.lq-stack .lead-teaser__features {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .lq-stack .lead-teaser__features {
+    grid-template-columns: 1fr;
+  }
+}

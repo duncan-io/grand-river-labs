@@ -1,0 +1,275 @@
+.what-we-do-glove {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.75), transparent 38%),
+    radial-gradient(circle at 100% 100%, rgba(176, 228, 220, 0.5), transparent 34%),
+    linear-gradient(160deg, var(--sky) 0%, #dff4f1 50%, var(--accent-soft) 100%);
+}
+
+.what-we-do-glove__journey {
+  position: relative;
+  display: grid;
+  gap: clamp(2.75rem, 6vw, 4.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.what-we-do-glove__journey::before {
+  content: "";
+  position: absolute;
+  top: 1.35rem;
+  bottom: 1.35rem;
+  left: 1.35rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(5, 122, 114, 0.35) 12%,
+    rgba(5, 122, 114, 0.35) 88%,
+    transparent 100%
+  );
+  animation: what-we-do-glove-spine 1.4s ease-out both;
+}
+
+.what-we-do-glove__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.7rem minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.what-we-do-glove__row--flip .what-we-do-glove__copy {
+  order: 3;
+}
+
+.what-we-do-glove__row--flip .what-we-do-glove__visual {
+  order: 2;
+}
+
+.what-we-do-glove__marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 30%, #fffdf4, #ccebe5 70%, #6fb8b0);
+  box-shadow:
+    0 0 0 2px rgba(5, 122, 114, 0.45),
+    0 0 0 8px rgba(5, 122, 114, 0.1);
+  animation: process-marker-pulse 4.5s ease-in-out infinite;
+}
+
+.what-we-do-glove__row:nth-child(2) .what-we-do-glove__marker {
+  animation-delay: 0.4s;
+}
+
+.what-we-do-glove__row:nth-child(3) .what-we-do-glove__marker {
+  animation-delay: 0.8s;
+}
+
+.what-we-do-glove__number {
+  color: var(--ink);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.92rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.what-we-do-glove__copy h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.85rem, 3vw, 2.65rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+.what-we-do-glove__copy p {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.what-we-do-glove__visual {
+  display: grid;
+  place-items: center;
+  min-height: 13rem;
+}
+
+.what-we-do-glove__motif {
+  width: min(100%, 24rem);
+  height: auto;
+  overflow: visible;
+}
+
+.what-we-do-glove__path {
+  animation: what-we-do-path-dash 2.8s linear infinite;
+}
+
+.what-we-do-glove__node {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: what-we-do-node-pulse 4.2s ease-in-out infinite;
+}
+
+.what-we-do-glove__node-ring,
+.what-we-do-glove__hub-ring {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: what-we-do-ring-pulse 4.5s ease-in-out infinite;
+}
+
+.what-we-do-glove__hub {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: what-we-do-hub-pulse 5s ease-in-out infinite;
+}
+
+.what-we-do-glove__hub-ring--outer {
+  animation-duration: 6s;
+}
+
+.what-we-do-glove__packet {
+  opacity: 0.95;
+}
+
+.what-we-do-glove__find {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: what-we-do-glove-find 7.5s ease-in-out infinite;
+}
+
+.what-we-do-glove__ops-antenna {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-antenna-blink 3.2s ease-in-out infinite;
+}
+
+.what-we-do-glove__board-btn {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: what-we-do-glove-btn-glow 5.4s ease-in-out infinite;
+}
+
+.what-we-do-glove__lever {
+  transform-origin: bottom center;
+  transform-box: fill-box;
+  animation: what-we-do-glove-lever-wiggle 4.8s ease-in-out infinite;
+}
+
+.what-we-do-glove__dial-needle {
+  transform-origin: bottom center;
+  transform-box: fill-box;
+  animation: what-we-do-glove-dial-sweep 3.6s ease-in-out infinite alternate;
+}
+
+.what-we-do-glove__monitor-wave {
+  animation: what-we-do-path-dash 2.4s linear infinite;
+}
+
+.what-we-do-glove__monitor-blip {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: what-we-do-glove-monitor-blip 2.2s ease-in-out infinite;
+}
+
+@keyframes what-we-do-glove-btn-glow {
+  0%,
+  14%,
+  28%,
+  100% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  18%,
+  22% {
+    filter: brightness(1.35);
+    transform: scale(1.12);
+  }
+  54%,
+  58% {
+    filter: brightness(1.35);
+    transform: scale(1.12);
+  }
+}
+
+@keyframes what-we-do-glove-lever-wiggle {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes what-we-do-glove-dial-sweep {
+  from {
+    transform: rotate(-40deg);
+  }
+  to {
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes what-we-do-glove-monitor-blip {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+@media (max-width: 900px) {
+
+  .what-we-do-glove__journey {
+    gap: 2.5rem;
+  }
+
+  .what-we-do-glove__row,
+  .what-we-do-glove__row--flip {
+    grid-template-columns: 2.7rem 1fr;
+    gap: 0.85rem 1.35rem;
+    align-items: start;
+  }
+
+  .what-we-do-glove__row .what-we-do-glove__copy,
+  .what-we-do-glove__row--flip .what-we-do-glove__copy {
+    order: 2;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .what-we-do-glove__row .what-we-do-glove__visual,
+  .what-we-do-glove__row--flip .what-we-do-glove__visual {
+    order: 3;
+    grid-column: 2;
+    grid-row: 2;
+    justify-items: start;
+    min-height: 0;
+  }
+
+  .what-we-do-glove__marker {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .what-we-do-glove__copy h3 {
+    margin-top: 0.4rem;
+    font-size: clamp(1.55rem, 6vw, 2rem);
+  }
+
+  .what-we-do-glove__motif {
+    width: min(100%, 18rem);
+  }
+}

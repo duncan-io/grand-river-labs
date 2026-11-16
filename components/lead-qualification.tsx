@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./icons";
 import { FaqSection } from "./faq-section";
+import "./lead-qualification.css";
 
 const sources = [
   { label: "Website forms", icon: "form" },

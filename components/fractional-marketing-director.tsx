@@ -9,6 +9,7 @@ import { FeaturedCaseStudy } from "./sections";
 import { Arrow } from "./icons";
 import { directorAreas, leadSystemNav } from "./what-we-do-nav";
 import { FaqSection } from "./faq-section";
+import "./fractional-marketing-director.css";
 
 const scopeAreas = [...directorAreas, leadSystemNav] as const;
 

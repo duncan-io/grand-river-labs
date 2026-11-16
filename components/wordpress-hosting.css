@@ -1,0 +1,130 @@
+/* —— WordPress hosting page —— */
+.hosting-included {
+  background: var(--surface);
+}
+
+.hosting-features {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.35rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hosting-feature {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: clamp(1.25rem, 2.2vw, 1.6rem);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 253, 244, 0.7), transparent 42%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.72) 0%, rgba(204, 235, 229, 0.42) 100%);
+  border: 1px solid rgba(5, 122, 114, 0.12);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease;
+}
+
+.hosting-feature:hover {
+  transform: translateY(-3px);
+  border-color: rgba(5, 122, 114, 0.28);
+}
+
+.hosting-feature__icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-bottom: 0.4rem;
+  border-radius: 50%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m6 10.2 2.6 2.6L14 7.4' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      center / 100% no-repeat,
+    var(--accent);
+}
+
+.hosting-feature h3 {
+  margin: 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.2rem, 1.6vw, 1.4rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.hosting-feature p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 1101px) {
+  .hosting-flow .gbp-flow__steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .hosting-features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .hosting-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hosting-hero__check {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hosting-check 10s ease-in-out infinite;
+}
+
+.hosting-hero g:nth-of-type(2) .hosting-hero__check {
+  animation-delay: 0.35s;
+}
+
+.hosting-hero g:nth-of-type(3) .hosting-hero__check {
+  animation-delay: 0.7s;
+}
+
+.hosting-hero g:nth-of-type(4) .hosting-hero__check {
+  animation-delay: 1.05s;
+}
+
+.hosting-hero g:nth-of-type(5) .hosting-hero__check {
+  animation-delay: 1.4s;
+}
+
+@keyframes hosting-check {
+  0%,
+  8% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  18%,
+  88% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hosting-hero__check {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hosting-feature:hover {
+    transform: none;
+  }
+}

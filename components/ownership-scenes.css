@@ -1,0 +1,61 @@
+.ws-ownership__path {
+  animation: what-we-do-path-dash 3.6s linear infinite;
+}
+
+.ws-ownership__packet {
+  filter: drop-shadow(0 0 6px rgba(5, 122, 114, 0.35));
+}
+
+.ws-ownership__node,
+.ws-ownership__dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ai-automation-float 5.5s ease-in-out infinite;
+}
+
+.ws-ownership__dot {
+  animation-duration: 4.2s;
+}
+
+.ws-ownership__node-ring,
+.ws-ownership__dot-ring {
+  fill: none;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ai-automation-node-ring 3.6s ease-out infinite;
+}
+
+.ws-ownership__site {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ai-automation-hub-pulse 4.8s ease-in-out infinite;
+}
+
+.ws-ownership__site-ring {
+  fill: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ai-automation-ring-pulse 4.8s ease-in-out infinite;
+}
+
+.ws-ownership__site-ring--outer {
+  animation-delay: 0.45s;
+}
+
+.ws-ownership__hub {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ai-automation-hub-pulse 3.6s ease-in-out infinite;
+}
+
+.ws-ownership__hub-ring {
+  fill: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ai-automation-ring-pulse 3.6s ease-in-out infinite;
+}
+
+.ws-ownership__hub-ring--outer {
+  animation-delay: 0.45s;
+}

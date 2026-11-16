@@ -1,0 +1,120 @@
+.industry-hero {
+  padding-top: clamp(7.5rem, 14vw, 10rem);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.85), transparent 28%),
+    linear-gradient(160deg, #f8fcfb 0%, #e7f6f3 52%, #d5efeb 100%);
+}
+
+.industry-hero__content {
+  max-width: 42rem;
+}
+
+.industry-hero__headline {
+  max-width: 18ch;
+}
+
+.industry-hero__copy {
+  max-width: 34rem;
+  margin: 0 0 2rem;
+}
+
+.industry-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.industry-drains {
+  background: var(--mist);
+}
+
+.industry-wins {
+  background: var(--background);
+}
+
+.industry-list {
+  border-top: 1px solid var(--line);
+}
+
+.industry-row__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.95rem;
+}
+
+.industry-how {
+  background:
+    radial-gradient(circle at 0 100%, rgba(176, 228, 220, 0.45), transparent 34%),
+    var(--sky);
+}
+
+.industry-how__steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.industry-how__step {
+  min-height: 14rem;
+  padding: 2rem 1.75rem 2rem 0;
+  border-right: 1px solid var(--line);
+}
+
+.industry-how__step:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.industry-how__number {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.95rem;
+}
+
+.industry-how__step h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.55rem, 2.4vw, 2rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+}
+
+.industry-how__step p {
+  margin: 0;
+  max-width: 22rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+
+  .industry-how__steps {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-how__step,
+  .industry-how__step:last-child {
+    min-height: auto;
+    padding: 1.75rem 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .industry-how__step:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .industry-hero__actions {
+    width: min(100%, 22rem);
+  }
+
+  .industry-hero__actions .button {
+    flex: 1 1 auto;
+  }
+}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { AUDIT_FEE, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./icons";
+import "./hero.css";
 
 function RiverScene() {
   return (

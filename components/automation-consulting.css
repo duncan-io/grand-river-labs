@@ -1,0 +1,432 @@
+/* —— Automation consulting page —— */
+.consulting-hero {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  align-items: center;
+  padding: 8.5rem 0 6rem;
+  background:
+    radial-gradient(circle at 76% 24%, rgba(255, 255, 255, 0.9), transparent 28%),
+    linear-gradient(148deg, #f8fcfb 0%, #dff3f0 46%, #bde7e3 100%);
+}
+
+.consulting-hero__scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.consulting-hero__glow {
+  transform-origin: center;
+  animation: sun-breathe 8s ease-in-out infinite;
+}
+
+.consulting-hero__path {
+  opacity: 0.7;
+  animation: what-we-do-path-dash 3.8s linear infinite;
+}
+
+.consulting-hero__packet {
+  opacity: 0.95;
+  filter: drop-shadow(0 0 6px rgba(5, 122, 114, 0.35));
+}
+
+.consulting-hero__node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-node-pulse 3.6s ease-in-out infinite;
+}
+
+.consulting-hero__node-ring {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-node-ring 3.6s ease-out infinite;
+}
+
+.consulting-hero__lens {
+  transform-origin: 1260px 470px;
+  animation: what-we-do-hub-pulse 3.6s ease-in-out infinite;
+}
+
+.consulting-hero__lens-ring {
+  transform-origin: 1260px 470px;
+  animation: what-we-do-ring-pulse 3.6s ease-in-out infinite;
+}
+
+.consulting-hero__lens-ring--outer {
+  animation-delay: 0.45s;
+}
+
+.consulting-hero__brand {
+  margin: 0 0 1.1rem;
+  color: var(--accent-dark);
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(3.2rem, 7vw, 6.8rem);
+  font-weight: 620;
+  letter-spacing: -0.07em;
+  line-height: 0.85;
+  text-wrap: balance;
+}
+
+.consulting-hero .eyebrow {
+  margin-bottom: 1rem;
+}
+
+.consulting-hero__headline {
+  max-width: 18ch;
+  margin: 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.85rem, 3.2vw, 3.1rem);
+  font-weight: 560;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.consulting-hero__copy {
+  max-width: 34rem;
+  margin: 1.35rem 0 0;
+  color: #365e5b;
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.consulting-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.consulting-hero__cue {
+  position: absolute;
+  z-index: 2;
+  bottom: 2rem;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.consulting-hero__cue::after {
+  width: 2.5rem;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  animation: cue-pulse 2s ease-in-out infinite;
+  transform-origin: left;
+}
+
+.consulting-when {
+  background: var(--surface);
+}
+
+.consulting-when__top .section-copy,
+.consulting-examples__top .section-copy,
+.consulting-deliverables__top .section-copy,
+.consulting-flow__top .section-copy {
+  max-width: 28rem;
+  margin: 0 0 0.5rem;
+}
+
+.consulting-when__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.consulting-when__point p {
+  margin: 0;
+  max-width: 22rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.consulting-examples {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(16, 47, 47, 0.05), transparent 42%),
+    linear-gradient(180deg, #e4efed 0%, #d8e6e3 100%);
+}
+
+.consulting-examples__list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.consulting-example {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.35fr) 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding: clamp(2rem, 4vw, 3rem) 0 clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--line);
+  border-left: 3px solid transparent;
+  padding-left: 0;
+  transition:
+    border-color 220ms ease,
+    padding-left 220ms ease;
+}
+
+.consulting-example:hover {
+  border-left-color: var(--accent);
+  padding-left: 1rem;
+}
+
+.consulting-example--offset {
+  margin-left: clamp(0rem, 4vw, 3.5rem);
+}
+
+.consulting-example__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.35rem;
+}
+
+.consulting-example__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.consulting-example__industry {
+  margin: 0;
+  max-width: 14rem;
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.consulting-example__body h3 {
+  margin: 0 0 1.75rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.75rem, 3vw, 2.55rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.consulting-example__blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.consulting-example__label {
+  margin: 0 0 0.65rem;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.consulting-example__blocks p:not(.consulting-example__label) {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.consulting-deliverables {
+  background:
+    radial-gradient(circle at 0 100%, rgba(176, 228, 220, 0.55), transparent 36%),
+    linear-gradient(165deg, #f4fbf9 0%, #dff3ef 55%, #ccebe5 100%);
+}
+
+.consulting-deliverables__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.consulting-deliverable {
+  min-height: 14rem;
+  padding: 2.25rem clamp(1.5rem, 3vw, 2.75rem) 2rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.consulting-deliverable:nth-child(2n) {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.consulting-deliverable:nth-child(odd) {
+  padding-left: 0;
+}
+
+.consulting-deliverable:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.consulting-deliverable__number {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.05rem;
+}
+
+.consulting-deliverable h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.55rem, 2.4vw, 2rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.consulting-deliverable p {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.consulting-flow {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.75), transparent 38%),
+    radial-gradient(circle at 100% 100%, rgba(176, 228, 220, 0.5), transparent 34%),
+    linear-gradient(160deg, var(--sky) 0%, #dff4f1 50%, var(--accent-soft) 100%);
+}
+
+.consulting-flow__connector svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.consulting-flow__connector-line {
+  stroke-dasharray: 4 6;
+  animation: whitelabel-connector-dash 2.4s linear infinite;
+}
+
+.consulting-flow__number {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.05rem;
+}
+
+.consulting-flow__step h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.55rem, 2.4vw, 2rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.consulting-flow__step p {
+  margin: 0;
+  max-width: 22rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+
+  .consulting-example {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .consulting-example--offset {
+    margin-left: 0;
+  }
+
+  .consulting-example__blocks {
+    grid-template-columns: 1fr;
+  }
+
+  .consulting-deliverables__list {
+    grid-template-columns: 1fr;
+  }
+
+  .consulting-deliverable,
+  .consulting-deliverable:nth-child(2n),
+  .consulting-deliverable:nth-child(odd) {
+    min-height: auto;
+    padding: 1.75rem 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .consulting-deliverable:nth-last-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .consulting-deliverable:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .consulting-hero {
+    align-items: start;
+    padding-top: 8rem;
+  }
+
+  .consulting-hero__content {
+    width: 100%;
+  }
+
+  .consulting-hero__brand {
+    max-width: 100%;
+    font-size: clamp(2.6rem, 11.5vw, 4rem);
+  }
+
+  .consulting-hero__headline {
+    max-width: 16ch;
+    font-size: 1.72rem;
+  }
+
+  .consulting-hero__copy {
+    max-width: 22rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .consulting-hero__scene {
+    opacity: 0.7;
+    transform: none;
+  }
+
+  .consulting-hero__actions {
+    width: min(100%, 22rem);
+  }
+
+  .consulting-hero__actions .button {
+    flex: 1 1 auto;
+  }
+
+  .consulting-hero__cue {
+    display: none;
+  }
+
+  .consulting-example:hover {
+    padding-left: 0.65rem;
+  }
+}

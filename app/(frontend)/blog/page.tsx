@@ -7,6 +7,7 @@ import { getPublishedPosts } from "@/lib/cms";
 import { formatDate } from "@/lib/format";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 import { PageShell } from "@/components/page-shell";
+import "./blog.css";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },

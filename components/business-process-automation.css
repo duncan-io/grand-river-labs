@@ -1,0 +1,417 @@
+/* —— Business process automation page —— */
+.bpa-hero {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  align-items: center;
+  padding: 8.5rem 0 6rem;
+  background:
+    radial-gradient(circle at 76% 24%, rgba(255, 255, 255, 0.9), transparent 28%),
+    linear-gradient(148deg, #f8fcfb 0%, #dff3f0 46%, #bde7e3 100%);
+}
+
+.bpa-hero__scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bpa-hero__glow {
+  transform-origin: center;
+  animation: sun-breathe 8s ease-in-out infinite;
+}
+
+.bpa-hero__path {
+  opacity: 0.7;
+  animation: what-we-do-path-dash 3.2s linear infinite;
+}
+
+.bpa-hero__packet {
+  opacity: 0.95;
+  filter: drop-shadow(0 0 6px rgba(5, 122, 114, 0.35));
+}
+
+.bpa-hero__stage {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-node-pulse 3.6s ease-in-out infinite;
+}
+
+.bpa-hero__stage-ring {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-node-ring 3.6s ease-out infinite;
+}
+
+.bpa-hero__merge {
+  transform-origin: 1180px 380px;
+  animation: what-we-do-hub-pulse 3.6s ease-in-out infinite;
+}
+
+.bpa-hero__merge-ring {
+  transform-origin: 1180px 380px;
+  animation: what-we-do-ring-pulse 3.6s ease-in-out infinite;
+}
+
+.bpa-hero__merge-ring--outer {
+  animation-delay: 0.45s;
+}
+
+.bpa-hero__brand {
+  margin: 0 0 0.85rem;
+  color: var(--accent-dark);
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 620;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.bpa-hero .eyebrow {
+  margin-bottom: 0.85rem;
+}
+
+.bpa-hero__headline {
+  max-width: 16ch;
+  margin: 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(2.15rem, 4.2vw, 3.85rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.bpa-hero__copy {
+  max-width: 34rem;
+  margin: 1.35rem 0 0;
+  color: #365e5b;
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.bpa-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.bpa-hero__cue {
+  position: absolute;
+  z-index: 2;
+  bottom: 2rem;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.bpa-hero__cue::after {
+  width: 2.5rem;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  animation: cue-pulse 2s ease-in-out infinite;
+  transform-origin: left;
+}
+
+.bpa-friction {
+  background: var(--surface);
+}
+
+.bpa-friction__top .section-copy,
+.bpa-examples__top .section-copy {
+  max-width: 28rem;
+  margin: 0 0 0.5rem;
+}
+
+.bpa-list {
+  border-top: 1px solid var(--line);
+}
+
+.bpa-row__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.95rem;
+}
+
+.bpa-examples {
+  background:
+    radial-gradient(circle at 0 100%, rgba(176, 228, 220, 0.55), transparent 36%),
+    linear-gradient(165deg, #f4fbf9 0%, #dff3ef 55%, #ccebe5 100%);
+}
+
+.bpa-featured {
+  padding-top: clamp(0.5rem, 2vw, 1rem);
+}
+
+.bpa-featured__process {
+  margin: 0 0 0.65rem;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.bpa-featured__title {
+  margin: 0 0 clamp(2rem, 5vw, 3rem);
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 560;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.bpa-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 0 0 clamp(2rem, 4vw, 2.75rem);
+  padding: 0;
+  list-style: none;
+}
+
+.bpa-timeline::before {
+  content: "";
+  position: absolute;
+  top: 1.35rem;
+  left: 1.35rem;
+  right: 1.35rem;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(5, 122, 114, 0.35) 8%,
+    rgba(5, 122, 114, 0.55) 50%,
+    rgba(5, 122, 114, 0.35) 92%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: process-rail-shimmer 4.8s linear infinite;
+  pointer-events: none;
+}
+
+.bpa-timeline__step {
+  position: relative;
+  padding: 0 1.5rem 0.5rem 0;
+}
+
+.bpa-timeline__marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  margin-bottom: 1.5rem;
+  border-radius: 50%;
+  background: #f4fbf9;
+  box-shadow:
+    0 0 0 2px rgba(5, 122, 114, 0.45),
+    0 0 0 8px rgba(5, 122, 114, 0.08);
+  animation: process-marker-pulse 3.6s ease-in-out infinite;
+}
+
+.bpa-timeline__step:nth-child(2) .bpa-timeline__marker {
+  animation-delay: 0.4s;
+}
+
+.bpa-timeline__step:nth-child(3) .bpa-timeline__marker {
+  animation-delay: 0.8s;
+}
+
+.bpa-timeline__step:nth-child(4) .bpa-timeline__marker {
+  animation-delay: 1.2s;
+}
+
+.bpa-timeline__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.95rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.bpa-timeline__body h4 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.bpa-timeline__body p {
+  margin: 0;
+  max-width: 11rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.bpa-featured__outcome {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--ink);
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.25rem, 2.2vw, 1.55rem);
+  font-weight: 560;
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+}
+
+.bpa-examples__more {
+  margin-top: clamp(2.75rem, 6vw, 4rem);
+  padding-top: clamp(1.75rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+
+.bpa-examples__more-line {
+  margin: 0 0 0.85rem;
+  max-width: 36rem;
+  color: var(--ink);
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  font-weight: 560;
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+}
+
+.bpa-examples__names {
+  margin: 0;
+  max-width: 44rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.bpa-examples__dot {
+  color: var(--accent);
+  opacity: 0.55;
+}
+
+@keyframes process-rail-shimmer {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes process-rail-shimmer-vertical {
+  from {
+    background-position: 0 0%;
+  }
+  to {
+    background-position: 0 200%;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .bpa-timeline {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-left: 0;
+  }
+
+  .bpa-timeline::before {
+    top: 1.35rem;
+    bottom: 1.35rem;
+    left: 1.35rem;
+    right: auto;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(5, 122, 114, 0.35) 8%,
+      rgba(5, 122, 114, 0.55) 50%,
+      rgba(5, 122, 114, 0.35) 92%,
+      transparent 100%
+    );
+    background-size: 100% 200%;
+    animation: process-rail-shimmer-vertical 4.8s linear infinite;
+  }
+
+  .bpa-timeline__step {
+    display: grid;
+    grid-template-columns: 2.7rem 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    padding: 0 0 1.75rem;
+  }
+
+  .bpa-timeline__step:last-child {
+    padding-bottom: 0;
+  }
+
+  .bpa-timeline__marker {
+    margin-bottom: 0;
+  }
+
+  .bpa-timeline__body p {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .bpa-hero {
+    align-items: start;
+    padding-top: 8rem;
+  }
+
+  .bpa-hero__content {
+    width: 100%;
+  }
+
+  .bpa-hero__brand {
+    max-width: 100%;
+    font-size: clamp(2.6rem, 11.5vw, 4rem);
+  }
+
+  .bpa-hero__headline {
+    max-width: 16ch;
+    font-size: 1.72rem;
+  }
+
+  .bpa-hero__copy {
+    max-width: 22rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .bpa-hero__scene {
+    opacity: 0.7;
+    transform: none;
+  }
+
+  .bpa-hero__actions {
+    width: min(100%, 22rem);
+  }
+
+  .bpa-hero__actions .button {
+    flex: 1 1 auto;
+  }
+
+  .bpa-hero__cue {
+    display: none;
+  }
+}

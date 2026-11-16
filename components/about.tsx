@@ -5,6 +5,7 @@ import { FiveStars } from "./five-stars";
 import { Arrow } from "./icons";
 import { testimonials } from "@/lib/testimonials";
 import duncanPhoto from "@/public/team/duncan.png";
+import "./about.css";
 
 const profileFacts = [
   { label: "Role", value: "Founder, fractional marketing director" },

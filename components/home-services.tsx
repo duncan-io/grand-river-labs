@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { getIndustry } from "./industries";
 import { Arrow } from "./icons";
+import "./home-services.css";
 
 const content = getIndustry("home-services")!;
 

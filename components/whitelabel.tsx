@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
 import { Arrow } from "./icons";
+import "./whitelabel.css";
 
 const audience = [
   {

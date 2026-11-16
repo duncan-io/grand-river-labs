@@ -3,6 +3,7 @@ import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
 import { Arrow } from "./icons";
 import { WhiteGloveEngagement } from "./white-glove-engagement";
+import "./business-process-automation.css";
 
 const friction = [
   {

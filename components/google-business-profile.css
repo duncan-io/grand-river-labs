@@ -1,0 +1,203 @@
+.gbp-explainer {
+  background: var(--surface);
+}
+
+.gbp-explainer__body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.gbp-factors {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gbp-factor {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.35rem 1rem;
+  padding: clamp(1.15rem, 2vw, 1.5rem);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 253, 244, 0.7), transparent 42%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.72) 0%, rgba(204, 235, 229, 0.42) 100%);
+  border: 1px solid rgba(5, 122, 114, 0.12);
+}
+
+.gbp-factor__number {
+  grid-row: span 2;
+  padding-top: 0.3rem;
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.95rem;
+}
+
+.gbp-factor h3 {
+  margin: 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.gbp-factor p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.gbp-factor a,
+.gbp-explainer .local-ads-facts a {
+  color: var(--accent-dark);
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+@media (max-width: 900px) {
+  .gbp-explainer__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gbp-friction {
+  background:
+    radial-gradient(circle at 0 100%, rgba(176, 228, 220, 0.55), transparent 36%),
+    linear-gradient(165deg, #f4fbf9 0%, #dff3ef 55%, #ccebe5 100%);
+}
+
+.gbp-friction__cell:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.gbp-friction__number {
+  display: inline-block;
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.9rem;
+  font-weight: 650;
+  animation: ws-friction-number-pulse 3.6s ease-in-out infinite;
+}
+
+.gbp-friction__cell:nth-child(2) .gbp-friction__number {
+  animation-delay: 0.4s;
+}
+
+.gbp-friction__cell:nth-child(3) .gbp-friction__number {
+  animation-delay: 0.8s;
+}
+
+.gbp-friction__cell:nth-child(4) .gbp-friction__number {
+  animation-delay: 1.2s;
+}
+
+.gbp-friction__cell p {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.gbp-way {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: clamp(1.35rem, 2.4vw, 1.85rem);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 253, 244, 0.7), transparent 42%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.72) 0%, rgba(204, 235, 229, 0.42) 100%);
+  border: 1px solid rgba(5, 122, 114, 0.12);
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease;
+}
+
+.gbp-way:last-child {
+  grid-column: 1 / -1;
+}
+
+.gbp-way:hover {
+  transform: translateY(-3px);
+  border-color: rgba(5, 122, 114, 0.28);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 253, 244, 0.9), transparent 44%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.88) 0%, rgba(176, 228, 220, 0.55) 100%);
+}
+
+.gbp-way__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.95rem;
+}
+
+.gbp-way h3 {
+  margin: 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.gbp-way__lead {
+  margin: 0 0 0.5rem;
+  color: var(--foreground);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.gbp-way__setup,
+.gbp-way__outcome {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.gbp-way__label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 901px) {
+  .gbp-way:last-child {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 1.75rem;
+    align-items: start;
+  }
+
+  .gbp-way:last-child .gbp-way__number {
+    grid-row: 1 / span 2;
+  }
+
+  .gbp-way:last-child h3,
+  .gbp-way:last-child .gbp-way__lead {
+    grid-column: 2;
+  }
+
+  .gbp-way:last-child .gbp-way__setup {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+
+  .gbp-way:last-child .gbp-way__outcome {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+  }
+}

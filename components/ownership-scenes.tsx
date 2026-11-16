@@ -1,3 +1,4 @@
+import "./ownership-scenes.css";
 type ScenePoint = { x: number; y: number };
 
 function quadPath(from: ScenePoint, to: ScenePoint, bend: number) {

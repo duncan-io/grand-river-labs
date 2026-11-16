@@ -1,0 +1,603 @@
+/* —— White-label page —— */
+.whitelabel-hero {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  align-items: center;
+  padding: 8.5rem 0 6rem;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.92), transparent 26%),
+    linear-gradient(145deg, #f9fdfb 0%, #ddf4f2 48%, #bee8e5 100%);
+}
+
+.whitelabel-hero__scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.whitelabel-hero__glow {
+  transform-origin: center;
+  animation: sun-breathe 8s ease-in-out infinite;
+}
+
+.whitelabel-hero__facade {
+  transform-origin: center;
+  animation: whitelabel-facade-drift 12s ease-in-out infinite alternate;
+}
+
+.whitelabel-hero__engine {
+  transform-origin: 70% 55%;
+  animation: whitelabel-engine-pulse 7s ease-in-out infinite;
+}
+
+.whitelabel-hero__pulse-ring {
+  transform-origin: 1280px 550px;
+  animation: whitelabel-ring-pulse 4.5s ease-in-out infinite;
+}
+
+.whitelabel-hero__brand {
+  margin: 0 0 0.85rem;
+  color: var(--accent-dark);
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 620;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.whitelabel-hero .eyebrow {
+  margin-bottom: 0.85rem;
+}
+
+.whitelabel-hero__headline {
+  max-width: 16ch;
+  margin: 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(2.15rem, 4.2vw, 3.85rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.whitelabel-hero__copy {
+  max-width: 34rem;
+  margin: 1.35rem 0 0;
+  color: #365e5b;
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.whitelabel-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.whitelabel-hero__cue {
+  position: absolute;
+  z-index: 2;
+  bottom: 2rem;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.whitelabel-hero__cue::after {
+  width: 2.5rem;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  animation: cue-pulse 2s ease-in-out infinite;
+  transform-origin: left;
+}
+
+.whitelabel-audience {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(255, 255, 255, 0.85), transparent 32%),
+    linear-gradient(165deg, #f8fcfb 0%, #edf8f5 48%, #dff3ef 100%);
+}
+
+.whitelabel-audience__top .section-copy,
+.whitelabel-friction__top .section-copy,
+.whitelabel-benefits__top .section-copy,
+.whitelabel-flow__top .section-copy {
+  max-width: 28rem;
+  margin: 0 0 0.5rem;
+}
+
+.whitelabel-persona {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.85rem;
+  min-height: 0;
+}
+
+.whitelabel-persona__visual {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.35rem;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.whitelabel-persona__motif {
+  width: min(100%, 17.5rem);
+  height: auto;
+  aspect-ratio: 280 / 160;
+}
+
+.whitelabel-persona h3 {
+  margin: 0;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.75rem, 2.8vw, 2.35rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.whitelabel-persona p {
+  margin: 0;
+  max-width: 22rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.whitelabel-friction {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(16, 47, 47, 0.06), transparent 40%),
+    linear-gradient(180deg, #e4efed 0%, #d8e6e3 100%);
+}
+
+.whitelabel-friction__points {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.whitelabel-point {
+  min-height: 17rem;
+  padding: 2rem clamp(1rem, 2.2vw, 1.75rem) 1.5rem;
+  border-right: 1px solid var(--line);
+}
+
+.whitelabel-point:first-child {
+  padding-left: 0;
+}
+
+.whitelabel-point:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.whitelabel-point__number {
+  color: var(--accent);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.whitelabel-point h3 {
+  margin: 3.5rem 0 0.8rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.whitelabel-point p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.whitelabel-benefits {
+  background:
+    radial-gradient(circle at 0 100%, rgba(176, 228, 220, 0.55), transparent 36%),
+    linear-gradient(165deg, #f4fbf9 0%, #dff3ef 55%, #ccebe5 100%);
+}
+
+.whitelabel-benefit {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.75rem;
+}
+
+.whitelabel-benefit__visual {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.whitelabel-benefit__motif {
+  width: min(100%, 17.5rem);
+  height: auto;
+  aspect-ratio: 280 / 160;
+}
+
+.whitelabel-benefit h3 {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.whitelabel-benefit p {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.whitelabel-flow {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.75), transparent 38%),
+    radial-gradient(circle at 100% 100%, rgba(176, 228, 220, 0.5), transparent 34%),
+    linear-gradient(160deg, var(--sky) 0%, #dff4f1 50%, var(--accent-soft) 100%);
+}
+
+.whitelabel-flow__journey {
+  position: relative;
+  display: grid;
+  gap: clamp(2.75rem, 6vw, 4.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.whitelabel-flow__journey::before {
+  content: "";
+  position: absolute;
+  top: 1.35rem;
+  bottom: 1.35rem;
+  left: 1.35rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(5, 122, 114, 0.35) 12%,
+    rgba(5, 122, 114, 0.35) 88%,
+    transparent 100%
+  );
+  animation: what-we-do-glove-spine 1.4s ease-out both;
+}
+
+.whitelabel-flow__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.7rem minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.whitelabel-flow__row--flip .whitelabel-flow__copy {
+  order: 3;
+}
+
+.whitelabel-flow__row--flip .whitelabel-flow__visual {
+  order: 2;
+}
+
+.whitelabel-flow__marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  background:
+    radial-gradient(circle at 40% 35%, rgba(255, 253, 244, 0.95), transparent 55%),
+    linear-gradient(160deg, #eaf9f7 0%, #ccebe5 100%);
+  border: 1px solid rgba(5, 122, 114, 0.22);
+  border-radius: 999px;
+  animation: what-we-do-hub-pulse 4.5s ease-in-out infinite;
+}
+
+.whitelabel-flow__row:nth-child(2) .whitelabel-flow__marker {
+  animation-delay: 0.4s;
+}
+
+.whitelabel-flow__row:nth-child(3) .whitelabel-flow__marker {
+  animation-delay: 0.8s;
+}
+
+.whitelabel-flow__number {
+  color: var(--ink);
+  font-family: var(--font-fraunces), serif;
+  font-size: 0.92rem;
+  font-weight: 620;
+}
+
+.whitelabel-flow__copy h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(1.85rem, 3vw, 2.65rem);
+  font-weight: 560;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.whitelabel-flow__copy p {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.whitelabel-flow__visual {
+  display: grid;
+  place-items: center;
+  min-height: 13rem;
+}
+
+.whitelabel-flow__motif {
+  width: min(100%, 24rem);
+  height: auto;
+  overflow: visible;
+}
+
+.whitelabel-motif__path {
+  opacity: 0.72;
+  animation: what-we-do-path-dash 3.4s linear infinite;
+}
+
+.whitelabel-motif__packet {
+  opacity: 0.95;
+  filter: drop-shadow(0 0 5px rgba(5, 122, 114, 0.3));
+}
+
+.whitelabel-motif__node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-node-pulse 3.6s ease-in-out infinite;
+}
+
+.whitelabel-motif__hub {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-hub-pulse 3.6s ease-in-out infinite;
+}
+
+.whitelabel-motif__hub-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-ring-pulse 3.6s ease-in-out infinite;
+}
+
+.whitelabel-motif__hub-ring--outer {
+  animation-delay: 0.45s;
+}
+
+.whitelabel-motif__facade {
+  transform-origin: center;
+  animation: whitelabel-facade-drift 12s ease-in-out infinite alternate;
+}
+
+.whitelabel-motif__engine {
+  transform-origin: center;
+  animation: whitelabel-engine-pulse 7s ease-in-out infinite;
+}
+
+.whitelabel-motif__find {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: what-we-do-glove-find 7.5s ease-in-out infinite;
+}
+
+.whitelabel-motif__magnifier {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: whitelabel-magnifier-bob 4.5s ease-in-out infinite;
+}
+
+@keyframes whitelabel-facade-drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes whitelabel-engine-pulse {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes whitelabel-ring-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes whitelabel-magnifier-bob {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-3px, -4px);
+  }
+}
+
+@media (max-width: 900px) {
+
+  .whitelabel-friction__points {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .whitelabel-point:nth-child(2n) {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .whitelabel-point:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .whitelabel-point:nth-child(2n + 1) {
+    padding-left: 0;
+  }
+
+  .whitelabel-point:nth-child(2n) {
+    padding-left: clamp(1rem, 2.2vw, 1.75rem);
+  }
+
+  .whitelabel-persona {
+    min-height: auto;
+    padding: 0 0 1.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .whitelabel-persona:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .whitelabel-point {
+    min-height: auto;
+  }
+
+  .whitelabel-point h3 {
+    margin-top: 1.25rem;
+  }
+
+  .whitelabel-flow__journey {
+    gap: 2.5rem;
+  }
+
+  .whitelabel-flow__row,
+  .whitelabel-flow__row--flip {
+    grid-template-columns: 2.7rem 1fr;
+    gap: 0.85rem 1.35rem;
+    align-items: start;
+  }
+
+  .whitelabel-flow__row .whitelabel-flow__copy,
+  .whitelabel-flow__row--flip .whitelabel-flow__copy {
+    order: 2;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .whitelabel-flow__row .whitelabel-flow__visual,
+  .whitelabel-flow__row--flip .whitelabel-flow__visual {
+    order: 3;
+    grid-column: 2;
+    grid-row: 2;
+    justify-items: start;
+    min-height: 0;
+  }
+
+  .whitelabel-flow__marker {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .whitelabel-flow__copy h3 {
+    margin-top: 0.4rem;
+    font-size: clamp(1.55rem, 6vw, 2rem);
+  }
+
+  .whitelabel-flow__motif {
+    width: min(100%, 18rem);
+  }
+}
+
+@media (max-width: 640px) {
+
+  .whitelabel-friction__points {
+    grid-template-columns: 1fr;
+  }
+
+  .whitelabel-point:nth-child(2n),
+  .whitelabel-point:nth-child(2n + 1),
+  .whitelabel-point:nth-child(-n + 2) {
+    padding-left: 0;
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .whitelabel-point:last-child {
+    border-bottom: 0;
+  }
+
+  .whitelabel-hero {
+    align-items: start;
+    padding-top: 8rem;
+  }
+
+  .whitelabel-hero__content {
+    width: 100%;
+  }
+
+  .whitelabel-hero__brand {
+    max-width: 100%;
+    font-size: clamp(2.6rem, 11.5vw, 4rem);
+  }
+
+  .whitelabel-hero__headline {
+    max-width: 16ch;
+    font-size: 1.72rem;
+  }
+
+  .whitelabel-hero__copy {
+    max-width: 22rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .whitelabel-hero__scene {
+    opacity: 0.7;
+    transform: none;
+  }
+
+  .whitelabel-hero__actions {
+    width: min(100%, 22rem);
+  }
+
+  .whitelabel-hero__actions .button {
+    flex: 1 1 auto;
+  }
+
+  .whitelabel-hero__cue {
+    display: none;
+  }
+}

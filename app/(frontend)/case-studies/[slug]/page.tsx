@@ -8,6 +8,7 @@ import { ContactSection } from "@/components/contact";
 import { getPublishedCaseStudy } from "@/lib/cms";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 import { PageShell } from "@/components/page-shell";
+import "../../blog/blog.css";
 
 type Args = {
   params: Promise<{ slug: string }>;

@@ -4,6 +4,7 @@ import { renderInline } from "@/components/inline-links";
 import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./icons";
 import { FaqSection } from "./faq-section";
+import "./cro.css";
 
 const friction = [
   {

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { Arrow } from "./icons";
 import { industriesNav } from "./what-we-do-nav";
+import "./industries-page.css";
 
 /** Short who-it's-for line and the key call-outs for each industry card. */
 const industryDetails: Record<

@@ -21,6 +21,7 @@ import {
   TurnstileField,
   type TurnstileFieldHandle,
 } from "./turnstile-field";
+import "./chat.css";
 
 type Role = "user" | "assistant";
 

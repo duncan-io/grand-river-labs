@@ -7,6 +7,7 @@ import {
   TurnstileField,
   type TurnstileFieldHandle,
 } from "./turnstile-field";
+import "./contact-form.css";
 
 type FormStatus = {
   state: "idle" | "success" | "error";
