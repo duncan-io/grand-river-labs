@@ -8,7 +8,6 @@ const dirname = path.dirname(filename);
 
 const nextConfig: NextConfig = {
   experimental: {
-    inlineCss: true,
     globalNotFound: true,
   },
   images: {
