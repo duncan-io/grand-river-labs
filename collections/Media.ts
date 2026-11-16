@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { expireCmsCache } from "@/lib/cms-cache";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -21,5 +22,9 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/gif"],
+  },
+  hooks: {
+    afterChange: [expireCmsCache],
+    afterDelete: [expireCmsCache],
   },
 };

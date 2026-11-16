@@ -3,9 +3,7 @@ import { ContactSection } from "@/components/contact";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { WorkPageContent } from "@/components/work-page";
-import { getPayloadClient } from "@/lib/get-payload";
-
-export const dynamic = "force-dynamic";
+import { getPublishedCaseStudies } from "@/lib/cms";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/work" },
@@ -16,18 +14,7 @@ export const metadata: Metadata = {
 
 export default async function WorkPage() {
   const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
-  const payload = await getPayloadClient();
-  const { docs: studies } = await payload.find({
-    collection: "case-studies",
-    depth: 1,
-    limit: 24,
-    sort: "-publishedAt",
-    where: {
-      _status: {
-        equals: "published",
-      },
-    },
-  });
+  const studies = await getPublishedCaseStudies();
 
   return (
     <div id="top">

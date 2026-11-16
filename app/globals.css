@@ -985,10 +985,14 @@ button.site-nav__trigger {
   gap: 1rem;
 }
 
-.five-stars {
+/* The quote cards style every span inside them, so name those contexts here. */
+.five-stars,
+.fdd-proof__quote .five-stars,
+.work-voices__attribution .five-stars {
   display: block;
   color: #e0a526;
   font-size: 1.05rem;
+  font-weight: 400;
   letter-spacing: 0.12em;
   line-height: 1;
 }

@@ -7,31 +7,12 @@ import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical
 import { ContactSection } from "@/components/contact";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getPayloadClient } from "@/lib/get-payload";
+import { getPublishedCaseStudy } from "@/lib/cms";
 import { isMedia, mediaImageSrc } from "@/lib/media";
-
-export const dynamic = "force-dynamic";
 
 type Args = {
   params: Promise<{ slug: string }>;
 };
-
-async function getPublishedCaseStudy(slug: string) {
-  const payload = await getPayloadClient();
-  const { docs } = await payload.find({
-    collection: "case-studies",
-    depth: 1,
-    limit: 1,
-    where: {
-      and: [
-        { slug: { equals: slug } },
-        { _status: { equals: "published" } },
-      ],
-    },
-  });
-
-  return docs[0] ?? null;
-}
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug } = await params;

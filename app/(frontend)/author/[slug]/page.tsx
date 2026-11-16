@@ -4,57 +4,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getPayloadClient } from "@/lib/get-payload";
+import { getAuthor, getPublishedPostsByAuthor } from "@/lib/cms";
+import { formatDate } from "@/lib/format";
 import { isMedia, mediaImageSrc } from "@/lib/media";
-
-export const dynamic = "force-dynamic";
 
 type Args = {
   params: Promise<{ slug: string }>;
 };
-
-function formatDate(value: string | null | undefined) {
-  if (!value) return null;
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(value));
-}
-
-async function getAuthor(slug: string) {
-  const payload = await getPayloadClient();
-  const { docs } = await payload.find({
-    collection: "authors",
-    depth: 1,
-    limit: 1,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  });
-
-  return docs[0] ?? null;
-}
-
-async function getAuthorPosts(authorId: number) {
-  const payload = await getPayloadClient();
-  const { docs } = await payload.find({
-    collection: "posts",
-    depth: 1,
-    limit: 24,
-    sort: "-publishedAt",
-    where: {
-      and: [
-        { author: { equals: authorId } },
-        { _status: { equals: "published" } },
-      ],
-    },
-  });
-
-  return docs;
-}
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug } = await params;
@@ -78,7 +34,7 @@ export default async function AuthorPage({ params }: Args) {
   if (!author) notFound();
 
   const photo = isMedia(author.photo) ? author.photo : null;
-  const posts = await getAuthorPosts(author.id);
+  const posts = await getPublishedPostsByAuthor(author.id);
 
   return (
     <div id="top">

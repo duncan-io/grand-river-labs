@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { expireCmsCache } from "@/lib/cms-cache";
 import { slugify } from "@/lib/slug";
 
 export const Authors: CollectionConfig = {
@@ -55,6 +56,8 @@ export const Authors: CollectionConfig = {
     },
   ],
   hooks: {
+    afterChange: [expireCmsCache],
+    afterDelete: [expireCmsCache],
     beforeValidate: [
       ({ data }) => {
         if (!data) return data;

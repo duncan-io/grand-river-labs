@@ -8,11 +8,10 @@ import { ContactSection } from "@/components/contact";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { isAuthor, truncateBio } from "@/lib/author";
-import { getPayloadClient } from "@/lib/get-payload";
+import { getPublishedPost } from "@/lib/cms";
+import { formatDate } from "@/lib/format";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 import type { Category } from "@/payload-types";
-
-export const dynamic = "force-dynamic";
 
 type Args = {
   params: Promise<{ slug: string }>;
@@ -20,32 +19,6 @@ type Args = {
 
 function isCategory(value: number | Category): value is Category {
   return typeof value === "object" && value !== null && "title" in value;
-}
-
-function formatDate(value: string | null | undefined) {
-  if (!value) return null;
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(value));
-}
-
-async function getPublishedPost(slug: string) {
-  const payload = await getPayloadClient();
-  const { docs } = await payload.find({
-    collection: "posts",
-    depth: 2,
-    limit: 1,
-    where: {
-      and: [
-        { slug: { equals: slug } },
-        { _status: { equals: "published" } },
-      ],
-    },
-  });
-
-  return docs[0] ?? null;
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {

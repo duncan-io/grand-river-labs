@@ -5,10 +5,9 @@ import { ContactSection } from "@/components/contact";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { isAuthor } from "@/lib/author";
-import { getPayloadClient } from "@/lib/get-payload";
+import { getPublishedPosts } from "@/lib/cms";
+import { formatDate } from "@/lib/format";
 import { isMedia, mediaImageSrc } from "@/lib/media";
-
-export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
@@ -17,29 +16,9 @@ export const metadata: Metadata = {
     "Notes on digital strategy, websites, automation, and running a focused digital department.",
 };
 
-function formatDate(value: string | null | undefined) {
-  if (!value) return null;
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(value));
-}
-
 export default async function BlogIndexPage() {
   const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
-  const payload = await getPayloadClient();
-  const { docs: posts } = await payload.find({
-    collection: "posts",
-    depth: 1,
-    limit: 24,
-    sort: "-publishedAt",
-    where: {
-      _status: {
-        equals: "published",
-      },
-    },
-  });
+  const posts = await getPublishedPosts();
 
   return (
     <div id="top">

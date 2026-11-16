@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
-import { getPayloadClient } from "@/lib/get-payload";
+import { connection } from "next/server";
+import { getSitemapDocs } from "@/lib/cms";
 import { getSiteUrl } from "@/lib/site";
-
-export const dynamic = "force-dynamic";
 
 const staticPaths = [
   "/",
@@ -41,118 +40,36 @@ function absoluteUrl(origin: string, path: string) {
   return path === "/" ? origin : `${origin}${path}`;
 }
 
-async function getPublishedPostEntries(
+/** CMS documents under a URL prefix. An unreachable database yields no entries rather than a broken sitemap. */
+async function cmsEntries(
   origin: string,
+  collection: Parameters<typeof getSitemapDocs>[0],
+  prefix: string,
 ): Promise<MetadataRoute.Sitemap> {
   try {
-    const payload = await getPayloadClient();
-    const { docs: posts } = await payload.find({
-      collection: "posts",
-      depth: 0,
-      limit: 1000,
-      pagination: false,
-      select: {
-        slug: true,
-        publishedAt: true,
-        updatedAt: true,
-      },
-      where: {
-        _status: {
-          equals: "published",
-        },
-      },
-    });
-
-    return posts.flatMap((post) => {
-      if (!post.slug) return [];
-      return [
-        {
-          url: absoluteUrl(origin, `/blog/${post.slug}`),
-          lastModified: post.updatedAt || post.publishedAt || undefined,
-        },
-      ];
-    });
-  } catch {
-    return [];
-  }
-}
-
-async function getPublishedCaseStudyEntries(
-  origin: string,
-): Promise<MetadataRoute.Sitemap> {
-  try {
-    const payload = await getPayloadClient();
-    const { docs: studies } = await payload.find({
-      collection: "case-studies",
-      depth: 0,
-      limit: 1000,
-      pagination: false,
-      select: {
-        slug: true,
-        publishedAt: true,
-        updatedAt: true,
-      },
-      where: {
-        _status: {
-          equals: "published",
-        },
-      },
-    });
-
-    return studies.flatMap((study) => {
-      if (!study.slug) return [];
-      return [
-        {
-          url: absoluteUrl(origin, `/case-studies/${study.slug}`),
-          lastModified: study.updatedAt || study.publishedAt || undefined,
-        },
-      ];
-    });
-  } catch {
-    return [];
-  }
-}
-
-async function getAuthorEntries(
-  origin: string,
-): Promise<MetadataRoute.Sitemap> {
-  try {
-    const payload = await getPayloadClient();
-    const { docs: authors } = await payload.find({
-      collection: "authors",
-      depth: 0,
-      limit: 1000,
-      pagination: false,
-      select: {
-        slug: true,
-        updatedAt: true,
-      },
-    });
-
-    return authors.flatMap((author) => {
-      if (!author.slug) return [];
-      return [
-        {
-          url: absoluteUrl(origin, `/author/${author.slug}`),
-          lastModified: author.updatedAt || undefined,
-        },
-      ];
-    });
+    const docs = await getSitemapDocs(collection);
+    return docs.map((doc) => ({
+      url: absoluteUrl(origin, `${prefix}/${doc.slug}`),
+      lastModified: doc.lastModified,
+    }));
   } catch {
     return [];
   }
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Build the sitemap per request; the build has no database to read from.
+  await connection();
+
   const origin = getSiteUrl();
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: absoluteUrl(origin, path),
   }));
-  const [postEntries, caseStudyEntries, authorEntries] = await Promise.all([
-    getPublishedPostEntries(origin),
-    getPublishedCaseStudyEntries(origin),
-    getAuthorEntries(origin),
+  const cmsEntryGroups = await Promise.all([
+    cmsEntries(origin, "posts", "/blog"),
+    cmsEntries(origin, "case-studies", "/case-studies"),
+    cmsEntries(origin, "authors", "/author"),
   ]);
 
-  return [...staticEntries, ...postEntries, ...caseStudyEntries, ...authorEntries];
+  return [...staticEntries, ...cmsEntryGroups.flat()];
 }
