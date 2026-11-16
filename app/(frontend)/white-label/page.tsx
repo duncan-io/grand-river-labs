@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { WhitelabelCta, WhitelabelSections } from "@/components/whitelabel";
+import { PageShell } from "@/components/page-shell";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/white-label" },
@@ -12,13 +11,9 @@ export const metadata: Metadata = {
 
 export default function WhitelabelPage() {
   return (
-    <div id="top">
-      <SiteHeader />
-      <main>
-        <WhitelabelSections />
-        <WhitelabelCta />
-      </main>
-      <SiteFooter />
-    </div>
+    <PageShell>
+      <WhitelabelSections />
+      <WhitelabelCta />
+    </PageShell>
   );
 }

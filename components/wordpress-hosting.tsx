@@ -1,7 +1,7 @@
 import { BookCallLink } from "./book-call-link";
-import { renderInline } from "@/components/inline-links";
 import { HOSTING_MONTHLY_FROM, formatUsd } from "@/lib/pricing";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
+import { FaqSection } from "./faq-section";
 
 const features = [
   {
@@ -415,27 +415,9 @@ export function HostingSections() {
         </div>
       </section>
 
-      <section className="section fdd-faq" id="faq">
-        <div className="shell">
-          <div className="fdd-faq__top reveal">
-            <div>
-              <p className="eyebrow">Questions</p>
-              <h2 className="section-heading">WordPress hosting, answered.</h2>
-            </div>
-            <p className="section-copy">
-              Anything else, we&apos;ll cover on the call.
-            </p>
-          </div>
-          <div className="fdd-faq__list reveal">
-            {faqs.map((item) => (
-              <details className="fdd-faq__item" key={item.question}>
-                <summary>{item.question}</summary>
-                <p>{renderInline(item.answer)}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSection faqs={faqs} heading="WordPress hosting, answered.">
+        Anything else, we&apos;ll cover on the call.
+      </FaqSection>
     </>
   );
 }

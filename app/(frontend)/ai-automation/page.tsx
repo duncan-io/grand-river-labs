@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import {
   AiAutomationCta,
   AiAutomationSections,
 } from "@/components/ai-automation";
+import { PageShell } from "@/components/page-shell";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/ai-automation" },
@@ -15,13 +14,9 @@ export const metadata: Metadata = {
 
 export default function AiAutomationPage() {
   return (
-    <div id="top">
-      <SiteHeader />
-      <main>
-        <AiAutomationSections />
-        <AiAutomationCta />
-      </main>
-      <SiteFooter />
-    </div>
+    <PageShell>
+      <AiAutomationSections />
+      <AiAutomationCta />
+    </PageShell>
   );
 }

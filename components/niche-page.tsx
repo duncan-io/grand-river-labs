@@ -2,13 +2,14 @@ import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { renderInline } from "@/components/inline-links";
 import { DepartmentHeroScene } from "./department-hero-scene";
+import { FaqSection } from "./faq-section";
 import { niches } from "./niches";
 import {
   DepartmentOwnershipScene,
   OwnershipGapScene,
   ServiceIcon,
 } from "./ownership-scenes";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 
 export function NichePage({
   content,
@@ -128,24 +129,11 @@ export function NichePage({
         </div>
       </section>
 
-      <section className="section fdd-faq" id="faq">
-        <div className="shell">
-          <div className="fdd-faq__top reveal">
-            <div>
-              <p className="eyebrow">{content.faq.eyebrow}</p>
-              <h2 className="section-heading">{content.faq.heading}</h2>
-            </div>
-          </div>
-          <div className="fdd-faq__list reveal">
-            {content.faq.items.map((item) => (
-              <details className="fdd-faq__item" key={item.question}>
-                <summary>{item.question}</summary>
-                <p>{renderInline(item.answer)}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSection
+        faqs={content.faq.items}
+        eyebrow={content.faq.eyebrow}
+        heading={content.faq.heading}
+      />
     </>
   );
 }

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { getIndustry } from "@/components/industries";
 import { IndustryUseCase } from "@/components/industry-use-case";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { UseCasesCta } from "@/components/use-cases";
+import { PageShell } from "@/components/page-shell";
 
 const industry = getIndustry("property-management")!;
 
@@ -15,13 +14,9 @@ export const metadata: Metadata = {
 
 export default function PropertyManagementUseCasePage() {
   return (
-    <div id="top">
-      <SiteHeader />
-      <main>
-        <IndustryUseCase content={industry} />
-        <UseCasesCta />
-      </main>
-      <SiteFooter />
-    </div>
+    <PageShell>
+      <IndustryUseCase content={industry} />
+      <UseCasesCta />
+    </PageShell>
   );
 }

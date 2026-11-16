@@ -15,7 +15,8 @@ import { EMAIL_MAX_LENGTH, normalizeEmail } from "@/lib/chat/email";
 import type { SseEvent } from "@/lib/chat/types";
 import { BOOK_CALL_HREF, buildBookingHref } from "@/lib/site";
 import { BookCallLink } from "./book-call-link";
-import { Arrow, SiteHeader } from "./site-header";
+import { Arrow } from "./icons";
+import { SiteHeader } from "./site-header";
 import {
   TurnstileField,
   type TurnstileFieldHandle,

@@ -7,7 +7,8 @@ import {
   OwnershipGapScene,
   ServiceIcon,
 } from "./ownership-scenes";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
+import { FaqSection } from "./faq-section";
 
 const fit = [
   {
@@ -388,26 +389,7 @@ export function HomeImprovementMarketingSections() {
         </div>
       </section>
 
-      <section className="section fdd-faq" id="faq">
-        <div className="shell">
-          <div className="fdd-faq__top reveal">
-            <div>
-              <p className="eyebrow">Questions</p>
-              <h2 className="section-heading">
-                What home improvement companies usually ask.
-              </h2>
-            </div>
-          </div>
-          <div className="fdd-faq__list reveal">
-            {faqs.map((item) => (
-              <details className="fdd-faq__item" key={item.question}>
-                <summary>{item.question}</summary>
-                <p>{renderInline(item.answer)}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSection faqs={faqs} heading="What home improvement companies usually ask." />
     </>
   );
 }

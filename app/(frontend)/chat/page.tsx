@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ChatPanel } from "@/components/chat";
+import { getTurnstileSiteKey } from "@/lib/turnstile";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/chat" },
@@ -9,12 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default function ChatPage() {
-  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
-
   return (
     <div id="top" className="chat-page">
       <main>
-        <ChatPanel turnstileSiteKey={turnstileSiteKey} />
+        <ChatPanel turnstileSiteKey={getTurnstileSiteKey()} />
       </main>
     </div>
   );

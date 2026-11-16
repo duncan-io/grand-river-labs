@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { BpaCta, BpaSections } from "@/components/business-process-automation";
+import { PageShell } from "@/components/page-shell";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/automation/business-process-automation" },
@@ -12,13 +11,9 @@ export const metadata: Metadata = {
 
 export default function BusinessProcessAutomationPage() {
   return (
-    <div id="top">
-      <SiteHeader />
-      <main>
-        <BpaSections />
-        <BpaCta />
-      </main>
-      <SiteFooter />
-    </div>
+    <PageShell>
+      <BpaSections />
+      <BpaCta />
+    </PageShell>
   );
 }

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { ContactSection } from "@/components/contact";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { WorkPageContent } from "@/components/work-page";
 import { getPublishedCaseStudies } from "@/lib/cms";
+import { PageShell } from "@/components/page-shell";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/work" },
@@ -13,26 +12,20 @@ export const metadata: Metadata = {
 };
 
 export default async function WorkPage() {
-  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
   const studies = await getPublishedCaseStudies();
 
   return (
-    <div id="top">
-      <SiteHeader />
-      <main>
-        <WorkPageContent studies={studies} />
+    <PageShell>
+      <WorkPageContent studies={studies} />
 
-        <ContactSection
-          turnstileSiteKey={turnstileSiteKey}
-          variant="cta"
-          eyebrow="Your turn"
-          heading="Want this kind of result?"
-          copy="Tell us what your marketing is doing now and the number that isn't moving. We'll reply within one business day with whether a fractional marketing director is the right fit—or what is."
-          messageLabel="What should we look at?"
-          messagePlaceholder="The brands, the sites, or the number that isn't moving."
-        />
-      </main>
-      <SiteFooter />
-    </div>
+      <ContactSection
+        variant="cta"
+        eyebrow="Your turn"
+        heading="Want this kind of result?"
+        copy="Tell us what your marketing is doing now and the number that isn't moving. We'll reply within one business day with whether a fractional marketing director is the right fit—or what is."
+        messageLabel="What should we look at?"
+        messagePlaceholder="The brands, the sites, or the number that isn't moving."
+      />
+    </PageShell>
   );
 }

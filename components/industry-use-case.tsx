@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 import type { IndustryContent } from "./industries";
 import { industries } from "./industries";
 

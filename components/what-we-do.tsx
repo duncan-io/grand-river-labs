@@ -2,7 +2,7 @@ import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
 import { IndustryStrip } from "./industry-use-case";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 import { WhiteGloveEngagement } from "./white-glove-engagement";
 
 const services = [

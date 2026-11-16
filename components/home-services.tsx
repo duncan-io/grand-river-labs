@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { getIndustry } from "./industries";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 
 const content = getIndustry("home-services")!;
 

@@ -4,7 +4,7 @@ import { testimonials } from "@/lib/testimonials";
 import { FiveStars } from "./five-stars";
 import { isMedia, mediaImageSrc } from "@/lib/media";
 import type { CaseStudy } from "@/payload-types";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 
 // Named orgs come from testimonial roles ("Owner · Paint To Life"); studies
 // contribute their anonymous client descriptor.

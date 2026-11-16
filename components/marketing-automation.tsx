@@ -1,7 +1,7 @@
 import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 
 const friction = [
   {

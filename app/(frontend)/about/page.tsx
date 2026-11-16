@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { AboutSections } from "@/components/about";
 import { ContactSection } from "@/components/contact";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { PageShell } from "@/components/page-shell";
 import { getSiteUrl } from "@/lib/site";
+import { JsonLd } from "@/components/json-ld";
 
 const description =
   "Meet Duncan McKee and Grand River Labs: a fractional marketing director, not another agency. We own the plan: patch lead leaks, verify what's working, and manage your vendors.";
@@ -41,31 +41,19 @@ const aboutPageJsonLd = {
 };
 
 export default function AboutPage() {
-  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
-
   return (
-    <div id="top">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(aboutPageJsonLd),
-        }}
+    <PageShell>
+      <JsonLd data={aboutPageJsonLd} />
+      <AboutSections />
+      <ContactSection
+        variant="cta"
+        eyebrow="Start a conversation"
+        heading="Who owns the picture today?"
+        copy="Tell us who currently owns digital, and where the picture breaks—a channel that keeps asking for budget, numbers you don't trust, or work nobody named. We'll get back within one business day."
+        directLabel="Book a 30-minute call with Duncan"
+        messageLabel="Who owns digital today?"
+        messagePlaceholder="An agency on one channel, a hire you haven't made, a pile of vendors—start wherever you are."
       />
-      <SiteHeader />
-      <main>
-        <AboutSections />
-        <ContactSection
-          turnstileSiteKey={turnstileSiteKey}
-          variant="cta"
-          eyebrow="Start a conversation"
-          heading="Who owns the picture today?"
-          copy="Tell us who currently owns digital, and where the picture breaks—a channel that keeps asking for budget, numbers you don't trust, or work nobody named. We'll get back within one business day."
-          directLabel="Book a 30-minute call with Duncan"
-          messageLabel="Who owns digital today?"
-          messagePlaceholder="An agency on one channel, a hire you haven't made, a pile of vendors—start wherever you are."
-        />
-      </main>
-      <SiteFooter />
-    </div>
+    </PageShell>
   );
 }

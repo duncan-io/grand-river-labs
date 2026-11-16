@@ -1,26 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { BookCallLink } from "./book-call-link";
+import { BrandMark } from "./brand-mark";
+import { Arrow } from "./icons";
 import {
   directorAreas,
   directorNav,
   standaloneNav,
 } from "./what-we-do-nav";
-
-const Arrow = () => (
-  <svg
-    aria-hidden="true"
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-  >
-    <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" strokeWidth="1.5" />
-  </svg>
-);
 
 const Chevron = () => (
   <svg
@@ -167,22 +156,6 @@ function NavDropdown({
         {children}
       </div>
     </div>
-  );
-}
-
-export function BrandMark() {
-  return (
-    <span className="wordmark">
-      <span className="wordmark__mark" aria-hidden="true">
-        <Image
-          src="/brand-mark.png"
-          alt="Grand River Labs logo"
-          width={76}
-          height={76}
-        />
-      </span>
-      Grand River Labs
-    </span>
   );
 }
 
@@ -354,5 +327,3 @@ export function SiteHeader({
     </header>
   );
 }
-
-export { Arrow };

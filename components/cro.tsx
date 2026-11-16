@@ -2,7 +2,8 @@ import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
 import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
+import { FaqSection } from "./faq-section";
 
 const friction = [
   {
@@ -556,28 +557,10 @@ export function CroSections() {
         </div>
       </section>
 
-      <section className="section fdd-faq" id="faq">
-        <div className="shell">
-          <div className="fdd-faq__top reveal">
-            <div>
-              <p className="eyebrow">Questions</p>
-              <h2 className="section-heading">What people usually ask.</h2>
-            </div>
-            <p className="section-copy">
-              Calls counted, tests sized to your traffic, and changes made on the
-              site you already have.
-            </p>
-          </div>
-          <div className="fdd-faq__list reveal">
-            {faqs.map((item) => (
-              <details className="fdd-faq__item" key={item.question}>
-                <summary>{item.question}</summary>
-                <p>{renderInline(item.answer)}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSection faqs={faqs}>
+        Calls counted, tests sized to your traffic, and changes made on the
+        site you already have.
+      </FaqSection>
     </>
   );
 }

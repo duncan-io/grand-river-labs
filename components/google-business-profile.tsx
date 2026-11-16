@@ -2,7 +2,8 @@ import { BookCallLink } from "./book-call-link";
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
 import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
+import { FaqSection } from "./faq-section";
 
 const factors = [
   {
@@ -660,30 +661,10 @@ export function GbpSections() {
         </div>
       </section>
 
-      <section className="section fdd-faq" id="faq">
-        <div className="shell">
-          <div className="fdd-faq__top reveal">
-            <div>
-              <p className="eyebrow">Questions</p>
-              <h2 className="section-heading">
-                Google Business Profile, answered.
-              </h2>
-            </div>
-            <p className="section-copy">
-              What owners usually ask about categories, reviews, and getting
-              into the map results.
-            </p>
-          </div>
-          <div className="fdd-faq__list reveal">
-            {faqs.map((item) => (
-              <details className="fdd-faq__item" key={item.question}>
-                <summary>{item.question}</summary>
-                <p>{renderInline(item.answer)}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSection faqs={faqs} heading="Google Business Profile, answered.">
+        What owners usually ask about categories, reviews, and getting
+        into the map results.
+      </FaqSection>
     </>
   );
 }

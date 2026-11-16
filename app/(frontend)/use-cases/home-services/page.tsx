@@ -4,8 +4,7 @@ import {
   HomeServicesSections,
 } from "@/components/home-services";
 import { getIndustry } from "@/components/industries";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { PageShell } from "@/components/page-shell";
 
 const industry = getIndustry("home-services")!;
 
@@ -17,13 +16,9 @@ export const metadata: Metadata = {
 
 export default function HomeServicesUseCasePage() {
   return (
-    <div id="top">
-      <SiteHeader />
-      <main>
-        <HomeServicesSections />
-        <HomeServicesCta />
-      </main>
-      <SiteFooter />
-    </div>
+    <PageShell>
+      <HomeServicesSections />
+      <HomeServicesCta />
+    </PageShell>
   );
 }

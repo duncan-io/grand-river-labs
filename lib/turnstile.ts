@@ -2,6 +2,11 @@ type SiteverifyResult = {
   success?: boolean;
 };
 
+/** Public site key for the Turnstile widget; empty when Turnstile is not configured. */
+export function getTurnstileSiteKey(): string {
+  return process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
+}
+
 export function getClientIp(request: Request): string | undefined {
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {

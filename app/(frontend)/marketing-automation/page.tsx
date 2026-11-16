@@ -3,8 +3,7 @@ import {
   MarketingAutomationCta,
   MarketingAutomationSections,
 } from "@/components/marketing-automation";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { PageShell } from "@/components/page-shell";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/marketing-automation" },
@@ -15,13 +14,9 @@ export const metadata: Metadata = {
 
 export default function MarketingAutomationPage() {
   return (
-    <div id="top">
-      <SiteHeader />
-      <main>
-        <MarketingAutomationSections />
-        <MarketingAutomationCta />
-      </main>
-      <SiteFooter />
-    </div>
+    <PageShell>
+      <MarketingAutomationSections />
+      <MarketingAutomationCta />
+    </PageShell>
   );
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ComponentProps } from "react";
-import { BrandMark } from "./site-header";
+import { BrandMark } from "./brand-mark";
 import { industriesNav, standaloneNav, whatWeDoNav } from "./what-we-do-nav";
 
 /** Internal footer link. Not prefetched: there are ~20 on every page and few are clicked. */

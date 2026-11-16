@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
-import { renderInline } from "@/components/inline-links";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
+import { FaqSection } from "./faq-section";
 
 const sources = [
   { label: "Website forms", icon: "form" },
@@ -337,27 +337,9 @@ export function LeadQualificationSections() {
         </div>
       </section>
 
-      <section className="section fdd-faq" id="faq">
-        <div className="shell">
-          <div className="fdd-faq__top reveal">
-            <div>
-              <p className="eyebrow">Questions</p>
-              <h2 className="section-heading">What people usually ask.</h2>
-            </div>
-            <p className="section-copy">
-              Anything else, we&apos;ll cover on the demo.
-            </p>
-          </div>
-          <div className="fdd-faq__list reveal">
-            {faqs.map((item) => (
-              <details className="fdd-faq__item" key={item.question}>
-                <summary>{item.question}</summary>
-                <p>{renderInline(item.answer)}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSection faqs={faqs}>
+        Anything else, we&apos;ll cover on the demo.
+      </FaqSection>
     </>
   );
 }

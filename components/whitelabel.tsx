@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { renderInline } from "@/components/inline-links";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 
 const audience = [
   {

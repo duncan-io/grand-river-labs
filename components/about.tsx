@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
 import { FiveStars } from "./five-stars";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 import { testimonials } from "@/lib/testimonials";
 import duncanPhoto from "@/public/team/duncan.png";
 

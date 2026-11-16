@@ -3,8 +3,7 @@ import {
   ConsultingCta,
   ConsultingSections,
 } from "@/components/automation-consulting";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { PageShell } from "@/components/page-shell";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/automation-consulting" },
@@ -15,13 +14,9 @@ export const metadata: Metadata = {
 
 export default function AutomationConsultingPage() {
   return (
-    <div id="top">
-      <SiteHeader />
-      <main>
-        <ConsultingSections />
-        <ConsultingCta />
-      </main>
-      <SiteFooter />
-    </div>
+    <PageShell>
+      <ConsultingSections />
+      <ConsultingCta />
+    </PageShell>
   );
 }

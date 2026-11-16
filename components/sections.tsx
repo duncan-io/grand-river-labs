@@ -9,7 +9,7 @@ import {
   leadQualificationNav,
   leadSystemNav,
 } from "./what-we-do-nav";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 
 const featuredCaseStudy = {
   href: "/case-studies/38-hvac-brand-sites",

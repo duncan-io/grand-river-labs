@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
-import { renderInline } from "@/components/inline-links";
 import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { testimonials } from "@/lib/testimonials";
 import { EngagementBlock } from "./engagement-block";
 import { FiveStars } from "./five-stars";
 import { NicheStrip } from "./niche-page";
 import { FeaturedCaseStudy } from "./sections";
-import { Arrow } from "./site-header";
+import { Arrow } from "./icons";
 import { directorAreas, leadSystemNav } from "./what-we-do-nav";
+import { FaqSection } from "./faq-section";
 
 const scopeAreas = [...directorAreas, leadSystemNav] as const;
 
@@ -592,28 +592,10 @@ export function FractionalDirectorSections() {
         </div>
       </section>
 
-      <section className="section fdd-faq" id="faq">
-        <div className="shell">
-          <div className="fdd-faq__top reveal">
-            <div>
-              <p className="eyebrow">Questions</p>
-              <h2 className="section-heading">What people usually ask.</h2>
-            </div>
-            <p className="section-copy">
-              Advising starts at {formatUsd(DIRECTOR_MONTHLY)}/month, no long
-              contracts, and your current vendors stay.
-            </p>
-          </div>
-          <div className="fdd-faq__list reveal">
-            {faqs.map((item) => (
-              <details className="fdd-faq__item" key={item.question}>
-                <summary>{item.question}</summary>
-                <p>{renderInline(item.answer)}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSection faqs={faqs}>
+        Advising starts at {formatUsd(DIRECTOR_MONTHLY)}/month, no long
+        contracts, and your current vendors stay.
+      </FaqSection>
 
       <NicheStrip />
     </>
