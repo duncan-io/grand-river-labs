@@ -1,11 +1,16 @@
 "use client";
 
+import Script from "next/script";
 import {
   forwardRef,
   useEffect,
   useImperativeHandle,
   useRef,
+  useState,
 } from "react";
+
+const TURNSTILE_API_SRC =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 
 type TurnstileApi = {
   render: (
@@ -41,6 +46,7 @@ export const TurnstileField = forwardRef<
   const widgetIdRef = useRef<string | null>(null);
   const onTokenChangeRef = useRef(onTokenChange);
   onTokenChangeRef.current = onTokenChange;
+  const [apiReady, setApiReady] = useState(false);
 
   useImperativeHandle(ref, () => ({
     reset: () => {
@@ -59,73 +65,50 @@ export const TurnstileField = forwardRef<
   }));
 
   useEffect(() => {
-    if (!siteKey || !containerRef.current) {
+    if (!siteKey || !apiReady || !containerRef.current || !window.turnstile) {
       return;
     }
 
-    let cancelled = false;
-    let pollId: ReturnType<typeof setInterval> | undefined;
-
-    const mount = () => {
-      if (cancelled || !containerRef.current || !window.turnstile) {
-        return;
-      }
-
-      if (widgetIdRef.current) {
-        return;
-      }
-
-      widgetIdRef.current = window.turnstile.render(containerRef.current, {
-        sitekey: siteKey,
-        action: "turnstile-spin-v2",
-        callback: (token: string) => {
-          onTokenChangeRef.current?.(token);
-        },
-        "expired-callback": () => {
-          onTokenChangeRef.current?.(null);
-        },
-        "error-callback": () => {
-          onTokenChangeRef.current?.(null);
-        },
-      });
-    };
-
-    // Next.js Script loads api.js with async; turnstile.ready() forbids that.
-    // Poll until the API exists, then render directly.
-    if (window.turnstile) {
-      mount();
-    } else {
-      pollId = setInterval(() => {
-        if (window.turnstile) {
-          if (pollId) {
-            clearInterval(pollId);
-          }
-          mount();
-        }
-      }, 50);
-    }
+    const turnstile = window.turnstile;
+    const widgetId = turnstile.render(containerRef.current, {
+      sitekey: siteKey,
+      action: "turnstile-spin-v2",
+      callback: (token: string) => {
+        onTokenChangeRef.current?.(token);
+      },
+      "expired-callback": () => {
+        onTokenChangeRef.current?.(null);
+      },
+      "error-callback": () => {
+        onTokenChangeRef.current?.(null);
+      },
+    });
+    widgetIdRef.current = widgetId;
 
     return () => {
-      cancelled = true;
-      if (pollId) {
-        clearInterval(pollId);
-      }
-      if (widgetIdRef.current && window.turnstile) {
-        window.turnstile.remove(widgetIdRef.current);
-        widgetIdRef.current = null;
-      }
+      turnstile.remove(widgetId);
+      widgetIdRef.current = null;
     };
-  }, [siteKey]);
+  }, [siteKey, apiReady]);
 
   if (!siteKey) {
     return null;
   }
 
   return (
-    <div
-      className="cf-turnstile turnstile-field"
-      data-action="turnstile-spin-v2"
-      ref={containerRef}
-    />
+    <>
+      {/* Loaded only on pages with a form, once the browser is idle. onReady
+          also fires on later mounts, when the script is already present. */}
+      <Script
+        src={TURNSTILE_API_SRC}
+        strategy="lazyOnload"
+        onReady={() => setApiReady(true)}
+      />
+      <div
+        className="cf-turnstile turnstile-field"
+        data-action="turnstile-spin-v2"
+        ref={containerRef}
+      />
+    </>
   );
 });
