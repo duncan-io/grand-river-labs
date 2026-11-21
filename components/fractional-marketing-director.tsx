@@ -1,51 +1,110 @@
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
-import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
+import { DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import { testimonials } from "@/lib/testimonials";
-import { EngagementBlock } from "./engagement-block";
 import { FiveStars } from "./five-stars";
-import { NicheStrip } from "./niche-page";
 import { FeaturedCaseStudy } from "./sections";
 import { Arrow } from "./icons";
-import { directorAreas, leadSystemNav } from "./what-we-do-nav";
 import { FaqSection } from "./faq-section";
 import "./fractional-marketing-director.css";
 
-const scopeAreas = [...directorAreas, leadSystemNav] as const;
+const deliverables = [
+  {
+    title: "A weekly meeting with your director",
+    copy: "Review the numbers, set priorities, and make decisions together. Between meetings, your director is a message away.",
+  },
+  {
+    title: "A strategy and budget you own",
+    copy: "Where to grow, where each dollar goes, and what it should return. Written down and updated every quarter. You keep the final say.",
+  },
+  {
+    title: "A monthly scorecard",
+    copy: "Leads and booked jobs from every channel, checked against your CRM, with a next step for each.",
+  },
+  {
+    title: "A team that can run it",
+    copy: "We coach whoever runs your marketing and train your office to answer and follow up on every lead.",
+  },
+];
 
-const comparisons = [
+const coverage: { label: string; href?: string; note: string }[] = [
   {
-    dimension: "Who decides the work",
-    agency: "You brief a channel. The agency executes what you asked for.",
-    fractional: "We look at the whole picture and make the call on what's next.",
+    label: "Strategy & budget",
+    note: "Goals, priorities, and where the money goes.",
   },
   {
-    dimension: "What the engagement covers",
-    agency: "Usually one channel, scoped as its own retainer.",
-    fractional: "Every channel, checked—plus the leaks where leads are lost.",
+    label: "SEO",
+    href: "/search-engine-optimization",
+    note: "Pages and content that bring in local searches.",
   },
   {
-    dimension: "Who you talk to",
-    agency: "An account team, with handoffs between planning and execution.",
-    fractional:
-      "The owner. The person who makes the calls is the person on the call.",
+    label: "Paid ads & LSA",
+    href: "/local-ads",
+    note: "Google Ads and Local Services Ads that book jobs.",
   },
   {
-    dimension: "Who checks the work",
-    agency: "The agency reports on the agency. Nobody verifies it.",
-    fractional: "Vendor reports reconciled against your CRM, lead by lead.",
+    label: "Google Business Profile",
+    href: "/google-business-profile",
+    note: "Categories, services, reviews, and tracked calls.",
   },
   {
-    dimension: "How you're billed",
-    agency: "A quote per channel.",
-    fractional: `One monthly rate, starting at ${formatUsd(DIRECTOR_MONTHLY)} for weekly advising.`,
+    label: "Conversion rate optimization",
+    href: "/conversion-rate-optimization",
+    note: "More leads from the traffic you already have.",
   },
   {
-    dimension: "Specialists",
-    agency: "The work stays inside the channel they were hired for.",
-    fractional: "We manage existing vendors when they are the better fit.",
+    label: "Lead follow-up automation",
+    href: "/automation",
+    note: "Fast, consistent follow-up on every new lead.",
   },
-] as const;
+  {
+    label: "Call tracking & Lead Monitoring System",
+    href: "/lead-system",
+    note: "Every lead counted, from first call to booked job.",
+  },
+];
+
+const steps = [
+  {
+    title: "Fit call",
+    copy: "A free 30-minute call about your goals, your budget, and your team.",
+  },
+  {
+    title: "Month one: learn and plan",
+    copy: "We learn how your business runs and write the plan and budget with you.",
+  },
+  {
+    title: "Every month after",
+    copy: "We put the plan to work and track what it books each month.",
+  },
+];
+
+export const faqs = [
+  {
+    question: "What is a fractional marketing director?",
+    answer:
+      "A senior marketing leader who works with your company part-time. Some people call it a fractional CMO. You get experienced leadership for the hours your business needs.",
+  },
+  {
+    question: "What does it cost?",
+    answer: `Advising starts at ${formatUsd(DIRECTOR_MONTHLY)}/month. That covers strategy, budget, and ongoing advice. Hands-on work can be added for one monthly fee. There are no long contracts.`,
+  },
+  {
+    question: "What happens in the first 90 days?",
+    answer:
+      "Month one is for learning and planning. In months two and three, we fix the biggest lead leaks first. By day 90, you know which channels bring in booked jobs.",
+  },
+  {
+    question: "How involved are you day to day?",
+    answer:
+      "You work with one senior person, the same one every time. Between meetings, you can reach us on Slack or email.",
+  },
+  {
+    question: "Can you work alongside our current team and vendors?",
+    answer:
+      "Yes. We work with your team and the vendors you have now. We set the plan, share clear briefs, and keep everyone working toward the same goals.",
+  },
+];
 
 const scorecardRows = [
   {
@@ -91,129 +150,6 @@ const scorecardTotals = scorecardRows.reduce(
   { claimed: 0, crm: 0, booked: 0 },
 );
 
-const deliverables = [
-  {
-    title: "A senior leader you meet with every week",
-    copy: "Your director joins your weekly meeting to review the numbers, set priorities, and make decisions with you. Between meetings, they're a message away for the hire, the new market, or the agency pitch.",
-  },
-  {
-    title: "A strategy and budget you own",
-    copy: "Where to grow, where every dollar goes, and what it should return, written down and revisited each quarter. You keep the final say.",
-  },
-  {
-    title: "A monthly scorecard",
-    copy: "What each vendor claimed, what reached your CRM, and what became a booked job, with the call on every channel.",
-  },
-  {
-    title: "A team that can run it",
-    copy: "We coach whoever owns marketing and train the office on lead handling, so the fixes hold after the meeting ends.",
-  },
-];
-
-const scope: Record<
-  (typeof scopeAreas)[number]["href"],
-  { mode: "do" | "direct"; note: string }
-> = {
-  "/lead-leak-audit": {
-    mode: "do",
-    note: "Where leads leak after the click, ranked by what each leak costs.",
-  },
-  "/conversion-rate-optimization": {
-    mode: "do",
-    note: "More leads from the traffic you already pay for.",
-  },
-  "/lead-system": {
-    mode: "do",
-    note: "Tracking, daily checks, and a portal showing what booked.",
-  },
-  "/automation": {
-    mode: "do",
-    note: "Lead routing and follow-up that don't depend on someone remembering.",
-  },
-  "/search-engine-optimization": {
-    mode: "direct",
-    note: "The strategy, the brief, and a check on whoever writes the pages.",
-  },
-  "/local-ads": {
-    mode: "direct",
-    note: "What to fund, pause, or dispute. Your media buyer runs the campaigns.",
-  },
-  "/google-business-profile": {
-    mode: "direct",
-    note: "Categories, services, reviews, and whether its calls get tracked.",
-  },
-};
-
-const scopeColumns = [
-  {
-    mode: "do",
-    title: "We do it ourselves",
-    copy: "Hands-on work on the leaks and the measurement, added as you need it.",
-  },
-  {
-    mode: "direct",
-    title: "We direct it",
-    copy: "Every channel planned, briefed, and checked against booked jobs.",
-  },
-] as const;
-
-const steps = [
-  {
-    title: "Fit call",
-    copy: "30 minutes, free. What you spend, who does what, and whether a director is the seat you're missing.",
-  },
-  {
-    title: "Month one: audit and plan",
-    copy: "We learn how the business runs, trace where leads are getting lost, and write the plan and budget with you. Already had the audit? We start from its findings.",
-  },
-  {
-    title: "Every month after",
-    copy: "You meet with your director every week to plan, review the numbers, and make the call on each channel. Between meetings we coach the team and check every vendor against the CRM. The scorecard shows what moved.",
-  },
-];
-
-export const faqs = [
-  {
-    question: "What is a fractional marketing director?",
-    answer:
-      "A senior marketing leader who works with your company part-time, sometimes called a fractional CMO. You get the judgment and ownership of a marketing director without the salary, benefits, or forty-hour week of a full-time hire. In practice, you meet with them weekly to plan, set strategy, and get advice on the big decisions.",
-  },
-  {
-    question: "What does a fractional marketing director do?",
-    answer:
-      "Meets with you every week to plan and set strategy, decides where the budget goes, and advises you on the big calls. Coaches whoever runs marketing day to day and holds every vendor to the plan. Add hands-on work and we fix where leads leak and the [tracking](/lead-system) behind the numbers, usually starting with a [lead leak audit](/lead-leak-audit).",
-  },
-  {
-    question:
-      "How is a fractional marketing director different from a full-time hire?",
-    answer:
-      "A full-time director costs six figures plus overhead, and most home services and other lead-driven companies don't have forty hours a week of director-level work. A fractional director covers the part that needs senior judgment: the strategy, the budget calls, the advice, and the oversight. You pay only for those hours.",
-  },
-  {
-    question: "How much does a fractional marketing director cost?",
-    answer: `Engagements start at ${formatUsd(DIRECTOR_MONTHLY)}/month for weekly advising: the plan, the budget, and the call on every channel. Hands-on work is scoped on top, still as one monthly fee rather than a quote per channel. There are no long contracts. Many clients start with the ${formatUsd(AUDIT_FEE)} [lead leak audit](/lead-leak-audit).`,
-  },
-  {
-    question: "Do you take on one-off projects?",
-    answer: `Yes. Not every problem needs an ongoing director. The [lead leak audit](/lead-leak-audit) is a ${formatUsd(AUDIT_FEE)} flat standalone engagement, the [Lead Monitoring System](/lead-system) is available on its own, and any area we oversee — conversion fixes, lead routing — can be scoped as a one-time project. We confirm scope and price on a 30-minute fit call.`,
-  },
-  {
-    question: "Will you replace our agency or marketing hire?",
-    answer:
-      "No. We sit above your agencies: deciding where effort goes, what good looks like, and when to pause. Vendors who deliver stay. An in-house marketing hire gets a coach, not a replacement. Agencies can also [partner with us](/white-label).",
-  },
-  {
-    question: "What happens in the first 90 days?",
-    answer:
-      "Month one is learning the business, tracing where leads are getting lost, and a written plan and budget. Months two and three bring the first fixes, vendor briefs, team coaching, and scorecards, so by day 90 you know which channels earn their budget.",
-  },
-  {
-    question: "How involved are you day to day?",
-    answer:
-      "One senior person, the same one every time. We join your weekly meeting, stay on Slack or email between, coach whoever owns marketing, and run sessions with the office on speed to lead and follow-up. No rotating account team, and no junior learning on your budget.",
-  },
-];
-
 /* One example week, matching the example scorecard below. */
 const week = [
   {
@@ -255,33 +191,25 @@ export function FractionalDirectorSections() {
         <div className="shell">
           <div className="director-hero__layout">
             <div className="mkt-hero__content director-hero__content">
-              <p className="eyebrow">
-                Fractional marketing director · Home services &amp; other lead-driven businesses
-              </p>
               <h1 className="mkt-hero__headline">
                 A senior marketing leader on your team, without the full-time
                 hire.
               </h1>
               <p className="mkt-hero__copy">
-                Meet every week with an experienced marketing director who plans
-                your strategy with you, decides where the budget goes, and
-                advises you on the big calls. That&apos;s a fractional marketing
-                director: senior leadership a few hours a week, for a fraction of
-                a full-time salary.
+                A fractional marketing director is an experienced marketing
+                leader who works with you part-time to plan your marketing,
+                guide your budget, and grow your leads.
               </p>
               <div className="mkt-hero__actions">
                 <BookCallLink className="button button-primary">
                   Book a 30-minute fit call
                   <Arrow />
                 </BookCallLink>
-                <a className="button button-secondary" href="#contact">
-                  Contact us
-                </a>
               </div>
               <ul className="mkt-hero__facts">
-                <li>Weekly meetings with your director</li>
                 <li>Advising from {formatUsd(DIRECTOR_MONTHLY)}/month</li>
                 <li>No long contracts</li>
+                <li>Work directly with a senior director</li>
               </ul>
             </div>
             <figure className="leak-map director-week">
@@ -324,13 +252,12 @@ export function FractionalDirectorSections() {
             <div>
               <p className="eyebrow">What you get</p>
               <h2 className="section-heading">
-                A senior leader to meet with, plan with, and lean on.
+                A clear plan, and proof of what&apos;s working.
               </h2>
             </div>
             <p className="section-copy">
-              You meet with the same director every week. Together you set the
-              plan and the budget, and every month a scorecard shows what each
-              channel actually booked.
+              Each month, your director sets the plan with you and shows what
+              every channel booked.
             </p>
           </div>
 
@@ -347,7 +274,7 @@ export function FractionalDirectorSections() {
                     <th scope="col">Vendor says</th>
                     <th scope="col">In your CRM</th>
                     <th scope="col">Booked</th>
-                    <th scope="col">The call</th>
+                    <th scope="col">Next step</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -418,97 +345,33 @@ export function FractionalDirectorSections() {
         <div className="shell">
           <div className="services__top reveal">
             <div>
-              <p className="eyebrow">What&apos;s in scope</p>
+              <p className="eyebrow">What we cover</p>
               <h2 className="section-heading">
-                What we do ourselves, and what we direct.
+                Every part of your marketing, under one plan.
               </h2>
             </div>
             <p className="section-copy">
-              Every channel is in scope, held to one plan. Advising covers
-              all of it.
+              Your director plans and oversees all of it. Hands-on work can be
+              added as needed.
             </p>
           </div>
-          <div className="director-scope__columns reveal">
-            {scopeColumns.map((column) => (
-              <div
-                className={`director-scope__column director-scope__column--${column.mode}`}
-                key={column.mode}
-              >
-                <h3 className="director-scope__title">{column.title}</h3>
-                <p className="director-scope__copy">{column.copy}</p>
-                <ul className="director-scope__list">
-                  {scopeAreas
-                    .filter((area) => scope[area.href].mode === column.mode)
-                    .map((area) => (
-                      <li key={area.href}>
-                        <Link href={area.href}>
-                          {area.label}
-                          <Arrow />
-                        </Link>
-                        <p>{scope[area.href].note}</p>
-                      </li>
-                    ))}
-                </ul>
-              </div>
+          <ul className="director-scope__list reveal">
+            {coverage.map((area) => (
+              <li key={area.label}>
+                {area.href ? (
+                  <Link href={area.href}>
+                    {area.label}
+                    <Arrow />
+                  </Link>
+                ) : (
+                  <span className="director-scope__label">{area.label}</span>
+                )}
+                <p>{area.note}</p>
+              </li>
             ))}
-          </div>
-          <p
-            className="fdd-proof__more director-scope__one-off reveal"
-            id="one-off-projects"
-          >
-            Not ready for ongoing? Any of these can be scoped as a one-off
-            project, or start with the{" "}
-            <Link href="/lead-leak-audit">
-              {formatUsd(AUDIT_FEE)} lead leak audit
-            </Link>
-            .{" "}
-            <BookCallLink>Book a fit call to scope it →</BookCallLink>
-          </p>
-        </div>
-      </section>
-
-      <section className="section director-compare" id="vs-agency">
-        <div className="shell">
-          <div className="director-compare__top reveal">
-            <div>
-              <p className="eyebrow">The difference</p>
-              <h2 className="section-heading">Same words. A different job.</h2>
-            </div>
-            <p className="section-copy">
-              An agency is hired for a channel and reports on itself. A
-              director is hired to answer “is it working?”—with evidence.
-            </p>
-          </div>
-
-          <div className="director-compare__board reveal">
-            <div className="director-compare__head" aria-hidden="true">
-              <span />
-              <span className="director-compare__col director-compare__col--agency">
-                An agency
-              </span>
-              <span className="director-compare__col director-compare__col--team">
-                A fractional director
-              </span>
-            </div>
-            {comparisons.map((row) => (
-              <article className="director-compare__row" key={row.dimension}>
-                <h3 className="director-compare__dimension">{row.dimension}</h3>
-                <p className="director-compare__cell director-compare__cell--agency">
-                  <span className="director-compare__side">An agency</span>
-                  {row.agency}
-                </p>
-                <p className="director-compare__cell director-compare__cell--team">
-                  <span className="director-compare__side">
-                    A fractional director
-                  </span>
-                  {row.fractional}
-                </p>
-              </article>
-            ))}
-          </div>
-
-          <p className="director-compare__promise reveal">
-            Not another vendor. A director for the whole picture.
+          </ul>
+          <p className="fdd-proof__more reveal">
+            <Link href="/#services">See all our services →</Link>
           </p>
         </div>
       </section>
@@ -519,12 +382,11 @@ export function FractionalDirectorSections() {
             <div>
               <p className="eyebrow">How it works</p>
               <h2 className="section-heading">
-                Audit first. Then a monthly rhythm.
+                Three steps to a plan that works.
               </h2>
             </div>
             <p className="section-copy">
-              Advising starts at {formatUsd(DIRECTOR_MONTHLY)}/month, no long
-              contracts.
+              Advising starts at {formatUsd(DIRECTOR_MONTHLY)}/month.
             </p>
           </div>
           <ol className="seo-flow__steps reveal">
@@ -559,10 +421,12 @@ export function FractionalDirectorSections() {
               </li>
             ))}
           </ol>
+          <p className="fdd-proof__more reveal">
+            Want a one-time project first?{" "}
+            <Link href="/lead-leak-audit">Start with a lead leak audit →</Link>
+          </p>
         </div>
       </section>
-
-      <EngagementBlock />
 
       <section className="section fdd-proof" id="proof">
         <div className="shell">
@@ -571,9 +435,6 @@ export function FractionalDirectorSections() {
               <p className="eyebrow">From clients</p>
               <h2 className="section-heading">What clients say.</h2>
             </div>
-            <p className="section-copy">
-              Less noise, and plans that fit how the business actually runs.
-            </p>
           </div>
           <div className="fdd-proof__quotes reveal">
             {testimonials.map((item) => (
@@ -593,12 +454,7 @@ export function FractionalDirectorSections() {
         </div>
       </section>
 
-      <FaqSection faqs={faqs}>
-        Advising starts at {formatUsd(DIRECTOR_MONTHLY)}/month, no long
-        contracts, and your current vendors stay.
-      </FaqSection>
-
-      <NicheStrip />
+      <FaqSection faqs={faqs} />
     </>
   );
 }

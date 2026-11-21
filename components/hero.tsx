@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BookCallLink } from "./book-call-link";
-import { AUDIT_FEE, formatUsd } from "@/lib/pricing";
 import { Arrow } from "./icons";
 import "./hero.css";
 
@@ -160,30 +159,32 @@ export function Hero() {
       <div className="shell">
         <div className="hero__content">
           <h1 className="hero__headline">
-            <span>Senior Marketing Leadership,</span>
-            <span>
-              <span className="hero__keep">Part-Time Costs</span>
+            <span>When one job is worth thousands, your marketing needs a director.</span>
+            <span className="hero__headline-sub">
+              Senior marketing leadership, part-time.
             </span>
           </h1>
           <p className="hero__copy">
-            I&apos;m Duncan, a part-time marketing director for owner-run home
-            service companies. I work out what each dollar is booking, tell you
-            where to put the next one and what to stop, and keep whoever does
-            your marketing on the plan.
+            I&apos;m Duncan, a fractional (part-time) marketing director for
+            owner-run home service companies. I work out what each dollar is
+            booking and tell you where to put the next one.
           </p>
           <div className="hero__actions">
             <BookCallLink className="button button-primary">
               Book a call
               <Arrow />
             </BookCallLink>
-            <Link className="button button-secondary" href="/lead-leak-audit">
-              Start with a {formatUsd(AUDIT_FEE)} lead leak audit
+            <Link
+              className="button button-secondary"
+              href="/fractional-marketing-director"
+            >
+              How the director role works
             </Link>
           </div>
         </div>
       </div>
-      <a className="hero__cue" href="#engagement">
-        What it costs
+      <a className="hero__cue" href="#ways">
+        Ways to work together
       </a>
     </section>
   );

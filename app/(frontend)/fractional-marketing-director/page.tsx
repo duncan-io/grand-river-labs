@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ContactSection } from "@/components/contact";
 import {
   FractionalDirectorSections,
@@ -49,11 +50,22 @@ export default function FractionalMarketingDirectorPage() {
       <ContactSection
         variant="cta"
         eyebrow="Start a conversation"
-        heading="Get a director's eyes on your marketing."
-        copy="Tell us what you spend and what you're not sure is working. In 30 minutes we'll tell you whether a director is the seat you're missing."
+        heading="Get a senior marketer's eyes on your marketing."
+        copy="Tell us your goals and what you spend today. In 30 minutes, we'll tell you if a fractional director is a good fit."
         directLabel="Book a 30-minute fit call"
         messageLabel="What's going on with your marketing?"
-        messagePlaceholder="No real plan, an agency grading its own numbers, a team that needs direction—start wherever you are."
+        messagePlaceholder="Your goals, your budget, what's working, what you'd like to grow. Start wherever you are."
+        footnote={
+          <>
+            Roofing or contracting company? See how we work with{" "}
+            <Link href="/fractional-marketing-director/roofing">roofers</Link>{" "}
+            and{" "}
+            <Link href="/fractional-marketing-director/contractors">
+              contractors
+            </Link>
+            .
+          </>
+        }
       />
     </PageShell>
   );

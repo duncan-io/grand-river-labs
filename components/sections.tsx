@@ -4,7 +4,9 @@ import { BookCallLink } from "./book-call-link";
 import { FiveStars } from "./five-stars";
 import { testimonials } from "@/lib/testimonials";
 import duncanPhoto from "@/public/team/duncan.png";
+import { AUDIT_FEE, DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
 import {
+  directorNav,
   industriesNav,
   leadQualificationNav,
   leadSystemNav,
@@ -21,64 +23,67 @@ const featuredCaseStudy = {
     "Ownership, one content strategy run across every brand, and conversion work on the pages that already had traffic.",
 };
 
-const decisions = [
-  {
-    title: "Sets the plan",
-    copy: "Where to invest next, what to stop, and what the next quarter looks like, written down with a budget against it. You keep the final say.",
-  },
-  {
-    title: "Decides channel by channel",
-    copy: "SEO, paid ads and Local Services Ads, your Google Business Profile, your website: what each one should be doing for you, and whether it has earned another dollar.",
-  },
-  {
-    title: "Counts booked jobs",
-    copy: "What each dollar booked, not what a report says it did. It works the same whether your leads live in a CRM or a spreadsheet.",
-  },
-  {
-    title: "Checks whoever does the work",
-    copy: "One agency or five. I brief them on the plan, check their numbers against the jobs you booked, and tell you when one has stopped earning its fee.",
-  },
-  {
-    title: "Finds where leads get lost",
-    copy: "Missed calls, forms that go nowhere, replies that take three days. Each one is ranked by what it costs you, with who should fix it.",
-  },
-  {
-    title: "Gets more from what you have",
-    copy: "More calls from the visitors you already get, and a fast next step for every inquiry, before you spend more on traffic.",
-  },
-];
+type ProcessStep = {
+  title: string;
+  copy: string;
+  artifact: string;
+  /** Optional line on who decides; used once so "final say" isn't repeated. */
+  roles?: string;
+};
 
-const systems = [
-  {
-    ...leadSystemNav,
-    kicker: "See every lead",
-    copy: "Every lead in one count, with what each lead cost and what each booked job cost. Every vendor is measured on the same numbers, so you can see who is earning their fee.",
-  },
-  {
-    ...leadQualificationNav,
-    kicker: "Talk to real prospects",
-    copy: "Form leads and missed calls get a text back within a minute. Every lead is then screened and scored: spam, renters and jobs outside your area are sorted out, and the best ones go on your estimator's calendar. You only talk to real prospects.",
-  },
-];
-
-const processSteps = [
+const processSteps: ProcessStep[] = [
   {
     title: "Audit",
-    copy: "I trace every path from the click or the call to the booked job: missed calls, forms, follow-up, and what your agency reports. You see where leads and money get lost.",
-    artifact: "A leak map, ranked by what it's costing you.",
-    roles: "You bring the context; I do the digging.",
+    copy: "Month one, I learn your whole marketing picture: every channel, what you spend on it, who does the work, and which leads turn into booked jobs.",
+    artifact: "A clear read on what each channel and vendor is booking.",
   },
   {
     title: "Plan",
-    copy: "We set the plan together: what to fix first, where to invest next, what to stop, and what next quarter's budget is for. Each fix gets an owner: your office, your vendor, or me.",
+    copy: "We set the plan together: where to invest next, what to stop, and what each channel is for, from SEO and ads to your Google Business Profile and website. Each priority gets an owner.",
     artifact: "A written plan and budget for the quarter.",
     roles: "I recommend; you keep the final say.",
   },
   {
     title: "Check",
-    copy: "Every month I set what your vendors report next to the jobs you actually booked, see what moved, and make the next call with you: fund it, pause it, or fix it.",
+    copy: "Every month I put what your vendors report next to the jobs you booked, and we make the next call together: fund it, pause it, or fix it.",
     artifact: "A monthly read on what booked, and the next call made.",
-    roles: "I check the numbers; you decide.",
+  },
+];
+
+type Offer = {
+  title: string;
+  /** Price or short tag shown with the title. */
+  tag?: string;
+  copy: string;
+  href: string;
+  linkLabel?: string;
+};
+
+/* Ways to work together. Edit, add or reorder offers here; the layout follows. */
+const primaryOffer: Offer = {
+  title: "Fractional marketing director",
+  tag: `From ${formatUsd(DIRECTOR_MONTHLY)}/mo`,
+  copy: "Senior marketing leadership, part-time: a weekly meeting, a written plan and budget, and a straight answer on each channel.",
+  href: directorNav.href,
+  linkLabel: "More on the director role",
+};
+
+const moreOffers: Offer[] = [
+  {
+    title: "Lead leak audit",
+    tag: `${formatUsd(AUDIT_FEE)} flat`,
+    copy: "A two-week look at where leads slip away after the click.",
+    href: "/lead-leak-audit",
+  },
+  {
+    title: leadSystemNav.label,
+    copy: "Cost per lead and per booked job, for every vendor.",
+    href: leadSystemNav.href,
+  },
+  {
+    title: leadQualificationNav.label,
+    copy: "A fast reply and a score for every new lead.",
+    href: leadQualificationNav.href,
   },
 ];
 
@@ -111,100 +116,6 @@ export function FeaturedCaseStudy() {
             Read the case study
             <Arrow />
           </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function LeadershipSection() {
-  return (
-    <section className="section services" id="leadership">
-      <div className="shell">
-        <div className="services__top reveal">
-          <div>
-            <p className="eyebrow">What your director does</p>
-            <h2 className="section-heading">Sets the plan. Checks the work.</h2>
-          </div>
-          <p className="section-copy">
-            One senior person who decides where your marketing goes next and
-            checks that it&apos;s paying off. You keep the final say.
-          </p>
-        </div>
-
-        <div className="director-intro reveal">
-          <span className="director-intro__photo">
-            <Image
-              src={duncanPhoto}
-              alt="Duncan McKee, founder of Grand River Labs"
-              sizes="8rem"
-              placeholder="blur"
-            />
-          </span>
-          <div className="director-intro__body">
-            <p className="director-intro__name">
-              <strong>Duncan McKee</strong>
-              <span>Founder · Grand Rapids, MI</span>
-            </p>
-            <p className="director-intro__copy">
-              I&apos;ve sold marketing at an agency and bought it in-house,
-              where I run the websites for a group of 38 home service
-              companies. When you hire Grand River Labs, you work with me, not
-              an account manager.
-            </p>
-          </div>
-        </div>
-
-        <ul className="services__grid reveal">
-          {decisions.map((item) => (
-            <li className="services__item" key={item.title}>
-              <h3>{item.title}</h3>
-              <p>{item.copy}</p>
-            </li>
-          ))}
-        </ul>
-
-        <p className="services__more reveal">
-          <Link href="/fractional-marketing-director">
-            See how the director engagement works →
-          </Link>
-        </p>
-      </div>
-    </section>
-  );
-}
-
-export function SystemsSection() {
-  return (
-    <section className="section services" id="systems">
-      {/* Keeps the old #services anchor working. */}
-      <span className="anchor-alias" id="services" aria-hidden="true" />
-      <div className="shell">
-        <div className="services__top reveal">
-          <div>
-            <p className="eyebrow">Systems</p>
-            <h2 className="section-heading">
-              Two systems for the leads you already pay for.
-            </h2>
-          </div>
-          <p className="section-copy">
-            Each one is built into the phone line, forms and tools you already
-            use. Buy either on its own, or run it alongside a director.
-          </p>
-        </div>
-
-        <div className="lq-pair__cards reveal">
-          {systems.map((item) => (
-            <article className="lq-pair__card" key={item.href}>
-              <p className="lq-pair__kicker">{item.kicker}</p>
-              <h3>{item.label}</h3>
-              <p>{item.copy}</p>
-              <Link className="lq-pair__link" href={item.href}>
-                See the {item.label}
-                <Arrow />
-              </Link>
-            </article>
-          ))}
         </div>
       </div>
     </section>
@@ -272,23 +183,48 @@ export function ProofSection() {
   );
 }
 
-export function ProcessSection() {
+export function HowIWorkSection() {
   return (
     <section className="section process" id="how-we-work">
       <div className="shell">
         <div className="process__top reveal">
           <div>
-            <p className="eyebrow">How it works</p>
-            <h2 className="section-heading">Find it, plan it, prove it.</h2>
+            <p className="eyebrow">How I work</p>
+            <h2 className="section-heading">
+              See what&apos;s working, set the plan, check what books.
+            </h2>
           </div>
           <p className="section-copy">
-            Month one is an audit. After that, it&apos;s a monthly rhythm:
-            check what booked, decide where the next dollar goes, and update
-            the plan — not another slide deck.
+            One senior person who decides where your marketing goes next and
+            checks that it&apos;s paying off, whether your leads live in a CRM
+            or a spreadsheet.
           </p>
         </div>
 
-        <ol className="process__cards reveal" aria-label="How it works">
+        <div className="director-intro reveal">
+          <span className="director-intro__photo">
+            <Image
+              src={duncanPhoto}
+              alt="Duncan McKee, founder of Grand River Labs"
+              sizes="8rem"
+              placeholder="blur"
+            />
+          </span>
+          <div className="director-intro__body">
+            <p className="director-intro__name">
+              <strong>Duncan McKee</strong>
+              <span>Founder · Grand Rapids, MI</span>
+            </p>
+            <p className="director-intro__copy">
+              I&apos;ve sold marketing at an agency and bought it in-house,
+              where I run the websites for a group of 38 home service
+              companies. When you hire Grand River Labs, you work with me
+              directly.
+            </p>
+          </div>
+        </div>
+
+        <ol className="process__cards reveal" aria-label="How I work">
           {processSteps.map((step, index) => (
             <li className="process__card" key={step.title}>
               {index > 0 ? (
@@ -307,27 +243,72 @@ export function ProcessSection() {
                 <span className="process__meta-label">What you get</span>
                 {step.artifact}
               </p>
-              <p className="process__roles">{step.roles}</p>
+              {step.roles ? (
+                <p className="process__roles">{step.roles}</p>
+              ) : null}
             </li>
           ))}
         </ol>
 
         <div className="process__footer reveal">
           <p className="process__loop">
-            Then we do it again—same person, tighter plan.
+            Then we do it again, same person, tighter plan.
           </p>
-          <div className="process__cta">
-            <BookCallLink
-              className="button button-primary"
-            >
-              Book a call
-              <Arrow />
-            </BookCallLink>
-            <a className="process__contact-link" href="#contact">
-              Or tell me what&apos;s getting in the way →
-            </a>
-          </div>
+          <BookCallLink className="button button-primary">
+            Book a call
+            <Arrow />
+          </BookCallLink>
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function WaysToWorkSection() {
+  return (
+    <section className="section ways" id="ways">
+      <div className="shell">
+        <div className="ways__top reveal">
+          <p className="eyebrow">Ways to work together</p>
+          <h2 className="section-heading">
+            Start with a director. Bring in the rest when you need it.
+          </h2>
+        </div>
+
+        <article className="ways__primary reveal">
+          <div>
+            <h3 className="ways__primary-title">{primaryOffer.title}</h3>
+            {primaryOffer.tag ? (
+              <p className="ways__primary-tag">{primaryOffer.tag}</p>
+            ) : null}
+          </div>
+          <div>
+            <p className="ways__primary-copy">{primaryOffer.copy}</p>
+            <Link className="ways__primary-link" href={primaryOffer.href}>
+              {primaryOffer.linkLabel ?? `See the ${primaryOffer.title}`}
+              <Arrow />
+            </Link>
+          </div>
+        </article>
+
+        <p className="ways__more-label reveal">
+          Alongside your director, or on their own
+        </p>
+        <ul className="ways__more reveal">
+          {moreOffers.map((offer) => (
+            <li key={offer.href}>
+              <Link href={offer.href}>
+                <span className="ways__more-title">
+                  {offer.title}
+                  {offer.tag ? (
+                    <span className="ways__more-tag"> · {offer.tag}</span>
+                  ) : null}
+                </span>
+                <span className="ways__more-copy">{offer.copy}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -346,8 +327,7 @@ export function UseCaseStrip() {
           </div>
           <p className="section-copy">
             Owner-run companies selling high-ticket work: roofing,
-            remodeling, windows and home improvement. One job can be worth
-            thousands, so one lost lead is expensive.
+            remodeling, windows and home improvement.
           </p>
         </div>
 

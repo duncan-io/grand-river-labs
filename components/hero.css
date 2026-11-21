@@ -22,19 +22,25 @@
   margin: 0;
   color: var(--accent-dark);
   font-family: var(--font-fraunces), serif;
-  font-size: clamp(2.65rem, 5.2vw, 4.35rem);
+  max-width: 19ch;
+  font-size: clamp(2.4rem, 4.6vw, 3.75rem);
   font-weight: 620;
   letter-spacing: -0.045em;
   line-height: 1.05;
+  text-wrap: balance;
 }
 
 .hero__headline span {
   display: block;
 }
 
-.hero__headline .hero__keep {
-  display: inline;
-  white-space: nowrap;
+.hero__headline .hero__headline-sub {
+  margin-top: 0.45em;
+  color: var(--accent);
+  font-size: 0.6em;
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .hero__copy {

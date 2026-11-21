@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { ContactSection } from "@/components/contact";
-import { EngagementBlock } from "@/components/engagement-block";
 import { Hero } from "@/components/hero";
 import {
-  LeadershipSection,
-  ProcessSection,
+  HowIWorkSection,
   ProofSection,
-  SystemsSection,
   UseCaseStrip,
+  WaysToWorkSection,
 } from "@/components/sections";
 import { PageShell } from "@/components/page-shell";
 import { DIRECTOR_MONTHLY, formatUsd } from "@/lib/pricing";
@@ -55,21 +53,17 @@ export default function Home() {
     <PageShell>
       <JsonLd data={homeJsonLd} />
       <Hero />
-      <EngagementBlock
-        eyebrow="What it costs"
-        copy="Someone senior who sets your marketing plan, decides where the budget goes, and tells you straight what's booking jobs — for a few hours a week instead of a full-time salary."
-        directorLabel="A part-time director"
-        ctaLabel="Book a call"
-      />
       <ProofSection />
-      <LeadershipSection />
-      <SystemsSection />
-      <ProcessSection />
+      <HowIWorkSection />
+      <WaysToWorkSection />
       <UseCaseStrip />
       <ContactSection
         variant="cta"
         atmosphere
-        copy="Tell me what you're spending and what you're not sure is working—an agency that reports its own numbers, leads that don't get answered, spend you can't tie to booked jobs. I'll tell you where I'd look first, and I'll reply within one business day."
+        heading="Tell me where your leads come from."
+        copy="Tell me what you spend, which channels you run, and which jobs you want more of. I'll tell you where I'd look first and reply within one business day."
+        messageLabel="What should I look at first?"
+        messagePlaceholder="Your budget, your channels, the jobs you want more of. Start wherever you are."
       />
     </PageShell>
   );

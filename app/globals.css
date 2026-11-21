@@ -244,45 +244,12 @@ a {
   list-style: none;
 }
 
-.services__item h3 {
-  margin: 0 0 0.65rem;
-  font-family: var(--font-fraunces), serif;
-  font-size: clamp(1.45rem, 2.2vw, 1.85rem);
-  font-weight: 560;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-}
 
-.services__item h3 a {
-  color: inherit;
-  text-decoration: none;
-}
 
-.services__item h3 a:hover {
-  color: var(--accent);
-}
 
-.services__item p {
-  margin: 0;
-  max-width: 28rem;
-  color: var(--muted);
-  font-size: 1.02rem;
-  line-height: 1.65;
-}
 
-.services__more {
-  margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
-}
 
-.services__more a {
-  color: var(--accent-dark);
-  font-weight: 650;
-  text-decoration: none;
-}
 
-.services__more a:hover {
-  color: var(--accent);
-}
 
 /* The quote cards style every span inside them, so name those contexts here. */
 .five-stars,
@@ -305,9 +272,6 @@ a {
   margin-bottom: 0.35rem;
 }
 
-.engagement {
-  background: var(--mist);
-}
 
 .engagement-compare {
   display: grid;
@@ -315,13 +279,6 @@ a {
   gap: 1rem;
 }
 
-.engagement__cta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.85rem 1.25rem;
-  margin-top: 1.75rem;
-}
 
 .engagement-compare__card {
   display: flex;
@@ -376,14 +333,7 @@ a {
   color: rgba(244, 251, 249, 0.78);
 }
 
-.engagement__alt {
-  color: var(--accent-dark);
-  font-weight: 650;
-}
 
-.engagement__alt:hover {
-  color: var(--accent);
-}
 
 .use-cases-strip__top {
   display: flex;
@@ -3459,6 +3409,26 @@ a {
   margin-top: 1.5rem;
 }
 
+.contact__footnote {
+  margin: 1.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.contact__footnote a {
+  border-bottom: 1px solid currentColor;
+  color: var(--accent-dark);
+  font-weight: 650;
+}
+
+.contact--cta .contact__footnote {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.contact--cta .contact__footnote a {
+  color: white;
+}
+
 .contact__direct {
   display: inline-block;
   margin-top: 1.25rem;
@@ -4016,15 +3986,7 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .services__item {
-    padding: 0.5rem 0 1.25rem;
-    border-bottom: 1px solid var(--line);
-  }
 
-  .services__item:last-child {
-    border-bottom: 0;
-    padding-bottom: 0;
-  }
 
   .services__top,
   .use-cases-strip__top,
@@ -4325,9 +4287,6 @@ a {
     font-size: clamp(2.1rem, 9.5vw, 3rem);
   }
 
-  .services__item h3 {
-    font-size: 1.65rem;
-  }
 
   .use-case,
   .industry-row {
@@ -4516,7 +4475,6 @@ a {
   }
 }
 
-.director-compare__top,
 .about-changes__top {
   display: flex;
   align-items: end;
@@ -4525,19 +4483,16 @@ a {
   margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
 }
 
-.director-compare__top .section-copy,
 .about-changes__top .section-copy {
   max-width: 28rem;
   margin: 0 0 0.35rem;
 }
 
-.director-compare__top .section-heading,
 .about-changes__top .section-heading {
   max-width: 11em;
 }
 
 @media (max-width: 900px) {
-  .director-compare__top,
   .about-changes__top {
     display: grid;
     gap: 1.25rem;

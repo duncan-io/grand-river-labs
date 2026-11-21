@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { getTurnstileSiteKey } from "@/lib/turnstile";
 import { BookCallLink } from "./book-call-link";
 import { ContactForm } from "./contact-form";
@@ -12,6 +13,8 @@ type ContactSectionProps = {
   directLabel?: string;
   messageLabel?: string;
   messagePlaceholder?: string;
+  /** Optional slim line under the book-a-call button. */
+  footnote?: ReactNode;
 };
 
 function ContactAtmosphere() {
@@ -73,6 +76,7 @@ export function ContactSection({
   copy = "Tell us the goal that isn't getting a clear plan—channel mix, the site's job, measurement, or work that still eats the team. We'll help you see what deserves attention now.",
   directLabel = "Book a call",
   messageLabel = "What should we look at first?",
+  footnote,
   messagePlaceholder = "A growth target, a channel that isn't earning its keep, a site that isn't converting, or work that's still too manual—start wherever you are.",
 }: ContactSectionProps) {
   return (
@@ -90,6 +94,7 @@ export function ContactSection({
             {directLabel}
             <Arrow />
           </BookCallLink>
+          {footnote ? <p className="contact__footnote">{footnote}</p> : null}
         </div>
 
         <ContactForm
